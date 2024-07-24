@@ -116,6 +116,37 @@
 .github-btn span {
     margin-left: 8px;
 }
+
+/* Badges Section */
+.badges-section {
+    background-color: #000;
+    padding: 40px 0;
+}
+
+.badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Espacio entre los badges */
+}
+
+.badge-container img {
+    max-width: 150px;
+    height: auto;
+}
+
+.badge-container a {
+    display: inline-block;
+}
+
+.badge-container.mt-5 {
+    margin-top: 40px; /* Separación adicional para la segunda fila */
+}
+
+.badge-container.mt-5 img.large-badge {
+    max-width: 250px; /* Ajuste de tamaño para mayor legibilidad */
+}
+
     </style>
 </head>
 <body id="page-top">
@@ -146,10 +177,30 @@
                     <h1 class="mx-auto my-0 text-uppercase">ToolboxBS</h1>
                     <h2 class="text-white-50 mx-auto mt-2 mb-5">Brandon Sepulveda Windows System Utility Suite</h2>
                     <a class="btn btn-primary" href="#features" style="background-color: white; color: black;">Get Started</a>
+                    <span class="d-none d-md-inline">GitHub</span>
                 </div>
             </div>
         </div>
     </header>
+<!-- Badges Section -->
+<section class="badges-section text-center mt-5">
+    <div class="container px-4 px-lg-5">
+        <div class="badge-container">
+            <img src="https://img.shields.io/badge/Total%20ejecuciones-1,818-%23000000?style=for-the-badge&color=%23000000&labelColor=%23ffffff&border=white" alt="Total Downloads">
+            <a href="https://github.com/BrandonSepulveda/ToolboxBS/releases">
+                <img src="https://img.shields.io/github/v/release/BrandonSepulveda/ToolboxBS?color=%23000000&label=Ultima%20Version&style=for-the-badge&background=%23000000&border=white&labelColor=%23ffffff" alt="Version">
+            </a>
+            <img src="https://img.shields.io/badge/Views-1,068-%23000000?style=for-the-badge&color=%23000000&labelColor=%23ffffff&border=white" alt="Views">
+            <img src="https://img.shields.io/github/languages/top/BrandonSepulveda/ToolboxBS?style=for-the-badge&color=%23000000&background=%23000000&border=white&labelColor=%23ffffff" alt="Top Language">
+            <img src="https://img.shields.io/github/license/BrandonSepulveda/ToolboxBS?style=for-the-badge&color=%23000000&background=%23000000&border=white&labelColor=%23ffffff" alt="License">
+        </div>
+        <div class="badge-container mt-5">
+            <img class="large-badge" src="https://img.shields.io/github/downloads/BrandonSepulveda/ToolboxBS/ToolboxBS.ps1?label=Total%20Descargas@V1.2s&style=for-the-badge&color=%23ffffff" alt="Total Descargas PS1">
+            <img class="large-badge" src="https://img.shields.io/github/downloads/BrandonSepulveda/ToolboxBS/ToolboxBS.bat?label=Total%20Descargas&style=for-the-badge&color=%23ffffff" alt="Total Descargas BAT">
+        </div>
+    </div>
+</section>
+
     <!-- Features-->
     <section class="features-section" id="features">
         <div class="container px-4 px-lg-5">
@@ -164,38 +215,38 @@
             <div class="feature-container">
                
                <!-- Feature 2 -->
-               <div class="feature">
-                <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/4faeacf4-e9f5-4557-9f99-2aa5b7e81da9" alt="Apps" class="feature-image"/>
-                <h3>Información del Sistema </h3>
-                <p>Muestra detalles del sistema como la versión de Windows, procesador, RAM, capacidad del disco, entre otros..</p>
-            </div>
-            <!-- Feature 3 -->
-            <div class="feature">
-                <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/bd9af57c-19b4-49c3-9ebd-00439bdfcf52" alt="Restauración y Verificación" class="feature-image"/>
-                <h3>Apps</h3>
-                <p>Permite al usuario seleccionar aplicaciones para descargar e instalar automáticamente.</p>
-            </div>
-            <!-- Feature 4 -->
-            <div class="feature">
-                <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/15296be3-ec1a-43f7-ad56-dd8400affc61" alt="Limpieza y Optimización" class="feature-image"/>
-                <h3>Restauración, Verificación y Limpieza</h3>
-                <p>Opciones para crear puntos de restauración, verificar y reparar archivos del sistema, limpieza y optimizacion</p>
-            </div>
-            <!-- Feature 5 -->
-            <div class="feature">
-                <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/774c09c4-bc01-4195-9df0-544dfe5bf582" alt="Tweaks" class="feature-image"/>
-                <h3>Tweaks</h3>
-                <p>Ajustes personalizables para mejorar el rendimiento del sistema y utlilidades.</p>
-            </div>
+                <div class="feature">
+                    <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/4faeacf4-e9f5-4557-9f99-2aa5b7e81da9" alt="Apps" class="feature-image"/>
+                    <h3>Información del Sistema/h3>
+                    <p>Muestra detalles del sistema como la versión de Windows, procesador, RAM, capacidad del disco, entre otros..</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="feature">
+                    <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/bd9af57c-19b4-49c3-9ebd-00439bdfcf52" alt="Restauración y Verificación" class="feature-image"/>
+                    <h3>Apps</h3>
+                    <p>Permite al usuario seleccionar aplicaciones para descargar e instalar automáticamente.</p>
+                </div>
+                <!-- Feature 4 -->
+                <div class="feature">
+                    <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/15296be3-ec1a-43f7-ad56-dd8400affc61" alt="Limpieza y Optimización" class="feature-image"/>
+                    <h3>Restauración, Verificación y Limpieza</h3>
+                    <p>Opciones para crear puntos de restauración, verificar y reparar archivos del sistema, limpieza y optimizacion</p>
+                </div>
+                <!-- Feature 5 -->
+                <div class="feature">
+                    <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/774c09c4-bc01-4195-9df0-544dfe5bf582" alt="Tweaks" class="feature-image"/>
+                    <h3>Tweaks</h3>
+                    <p>Ajustes personalizables para mejorar el rendimiento del sistema y utlilidades.</p>
+                </div>
 
-             <!-- Feature 1 -->
-             <div class="feature">
-                <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/eee7a564-97e9-4aab-8a30-f1b17dbfb5d7" alt="Información del Sistema" class="feature-image"/>
-                
-                
-            </div>
+                 <!-- Feature 1 -->
+                 <div class="feature">
+                    <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/eee7a564-97e9-4aab-8a30-f1b17dbfb5d7" alt="Información del Sistema" class="feature-image"/>
+                    
+                    
+                </div>
 
-        </div>
+            </div>
     </section>
 
   <!-- Download Button -->
