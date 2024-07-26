@@ -58,21 +58,26 @@
             text-decoration: underline;
         }
         .feature-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .feature {
-            max-width: 45%;
-            margin: 20px;
-            text-align: center;
-        }
-        .feature img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-        }
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.feature {
+    max-width: 65%;
+    margin: 20px;
+    text-align: center;
+}
+
+.feature img {
+    width: 100%; /* Utiliza todo el ancho disponible */
+    height: auto; /* Mantiene la proporción de la imagen */
+    margin-bottom: 10px;
+    border-radius: 8px; /* Añade bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Añade una sombra sutil */
+}
+        
         .feature h3 {
             margin-top: 10px;
         }
@@ -213,39 +218,35 @@
             </div>
 
             <div class="feature-container">
-               
-               <!-- Feature 2 -->
+                <!-- Feature 1 -->
                 <div class="feature">
-                    <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/4faeacf4-e9f5-4557-9f99-2aa5b7e81da9" alt="Apps" class="feature-image"/>
+                    <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/eee7a564-97e9-4aab-8a30-f1b17dbfb5d7" alt="Información del Sistema" class="feature-image"/>
                     <h3>Información del Sistema</h3>
                     <p>Muestra detalles del sistema como la versión de Windows, procesador, RAM, capacidad del disco, entre otros..</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="feature">
+                    <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/4faeacf4-e9f5-4557-9f99-2aa5b7e81da9" alt="Apps" class="feature-image"/>
+                    <h3>Apps</h3>
+                    <p>Permite al usuario seleccionar aplicaciones para descargar e instalar automáticamente.</p>
                 </div>
                 <!-- Feature 3 -->
                 <div class="feature">
                     <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/bd9af57c-19b4-49c3-9ebd-00439bdfcf52" alt="Restauración y Verificación" class="feature-image"/>
-                    <h3>Apps</h3>
-                    <p>Permite al usuario seleccionar aplicaciones para descargar e instalar automáticamente.</p>
+                    <h3>Restauración, Verificación y Limpieza</h3>
+                    <p>Opciones para crear puntos de restauración, verificar y reparar archivos del sistema, limpieza y optimización.</p>
                 </div>
                 <!-- Feature 4 -->
                 <div class="feature">
                     <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/15296be3-ec1a-43f7-ad56-dd8400affc61" alt="Limpieza y Optimización" class="feature-image"/>
-                    <h3>Restauración, Verificación y Limpieza</h3>
-                    <p>Opciones para crear puntos de restauración, verificar y reparar archivos del sistema, limpieza y optimizacion</p>
+                    <h3>Tweaks</h3>
+                    <p>Ajustes personalizables para mejorar el rendimiento del sistema y utilidades.</p>
                 </div>
                 <!-- Feature 5 -->
                 <div class="feature">
                     <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/774c09c4-bc01-4195-9df0-544dfe5bf582" alt="Tweaks" class="feature-image"/>
-                    <h3>Tweaks</h3>
-                    <p>Ajustes personalizables para mejorar el rendimiento del sistema y utlilidades.</p>
+                    <h3>y mas..</h3>
                 </div>
-
-                 <!-- Feature 1 -->
-                 <div class="feature">
-                    <img src="https://github.com/BrandonSepulveda/Toolbox/assets/88468929/eee7a564-97e9-4aab-8a30-f1b17dbfb5d7" alt="Información del Sistema" class="feature-image"/>
-                    
-                    
-                </div>
-
             </div>
     </section>
 
