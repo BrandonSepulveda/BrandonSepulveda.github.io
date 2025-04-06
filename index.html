@@ -3,164 +3,360 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112"crossorigin="anonymous"></script>
-	<script type='text/javascript' src='//pl25635923.profitablecpmrate.com/8c/04/45/8c0445e9774a3f268ed395c69a29aacf.js'></script>
-        <title>Brandon Sepulveda🦇- PapiBrandon</title>
+        <meta name="description" content="Personal portfolio website for Brandon Sepulveda - Developer and Creator" />
+        <meta name="author" content="Brandon Sepulveda" />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112" crossorigin="anonymous"></script>
+        <script type='text/javascript' src='//pl25635923.profitablecpmrate.com/8c/04/45/8c0445e9774a3f268ed395c69a29aacf.js'></script>
+        <title>Brandon Sepulveda 🦇 - PapiBrandon</title>
         <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-27.ico" />
-        <!-- Font Awesome icons (free version)-->
+        <!-- Font Awesome icons -->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap" rel="stylesheet" />
         <!-- AOS CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
         
         <style>
-            /* Estilos nuevos de la navbar */
+            :root {
+                --primary-color: #000000;
+                --accent-color: #33ff00;
+                --text-light: #ffffff;
+                --text-dark: #212529;
+                --transition-default: all 0.3s ease;
+            }
+
+            body {
+                font-family: 'Nunito', sans-serif;
+                letter-spacing: 0.0625em;
+            }
+
+            /* ===== NAVBAR STYLES ===== */
             .navbar {
-                transition: all 0.3s ease-in-out;
+                transition: var(--transition-default);
+                padding: 1rem 1.5rem;
             }
         
             .navbar.scrolled {
                 background: rgba(0, 0, 0, 0.95) !important;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+                padding: 0.75rem 1.5rem;
             }
         
             .navbar.scrolled .navbar-brand,
             .navbar.scrolled .nav-link {
-                color: #ffffff !important;
+                color: var(--text-light) !important;
             }
         
             .navbar.scrolled .navbar-toggler {
-                color: #ffffff !important;
-                border-color: #ffffff !important;
+                color: var(--text-light) !important;
+                border-color: var(--text-light) !important;
             }
         
             .navbar.scrolled .navbar-toggler-icon {
                 background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
             }
         
-            /* Estilos para el estado inicial de la navbar */
             #mainNav {
                 background-color: transparent;
             }
         
             #mainNav .navbar-brand {
                 color: rgba(255, 255, 255, 0.9);
+                font-weight: 700;
+                letter-spacing: 0.1rem;
             }
         
             #mainNav .nav-link {
                 color: rgba(255, 255, 255, 0.9);
+                font-weight: 600;
+                padding: 0.75rem 1rem;
+                position: relative;
             }
         
-            /* Hover effects de la navbar */
+            #mainNav .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 2px;
+                background: var(--accent-color);
+                transition: all 0.3s ease;
+                transform: translateX(-50%);
+            }
+            
+            #mainNav .nav-link:hover::after {
+                width: 70%;
+            }
+        
             #mainNav .navbar-brand:hover,
             #mainNav .nav-link:hover {
                 color: #fff;
                 transform: translateY(-1px);
             }
         
-            /* Transición suave para los enlaces */
             #mainNav .nav-link,
             #mainNav .navbar-brand {
-                transition: all 0.3s ease;
+                transition: var(--transition-default);
             }
-        
-            /* Tus estilos existentes */
-            .project {
-                transition: transform 0.3s ease;
+            
+            /* ===== HEADER STYLES ===== */
+            .masthead {
+                position: relative;
+                width: 100%;
+                height: 100vh;
+                min-height: 35rem;
+                padding: 15rem 0;
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url('https://source.unsplash.com/random/1600x900/?tech,dark');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: scroll;
+                background-size: cover;
             }
-        
-            .project:hover {
-                transform: translateY(-5px);
+            
+            .masthead h1 {
+                font-family: 'Varela Round', sans-serif;
+                font-size: 5rem;
+                line-height: 5rem;
+                letter-spacing: 0.8rem;
+                background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+                -webkit-text-fill-color: transparent;
+                -webkit-background-clip: text;
+                background-clip: text;
+                animation: fadeIn 2s ease-out;
             }
-        
-            .btn {
-                transition: all 0.3s ease;
+            
+            .masthead h2 {
+                max-width: 20rem;
+                font-size: 1.2rem;
+                animation: fadeIn 2.5s ease-out;
             }
-        
-            .btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            }
-        
-            .social a {
-                transition: all 0.3s ease;
-            }
-        
-            .social a:hover {
-                transform: scale(1.2);
-                color: #fff !important;
-            }
-        
-            .card {
-                transition: all 0.3s ease;
-            }
-        
-            .card:hover {
-                transform: translateY(-10px);
-                box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            }
-        
-            .text-uppercase {
-                animation: fadeInDown 1s ease-out;
-            }
-        
-            @keyframes fadeInDown {
+            
+            @keyframes fadeIn {
                 from {
                     opacity: 0;
-                    transform: translateY(-20px);
+                    transform: translateY(20px);
                 }
                 to {
                     opacity: 1;
                     transform: translateY(0);
                 }
             }
-        
-            .masthead {
-                position: relative;
+            
+            /* ===== PROJECT SECTION STYLES ===== */
+            .proyectos-section {
+                padding: 5rem 0;
+            }
+            
+            .project {
+                transition: var(--transition-default);
+                border-radius: 0.5rem;
                 overflow: hidden;
+                height: 100%;
             }
         
-            .masthead::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                height: 100%;
-                background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
-                pointer-events: none;
+            .project:hover {
+                transform: translateY(-5px);
+            }
+            
+            .featured-text {
+                padding: 2rem;
+            }
+            
+            .featured-text h4 {
+                font-size: 1.5rem;
+                font-weight: 700;
+                margin-bottom: 1.5rem;
+            }
+            
+            .img-fluid {
+                transition: transform 0.5s ease;
+            }
+            
+            .project:hover .img-fluid {
+                transform: scale(1.05);
+            }
+        
+            /* ===== BUTTON STYLES ===== */
+            .btn {
+                padding: 1.25rem 2.5rem;
+                font-size: 0.85rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.15rem;
+                border: 0;
+                border-radius: 5rem;
+                transition: var(--transition-default);
+                box-shadow: 0 0.1875rem 0.1875rem 0 rgba(0, 0, 0, 0.1);
+            }
+        
+            .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            }
+            
+            .btn-primary {
+                background-color: var(--text-light);
+                color: var(--primary-color);
+            }
+            
+            .btn-primary:hover {
+                background-color: var(--text-light);
+                color: var(--accent-color);
+            }
+            
+            .btn-tertiary {
+                background-color: var(--primary-color);
+                color: var(--text-light);
+            }
+            
+            .btn-tertiary:hover {
+                background-color: #2d2d2d;
+                color: var(--accent-color);
+            }
+            
+            /* ===== CONTACT SECTION STYLES ===== */
+            .signup-section {
+                padding: 10rem 0;
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.5) 75%, #000 100%), url('https://source.unsplash.com/random/1600x900/?tech,contact');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            
+            .contact-section {
+                padding: 5rem 0;
+            }
+            
+            .contact-section .card {
+                border: 0;
+                border-radius: 0.5rem;
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+                transition: var(--transition-default);
+            }
+        
+            .contact-section .card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            }
+            
+            .contact-section .card h4 {
+                font-size: 0.8rem;
+                font-weight: 700;
+                letter-spacing: 0.15rem;
+            }
+            
+            .contact-section .card hr {
+                border-color: var(--accent-color);
+                border-width: 0.25rem;
+                width: 3rem;
+            }
+            
+            .contact-section .social {
+                margin-top: 5rem;
+            }
+            
+            .contact-section .social a {
+                height: 4rem;
+                width: 4rem;
+                background: rgba(255, 255, 255, 0.15);
+                border-radius: 100%;
+                line-height: 4rem;
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 1.5rem;
+                margin: 0 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition-default);
+            }
+        
+            .contact-section .social a:hover {
+                transform: scale(1.2);
+                color: var(--text-light) !important;
+                background: var(--accent-color);
+            }
+            
+            /* ===== FOOTER STYLES ===== */
+            .footer {
+                padding: 2.5rem 0;
+            }
+            
+            /* ===== MEDIA QUERIES ===== */
+            @media (min-width: 768px) {
+                .masthead h1 {
+                    font-size: 6.5rem;
+                    line-height: 6.5rem;
+                    letter-spacing: 0.8rem;
+                }
+                
+                .masthead h2 {
+                    max-width: 30rem;
+                    font-size: 1.5rem;
+                }
+            }
+            
+            /* Typing animation styles */
+            .typing-container {
+                display: none; /* Will be shown via JS */
+            }
+            
+            #cursor {
+                animation: blink 1s infinite;
+                color: #fff;
+                font-weight: bold;
+            }
+            
+            @keyframes blink {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0; }
+            }
+            
+            @media (max-width: 768px) {
+                .featured-text {
+                    padding: 1rem;
+                }
+                
+                .masthead {
+                    padding: 10rem 0;
+                }
+                
+                .masthead h1 {
+                    font-size: 3rem;
+                    line-height: 3rem;
+                }
+                
+                .masthead h2 {
+                    font-size: 1rem;
+                }
             }
         </style>
-        <script type='text/javascript' src='//pl25635923.profitablecpmrate.com/8c/04/45/8c0445e9774a3f268ed395c69a29aacf.js'></script>
     </head>
     <body id="page-top">
-
- <!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-    <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#page-top" data-aos="fade-right">
-            <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Brandon Sepulveda Logo" style="max-height: 30px; width: auto;">
-        </a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            Menu
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#proyectos" data-aos="fade-left" data-aos-delay="100">Proyectos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#signup" data-aos="fade-left" data-aos-delay="200">Contact</a></li>
-                <li class="nav-item"><a class="nav-link" href="apps.html" data-aos="fade-left" data-aos-delay="300">Apps</a></li>
-                <li class="nav-item"><a class="nav-link" href="toolboxbs.html" data-aos="fade-left" data-aos-delay="400">ToolboxBS</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#page-top" data-aos="fade-right">
+                    <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Brandon Sepulveda Logo" style="max-height: 30px; width: auto;">
+                    Brandon Sepulveda
+                </a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="#proyectos" data-aos="fade-left" data-aos-delay="100">Proyectos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#signup" data-aos="fade-left" data-aos-delay="200">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="apps.html" data-aos="fade-left" data-aos-delay="300">Apps</a></li>
+                        <li class="nav-item"><a class="nav-link" href="toolboxbs.html" data-aos="fade-left" data-aos-delay="400">ToolboxBS</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         
         <!-- Masthead-->
         <header class="masthead">
@@ -168,76 +364,78 @@
                 <div class="d-flex justify-content-center">
                     <div class="text-center" data-aos="zoom-in" data-aos-duration="1000">
                         <h1 class="mx-auto my-0 text-uppercase">JBSV</h1>
-                        <h2 class="text-white-50 mx-auto mt-2 mb-5"></h2>
+                        <h2 class="text-white-50 mx-auto mt-2 mb-5">Developer • Content Creator • Support Specialist • Innovator</h2>
+                        <div class="typing-container mt-2 mb-5">
+                            <span id="typing-text" class="text-white"></span>
+                            <span id="cursor">|</span>
+                        </div>
+                        <a class="btn btn-tertiary" href="#proyectos">View Projects</a>
                     </div>
                 </div>
             </div>
         </header>
 
-        <div style="height: 150px;"></div>
-
         <!-- Projects-->
         <section class="proyectos-section bg-light" id="proyectos">
-            <div class="container px-8 px-lg-5">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="text-black mb-4" data-aos="fade-up">My Projects</h2>
+                </div>
+                
                 <!-- Featured Project Row-->
-                <div class="row gx-0 mb-4 mb-lg-5 align-items-center" data-aos="fade-up">
+                <div class="row gx-0 mb-5 mb-lg-5 align-items-center" data-aos="fade-up">
                     <div class="col-xl-8 col-lg-7">
-                        <img class="img-fluid mb-3 mb-lg-0" src="https://github.com/user-attachments/assets/64f94e69-bc74-44ce-b205-d46ca2631103" alt="..." />
+                        <img class="img-fluid mb-3 mb-lg-0" src="https://github.com/user-attachments/assets/64f94e69-bc74-44ce-b205-d46ca2631103" alt="ToolboxBS Screenshot" loading="lazy" />
                     </div>
                     <div class="col-xl-4 col-lg-5">
-                        <div class="featured-text text-center text-lg-left px-4">
-                            <h4 data-aos="fade-left" data-aos-delay="200">Brandon Sepulveda Windows System Utility Suite ToolboxBS</h4>
-                            <p class="text-black-100 mb-0" data-aos="fade-left" data-aos-delay="400">Es un Conjunto de utilidades del sistema que te muestra información del sistema esencial y permite al usuario seleccionar aplicaciones para descargar e instalar de manera simultánea. También incluye funciones para observar anomalías, optimizar el sistema, verificar y reparar archivos del sistema, y más.</p>
-                            <div style="height: 50px;"></div>
-                            <a class="btn btn-tertiary" href="https://brandonsepulveda.github.io/toolboxbs.html" style="background-color: rgb(0, 0, 0); color: rgb(255, 255, 255);" data-aos="zoom-in" data-aos-delay="600">ToolboxBS</a>
+                        <div class="featured-text text-center text-lg-left">
+                            <h4 data-aos="fade-left" data-aos-delay="200">ToolboxBS - Windows System Utility Suite</h4>
+                            <p class="text-black-100 mb-4" data-aos="fade-left" data-aos-delay="400">Es un Conjunto de utilidades del sistema que te muestra información del sistema esencial y permite al usuario seleccionar aplicaciones para descargar e instalar de manera simultánea. También incluye funciones para observar anomalías, optimizar el sistema, verificar y reparar archivos del sistema, y más.</p>
+                            <a class="btn btn-tertiary" href="https://brandonsepulveda.github.io/toolboxbs.html" data-aos="zoom-in" data-aos-delay="600">View ToolboxBS</a>
                         </div>
                     </div>
                 </div>
-
-                <div style="height: 150px;"></div>
                 
-                <!-- Project TYBYTE -->
-                <div class="row gx-0 mb-4 justify-content-center" data-aos="fade-right">
-                    <div class="col-lg-6">
-                        <img class="img-fluid w-100 h-100 object-fit-cover" src="https://raw.githubusercontent.com/BrandonSepulveda/BrandonSepulveda.github.io/main/20230130_221518_0000.png" alt="TYBYTE" />
+                <div class="row gx-4 gx-lg-5 mb-5">
+                    <!-- Project TYBYTE -->
+                    <div class="col-md-6 mb-4 mb-md-0" data-aos="fade-right" data-aos-delay="200">
+                        <div class="card h-100 project overflow-hidden">
+                            <img class="img-fluid" src="https://raw.githubusercontent.com/BrandonSepulveda/BrandonSepulveda.github.io/main/20230130_221518_0000.png" alt="TYBYTE" loading="lazy" />
+                            <div class="card-body bg-black text-center">
+                                <h5 class="text-white mb-3">TYBYTE PRO</h5>
+                                <a class="btn btn-primary px-4 py-2" href="https://allmylinks.com/tbytepro404">Visit Project</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center">
-                                    <a class="btn btn-primary px-4 py-2" href="https://allmylinks.com/tbytepro404" style="background-color: white; color: black;">TYBYTE PRO</a>
-                                </div>
+
+                    <!-- Project SQUAD -->
+                    <div class="col-md-6" data-aos="fade-left" data-aos-delay="300">
+                        <div class="card h-100 project overflow-hidden">
+                            <img class="img-fluid" src="https://raw.githubusercontent.com/BrandonSepulveda/BrandonSepulveda.github.io/main/InShot_20240622_184423032.jpg" alt="SQUAD" loading="lazy" />
+                            <div class="card-body bg-black text-center">
+                                <h5 class="text-white mb-3">SQUAD</h5>
+                                <a class="btn btn-primary px-4 py-2" href="https://www.instagram.com/elsquaddelputeooficial/">View On Instagram</a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Project SQUAD -->
-                <div class="row gx-0 mb-4 justify-content-center" data-aos="fade-left">
-                    <div class="col-lg-6">
-                        <img class="img-fluid w-100 h-100 object-fit-cover" src="https://raw.githubusercontent.com/BrandonSepulveda/BrandonSepulveda.github.io/main/InShot_20240622_184423032.jpg" alt="SQUAD" />
-                    </div>
-                    <div class="col-lg-6 order-lg-first">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center">
-                                    <a class="btn btn-primary px-4 py-2" href="https://www.instagram.com/elsquaddelputeooficial/" style="background-color: white; color: black;">SQUAD</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                
                 <!-- Project KICK -->
-                <div class="row gx-0 mb-4 justify-content-center" data-aos="fade-right">
-                    <div class="col-lg-6">
-                        <img class="img-fluid w-100 h-100 object-fit-cover" src="https://media.tenor.com/56rb9SP2BC0AAAAj/kick-kick-logo.gif" alt="KICK" />
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center">
-                                    <a class="btn btn-primary px-4 py-2" href="https://kick.com/papibrandon" style="background-color: white; color: rgb(51, 255, 0);">kick.com/papibrandon</a>
+                <div class="row gx-0 justify-content-center mb-5" data-aos="fade-up" data-aos-delay="400">
+                    <div class="col-lg-8">
+                        <div class="card project overflow-hidden">
+                            <div class="row g-0">
+                                <div class="col-md-6">
+                                    <img class="img-fluid h-100 w-100 object-fit-cover" src="https://media.tenor.com/56rb9SP2BC0AAAAj/kick-kick-logo.gif" alt="KICK" loading="lazy" />
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-body bg-black text-center h-100 d-flex flex-column justify-content-center">
+                                        <h5 class="text-white mb-4">KICK Streaming</h5>
+                                        <p class="text-white-50 mb-4">Follow me on my streaming channel where I share exclusive content.</p>
+                                        <a class="btn btn-primary px-4 py-2" href="https://kick.com/papibrandon">
+                                            <i class="fas fa-video me-2"></i>kick.com/papibrandon
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -245,7 +443,8 @@
                 </div>
             </div>
         </section>
-        <!-- Signup-->
+        
+        <!-- Contact Section-->
         <section class="signup-section" id="signup">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5">
@@ -257,55 +456,66 @@
             </div>
         </section>
 
-        <!-- Contact-->
         <section class="contact-section bg-black">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-4 mb-3 mb-md-0" data-aos="flip-left">
-                        <div class="card py-4 h-100 mx-auto d-block">
+                        <div class="card py-4 h-100">
                             <div class="card-body text-center">
                                 <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Address</h4>
+                                <h4 class="text-uppercase m-0">Ubicación</h4>
                                 <hr class="my-4 mx-auto" />
                                 <div class="small text-black-50">Colombia</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3 mb-md-0" data-aos="flip-right">
-                        <div class="card py-4 h-100 mx-auto d-block">
+                        <div class="card py-4 h-100">
                             <div class="card-body text-center">
                                 <i class="fas fa-envelope text-primary mb-2"></i>
                                 <h4 class="text-uppercase m-0">Email</h4>
                                 <hr class="my-4 mx-auto" />
-                                <div class="small text-black-50"><a href="#!">jhonvaldessepulveda@gmail.com</a></div>
+                                <div class="small text-black-50"><a href="mailto:jhonvaldessepulveda@gmail.com">jhonvaldessepulveda@gmail.com</a></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="social d-flex justify-content-center" data-aos="fade-up">
-                    <a class="mx-2" href="https://www.instagram.com/brandonsepulveda_66"><i class="fab fa-instagram"></i></a>
-                    <a class="mx-2" href="https://github.com/BrandonSepulveda"><i class="fab fa-github"></i></a>
+                <div class="social d-flex justify-content-center mt-5" data-aos="fade-up">
+                    <a href="https://www.instagram.com/brandonsepulveda_66" aria-label="Instagram" title="Instagram">
+                        <i class="fab fa-instagram fa-fw"></i>
+                    </a>
+                    <a href="https://github.com/BrandonSepulveda" aria-label="GitHub" title="GitHub">
+                        <i class="fab fa-github fa-fw"></i>
+                    </a>
+                    <a href="https://kick.com/papibrandon" aria-label="Kick" title="Kick">
+                        <i class="fas fa-video fa-fw"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- Footer-->
         <footer class="footer bg-black small text-center text-white-50">
-            <div class="container px-4 px-lg-5">Copyright &copy; (c) 2024 Jhon Brandon Sepulveda Valdes</div>
+            <div class="container px-4 px-lg-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        Copyright &copy; 2024 Jhon Brandon Sepulveda Valdes
+                    </div>
+                </div>
+            </div>
         </footer>
 
-        <!-- Bootstrap core JS-->
+        <!-- Bootstrap & JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
         <!-- AOS JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-        <!-- Initialize AOS and other animations -->
         <script>
+            // Initialize AOS animation library
             AOS.init({
                 duration: 1000,
                 once: true,
-                mirror: false
+                mirror: false,
+                offset: 100
             });
 
             // Navbar scroll effect
@@ -314,6 +524,89 @@
                     document.querySelector('.navbar').classList.add('scrolled');
                 } else {
                     document.querySelector('.navbar').classList.remove('scrolled');
+                }
+            });
+            
+            // Add smooth scrolling to all links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        const navbarToggler = document.querySelector('.navbar-toggler');
+                        const navbarCollapse = document.querySelector('.navbar-collapse');
+                        if (navbarCollapse.classList.contains('show')) {
+                            navbarToggler.click();
+                        }
+                    }
+                });
+            });
+            
+            // Typing animation effect
+            document.addEventListener('DOMContentLoaded', function () {
+                // Hide the static h2 and show the typing container
+                const staticH2 = document.querySelector('.masthead h2');
+                const typingContainer = document.querySelector('.typing-container');
+                
+                if (staticH2 && typingContainer) {
+                    staticH2.style.display = 'none';
+                    typingContainer.style.display = 'block';
+                    
+                    const typingText = document.getElementById('typing-text');
+                    const phrases = [
+                        'Web & Software Developer',
+                        'Digital Content Creator',
+                        'Technical Support Specialist',
+                        'Technology Innovator'
+                    ];
+                    
+                    let phraseIndex = 0;
+                    let charIndex = 0;
+                    let isDeleting = false;
+                    let typingSpeed = 100;
+                    
+                    function typeEffect() {
+                        const currentPhrase = phrases[phraseIndex];
+                        
+                        if (isDeleting) {
+                            // Deleting text
+                            typingText.textContent = currentPhrase.substring(0, charIndex - 1);
+                            charIndex--;
+                            typingSpeed = 50; // Faster when deleting
+                        } else {
+                            // Adding text
+                            typingText.textContent = currentPhrase.substring(0, charIndex + 1);
+                            charIndex++;
+                            typingSpeed = 100; // Normal speed when typing
+                        }
+                        
+                        // If word is complete
+                        if (!isDeleting && charIndex === currentPhrase.length) {
+                            // Pause at the end of a phrase
+                            isDeleting = true;
+                            typingSpeed = 1500; // Wait before deleting
+                        } else if (isDeleting && charIndex === 0) {
+                            // Move to next phrase
+                            isDeleting = false;
+                            phraseIndex = (phraseIndex + 1) % phrases.length;
+                            typingSpeed = 500; // Wait before typing next phrase
+                        }
+                        
+                        setTimeout(typeEffect, typingSpeed);
+                    }
+                    
+                    // Start the typing effect
+                    setTimeout(typeEffect, 1000);
                 }
             });
         </script>
