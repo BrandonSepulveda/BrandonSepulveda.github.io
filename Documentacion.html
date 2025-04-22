@@ -11,6 +11,7 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* Tus variables CSS */
         :root {
             --white: #ffffff;
             --black: #000000;
@@ -21,14 +22,16 @@
             --code-bg: #f0f0f0;
             --border-color: #cccccc;
             --highlight: #2196F3;
+            --menu-width-mobile: 280px; /* Ancho del menú en móvil */
         }
 
+        /* Reset y estilos generales */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -36,24 +39,26 @@
             background-color: var(--white);
             margin: 0;
             padding: 0;
+            overflow-x: hidden; /* Previene el scroll horizontal no deseado */
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
-        
+
+        /* --- Header --- */
         header {
             background-color: var(--black);
             color: var(--white);
             padding: 20px 0;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: sticky;
+            position: sticky; /* Sigue siendo pegajoso en la parte superior */
             top: 0;
             z-index: 1000;
         }
-        
+
         .header-content {
             display: flex;
             align-items: center;
@@ -62,46 +67,62 @@
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
-        }
-        
-        .logo img {
-            width: 40px;
-            height: 40px;
-            margin-right: 15px;
-        }
-        
-        .logo-text {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--white);
+            text-decoration: none; /* Asegura que el logo sea clickeable como enlace */
         }
 
-        /* Navegación principal */
+        .logo img {
+            width: 50px; /* Aumentado un poco el tamaño */
+            height: 50px; /* Aumentado un poco el tamaño */
+            margin-right: 15px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 28px; /* Aumentado un poco el tamaño */
+            font-weight: bold;
+            color: var(--white);
+            margin: 0; /* Elimina margen por defecto h1 */
+        }
+
+        /* --- Botón Hamburguesa (Visible solo en móvil) --- */
+        .hamburger {
+            display: none; /* Oculto por defecto en escritorio */
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 30px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1100; /* Mayor que el menú */
+        }
+
+
+        /* --- Navegación Principal --- */
         nav {
-            background-color: var(--black);
+            /* background-color: var(--black); */ /* El fondo ya lo da el header en escritorio */
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+             max-width: 1200px;
+             margin: 0 auto;
+             padding: 0 20px;
         }
 
         .nav-list {
             list-style: none;
-            display: flex;
+            display: flex; /* Layout horizontal en escritorio */
             margin: 0;
             padding: 0;
-            overflow-x: auto;
+            /* overflow-x: auto; */ /* Eliminar scroll horizontal, usaremos menú hamburguesa */
         }
 
         .nav-item {
-            position: relative;
+            position: relative; /* Necesario para el submenu absoluto en escritorio */
         }
 
         .nav-link {
@@ -109,30 +130,33 @@
             color: var(--white);
             text-decoration: none;
             padding: 15px 20px;
-            font-size: 15px;
+            font-size: 16px; /* Ajustado a 16px para legibilidad */
             transition: background-color 0.3s;
             white-space: nowrap;
         }
 
-        .nav-link:hover, 
+        .nav-link:hover,
         .nav-link.active {
             background-color: rgba(255, 255, 255, 0.1);
         }
 
-        /* Submenu */
+        /* --- Submenu (Escritorio) --- */
         .submenu {
-            display: none;
-            position: absolute;
-            top: 100%;
+            display: none; /* Oculto por defecto */
+            position: absolute; /* Posicionamiento relativo al nav-item */
+            top: 100%; /* Debajo del nav-link */
             left: 0;
             background-color: var(--white);
             min-width: 200px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            z-index: 1;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Sombra más pronunciada */
+            z-index: 1050; /* Asegura que esté sobre el contenido principal */
             border: 1px solid var(--border-color);
+            border-radius: 4px; /* Bordes redondeados */
+            overflow: hidden; /* Para contener border-radius */
         }
 
-        .nav-item:hover .submenu {
+        /* Mostrar submenu al pasar el ratón en escritorio */
+        .nav-item:hover > .submenu { /* Usar > para asegurar que sea el hijo directo */
             display: block;
         }
 
@@ -143,6 +167,7 @@
             text-decoration: none;
             transition: background-color 0.3s;
             border-bottom: 1px solid var(--border-color);
+            font-size: 15px;
         }
 
         .submenu-item:hover {
@@ -153,34 +178,38 @@
             border-bottom: none;
         }
 
-        /* Contenido principal */
+        /* --- Contenido principal --- */
         .section {
             padding: 40px 0;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--gray); /* Borde ligeramente más suave */
         }
-        
+
+        .section:last-child {
+             border-bottom: none; /* Elimina el borde inferior de la última sección */
+        }
+
         .section-title {
             color: var(--black);
-            font-size: 28px;
+            font-size: 32px; /* Ajustado tamaño */
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--highlight);
         }
-        
+
         .tool-description {
             margin-bottom: 40px;
-            padding: 20px;
+            padding: 25px; /* Aumentado padding */
             background-color: var(--light-gray);
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-radius: 8px; /* Bordes más redondeados */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08); /* Sombra más pronunciada */
         }
-        
+
         .tool-title {
-            color: var(--black);
-            font-size: 22px;
+            color: var(--dark-gray); /* Color de título más oscuro */
+            font-size: 24px; /* Ajustado tamaño */
             margin-bottom: 15px;
             position: relative;
-            padding-left: 15px;
+            padding-left: 20px; /* Aumentado padding para la barra */
         }
 
         .tool-title::before {
@@ -189,54 +218,68 @@
             left: 0;
             top: 0;
             bottom: 0;
-            width: 5px;
+            width: 6px; /* Aumentado ancho de la barra */
             background-color: var(--highlight);
             border-radius: 3px;
         }
-        
+
         .tool-text {
             margin-bottom: 20px;
-            font-size: 16px;
+            font-size: 17px; /* Ajustado tamaño */
+            color: var(--text-color);
         }
-        
+
         pre {
             background-color: var(--code-bg);
-            color: var(--black);
+            color: var(--dark-gray); /* Color de código más oscuro */
             padding: 15px;
             border-radius: 5px;
-            overflow-x: auto;
+            overflow-x: auto; /* Mantiene el scroll horizontal si el código es muy largo */
             margin: 15px 0;
             border: 1px solid var(--border-color);
+            white-space: pre-wrap; /* Envuelve el texto si es posible para evitar scroll horizontal */
+            word-wrap: break-word;
         }
-        
+
         code {
             font-family: Consolas, Monaco, 'Andale Mono', monospace;
             font-size: 14px;
         }
-        
+
         .note {
             background-color: var(--white);
-            border-left: 4px solid var(--highlight);
+            border-left: 5px solid var(--highlight); /* Aumentado ancho del borde */
             padding: 15px;
             margin: 20px 0;
             border-radius: 0 5px 5px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra suave */
         }
-        
+
         .note-title {
             color: var(--highlight);
             font-weight: bold;
             margin-bottom: 10px;
         }
-        
+
+        .note ul {
+            list-style: disc; /* Usa discos para las listas */
+            margin-left: 20px;
+            padding: 0;
+        }
+        .note ul li {
+            margin-bottom: 5px;
+        }
+
+
         .category-title {
             color: var(--black);
-            font-size: 24px;
+            font-size: 28px; /* Ajustado tamaño */
             margin: 30px 0 20px;
             padding-bottom: 10px;
             border-bottom: 1px solid var(--border-color);
         }
 
-        /* Botón para volver arriba */
+        /* --- Botón para volver arriba --- */
         .back-to-top {
             position: fixed;
             bottom: 20px;
@@ -250,82 +293,200 @@
             justify-content: center;
             align-items: center;
             text-decoration: none;
-            opacity: 0;
-            transition: opacity 0.3s;
+            opacity: 0; /* Oculto por defecto */
+            visibility: hidden; /* Oculto para no interferir con eventos */
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             z-index: 99;
         }
 
         .back-to-top.visible {
             opacity: 0.7;
+            visibility: visible;
         }
 
         .back-to-top:hover {
             opacity: 1;
         }
 
-        /* Footer */
+        /* --- Footer --- */
         footer {
             text-align: center;
             padding: 30px 0;
             color: var(--text-color);
             background-color: var(--light-gray);
             margin-top: 50px;
+            font-size: 15px;
         }
-        
+
         footer a {
             color: var(--highlight);
             text-decoration: none;
         }
-        
+
         footer a:hover {
             text-decoration: underline;
         }
 
-        /* Responsive */
+        /* --- Overlay para menú móvil --- */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+            z-index: 800; /* Detrás del menú pero sobre el contenido */
+            display: none; /* Oculto por defecto */
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+
+        .overlay.visible {
+            display: block;
+            opacity: 1;
+        }
+
+
+        /* --- Responsive Styles --- */
         @media (max-width: 768px) {
+
+            body.menu-open {
+                 overflow: hidden; /* Evita el scroll del contenido principal cuando el menú está abierto */
+            }
+
             .header-content {
-                flex-direction: column;
-                text-align: center;
+                flex-direction: row; /* Mantener logo y hamburguesa en la misma fila */
+                justify-content: space-between; /* Espacio entre logo y hamburguesa */
+                align-items: center; /* Centrar verticalmente */
+                padding: 0 20px; /* Asegurar padding horizontal */
             }
-            
+
             .logo {
-                margin-bottom: 15px;
-                justify-content: center;
+                margin-bottom: 0; /* Eliminar margen inferior del logo en móvil */
             }
-            
+
+            .hamburger {
+                display: block; /* Mostrar el botón hamburguesa en móvil */
+            }
+
+            nav {
+                 border-top: none; /* Eliminar borde superior en móvil */
+            }
+
+            /* Ocultar la lista de navegación principal en móvil por defecto */
             .nav-list {
-                justify-content: center;
-                flex-wrap: wrap;
+                position: fixed; /* Menú fijo en la pantalla */
+                top: 0; /* Arriba del todo */
+                right: calc(-1 * var(--menu-width-mobile)); /* Inicialmente fuera de la pantalla a la derecha */
+                bottom: 0; /* Abajo del todo */
+                width: var(--menu-width-mobile); /* Ancho definido en variables */
+                background-color: var(--black); /* Fondo oscuro para el menú */
+                flex-direction: column; /* Elementos apilados verticalmente */
+                padding: 60px 20px 20px 20px; /* Padding arriba (para dejar espacio al header), y a los lados/abajo */
+                transition: right 0.3s ease-in-out; /* Animación al mostrar/ocultar */
+                overflow-y: auto; /* Scroll vertical si el contenido del menú es largo */
+                z-index: 900; /* Sobre el contenido y el overlay */
+                box-shadow: -2px 0 5px rgba(0,0,0,0.2); /* Sombra sutil en el borde izquierdo */
+                display: flex; /* Necesario para que flex-direction column funcione */
             }
-            
+
+            /* Estado del menú abierto */
+            .nav-list.menu-open {
+                right: 0; /* Mover a la posición visible */
+            }
+
             .nav-item {
-                position: static;
+                 width: 100%; /* Cada item ocupa el ancho completo del menú */
+                 border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separador entre items */
+                 position: static; /* Eliminar posicionamiento relativo para evitar problemas con submenus */
             }
-            
+             .nav-item:last-child {
+                 border-bottom: none;
+             }
+
+
+            .nav-link {
+                padding: 15px 10px; /* Ajustar padding para móvil */
+                font-size: 18px; /* Aumentar tamaño de fuente para mejor interacción táctil */
+                white-space: normal; /* Permitir que el texto se ajuste */
+                display: flex; /* Usar flex para alinear texto y posible icono de submenu */
+                justify-content: space-between; /* Espacio entre texto y icono */
+                align-items: center; /* Alinear verticalmente */
+            }
+
+            /* Icono para indicar submenú en móvil */
+            .nav-item .nav-link::after {
+                 content: '\f078'; /* Código de un icono de flecha hacia abajo de FontAwesome */
+                 font-family: 'Font Awesome 6 Free'; /* Usar la fuente FontAwesome */
+                 font-weight: 900; /* Usar el peso sólido para el icono */
+                 display: inline-block;
+                 margin-left: 10px;
+                 transition: transform 0.3s ease-in-out;
+            }
+
+             /* Rotar icono cuando el submenu esté abierto */
+            .nav-item.submenu-open .nav-link::after {
+                transform: rotate(180deg);
+            }
+
+             /* Ocultar icono para items sin submenu */
+            .nav-item:not(:has(.submenu)) .nav-link::after {
+                content: ''; /* No mostrar icono si no hay submenu */
+            }
+
+
+            /* Submenu (Móvil) */
             .submenu {
-                position: relative;
-                width: 100%;
-                box-shadow: none;
-                border: none;
-                background-color: rgba(0,0,0,0.1);
+                position: static; /* Posicionamiento estático dentro del flujo */
+                width: 100%; /* Ocupa el ancho completo del nav-item */
+                background-color: rgba(255, 255, 255, 0.05); /* Fondo ligeramente diferente */
+                box-shadow: none; /* Sin sombra */
+                border: none; /* Sin borde */
+                display: none; /* Oculto por defecto en móvil */
+                padding-left: 10px; /* Espacio adicional para los items del submenu */
+                /* transition: max-height 0.3s ease-in-out; /* Opcional: animación de despliegue */
+                /* max-height: 0; */ /* Para la animación de despliegue */
+                overflow: hidden; /* Para ocultar el contenido cuando max-height es 0 */
             }
-            
+
+            /* Mostrar submenu cuando el nav-item padre tiene la clase 'submenu-open' */
+            .nav-item.submenu-open > .submenu {
+                display: block;
+                /* max-height: 500px; */ /* Un valor grande para mostrar todo el contenido al animar */
+            }
+
             .submenu-item {
-                padding-left: 30px;
-                color: var(--white);
-                border-bottom: 1px solid rgba(255,255,255,0.1);
+                padding: 10px 10px; /* Ajustar padding del item de submenu */
+                color: var(--white); /* Color blanco para los items de submenu en el menú oscuro */
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Separador más sutil */
+                font-size: 16px; /* Tamaño de fuente consistente */
             }
+
+            .submenu-item:hover {
+                 background-color: rgba(255, 255, 255, 0.1);
+            }
+
+             /* Asegurar que el hover de escritorio no interfiera */
+            .nav-item:hover > .submenu {
+                 display: none; /* Ocultar el submenu al pasar el ratón en móvil */
+            }
+            .nav-item.submenu-open > .submenu {
+                 display: block; /* Asegurarse de que se muestre con la clase */
+            }
+
         }
     </style>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <a href="index.html"class="logo">
-                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="ToolboxBS Logo" style="width: 50px; height: 50px; object-fit: contain;">
+            <a href="index.html" class="logo">
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="ToolboxBS Logo">
                 <h1 class="logo-text">TOOLBOXBS</h1>
-            </div>
+            </a>
+            <button class="hamburger" aria-label="Toggle navigation">
+                 <i class="fas fa-bars"></i> </button>
         </div>
         <nav>
             <div class="nav-container">
@@ -344,10 +505,10 @@
                     </li>
                     <li class="nav-item">
                         <a href="#info-sistema" class="nav-link">Información del Sistema</a>
-                    </li>
+                        </li>
                     <li class="nav-item">
                         <a href="#descargas-apps" class="nav-link">Descargas Apps</a>
-                    </li>
+                        </li>
                     <li class="nav-item">
                         <a href="#reparacion" class="nav-link">Reparación</a>
                         <div class="submenu">
@@ -377,7 +538,7 @@
                             <a href="#actualizar-apps" class="submenu-item">Actualizar Apps</a>
                         </div>
                     </li>
-                    <li class="nav-item">
+                     <li class="nav-item">
                         <a href="#herramientas" class="nav-link">Herramientas</a>
                         <div class="submenu">
                             <a href="#ejecutar-toolboxbs" class="submenu-item">Ejecutar ToolboxBS</a>
@@ -398,18 +559,20 @@
             </div>
         </nav>
     </header>
-    
+
+    <div class="overlay"></div>
+
     <div class="container">
         <section id="inicio" class="section">
             <h2 class="section-title">Inicio</h2>
             <p>El menú de Inicio proporciona acceso rápido a funciones básicas del sistema y herramientas de diagnóstico.</p>
-            
+
             <div class="tool-description" id="panel-control">
                 <h3 class="tool-title">Panel de Control</h3>
                 <p class="tool-text">Abre el Panel de Control clásico de Windows para configurar y personalizar el sistema operativo.</p>
                 <pre><code>control.exe</code></pre>
             </div>
-            
+
             <div class="tool-description" id="diagnostico-rapido">
                 <h3 class="tool-title">Diagnóstico Rápido</h3>
                 <p class="tool-text">Realiza un análisis rápido del sistema para identificar problemas críticos del hardware y software.</p>
@@ -424,19 +587,19 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="tool-description" id="ajustes-windows">
                 <h3 class="tool-title">Ajustes de Windows</h3>
                 <p class="tool-text">Abre la aplicación de Configuración moderna de Windows.</p>
                 <pre><code>Start-Process "ms-settings:"</code></pre>
             </div>
-            
+
             <div class="tool-description" id="explorador">
                 <h3 class="tool-title">Explorador de Archivos</h3>
                 <p class="tool-text">Inicia el Explorador de archivos de Windows.</p>
                 <pre><code>explorer.exe</code></pre>
             </div>
-            
+
             <div class="tool-description" id="powershell">
                 <h3 class="tool-title">PowerShell</h3>
                 <p class="tool-text">Abre PowerShell, la interfaz de línea de comandos avanzada de Windows.</p>
@@ -445,13 +608,13 @@
                     <p>Intenta abrir PowerShell 7 si está disponible. Si no, abre PowerShell 5 (integrado en Windows).</p>
                 </div>
             </div>
-            
+
             <div class="tool-description" id="msinfo32">
                 <h3 class="tool-title">Información del Sistema</h3>
                 <p class="tool-text">Abre la herramienta de información del sistema integrada en Windows.</p>
                 <pre><code>msinfo32.exe</code></pre>
             </div>
-            
+
             <div class="tool-description" id="instalar-powershell7">
                 <h3 class="tool-title">Instalar PowerShell 7</h3>
                 <p class="tool-text">Instala la última versión de PowerShell 7, una versión mejorada con más características y mejor rendimiento.</p>
@@ -461,10 +624,10 @@
                 </div>
             </div>
         </section>
-        
+
         <section id="info-sistema" class="section">
             <h2 class="section-title">Información del Sistema</h2>
-            
+
             <div class="tool-description">
                 <h3 class="tool-title">Información Completa del Sistema</h3>
                 <p class="tool-text">Proporciona un informe detallado sobre el hardware y software del equipo.</p>
@@ -486,10 +649,10 @@
                 </div>
             </div>
         </section>
-        
+
         <section id="descargas-apps" class="section">
             <h2 class="section-title">Descargas Apps</h2>
-            
+
             <div class="tool-description">
                 <h3 class="tool-title">Instalador de Aplicaciones</h3>
                 <p class="tool-text">Interfaz gráfica para instalar aplicaciones populares utilizando Chocolatey o Winget.</p>
@@ -510,10 +673,10 @@
                 </div>
             </div>
         </section>
-        
+
         <section id="reparacion" class="section">
             <h2 class="section-title">Reparación</h2>
-            
+
             <div class="tool-description" id="crear-punto-restauracion">
                 <h3 class="tool-title">Crear Punto de Restauración</h3>
                 <p class="tool-text">Crea un punto de restauración del sistema antes de aplicar cambios importantes.</p>
@@ -523,7 +686,7 @@
                     <p>Permite revertir el sistema a un estado anterior en caso de problemas con actualizaciones o cambios en la configuración.</p>
                 </div>
             </div>
-            
+
             <div class="tool-description" id="mantenimiento-so">
                 <h3 class="tool-title">Mantenimiento del S.O.</h3>
                 <p class="tool-text">Realiza tareas de mantenimiento avanzadas en el sistema operativo Windows.</p>
@@ -544,7 +707,7 @@ Dism.exe /Online /Cleanup-Image /startComponentCleanup</code></pre>
                     </ul>
                 </div>
             </div>
-            
+
             <div class="tool-description" id="info-pantallazos">
                 <h3 class="tool-title">Información de Pantallazos Azules</h3>
                 <p class="tool-text">Analiza y proporciona información sobre los pantallazos azules (BSOD) que han ocurrido en el sistema.</p>
@@ -556,7 +719,7 @@ Dism.exe /Online /Cleanup-Image /startComponentCleanup</code></pre>
                     </ul>
                 </div>
             </div>
-            
+
             <div class="tool-description" id="estado-bateria">
                 <h3 class="tool-title">Ver Estado de la Batería</h3>
                 <p class="tool-text">Proporciona información detallada sobre el estado y salud de la batería en dispositivos portátiles.</p>
@@ -569,7 +732,7 @@ Dism.exe /Online /Cleanup-Image /startComponentCleanup</code></pre>
                     </ul>
                 </div>
             </div>
-            
+
             <div class="tool-description" id="info-drivers">
                 <h3 class="tool-title">Información de Drivers</h3>
                 <p class="tool-text">Proporciona información detallada sobre los controladores instalados en el sistema.</p>
@@ -581,7 +744,7 @@ Dism.exe /Online /Cleanup-Image /startComponentCleanup</code></pre>
                     </ul>
                 </div>
             </div>
-            
+
             <div class="tool-description" id="reparar-red">
                 <h3 class="tool-title">Reparar Red</h3>
                 <p class="tool-text">Soluciona problemas comunes de conexión a Internet y red.</p>
@@ -600,7 +763,7 @@ ipconfig /flushdns</code></pre>
                     </ul>
                 </div>
             </div>
-            
+
             <div class="tool-description" id="limpieza">
                 <h3 class="tool-title">Limpieza</h3>
                 <p class="tool-text">Herramientas para liberar espacio y optimizar recursos del sistema.</p>
@@ -613,10 +776,10 @@ ipconfig /flushdns</code></pre>
                 </div>
             </div>
         </section>
-        
+
         <section id="tweaks" class="section">
             <h2 class="section-title">Tweaks</h2>
-            
+
             <div class="tool-description" id="ejecutar-winutil">
                 <h3 class="tool-title">Ejecutar WinUtil</h3>
                 <p class="tool-text">Ejecuta la herramienta WinUtil de Chris Titus Tech para optimizaciones avanzadas del sistema.</p>
@@ -632,7 +795,7 @@ ipconfig /flushdns</code></pre>
                     </ul>
                 </div>
             </div>
-            
+
             <div class="tool-description" id="instalar-winget">
                 <h3 class="tool-title">Instalar Winget</h3>
                 <p class="tool-text">Instala el gestor de paquetes oficial de Windows (Windows Package Manager).</p>
@@ -647,7 +810,7 @@ Add-AppxPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle</code></p
                     <p>Winget facilita la instalación y actualización de aplicaciones desde la línea de comandos. Es el gestor de paquetes nativo de Microsoft para Windows 10 y 11.</p>
                 </div>
             </div>
-            
+
             <div class="tool-description" id="activar-windows">
                 <h3 class="tool-title">Activar Windows</h3>
                 <p class="tool-text">Activa Windows utilizando la clave digital integrada en la BIOS/UEFI del sistema.</p>
@@ -661,7 +824,7 @@ slmgr.vbs /ipk $clave</code></pre>
                     <p>Esta función recupera la clave digital de Windows que está almacenada en la BIOS de fábrica (si está disponible) y la aplica automáticamente.</p>
                 </div>
             </div>
-            
+
             <div class="tool-description" id="ejecutar-optimizer">
                 <h3 class="tool-title">Ejecutar Optimizer</h3>
                 <p class="tool-text">Descarga e inicia Optimizer, una herramienta de optimización completa para Windows.</p>
@@ -677,7 +840,7 @@ slmgr.vbs /ipk $clave</code></pre>
                     </ul>
                 </div>
             </div>
-            
+
             <div class="tool-description" id="buscar-drivers">
                 <h3 class="tool-title">Buscar Drivers</h3>
                 <p class="tool-text">Identifica el modelo y número de serie del equipo y busca los controladores correspondientes en línea.</p>
@@ -688,7 +851,7 @@ $serial = (Get-WmiObject -Class:Win32_BIOS).SerialNumber
 # Buscar drivers para este modelo específico
 Start-Process "https://www.google.com/search?q=$modelo+$serial+drivers"</code></pre>
             </div>
-            
+
             <div class="tool-description" id="actualizar-windows">
                 <h3 class="tool-title">Actualizar Windows</h3>
                 <p class="tool-text">Inicia el proceso de búsqueda e instalación de actualizaciones de Windows.</p>
@@ -927,7 +1090,106 @@ DISM.exe /Online /Cleanup-image /Restorehealth</code></pre>
             </div>
         </section>
     </div>
-    
+    <a href="#" class="back-to-top" aria-label="Volver arriba">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<div class="overlay"></div>
+
+
+<footer>
+    <div class="container">
+        <p>&copy; <span id="current-year"></span> ToolboxBS. Todos los derechos reservados. Desarrollado por <a href="[https://github.com/BrandonSepulveda](https://github.com/BrandonSepulveda)" target="_blank">Brandon Sepulveda</a>.</p>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.querySelector('.hamburger');
+        const navList = document.querySelector('.nav-list');
+        const overlay = document.querySelector('.overlay');
+        const navItemsWithSubmenu = document.querySelectorAll('.nav-item:has(.submenu)'); // Selecciona items con submenu
+
+        // --- Toggle del Menú Hamburguesa ---
+        function toggleMenu() {
+            navList.classList.toggle('menu-open');
+            overlay.classList.toggle('visible');
+             // Bloquear scroll del cuerpo cuando el menú está abierto
+            document.body.classList.toggle('menu-open');
+             // Actualizar estado de accesibilidad
+             const isMenuOpen = navList.classList.contains('menu-open');
+             hamburger.setAttribute('aria-expanded', isMenuOpen);
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu); // Cerrar menú al hacer clic en overlay
+
+         // --- Cerrar Menú al Clic en un Enlace (opcional) ---
+         // Esto es si quieres que el menú se cierre automáticamente al hacer clic en un enlace interno.
+         // Si haces clic en un enlace de submenú, el menú principal se cerrará.
+        navList.querySelectorAll('a.nav-link, .submenu-item').forEach(link => {
+             link.addEventListener('click', function() {
+                 // Solo cerrar si la ventana es menor o igual a 768px (móvil)
+                 if (window.innerWidth <= 768) {
+                     // Agregar un pequeño retraso si es necesario para que la navegación ocurra primero
+                     setTimeout(toggleMenu, 100); // Cierra el menú después de 100ms
+                 }
+             });
+         });
+
+
+        // --- Toggle de Submenús en Móvil ---
+         // Manejar el clic en los elementos del menú principal que tienen submenús
+         navItemsWithSubmenu.forEach(item => {
+             const link = item.querySelector('.nav-link'); // Obtener el enlace dentro del item
+             link.addEventListener('click', function(e) {
+                 // Solo aplicar esta lógica en pantallas móviles
+                 if (window.innerWidth <= 768) {
+                     const parentItem = this.closest('.nav-item'); // Obtener el li.nav-item padre
+                     const isSubmenuOpen = parentItem.classList.contains('submenu-open');
+
+                     // Cerrar otros submenús abiertos antes de abrir este (comportamiento tipo acordeón)
+                     navItemsWithSubmenu.forEach(otherItem => {
+                          if (otherItem !== parentItem && otherItem.classList.contains('submenu-open')) {
+                              otherItem.classList.remove('submenu-open');
+                          }
+                     });
+
+                     // Toggle el submenu del item clickeado
+                     parentItem.classList.toggle('submenu-open');
+
+                     // Prevenir la navegación si el submenu se acaba de abrir o estaba abierto
+                     // Esto evita que el #anchor active el scroll si abres/cierras el submenu
+                     // Si solo quieres que el click *siempre* abra/cierre el submenu y *nunca* navegue al #anchor,
+                     // elimina el href de los links principales que tienen submenus en tu HTML.
+                     if (!isSubmenuOpen || parentItem.classList.contains('submenu-open')) {
+                         e.preventDefault();
+                     }
+                 }
+                 // En escritorio, el comportamiento de hover sigue funcionando por CSS.
+                 // Si haces clic en escritorio, el enlace navegará normalmente.
+             });
+         });
+
+
+        // --- Back to Top Button ---
+        const backToTopButton = document.querySelector(".back-to-top");
+
+        window.addEventListener("scroll", () => {
+            if (window.pageYOffset > 100) { // Muestra el botón después de 100px de scroll
+                backToTopButton.classList.add("visible");
+            } else {
+                backToTopButton.classList.remove("visible");
+            }
+        });
+
+        // --- Actualizar Año en el Footer ---
+         const currentYearSpan = document.getElementById('current-year');
+         if (currentYearSpan) {
+             currentYearSpan.textContent = new Date().getFullYear();
+         }
+    });
+</script>
     <footer>
         <p>ToolboxBS &copy; 2023-2025 | Desarrollado por <a href="https://github.com/BrandonSepulveda" target="_blank">Brandon Sepulveda</a></p>
         <p>Licencia MIT</p>
