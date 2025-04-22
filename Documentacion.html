@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolboxBS - Documentación de Herramientas</title>
+    <style>
+        :root {
+            --white: #ffffff;
+            --black: #000000;
+            --light-gray: #f5f5f5;
+            --gray: #e0e0e0;
+            --dark-gray: #333333;
+            --text-color: #333333;
+            --code-bg: #f0f0f0;
+            --border-color: #cccccc;
+            --highlight: #2196F3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--white);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+        }
+
+        /* Navegación principal */
+        nav {
+            background-color: var(--black);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            overflow-x: auto;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            color: var(--white);
+            text-decoration: none;
+            padding: 15px 20px;
+            font-size: 15px;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover, 
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Submenu */
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--white);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            z-index: 1;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-item:hover .submenu {
+            display: block;
+        }
+
+        .submenu-item {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.3s;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .submenu-item:hover {
+            background-color: var(--light-gray);
+        }
+
+        .submenu-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Contenido principal */
+        .section {
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            color: var(--black);
+            font-size: 28px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--highlight);
+        }
+        
+        .tool-description {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--light-gray);
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .tool-title {
+            color: var(--black);
+            font-size: 22px;
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .tool-title::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background-color: var(--highlight);
+            border-radius: 3px;
+        }
+        
+        .tool-text {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        pre {
+            background-color: var(--code-bg);
+            color: var(--black);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border: 1px solid var(--border-color);
+        }
+        
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            font-size: 14px;
+        }
+        
+        .note {
+            background-color: var(--white);
+            border-left: 4px solid var(--highlight);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .note-title {
+            color: var(--highlight);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .category-title {
+            color: var(--black);
+            font-size: 24px;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Botón para volver arriba */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--black);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 99;
+        }
+
+        .back-to-top.visible {
+            opacity: 0.7;
+        }
+
+        .back-to-top:hover {
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-color);
+            background-color: var(--light-gray);
+            margin-top: 50px;
+        }
+        
+        footer a {
+            color: var(--highlight);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+                justify-content: center;
+            }
+            
+            .nav-list {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .nav-item {
+                position: static;
+            }
+            
+            .submenu {
+                position: relative;
+                width: 100%;
+                box-shadow: none;
+                border: none;
+                background-color: rgba(0,0,0,0.1);
+            }
+            
+            .submenu-item {
+                padding-left: 30px;
+                color: var(--white);
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="ToolboxBS Logo" style="width: 50px; height: 50px; object-fit: contain;">
+                <h1 class="logo-text">TOOLBOXBS</h1>
+            </div>
+        </div>
+        <nav>
+            <div class="nav-container">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#inicio" class="nav-link">Inicio</a>
+                        <div class="submenu">
+                            <a href="#panel-control" class="submenu-item">Panel de Control</a>
+                            <a href="#diagnostico-rapido" class="submenu-item">Diagnóstico Rápido</a>
+                            <a href="#ajustes-windows" class="submenu-item">Ajustes de Windows</a>
+                            <a href="#explorador" class="submenu-item">Explorador de Archivos</a>
+                            <a href="#powershell" class="submenu-item">PowerShell</a>
+                            <a href="#msinfo32" class="submenu-item">Información del Sistema</a>
+                            <a href="#instalar-powershell7" class="submenu-item">Instalar PowerShell 7</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#info-sistema" class="nav-link">Información del Sistema</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#descargas-apps" class="nav-link">Descargas Apps</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#reparacion" class="nav-link">Reparación</a>
+                        <div class="submenu">
+                            <a href="#crear-punto-restauracion" class="submenu-item">Crear Punto de Restauración</a>
+                            <a href="#mantenimiento-so" class="submenu-item">Mantenimiento del S.O.</a>
+                            <a href="#info-pantallazos" class="submenu-item">Info de Pantallazos Azules</a>
+                            <a href="#estado-bateria" class="submenu-item">Estado de la Batería</a>
+                            <a href="#info-drivers" class="submenu-item">Información de Drivers</a>
+                            <a href="#reparar-red" class="submenu-item">Reparar Red</a>
+                            <a href="#limpieza" class="submenu-item">Limpieza</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#tweaks" class="nav-link">Tweaks</a>
+                        <div class="submenu">
+                            <a href="#ejecutar-winutil" class="submenu-item">Ejecutar WinUtil</a>
+                            <a href="#instalar-winget" class="submenu-item">Instalar Winget</a>
+                            <a href="#activar-windows" class="submenu-item">Activar Windows</a>
+                            <a href="#ejecutar-optimizer" class="submenu-item">Ejecutar Optimizer</a>
+                            <a href="#buscar-drivers" class="submenu-item">Buscar Drivers</a>
+                            <a href="#actualizar-windows" class="submenu-item">Actualizar Windows</a>
+                            <a href="#analizar-optimizar" class="submenu-item">Analizar y Optimizar S.O.</a>
+                            <a href="#propiedades-sistema" class="submenu-item">Propiedades del Sistema</a>
+                            <a href="#deshabilitar-transparencia" class="submenu-item">Deshabilitar Transparencia</a>
+                            <a href="#apagar-bios" class="submenu-item">Apagar y Entrar a BIOS</a>
+                            <a href="#entorno-recuperacion" class="submenu-item">Entorno de Recuperación</a>
+                            <a href="#actualizar-apps" class="submenu-item">Actualizar Apps</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#herramientas" class="nav-link">Herramientas</a>
+                        <div class="submenu">
+                            <a href="#ejecutar-toolboxbs" class="submenu-item">Ejecutar ToolboxBS</a>
+                            <a href="#ejecutar-winscript" class="submenu-item">Ejecutar WinScript</a>
+                            <a href="#instalar-sentinel" class="submenu-item">Instalar Sentinel</a>
+                            <a href="#optimizar-sistema" class="submenu-item">Optimizar Sistema</a>
+                            <a href="#instalar-intel" class="submenu-item">Instalar Intel Driver Support</a>
+                            <a href="#reparacion-windows" class="submenu-item">Reparación de Windows</a>
+                            <a href="#administrador-tareas" class="submenu-item">Administrador de Tareas</a>
+                            <a href="#administrador-dispositivos" class="submenu-item">Administrador de Dispositivos</a>
+                            <a href="#servicios" class="submenu-item">Servicios</a>
+                            <a href="#limpieza-disco" class="submenu-item">Limpieza de Disco</a>
+                            <a href="#editor-registro" class="submenu-item">Editor del Registro</a>
+                            <a href="#verificar-actualizaciones" class="submenu-item">Verificar Actualizaciones</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <section id="inicio" class="section">
+            <h2 class="section-title">Inicio</h2>
+            <p>El menú de Inicio proporciona acceso rápido a funciones básicas del sistema y herramientas de diagnóstico.</p>
+            
+            <div class="tool-description" id="panel-control">
+                <h3 class="tool-title">Panel de Control</h3>
+                <p class="tool-text">Abre el Panel de Control clásico de Windows para configurar y personalizar el sistema operativo.</p>
+                <pre><code>control.exe</code></pre>
+            </div>
+            
+            <div class="tool-description" id="diagnostico-rapido">
+                <h3 class="tool-title">Diagnóstico Rápido</h3>
+                <p class="tool-text">Realiza un análisis rápido del sistema para identificar problemas críticos del hardware y software.</p>
+                <div class="note">
+                    <div class="note-title">Elementos analizados:</div>
+                    <ul>
+                        <li>Espacio disponible en disco (alerta si menos del 10%)</li>
+                        <li>Uso de memoria RAM (alerta si más del 80%)</li>
+                        <li>Estado de servicios críticos de Windows</li>
+                        <li>Actualizaciones pendientes</li>
+                        <li>Eventos críticos recientes en el registro de Windows</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="ajustes-windows">
+                <h3 class="tool-title">Ajustes de Windows</h3>
+                <p class="tool-text">Abre la aplicación de Configuración moderna de Windows.</p>
+                <pre><code>Start-Process "ms-settings:"</code></pre>
+            </div>
+            
+            <div class="tool-description" id="explorador">
+                <h3 class="tool-title">Explorador de Archivos</h3>
+                <p class="tool-text">Inicia el Explorador de archivos de Windows.</p>
+                <pre><code>explorer.exe</code></pre>
+            </div>
+            
+            <div class="tool-description" id="powershell">
+                <h3 class="tool-title">PowerShell</h3>
+                <p class="tool-text">Abre PowerShell, la interfaz de línea de comandos avanzada de Windows.</p>
+                <div class="note">
+                    <div class="note-title">Nota:</div>
+                    <p>Intenta abrir PowerShell 7 si está disponible. Si no, abre PowerShell 5 (integrado en Windows).</p>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="msinfo32">
+                <h3 class="tool-title">Información del Sistema</h3>
+                <p class="tool-text">Abre la herramienta de información del sistema integrada en Windows.</p>
+                <pre><code>msinfo32.exe</code></pre>
+            </div>
+            
+            <div class="tool-description" id="instalar-powershell7">
+                <h3 class="tool-title">Instalar PowerShell 7</h3>
+                <p class="tool-text">Instala la última versión de PowerShell 7, una versión mejorada con más características y mejor rendimiento.</p>
+                <div class="note">
+                    <div class="note-title">Nota:</div>
+                    <p>Se instala automáticamente usando Winget si está disponible. Si no está disponible Winget, se descarga e instala el MSI desde GitHub.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="info-sistema" class="section">
+            <h2 class="section-title">Información del Sistema</h2>
+            
+            <div class="tool-description">
+                <h3 class="tool-title">Información Completa del Sistema</h3>
+                <p class="tool-text">Proporciona un informe detallado sobre el hardware y software del equipo.</p>
+                <div class="note">
+                    <div class="note-title">Información proporcionada:</div>
+                    <ul>
+                        <li><strong>Sistema operativo:</strong> Versión de Windows, compilación, arquitectura, fecha de instalación</li>
+                        <li><strong>Procesador:</strong> Modelo, núcleos, hilos, velocidad máxima</li>
+                        <li><strong>Memoria RAM:</strong> Capacidad total, detalles de módulos, fabricante, velocidad</li>
+                        <li><strong>Almacenamiento:</strong> Capacidad, espacio libre, tipo (SSD/HDD), interfaces</li>
+                        <li><strong>GPU:</strong> Modelo, memoria dedicada, resolución actual, versión del controlador</li>
+                        <li><strong>Placa base:</strong> Fabricante, modelo</li>
+                        <li><strong>Red:</strong> Adaptadores activos, direcciones IP, MAC, velocidad de conexión</li>
+                        <li><strong>Seguridad:</strong> Estado de Windows Defender, Firewall, BitLocker</li>
+                        <li><strong>Batería:</strong> Estado de carga, capacidad, vida estimada (para portátiles)</li>
+                        <li><strong>Monitores:</strong> Modelos conectados, información de fabricante</li>
+                        <li><strong>Rendimiento actual:</strong> Uso de CPU, memoria y disco en tiempo real</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="descargas-apps" class="section">
+            <h2 class="section-title">Descargas Apps</h2>
+            
+            <div class="tool-description">
+                <h3 class="tool-title">Instalador de Aplicaciones</h3>
+                <p class="tool-text">Interfaz gráfica para instalar aplicaciones populares utilizando Chocolatey o Winget.</p>
+                <div class="note">
+                    <div class="note-title">Características:</div>
+                    <ul>
+                        <li>Selección entre gestores de paquetes Chocolatey o Winget</li>
+                        <li>Instalación automatizada del gestor de paquetes si no está disponible</li>
+                        <li>Búsqueda de aplicaciones con filtrado en tiempo real</li>
+                        <li>Selección múltiple para instalar varias aplicaciones a la vez</li>
+                        <li>Visualización del progreso de instalación</li>
+                        <li>Registro detallado del proceso</li>
+                    </ul>
+                </div>
+                <div class="note">
+                    <div class="note-title">Aplicaciones disponibles:</div>
+                    <p>7zip, aida64, anydesk, brave, cpu-z, crystaldiskinfo, dellcommandupdate, discord, googlechrome, hp-pc-hardware-diagnostics, hpimageassistant, hpsmart, hpsupportassistant, intel-driver-support-assistant, lenovovantage, lenovosystemupdate, microsoft365uninstall, microsoftpowertoys, myasus, notepadplusplus, nzxt-cam, powershell, rufus, teamviewer, ventoy, visualstudiocode, whatsapp, windowsterminal</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="reparacion" class="section">
+            <h2 class="section-title">Reparación</h2>
+            
+            <div class="tool-description" id="crear-punto-restauracion">
+                <h3 class="tool-title">Crear Punto de Restauración</h3>
+                <p class="tool-text">Crea un punto de restauración del sistema antes de aplicar cambios importantes.</p>
+                <pre><code>Checkpoint-Computer -Description "Punto de restauracion creado por ToolboxBS" -RestorePointType "MODIFY_SETTINGS"</code></pre>
+                <div class="note">
+                    <div class="note-title">Nota:</div>
+                    <p>Permite revertir el sistema a un estado anterior en caso de problemas con actualizaciones o cambios en la configuración.</p>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="mantenimiento-so">
+                <h3 class="tool-title">Mantenimiento del S.O.</h3>
+                <p class="tool-text">Realiza tareas de mantenimiento avanzadas en el sistema operativo Windows.</p>
+                <pre><code>bcdedit /set useplatformtick yes
+bcdedit /set disabledynamictick yes
+sfc /scannow
+DISM.exe /Online /Cleanup-image /CheckHealth
+DISM.exe /Online /Cleanup-image /Restorehealth
+sfc /scannow
+Dism.exe /Online /Cleanup-Image /startComponentCleanup</code></pre>
+                <div class="note">
+                    <div class="note-title">Tareas realizadas:</div>
+                    <ul>
+                        <li>Configuración del temporizador del sistema para mejor rendimiento</li>
+                        <li>Verificación y reparación de archivos del sistema (SFC)</li>
+                        <li>Diagnóstico y reparación de la imagen de Windows (DISM)</li>
+                        <li>Limpieza de componentes de Windows Update</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="info-pantallazos">
+                <h3 class="tool-title">Información de Pantallazos Azules</h3>
+                <p class="tool-text">Analiza y proporciona información sobre los pantallazos azules (BSOD) que han ocurrido en el sistema.</p>
+                <div class="note">
+                    <div class="note-title">Opciones disponibles:</div>
+                    <ul>
+                        <li><strong>BlueScreenView:</strong> Herramienta para visualizar detalles de los BSODs</li>
+                        <li><strong>Script Remoto:</strong> Análisis avanzado de las causas comunes de BSODs</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="estado-bateria">
+                <h3 class="tool-title">Ver Estado de la Batería</h3>
+                <p class="tool-text">Proporciona información detallada sobre el estado y salud de la batería en dispositivos portátiles.</p>
+                <pre><code>powercfg /batteryreport /output "C:\battery_report.html"</code></pre>
+                <div class="note">
+                    <div class="note-title">Opciones disponibles:</div>
+                    <ul>
+                        <li><strong>BatteryInfoView:</strong> Herramienta para detalles avanzados de la batería</li>
+                        <li><strong>Informe de Batería:</strong> Genera un informe HTML completo con información histórica</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="info-drivers">
+                <h3 class="tool-title">Información de Drivers</h3>
+                <p class="tool-text">Proporciona información detallada sobre los controladores instalados en el sistema.</p>
+                <div class="note">
+                    <div class="note-title">Opciones disponibles:</div>
+                    <ul>
+                        <li><strong>Exportar Drivers:</strong> Guarda la información de controladores en un archivo de texto</li>
+                        <li><strong>Administrador de Dispositivos:</strong> Abre la herramienta de gestión de hardware de Windows</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="reparar-red">
+                <h3 class="tool-title">Reparar Red</h3>
+                <p class="tool-text">Soluciona problemas comunes de conexión a Internet y red.</p>
+                <pre><code>netsh winsock reset
+netsh int ip reset
+ipconfig /release
+ipconfig /renew
+ipconfig /flushdns</code></pre>
+                <div class="note">
+                    <div class="note-title">Operaciones realizadas:</div>
+                    <ul>
+                        <li>Restablecer catálogo Winsock</li>
+                        <li>Restablecer TCP/IP stack</li>
+                        <li>Liberar y renovar la dirección IP</li>
+                        <li>Limpiar la caché DNS</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="limpieza">
+                <h3 class="tool-title">Limpieza</h3>
+                <p class="tool-text">Herramientas para liberar espacio y optimizar recursos del sistema.</p>
+                <div class="note">
+                    <div class="note-title">Opciones disponibles:</div>
+                    <ul>
+                        <li><strong>Limpiar Archivos Temporales:</strong> Elimina archivos temporales del sistema y del usuario</li>
+                        <li><strong>Optimizar RAM:</strong> Libera memoria utilizando la herramienta RAMMap de Sysinternals</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="tweaks" class="section">
+            <h2 class="section-title">Tweaks</h2>
+            
+            <div class="tool-description" id="ejecutar-winutil">
+                <h3 class="tool-title">Ejecutar WinUtil</h3>
+                <p class="tool-text">Ejecuta la herramienta WinUtil de Chris Titus Tech para optimizaciones avanzadas del sistema.</p>
+                <pre><code>powershell -NoExit -Command "irm christitus.com/win | iex"</code></pre>
+                <div class="note">
+                    <div class="note-title">Características:</div>
+                    <ul>
+                        <li>Optimizaciones de rendimiento y privacidad</li>
+                        <li>Instalación y desinstalación de aplicaciones</li>
+                        <li>Configuración de opciones avanzadas de Windows</li>
+                        <li>Mejoras de seguridad</li>
+                        <li>Activación de características ocultas</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="instalar-winget">
+                <h3 class="tool-title">Instalar Winget</h3>
+                <p class="tool-text">Instala el gestor de paquetes oficial de Windows (Windows Package Manager).</p>
+                <pre><code>Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
+Invoke-WebRequest -Uri https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx -OutFile Microsoft.VCLibs.x64.14.00.Desktop.appx
+Invoke-WebRequest -Uri https://github.com/microsoft/microsoft-ui-xaml/releases/download/v2.7.3/Microsoft.UI.Xaml.2.7.x64.appx -OutFile Microsoft.UI.Xaml.2.7.x64.appx
+Add-AppxPackage Microsoft.VCLibs.x64.14.00.Desktop.appx
+Add-AppxPackage Microsoft.UI.Xaml.2.7.x64.appx
+Add-AppxPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle</code></pre>
+                <div class="note">
+                    <div class="note-title">Nota:</div>
+                    <p>Winget facilita la instalación y actualización de aplicaciones desde la línea de comandos. Es el gestor de paquetes nativo de Microsoft para Windows 10 y 11.</p>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="activar-windows">
+                <h3 class="tool-title">Activar Windows</h3>
+                <p class="tool-text">Activa Windows utilizando la clave digital integrada en la BIOS/UEFI del sistema.</p>
+                <pre><code># Obtener la clave digital almacenada en la BIOS
+$clave = (Get-WmiObject SoftwareLicensingService | Select-Object -ExpandProperty OA3xOriginalProductKey)
+
+# Establecer la clave como predefinida
+slmgr.vbs /ipk $clave</code></pre>
+                <div class="note">
+                    <div class="note-title">Nota:</div>
+                    <p>Esta función recupera la clave digital de Windows que está almacenada en la BIOS de fábrica (si está disponible) y la aplica automáticamente.</p>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="ejecutar-optimizer">
+                <h3 class="tool-title">Ejecutar Optimizer</h3>
+                <p class="tool-text">Descarga e inicia Optimizer, una herramienta de optimización completa para Windows.</p>
+                <div class="note">
+                    <div class="note-title">Características de Optimizer:</div>
+                    <ul>
+                        <li>Limpieza del sistema</li>
+                        <li>Gestión de servicios</li>
+                        <li>Eliminación de telemetría</li>
+                        <li>Opciones de privacidad</li>
+                        <li>Gestión de aplicaciones de inicio</li>
+                        <li>Personalización del sistema</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="buscar-drivers">
+                <h3 class="tool-title">Buscar Drivers</h3>
+                <p class="tool-text">Identifica el modelo y número de serie del equipo y busca los controladores correspondientes en línea.</p>
+                <pre><code># Obtener información del equipo
+$modelo = (Get-WmiObject -Class:Win32_ComputerSystem).Model
+$serial = (Get-WmiObject -Class:Win32_BIOS).SerialNumber
+
+# Buscar drivers para este modelo específico
+Start-Process "https://www.google.com/search?q=$modelo+$serial+drivers"</code></pre>
+            </div>
+            
+            <div class="tool-description" id="actualizar-windows">
+                <h3 class="tool-title">Actualizar Windows</h3>
+                <p class="tool-text">Inicia el proceso de búsqueda e instalación de actualizaciones de Windows.</p>
+                <pre><code>Start-Process -FilePath "C:\Windows\System32\UsoClient.exe" -ArgumentList "StartInteractiveScan" -NoNewWindow</code></pre>
+                <div class="note">
+                    <div class="note-title">Nota:</div>
+                    <p>Este comando inicia el escáner de Windows Update de forma interactiva, permitiendo al usuario elegir qué actualizaciones instalar.</p>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="analizar-optimizar">
+                <h3 class="tool-title">Analizar y Optimizar S.O.</h3>
+                <p class="tool-text">Ejecuta un script personalizado que analiza y optimiza el sistema operativo Windows.</p>
+                <pre><code>powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/Analizador.ps1' | iex"</code></pre>
+                <div class="note">
+                    <div class="note-title">Funciones del analizador:</div>
+                    <ul>
+                        <li>Diagnóstico completo del sistema</li>
+                        <li>Identificación de problemas y cuellos de botella</li>
+                        <li>Sugerencias personalizadas de optimización</li>
+                        <li>Aplicación automática de mejoras recomendadas</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="propiedades-sistema">
+                <h3 class="tool-title">Propiedades del Sistema</h3>
+                <p class="tool-text">Abre la ventana de propiedades del sistema para ajustar la configuración de rendimiento y otras opciones avanzadas.</p>
+                <pre><code>control.exe sysdm.cpl</code></pre>
+                <div class="note">
+                    <div class="note-title">Nota:</div>
+                    <p>Permite acceder a configuraciones avanzadas como opciones de rendimiento, variables de entorno, inicio y recuperación, y protección del sistema.</p>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="deshabilitar-transparencia">
+                <h3 class="tool-title">Deshabilitar Transparencia</h3>
+                <p class="tool-text">Desactiva los efectos de transparencia en Windows para mejorar el rendimiento visual.</p>
+                <pre><code>$registryPath = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+$name = "EnableTransparency"
+$value = 0
+Set-ItemProperty -Path $registryPath -Name $name -Value $value</code></pre>
+                <div class="note">
+                    <div class="note-title">Nota:</div>
+                    <p>Deshabilitar los efectos de transparencia puede mejorar el rendimiento en equipos con hardware limitado.</p>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="apagar-bios">
+                <h3 class="tool-title">Apagar y Entrar a BIOS</h3>
+                <p class="tool-text">Reinicia el sistema y entra directamente a la configuración del BIOS/UEFI.</p>
+                <pre><code>Start-Process -FilePath "shutdown" -ArgumentList "/r /fw /t 1" -Verb RunAs</code></pre>
+                <div class="note">
+                    <div class="note-title">Nota:</div>
+                    <p>Este comando permite acceder a la configuración de la BIOS sin necesidad de presionar teclas especiales durante el inicio del sistema.</p>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="entorno-recuperacion">
+                <h3 class="tool-title">Entorno de Recuperación</h3>
+                <p class="tool-text">Reinicia el sistema y entra al entorno de recuperación de Windows.</p>
+                <pre><code>shutdown /r /o /f /t 00</code></pre>
+                <div class="note">
+                    <div class="note-title">Opciones disponibles en el entorno de recuperación:</div>
+                    <ul>
+                        <li>Restaurar a un punto anterior</li>
+                        <li>Restablecer el PC</li>
+                        <li>Iniciar en modo seguro</li>
+                        <li>Símbolo del sistema para solucionar problemas avanzados</li>
+                        <li>Restaurar desde una imagen del sistema</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="actualizar-apps">
+                <h3 class="tool-title">Actualizar Apps</h3>
+                <p class="tool-text">Actualiza todas las aplicaciones instaladas mediante Winget.</p>
+                <pre><code>winget update --all</code></pre>
+                <div class="note">
+                    <div class="note-title">Nota:</div>
+                    <p>Este comando busca actualizaciones para todas las aplicaciones instaladas a través de Winget y las actualiza automáticamente.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="herramientas" class="section">
+            <h2 class="section-title">Herramientas</h2>
+            
+            <div class="tool-description" id="ejecutar-toolboxbs">
+                <h3 class="tool-title">Ejecutar ToolboxBS</h3>
+                <p class="tool-text">Inicia la última versión de ToolboxBS directamente desde GitHub.</p>
+                <pre><code>irm https://cutt.ly/ToolboxBS | iex</code></pre>
+                <div class="note">
+                    <div class="note-title">Nota:</div>
+                    <p>Este comando descarga e inicia la última versión de ToolboxBS sin necesidad de instalación.</p>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="ejecutar-winscript">
+                <h3 class="tool-title">Ejecutar WinScript</h3>
+                <p class="tool-text">Ejecuta WinScript, una herramienta complementaria para optimización de Windows.</p>
+                <pre><code>irm https://winscript.cc/irm | iex</code></pre>
+            </div>
+            
+            <div class="tool-description" id="instalar-sentinel">
+                <h3 class="tool-title">Instalar Sentinel</h3>
+                <p class="tool-text">Descarga e instala Hard Disk Sentinel para monitorear la salud de los discos duros.</p>
+                <div class="note">
+                    <div class="note-title">Características:</div>
+                    <ul>
+                        <li>Monitoreo de la salud de discos duros y SSD</li>
+                        <li>Detección temprana de fallos</li>
+                        <li>Información detallada de temperatura</li>
+                        <li>Pruebas de rendimiento</li>
+                        <li>Alertas preventivas</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="optimizar-sistema">
+                <h3 class="tool-title">Optimizar Sistema</h3>
+                <p class="tool-text">Aplica una serie de optimizaciones avanzadas al sistema operativo para mejorar el rendimiento.</p>
+                <div class="note">
+                    <div class="note-title">Optimizaciones aplicadas:</div>
+                    <ul>
+                        <li>Creación de un punto de restauración</li>
+                        <li>Deshabilitación de telemetría y rastreo</li>
+                        <li>Optimización de servicios para mejor rendimiento</li>
+                        <li>Activación del modo de rendimiento definitivo</li>
+                        <li>Aplicación de ajustes para videojuegos</li>
+                        <li>Personalización de la interfaz de Windows</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="instalar-intel">
+                <h3 class="tool-title">Instalar Intel Driver Support</h3>
+                <p class="tool-text">Descarga e instala Intel Driver Support Assistant para la gestión automatizada de controladores Intel.</p>
+                <div class="note">
+                    <div class="note-title">Características:</div>
+                    <ul>
+                        <li>Detección automática de hardware Intel</li>
+                        <li>Verificación de controladores desactualizados</li>
+                        <li>Descarga e instalación de los controladores más recientes</li>
+                        <li>Soporte para gráficas, chipsets, redes y más</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="reparacion-windows">
+                <h3 class="tool-title">Reparación de Windows</h3>
+                <p class="tool-text">Ejecuta comandos avanzados de reparación del sistema operativo Windows.</p>
+                <pre><code>sfc /scannow
+DISM.exe /Online /Cleanup-image /Restorehealth</code></pre>
+                <div class="note">
+                    <div class="note-title">Operaciones realizadas:</div>
+                    <ul>
+                        <li>Verificación de la integridad de todos los archivos protegidos del sistema</li>
+                        <li>Reparación de archivos dañados</li>
+                        <li>Reparación de la imagen del sistema operativo</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="administrador-tareas">
+                <h3 class="tool-title">Administrador de Tareas</h3>
+                <p class="tool-text">Abre el Administrador de tareas de Windows para monitorear y gestionar procesos y rendimiento.</p>
+                <pre><code>taskmgr.exe</code></pre>
+            </div>
+            
+            <div class="tool-description" id="administrador-dispositivos">
+                <h3 class="tool-title">Administrador de Dispositivos</h3>
+                <p class="tool-text">Abre el Administrador de dispositivos para visualizar y gestionar el hardware del sistema.</p>
+                <pre><code>devmgmt.msc</code></pre>
+            </div>
+            
+            <div class="tool-description" id="servicios">
+                <h3 class="tool-title">Servicios</h3>
+                <p class="tool-text">Abre la consola de administración de servicios de Windows.</p>
+                <pre><code>services.msc</code></pre>
+                <div class="note">
+                    <div class="note-title">Nota:</div>
+                    <p>Permite iniciar, detener, habilitar o deshabilitar los servicios del sistema. Es una herramienta avanzada para usuarios con conocimientos técnicos.</p>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="limpieza-disco">
+                <h3 class="tool-title">Limpieza de Disco</h3>
+                <p class="tool-text">Inicia la herramienta de limpieza de disco integrada en Windows.</p>
+                <pre><code>cleanmgr.exe</code></pre>
+                <div class="note">
+                    <div class="note-title">Nota:</div>
+                    <p>Permite eliminar archivos temporales, caché del navegador, archivos de la papelera y otras categorías de archivos innecesarios para liberar espacio en disco.</p>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="editor-registro">
+                <h3 class="tool-title">Editor del Registro</h3>
+                <p class="tool-text">Abre el Editor del registro de Windows para realizar modificaciones avanzadas.</p>
+                <pre><code>regedit.exe</code></pre>
+                <div class="note">
+                    <div class="note-title">Precaución:</div>
+                    <p>El Editor del registro es una herramienta avanzada. Los cambios incorrectos pueden causar problemas graves en el sistema. Se recomienda crear un punto de restauración antes de realizar cambios.</p>
+                </div>
+            </div>
+            
+            <div class="tool-description" id="verificar-actualizaciones">
+                <h3 class="tool-title">Verificar Actualizaciones</h3>
+                <p class="tool-text">Abre la configuración de Windows Update para buscar e instalar actualizaciones.</p>
+                <pre><code>Start-Process "ms-settings:windowsupdate"</code></pre>
+            </div>
+        </section>
+        
+        <section id="conclusion" class="section">
+            <h2 class="section-title">Conclusión</h2>
+            <div class="tool-description">
+                <h3 class="tool-title">Sobre ToolboxBS</h3>
+                <p class="tool-text">ToolboxBS es una herramienta completa de mantenimiento y optimización para Windows, desarrollada por Brandon Sepulveda. Proporciona una interfaz moderna y amigable para acceder a numerosas funciones de diagnóstico, reparación, optimización y personalización del sistema operativo.</p>
+                
+                <div class="note">
+                    <div class="note-title">Contacto e información:</div>
+                    <ul>
+                        <li><strong>Autor:</strong> Jhon Brandon Sepulveda Valdes</li>
+                        <li><strong>GitHub:</strong> <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank">github.com/BrandonSepulveda/ToolboxBS</a></li>
+                        <li><strong>Sitio web:</strong> <a href="https://brandonsepulveda.github.io" target="_blank">brandonsepulveda.github.io</a></li>
+                        <li><strong>Versión:</strong> 2.0</li>
+                        <li><strong>Licencia:</strong> MIT License</li>
+                    </ul>
+                </div>
+                
+                <div class="note">
+                    <div class="note-title">Instalación rápida:</div>
+                    <p>Para ejecutar ToolboxBS directamente, utiliza el siguiente comando en PowerShell:</p>
+                    <pre><code>irm https://cutt.ly/ToolboxBS | iex</code></pre>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>ToolboxBS &copy; 2023-2025 | Desarrollado por <a href="https://github.com/BrandonSepulveda" target="_blank">Brandon Sepulveda</a></p>
+        <p>Licencia MIT</p>
+    </footer>
+    
+    <script>
+        // Script para el botón de "Volver arriba"
+        document.addEventListener('DOMContentLoaded', function() {
+            var backToTop = document.createElement('a');
+            backToTop.href = '#';
+            backToTop.className = 'back-to-top';
+            backToTop.textContent = '↑';
+            document.body.appendChild(backToTop);
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            });
+            
+            backToTop.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
