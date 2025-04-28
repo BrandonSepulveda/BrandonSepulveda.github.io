@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brandon Sepulveda | Herramientas y Utilidades</title>
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #000000;
+            --accent-color: #33ff00;
+            --text-light: #ffffff;
+            --text-dark: #212529;
+            --transition-default: all 0.3s ease;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url('https://source.unsplash.com/random/1600x900/?tech,dark');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            background-size: cover;
+            color: var(--text-light);
+            min-height: 100vh;
+            padding-top: 70px;
+        }
+
+        .content-wrapper {
+            flex: 1 0 auto;
+        }
+
+        .navbar {
+            transition: var(--transition-default);
+            padding: 1rem 1.5rem;
+            background-color: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.95) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            padding: 0.75rem 1.5rem;
+        }
+
+        .navbar-brand {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 700;
+            letter-spacing: 0.1rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 70%;
+        }
+
+        .tools-container {
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(51, 255, 0, 0.2);
+            max-width: 1000px;
+            margin: 2rem auto;
+        }
+
+        .tool-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition-default);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tool-card:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .tool-card-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-right: 1rem;
+        }
+
+        .tool-card-content {
+            flex-grow: 1;
+        }
+
+        .tool-card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .tool-card-description {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 1rem;
+        }
+
+        .btn-tool {
+            background-color: var(--primary-color);
+            border-color: var(--accent-color);
+            color: var(--text-light);
+        }
+
+        .btn-tool:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        .footer {
+            flex-shrink: 0;
+            background-color: rgba(0,0,0,0.8) !important;
+            border-top: 1px solid rgba(51, 255, 0, 0.2);
+            padding: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .tool-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .tool-card-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="index.html" data-aos="fade-right">
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Brandon Sepulveda Logo" style="max-height: 30px; width: auto;">
+                Brandon Sepulveda
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html" data-aos="fade-left" data-aos-delay="100">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#proyectos" data-aos="fade-left" data-aos-delay="100">Proyectos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#signup" data-aos="fade-left" data-aos-delay="200">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#" data-aos="fade-left" data-aos-delay="300">Herramientas</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+        <div class="container tools-container" data-aos="fade-up">
+            <h2 class="text-center mb-4">Herramientas y Utilidades</h2>
+            
+            <!-- Windows ISO Downloader Tool -->
+            <div class="tool-card">
+                <div class="tool-card-icon">
+                    <i class="fab fa-windows"></i>
+                </div>
+                <div class="tool-card-content">
+                    <h3 class="tool-card-title">Descarga de Windows ISO</h3>
+                    <p class="tool-card-description">Descarga fácil de imágenes ISO oficiales de Windows 10 y Windows 11.</p>
+                </div>
+                <div>
+                    <a href="descargawindows.html" class="btn btn-tool">
+                        Ir a Descarga <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Drivers Tool (Placeholder) -->
+            <div class="tool-card">
+                <div class="tool-card-icon">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <div class="tool-card-content">
+                    <h3 class="tool-card-title">Gestor de Drivers</h3>
+                    <p class="tool-card-description">Próximamente: Herramienta para descargar y gestionar drivers.</p>
+                </div>
+                <div>
+                    <button class="btn btn-tool" disabled>
+                        Próximamente <i class="fas fa-clock ms-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Apps Tool (Placeholder) -->
+            <div class="tool-card">
+                <div class="tool-card-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="tool-card-content">
+                    <h3 class="tool-card-title">Repositorio de Apps</h3>
+                    <p class="tool-card-description">Próximamente: Colección de aplicaciones útiles y herramientas.</p>
+                </div>
+                <div>
+                    <button class="btn btn-tool" disabled>
+                        Próximamente <i class="fas fa-clock ms-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-12">
+                    <p class="mb-2">
+                        Herramientas desarrolladas por 
+                        <a href="https://github.com/BrandonSepulveda" 
+                           target="_blank" 
+                           style="color: #33ff00; text-decoration: none; font-weight: bold;">
+                            Brandon Sepulveda
+                        </a>
+                    </p>
+                    <div class="mt-3">
+                        <a href="https://github.com/BrandonSepulveda" 
+                           target="_blank" 
+                           class="btn btn-outline-light btn-sm me-2">
+                            <i class="fab fa-github me-1"></i>Mi GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap and AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init();
+
+        // Navbar scrolling effect
+        const mainNav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                mainNav.classList.add('scrolled');
+            } else {
+                mainNav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

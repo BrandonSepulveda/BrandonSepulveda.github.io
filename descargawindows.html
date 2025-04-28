@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows ISO Downloader | Brandon Sepulveda</title>
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-color: #000000;
+            --accent-color: #33ff00;
+            --text-light: #ffffff;
+            --text-dark: #212529;
+            --transition-default: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url('https://source.unsplash.com/random/1600x900/?tech,dark');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            background-size: cover;
+            color: var(--text-light);
+            min-height: 100vh;
+            padding-top: 70px;
+        }
+        content-wrapper {
+            flex: 1 0 auto;
+            .footer {
+            flex-shrink: 0;
+            background-color: rgba(0,0,0,0.8) !important;
+            border-top: 1px solid rgba(51, 255, 0, 0.2);
+            padding: 2rem 0;
+        }
+    }
+        /* Navbar Styles (matching your original design) */
+        .navbar {
+            transition: var(--transition-default);
+            padding: 1rem 1.5rem;
+            background-color: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.95) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            padding: 0.75rem 1.5rem;
+        }
+
+        .navbar-brand {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 700;
+            letter-spacing: 0.1rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 70%;
+        }
+
+        /* Downloader Container */
+        .iso-downloader-container {
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(51, 255, 0, 0.2);
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .iso-downloader-container h2 {
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-family: 'Varela Round', sans-serif;
+        }
+
+        .form-label {
+            color: var(--text-light);
+            opacity: 0.8;
+        }
+
+        /* Form Styles */
+        .form-select, .btn-primary {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition-default);
+        }
+
+        .form-select {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: var(--text-light);
+        }
+
+        .form-select option {
+            background-color: #2c2c2c;
+            color: var(--text-light);
+        }
+
+        .form-select:focus, .btn-primary:focus {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: var(--text-light);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(51, 255, 0, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--accent-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        /* Download Links */
+        .list-group-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition-default);
+        }
+
+        .list-group-item:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Status Alert */
+        .alert {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text-light);
+        }
+
+        .alert-success {
+            color: var(--accent-color);
+        }
+
+        .alert-danger {
+            color: #ff4136;
+        }
+
+        /* Scrollbar Styles */
+        .form-select::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .form-select::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-select::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+
+        .form-select::-webkit-scrollbar-thumb:hover {
+            background: rgba(51, 255, 0, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .iso-downloader-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="index.html" data-aos="fade-right">
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Brandon Sepulveda Logo" style="max-height: 30px; width: auto;">
+                Brandon Sepulveda
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html" data-aos="fade-left" data-aos-delay="100">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#proyectos" data-aos="fade-left" data-aos-delay="100">Proyectos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#signup" data-aos="fade-left" data-aos-delay="200">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="apps.html" data-aos="fade-left" data-aos-delay="300">Apps</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#" data-aos="fade-left" data-aos-delay="400">ISO Downloader</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ISO Downloader Container -->
+    <div class="container iso-downloader-container" data-aos="fade-up">
+        <h2>Windows ISO Downloader</h2>
+        
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="windowsVersion" class="form-label">Seleccionar Versión de Windows</label>
+                <select id="windowsVersion" class="form-select">
+                    <option value="2618">Windows 10 22H2 v1 (19045.2965)</option>
+                    <option value="3113">Windows 11 24H2 (26100.1742)</option>
+                </select>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+                <label for="languageSelect" class="form-label">Seleccionar Idioma</label>
+                <select id="languageSelect" class="form-select" disabled>
+                    <option>Selecciona primero una versión</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <button id="getLanguagesBtn" class="btn btn-primary w-100">
+                    <i class="fas fa-globe me-2"></i>Obtener Idiomas
+                </button>
+            </div>
+        </div>
+
+        <div id="downloadLinksSection" class="mt-3" style="display: none;">
+            <h4 class="text-light">Enlaces de Descarga</h4>
+            <div class="list-group" id="downloadLinksList">
+                <!-- Download links will be populated here -->
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <div id="downloadStatus" class="alert" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap and AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init();
+
+        // Navbar scrolling effect
+        const mainNav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                mainNav.classList.add('scrolled');
+            } else {
+                mainNav.classList.remove('scrolled');
+            }
+        });
+
+        // MSDL API Configuration
+        const API_BASE_URL = 'https://api.gravesoft.dev/msdl/';
+
+        // DOM Elements
+        const windowsVersionSelect = document.getElementById('windowsVersion');
+        const languageSelect = document.getElementById('languageSelect');
+        const getLanguagesBtn = document.getElementById('getLanguagesBtn');
+        const downloadLinksSection = document.getElementById('downloadLinksSection');
+        const downloadLinksList = document.getElementById('downloadLinksList');
+        const downloadStatus = document.getElementById('downloadStatus');
+
+        // Fetch Languages
+        getLanguagesBtn.addEventListener('click', async () => {
+            const productId = windowsVersionSelect.value;
+            const productName = windowsVersionSelect.options[windowsVersionSelect.selectedIndex].text;
+
+            // Reset previous state
+            languageSelect.innerHTML = '';
+            downloadLinksSection.style.display = 'none';
+            downloadLinksList.innerHTML = '';
+            showStatus('Cargando idiomas...', 'info');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}skuinfo?product_id=${productId}`, {
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('No se pudieron obtener los idiomas');
+                }
+
+                const data = await response.json();
+
+                // Populate language select
+                languageSelect.disabled = false;
+                data.Skus.forEach(sku => {
+                    const option = document.createElement('option');
+                    option.value = sku.Id;
+                    option.text = sku.LocalizedLanguage;
+                    languageSelect.appendChild(option);
+                });
+
+                // Add event listener for language selection
+                languageSelect.addEventListener('change', () => fetchDownloadLinks(productId));
+
+                showStatus('Idiomas cargados correctamente', 'success');
+            } catch (error) {
+                showStatus(`Error: ${error.message}`, 'danger');
+                languageSelect.disabled = true;
+            }
+        });
+
+        // Fetch Download Links
+        async function fetchDownloadLinks(productId) {
+            const skuId = languageSelect.value;
+            const languageName = languageSelect.options[languageSelect.selectedIndex].text;
+
+            // Reset download links
+            downloadLinksList.innerHTML = '';
+            showStatus('Buscando enlaces de descarga...', 'info');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}proxy?product_id=${productId}&sku_id=${skuId}`, {
+                    headers: {
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('No se pudieron obtener los enlaces de descarga');
+                }
+
+                const data = await response.json();
+
+                // Display download links
+                downloadLinksSection.style.display = 'block';
+                data.ProductDownloadOptions.forEach(option => {
+                    const linkItem = document.createElement('a');
+                    linkItem.href = option.Uri;
+                    linkItem.className = 'list-group-item list-group-item-action d-flex justify-content-between align-items-center';
+                    
+                    // Extract filename from URL
+                    const filename = option.Uri.split('?')[0].split('/').pop();
+                    
+                    // Create content with filename and download icon
+                    linkItem.innerHTML = `
+                        <span>${filename}</span>
+                        <i class="fas fa-download text-light"></i>
+                    `;
+                    
+                    linkItem.target = '_blank';
+                    downloadLinksList.appendChild(linkItem);
+                });
+
+                showStatus('Enlaces de descarga encontrados', 'success');
+            } catch (error) {
+                showStatus(`Error: ${error.message}`, 'danger');
+                downloadLinksSection.style.display = 'none';
+            }
+        }
+
+        // Status Message Helper
+        function showStatus(message, type) {
+            downloadStatus.textContent = message;
+            downloadStatus.className = `alert alert-${type}`;
+            downloadStatus.style.display = 'block';
+        }
+    </script>
+
+ <!-- Footer -->
+<footer class="footer mt-auto py-3">
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-12">
+                <p class="mb-2">
+                    Basado en 
+                    <a href="https://github.com/gravesoft/msdl" 
+                       target="_blank" 
+                       style="color: #33ff00; text-decoration: none; font-weight: bold;">
+                        MSDL (Microsoft Software Download Listing)
+                    </a>
+                </p>
+                <p class="mb-2">
+                    <i class="fab fa-github me-2"></i>Proyecto Original por 
+                    <a href="https://github.com/gravesoft" 
+                       target="_blank" 
+                       style="color: #fff; text-decoration: none;">
+                        Gravesoft
+                    </a>
+                </p>
+                <p class="text-muted small">
+                    Adaptación y diseño por Brandon Sepulveda
+                </p>
+                <div class="mt-3">
+                    <a href="https://github.com/BrandonSepulveda" 
+                       target="_blank" 
+                       class="btn btn-outline-light btn-sm me-2">
+                        <i class="fab fa-github me-1"></i>Mi GitHub
+                    </a>
+                    <a href="https://github.com/gravesoft/msdl" 
+                       target="_blank" 
+                       class="btn btn-outline-light btn-sm">
+                        <i class="fab fa-github me-1"></i>Proyecto MSDL
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap and AOS JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    // Your existing JavaScript remains the same
+    // ... (paste all the previous script content here) ...
+</script>
+</body>
+</html>
