@@ -412,62 +412,255 @@
         
         // Procesar imagen para hacerla transparente
         function processImage() {
-            if (!originalImage) return;
+    if (!originalImage) return;
+    
+    loadingIndicator.style.display = 'block';
+    
+    // Usamos setTimeout para permitir que la UI se actualice antes de procesar
+    setTimeout(() => {
+        // Crear un canvas temporal con el tamaño original de la imagen
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = originalCanvas.width;
+        tempCanvas.height = originalCanvas.height;
+        const tempCtx = tempCanvas.getContext('2d', { alpha: true, willReadFrequently: true });
+        
+        // Dibujar imagen original a tamaño completo para mantener calidad
+        tempCtx.drawImage(originalImage, 0, 0, tempCanvas.width, tempCanvas.height);
+        
+        // Obtener datos de la imagen
+        const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+        const data = imageData.data;
+        
+        // Color seleccionado para remover
+        const targetColor = hexToRgb(colorPicker.value);
+        const tolerance = parseInt(toleranceSlider.value);
+        
+        // Optimización para detección de texto (bordes más nítidos)
+        const textThreshold = tolerance * 0.6; // Umbral para texto (más estricto)
+        
+        // Procesar cada píxel con preservación de texto mejorada
+        for (let i = 0; i < data.length; i += 4) {
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
             
-            loadingIndicator.style.display = 'block';
+            // Calcular la diferencia de color (distancia euclidiana)
+            const diff = Math.sqrt(
+                Math.pow(r - targetColor.r, 2) +
+                Math.pow(g - targetColor.g, 2) +
+                Math.pow(b - targetColor.b, 2)
+            );
             
-            // Usamos setTimeout para permitir que la UI se actualice antes de procesar
-            setTimeout(() => {
-                // Crear un canvas temporal con el tamaño original de la imagen
-                const tempCanvas = document.createElement('canvas');
-                tempCanvas.width = originalCanvas.width;
-                tempCanvas.height = originalCanvas.height;
-                const tempCtx = tempCanvas.getContext('2d', { alpha: true, willReadFrequently: true });
+            // Calcular luminosidad (para identificar mejor el texto)
+            const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+            
+            // Detectar borde de texto potencial (alto contraste)
+            const isEdge = isPixelEdge(i, data, imageData.width);
+            
+            // Si la diferencia es menor que la tolerancia, hacer transparente
+            if (diff <= textThreshold && !isEdge) {
+                // Color muy cercano al fondo y no es un borde - hacerlo totalmente transparente
+                data[i + 3] = 0;
+            } else if (diff <= tolerance) {
+                if (isEdge && Math.abs(luminance - getTargetLuminance(targetColor)) > 30) {
+                    // Preservar bordes de alto contraste (como texto)
+                    // Mantener la opacidad para el texto
+                    data[i + 3] = 255;
+                } else {
+                    // Aplicar transparencia basada en la diferencia
+                    const alpha = Math.round(255 * (diff / tolerance));
+                    data[i + 3] = alpha;
+                }
+            }
+        }
+        
+        // Aplicar un segundo pase para mejorar la preservación del texto
+        improveTextPreservation(data, imageData.width, imageData.height);
+        
+        // Limpiar el canvas transparente
+        transparentCtx.clearRect(0, 0, transparentCanvas.width, transparentCanvas.height);
+        
+        // Aplicar datos de imagen procesados
+        transparentCtx.putImageData(imageData, 0, 0);
+        
+        loadingIndicator.style.display = 'none';
+    }, 50);
+}
+
+// Función para detectar bordes (útil para preservar texto)
+function isPixelEdge(i, data, width) {
+    const pixelWidth = 4; // 4 bytes por píxel (RGBA)
+    const row = Math.floor(i / (width * pixelWidth));
+    const col = Math.floor((i % (width * pixelWidth)) / pixelWidth);
+    
+    // Solo verificar píxeles que no estén en los bordes de la imagen
+    if (row <= 0 || col <= 0 || row >= width - 1 || col >= width - 1) {
+        return false;
+    }
+    
+    // Obtener valores de píxeles adyacentes
+    const current = {
+        r: data[i],
+        g: data[i + 1],
+        b: data[i + 2]
+    };
+    
+    // Píxel de arriba
+    const topIndex = i - (width * pixelWidth);
+    const top = {
+        r: data[topIndex],
+        g: data[topIndex + 1],
+        b: data[topIndex + 2]
+    };
+    
+    // Píxel de abajo
+    const bottomIndex = i + (width * pixelWidth);
+    const bottom = {
+        r: data[bottomIndex],
+        g: data[bottomIndex + 1],
+        b: data[bottomIndex + 2]
+    };
+    
+    // Píxel izquierdo
+    const leftIndex = i - pixelWidth;
+    const left = {
+        r: data[leftIndex],
+        g: data[leftIndex + 1],
+        b: data[leftIndex + 2]
+    };
+    
+    // Píxel derecho
+    const rightIndex = i + pixelWidth;
+    const right = {
+        r: data[rightIndex],
+        g: data[rightIndex + 1],
+        b: data[rightIndex + 2]
+    };
+    
+    // Calcular diferencias con vecinos
+    const diffTop = colorDifference(current, top);
+    const diffBottom = colorDifference(current, bottom);
+    const diffLeft = colorDifference(current, left);
+    const diffRight = colorDifference(current, right);
+    
+    // Si hay una diferencia significativa con algún vecino, es un borde
+    const edgeThreshold = 30; // Umbral para considerar un borde
+    return (diffTop > edgeThreshold || diffBottom > edgeThreshold || 
+            diffLeft > edgeThreshold || diffRight > edgeThreshold);
+}
+
+// Calcular diferencia entre dos colores
+function colorDifference(color1, color2) {
+    return Math.sqrt(
+        Math.pow(color1.r - color2.r, 2) + 
+        Math.pow(color1.g - color2.g, 2) + 
+        Math.pow(color1.b - color2.b, 2)
+    );
+}
+
+// Calcular luminosidad de un color
+function getTargetLuminance(color) {
+    return 0.299 * color.r + 0.587 * color.g + 0.114 * color.b;
+}
+
+// Segundo pase para mejorar la preservación del texto
+function improveTextPreservation(data, width, height) {
+    // Crear una copia de los datos para no modificar durante la iteración
+    const tempData = new Uint8ClampedArray(data);
+    
+    const pixelWidth = 4; // RGBA
+    
+    // Para cada píxel (excepto bordes)
+    for (let y = 1; y < height - 1; y++) {
+        for (let x = 1; x < width - 1; x++) {
+            const i = (y * width + x) * pixelWidth;
+            
+            // Si es parcialmente transparente
+            if (tempData[i + 3] > 0 && tempData[i + 3] < 255) {
+                let alphaSum = 0;
+                let count = 0;
                 
-                // Dibujar imagen original a tamaño completo para mantener calidad
-                tempCtx.drawImage(originalImage, 0, 0, tempCanvas.width, tempCanvas.height);
-                
-                // Obtener datos de la imagen
-                const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
-                const data = imageData.data;
-                
-                // Color seleccionado para remover
-                const targetColor = hexToRgb(colorPicker.value);
-                const tolerance = parseInt(toleranceSlider.value);
-                
-                // Procesar cada píxel con antialiasing mejorado
-                for (let i = 0; i < data.length; i += 4) {
-                    const r = data[i];
-                    const g = data[i + 1];
-                    const b = data[i + 2];
-                    
-                    // Calcular la diferencia de color (distancia euclidiana)
-                    const diff = Math.sqrt(
-                        Math.pow(r - targetColor.r, 2) +
-                        Math.pow(g - targetColor.g, 2) +
-                        Math.pow(b - targetColor.b, 2)
-                    );
-                    
-                    // Si la diferencia es menor que la tolerancia, hacer transparente
-                    // con transición suave para evitar pixelación en los bordes
-                    if (diff <= tolerance) {
-                        data[i + 3] = 0; // Canal alfa a 0 (completamente transparente)
-                    } else if (diff <= tolerance * 1.2) {
-                        // Transición suave para los bordes (antialiasing mejorado)
-                        const alpha = Math.round(255 * (diff - tolerance) / (tolerance * 0.2));
-                        data[i + 3] = alpha;
+                // Verificar vecinos en un área de 3x3
+                for (let ny = -1; ny <= 1; ny++) {
+                    for (let nx = -1; nx <= 1; nx++) {
+                        if (nx === 0 && ny === 0) continue; // Saltar el píxel actual
+                        
+                        const ni = ((y + ny) * width + (x + nx)) * pixelWidth;
+                        alphaSum += tempData[ni + 3];
+                        count++;
                     }
                 }
                 
-                // Limpiar el canvas transparente
-                transparentCtx.clearRect(0, 0, transparentCanvas.width, transparentCanvas.height);
+                // Promedio de alfa de los vecinos
+                const avgAlpha = alphaSum / count;
                 
-                // Aplicar datos de imagen procesados
-                transparentCtx.putImageData(imageData, 0, 0);
-                
-                loadingIndicator.style.display = 'none';
-            }, 50);
+                // Si los vecinos son en su mayoría transparentes y este no es un borde claro
+                if (avgAlpha < 50) {
+                    data[i + 3] = 0; // Hacer transparente
+                }
+                // Si los vecinos son en su mayoría opacos y este se parece a texto
+                else if (avgAlpha > 200 && isLikelyText(tempData, i, width)) {
+                    data[i + 3] = 255; // Hacer completamente opaco
+                }
+            }
         }
+    }
+}
+
+// Función para identificar píxeles que probablemente forman parte de texto
+function isLikelyText(data, i, width) {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+    
+    // Calcular luminancia
+    const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
+    
+    // Verificar si el píxel es muy oscuro o muy claro (típico de texto)
+    const isExtremeLuminance = luminance < 50 || luminance > 200;
+    
+    // Verificar si hay píxeles adyacentes con alta opacidad
+    const hasOpaqueNeighbors = checkOpaqueNeighbors(data, i, width);
+    
+    return isExtremeLuminance && hasOpaqueNeighbors;
+}
+
+// Verificar si hay vecinos opacos cercanos
+function checkOpaqueNeighbors(data, i, width) {
+    const pixelWidth = 4;
+    
+    // Verificar los píxeles adyacentes directos (arriba, abajo, izquierda, derecha)
+    const indices = [
+        i - (width * pixelWidth), // arriba
+        i + (width * pixelWidth), // abajo
+        i - pixelWidth,           // izquierda
+        i + pixelWidth            // derecha
+    ];
+    
+    let opaqueCount = 0;
+    
+    for (const idx of indices) {
+        if (idx >= 0 && idx < data.length && data[idx + 3] > 200) {
+            opaqueCount++;
+        }
+    }
+    
+    // Si al menos 2 vecinos son opacos, probablemente es parte de texto
+    return opaqueCount >= 2;
+}
+
+// ¡También agrega este nuevo slider para control de nitidez de texto!
+// (Esto se debe agregar al HTML, después de la sección del slider de tolerancia)
+/*
+<div class="control-group">
+    <label><i class="fas fa-font me-2"></i>Preservación de texto:</label>
+    <div class="slider-container">
+        <input type="range" id="textPreservationSlider" min="0" max="100" value="50">
+        <span class="slider-value" id="textPreservationValue">50</span>
+    </div>
+    <small style="color: #aaa;">Aumenta para preservar mejor el texto y las letras</small>
+</div>
+*/
         
         // Convertir color hex a RGB
         function hexToRgb(hex) {
@@ -481,24 +674,203 @@
         
         // Función para seleccionar un color de la imagen
         function enableColorPicking() {
-            if (!originalImage) {
-                alert('Primero debes cargar una imagen.');
-                return;
-            }
-            
-            isPickingColor = true;
-            originalCanvas.style.cursor = 'crosshair';
-        }
+    if (!originalImage) {
+        alert('Primero debes cargar una imagen.');
+        return;
+    }
+    
+    isPickingColor = true;
+    originalCanvas.style.cursor = 'crosshair';
+    document.getElementById('pickFromImage').innerHTML = '<i class="fas fa-times me-2"></i>Cancelar selección';
+    document.getElementById('pickFromImage').classList.add('active');
+    
+    // Mostrar instrucciones temporales
+    const instructionEl = document.createElement('div');
+    instructionEl.id = 'colorPickInstruction';
+    instructionEl.style.cssText = `
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0,0,0,0.8);
+        color: #33ff00;
+        padding: 8px 15px;
+        border-radius: 20px;
+        border: 1px solid #33ff00;
+        font-size: 14px;
+        z-index: 1000;
+    `;
+    instructionEl.innerHTML = '<i class="fas fa-info-circle me-2"></i>Haz clic en el color de fondo que deseas eliminar';
+    document.querySelector('.image-container').appendChild(instructionEl);
+}
+
+// Mejorar la función para obtener un color más preciso
+function getPixelColor(x, y) {
+    // Obtener el color exacto del pixel
+    const pixelData = originalCtx.getImageData(x, y, 1, 1).data;
+    
+    // Color básico del pixel seleccionado
+    const selectedColor = {
+        r: pixelData[0],
+        g: pixelData[1],
+        b: pixelData[2]
+    };
+    
+    // Para una mejor selección de color de fondo, podemos analizar un área pequeña
+    // alrededor del pixel para determinar si hay un color dominante
+    const area = 5; // Área de 5x5 píxeles alrededor del punto seleccionado
+    const areaData = originalCtx.getImageData(
+        Math.max(0, x - Math.floor(area/2)),
+        Math.max(0, y - Math.floor(area/2)),
+        area, area
+    ).data;
+    
+    // Recopilar todos los colores en el área
+    const colors = [];
+    for (let i = 0; i < areaData.length; i += 4) {
+        colors.push({
+            r: areaData[i],
+            g: areaData[i + 1],
+            b: areaData[i + 2]
+        });
+    }
+    
+    // Si la mayoría de los colores son similares, usar un promedio para mayor precisión
+    if (areColorsSimilar(colors, 15)) { // 15 es el umbral de similaridad
+        const avgColor = getAverageColor(colors);
+        return avgColor;
+    }
+    
+    // Si hay mucha variación, probablemente sea un borde o texto
+    // En ese caso, es mejor usar solo el pixel exacto que se seleccionó
+    return selectedColor;
+}
+
+// Verificar si los colores en un área son similares (para detectar áreas uniformes)
+function areColorsSimilar(colors, threshold) {
+    if (colors.length <= 1) return true;
+    
+    const baseColor = colors[0];
+    let similarCount = 0;
+    
+    for (let i = 1; i < colors.length; i++) {
+        const diff = Math.sqrt(
+            Math.pow(baseColor.r - colors[i].r, 2) +
+            Math.pow(baseColor.g - colors[i].g, 2) +
+            Math.pow(baseColor.b - colors[i].b, 2)
+        );
         
-        // Función para obtener el color del pixel seleccionado
-        function getPixelColor(x, y) {
-            const pixelData = originalCtx.getImageData(x, y, 1, 1).data;
-            return {
-                r: pixelData[0],
-                g: pixelData[1],
-                b: pixelData[2]
-            };
+        if (diff <= threshold) {
+            similarCount++;
         }
+    }
+    
+    // Si más del 70% de los colores son similares, consideramos el área uniforme
+    return (similarCount / (colors.length - 1)) > 0.7;
+}
+
+// Calcular el color promedio de un área
+function getAverageColor(colors) {
+    let rSum = 0, gSum = 0, bSum = 0;
+    
+    for (const color of colors) {
+        rSum += color.r;
+        gSum += color.g;
+        bSum += color.b;
+    }
+    
+    return {
+        r: Math.round(rSum / colors.length),
+        g: Math.round(gSum / colors.length),
+        b: Math.round(bSum / colors.length)
+    };
+}
+
+// Modificar el event listener del canvas para mejorar la selección de color
+originalCanvas.addEventListener('click', (e) => {
+    if (!isPickingColor) return;
+    
+    const rect = originalCanvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    const color = getPixelColor(x, y);
+    const hexColor = rgbToHex(color.r, color.g, color.b);
+    
+    colorPicker.value = hexColor;
+    updateColorPreview();
+    
+    // Restablecer el estado
+    isPickingColor = false;
+    originalCanvas.style.cursor = 'default';
+    document.getElementById('pickFromImage').innerHTML = '<i class="fas fa-eye-dropper me-2"></i>Seleccionar de la imagen';
+    document.getElementById('pickFromImage').classList.remove('active');
+    
+    // Eliminar instrucciones temporales si existen
+    const instruction = document.getElementById('colorPickInstruction');
+    if (instruction) {
+        instruction.remove();
+    }
+    
+    // Opcional: procesar la imagen automáticamente después de seleccionar un color
+    // processImage();
+});
+
+// Agregar nuevo evento para cancelar la selección con Escape
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isPickingColor) {
+        isPickingColor = false;
+        originalCanvas.style.cursor = 'default';
+        document.getElementById('pickFromImage').innerHTML = '<i class="fas fa-eye-dropper me-2"></i>Seleccionar de la imagen';
+        document.getElementById('pickFromImage').classList.remove('active');
+        
+        // Eliminar instrucciones temporales si existen
+        const instruction = document.getElementById('colorPickInstruction');
+        if (instruction) {
+            instruction.remove();
+        }
+    }
+});
+
+// Modificar el event listener del botón para alternar la selección
+document.getElementById('pickFromImage').addEventListener('click', (e) => {
+    if (isPickingColor) {
+        // Cancelar el modo de selección
+        isPickingColor = false;
+        originalCanvas.style.cursor = 'default';
+        e.target.innerHTML = '<i class="fas fa-eye-dropper me-2"></i>Seleccionar de la imagen';
+        e.target.classList.remove('active');
+        
+        // Eliminar instrucciones temporales si existen
+        const instruction = document.getElementById('colorPickInstruction');
+        if (instruction) {
+            instruction.remove();
+        }
+    } else {
+        // Activar modo de selección
+        enableColorPicking();
+    }
+});
+
+// Agregar estilos para el botón activo
+const style = document.createElement('style');
+style.textContent = `
+    #pickFromImage.active {
+        background-color: #33ff00;
+        color: var(--primary-color);
+    }
+    
+    #colorPickInstruction {
+        animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { opacity: 0.7; }
+        50% { opacity: 1; }
+        100% { opacity: 0.7; }
+    }
+`;
+document.head.appendChild(style);
         
         // Convertir RGB a HEX
         function rgbToHex(r, g, b) {
