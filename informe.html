@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor de Informe gestion 0 proactiva </title>
+  <style>
+    :root {
+      --primary: #0066cc;
+      --secondary: #f7f7f7;
+      --accent: #e63946;
+      --text: #333333;
+      --light-text: #666666;
+      --border: #dddddd;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 15px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-circle {
+      width: 40px;
+      height: 40px;
+      background-color: #cc2a25;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    
+    .title-section {
+      margin-bottom: 30px;
+    }
+    
+    h1 {
+      font-size: 28px;
+      color: var(--text);
+      margin-bottom: 0;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      color: var(--light-text);
+      margin-top: 5px;
+    }
+    
+    .analyst-badge {
+      background-color: var(--primary);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 4px;
+      display: inline-block;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    
+    .summary-section {
+      background-color: var(--secondary);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      border-left: 4px solid var(--primary);
+    }
+    
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .section-title::before {
+      content: '';
+      width: 6px;
+      height: 20px;
+      background-color: var(--primary);
+      margin-right: 10px;
+    }
+    
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .insight-card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      border-top: 3px solid var(--primary);
+      transition: transform 0.3s ease;
+    }
+    
+    .insight-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .insight-number {
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    
+    .insight-label {
+      font-size: 14px;
+      color: var(--light-text);
+      margin-top: 5px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+    
+    th {
+      background-color: var(--primary);
+      color: white;
+      text-align: left;
+      padding: 12px 15px;
+    }
+    
+    td {
+      padding: 12px 15px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f8f8f8;
+    }
+    
+    .highlight {
+      background-color: #fff8e1;
+    }
+    
+    .alert-tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+    
+    .alert-high {
+      background-color: #ffebee;
+      color: #d32f2f;
+      border: 1px solid #ffcdd2;
+    }
+    
+    .alert-medium {
+      background-color: #fff8e1;
+      color: #ff8f00;
+      border: 1px solid #ffe082;
+    }
+    
+    .alert-low {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+    }
+    
+    .intervention-status {
+      padding: 20px;
+      background-color: #fff8e1;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      border-left: 4px solid #ff8f00;
+    }
+    
+    .important-note {
+      padding: 15px;
+      background-color: #e8f4fd;
+      border-left: 4px solid var(--primary);
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    
+    .recommendations {
+      background-color: var(--secondary);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    
+    .footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 14px;
+      color: var(--light-text);
+    }
+    
+    .chart-container {
+      height: 300px;
+      margin-bottom: 30px;
+    }
+    
+    /* Estilos para el editor */
+    .editor-panel {
+      background-color: #f0f4f8;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+    }
+    
+    .panel-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    
+    textarea {
+      min-height: 80px;
+    }
+    
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 5px;
+    }
+    
+    .button-danger {
+      background-color: #e63946;
+    }
+    
+    .button-success {
+      background-color: #2e7d32;
+    }
+    
+    .tab-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .tab {
+      padding: 10px 15px;
+      background-color: #e0e0e0;
+      border-radius: 4px 4px 0 0;
+      cursor: pointer;
+    }
+    
+    .tab.active {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .content-section {
+      display: none;
+    }
+    
+    .content-section.active {
+      display: block;
+    }
+    
+    .category-item {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+    
+    .flex-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .flex-grow {
+      flex: 1;
+    }
+    
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="tab-container">
+    <div class="tab active" id="edit-tab">Editar</div>
+    <div class="tab" id="preview-tab">Vista Previa</div>
+  </div>
+  
+  <div class="content-section active" id="edit-section">
+    <div class="editor-panel">
+      <div class="panel-title">Editor de Informe</div>
+      
+      <h3>Información General</h3>
+      <div class="form-group">
+        <label>Empresa:</label>
+        <input type="text" id="empresa" value="Milenio PC">
+      </div>
+      
+      <div class="form-group">
+        <label>Fecha Informe:</label>
+        <input type="text" id="fecha" value="Mayo 2025">
+      </div>
+      
+      <div class="form-group">
+        <label>Título:</label>
+        <input type="text" id="titulo" value="Detección exitosa de riesgos en incidentes potenciales">
+      </div>
+      
+      <div class="form-group">
+        <label>Analista:</label>
+        <input type="text" id="analista" value="Laura Marcela Osorio">
+      </div>
+      
+      <h3>Resumen Ejecutivo</h3>
+      <div class="form-group">
+        <label>Texto de resumen:</label>
+        <textarea id="resumen">Durante el mes, se generaron un total de 4 casos de alertas en el monitoreo de Tech Pulse. A continuación se presenta un análisis detallado de los casos registrados, las intervenciones realizadas y las recomendaciones para el próximo periodo.</textarea>
+      </div>
+      
+      <h3>Cuadro de Estadísticas</h3>
+      <div id="insights-container">
+        <!-- Los insights se generarán dinámicamente aquí -->
+      </div>
+      <button id="add-insight">+ Agregar estadística</button>
+      
+      <h3>Categorías</h3>
+      <div id="categorias-container">
+        <!-- Las categorías se generarán dinámicamente aquí -->
+      </div>
+      <button id="add-categoria">+ Agregar categoría</button>
+      
+      <h3>Estado de Intervención</h3>
+      <div class="form-group">
+        <label>Estado:</label>
+        <textarea id="estado-intervencion">Los casos no fueron intervenidos por disponibilidad del usuario.</textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>Nota importante:</label>
+        <textarea id="nota-importante">Quedamos atentos a su disponibilidad para atender estas alertas como parte de nuestra gestión proactiva. La pronta intervención de estos casos podría prevenir incidentes mayores en la operación.</textarea>
+      </div>
+      
+      <h3>Recomendaciones</h3>
+      <div id="recomendaciones-container">
+        <!-- Las recomendaciones se generarán dinámicamente aquí -->
+      </div>
+      <button id="add-recomendacion">+ Agregar recomendación</button>
+      
+      <h3>Pie de Página</h3>
+      <div class="form-group">
+        <label>Año:</label>
+        <input type="text" id="year-footer" value="2025">
+      </div>
+      
+      <div class="form-group">
+        <label>Fecha de generación:</label>
+        <input type="text" id="fecha-generacion" value="13 de mayo de 2025">
+      </div>
+    </div>
+  </div>
+  
+  <div class="content-section" id="preview-section">
+    <button class="button-success" id="export-pdf">Exportar a PDF</button>
+    
+    <div id="documento-preview" class="container">
+      <!-- La vista previa se generará dinámicamente aquí -->
+    </div>
+  </div>
+  
+  <!-- Incluir la biblioteca html2pdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
+  <script>
+    // Datos iniciales
+    const insightsData = [
+      { id: 1, numero: 41, etiqueta: "Alertas detectadas" },
+      { id: 2, numero: 4, etiqueta: "Casos registrados" },
+      { id: 3, numero: 0, etiqueta: "Casos intervenidos" },
+      { id: 4, numero: 100, etiqueta: "Pendientes de intervención", porcentaje: true }
+    ];
+    
+    const categoriasData = [
+      { 
+        id: 1,
+        categoria: "Batería", 
+        cantidad: 36, 
+        caso: 107662, 
+        prioridad: "alta", 
+        observacion: "Se detectaron 36 alertas reportadas para verificaciones del estado real de las baterías" 
+      },
+      { 
+        id: 2,
+        categoria: "BIOS", 
+        cantidad: 2, 
+        caso: 107660, 
+        prioridad: "media", 
+        observacion: "Casos vinculados a versiones desactualizadas. Se envió listado con los equipos para intervenir" 
+      },
+      { 
+        id: 3,
+        categoria: "Pantallazos azules", 
+        cantidad: 1, 
+        caso: 107659, 
+        prioridad: "alta", 
+        observacion: "Alertas relacionadas a equipos con pantallazos azules críticos con más de 3 registros de recurrencia en el mes" 
+      },
+      { 
+        id: 4,
+        categoria: "Almacenamiento", 
+        cantidad: 2, 
+        caso: 107659, 
+        prioridad: "media", 
+        observacion: "Equipos con alertas de poco espacio de disco" 
+      }
+    ];
+    
+    const recomendacionesData = [
+      { id: 1, texto: "Programar intervenciones para las 36 alertas de batería a la mayor brevedad posible." },
+      { id: 2, texto: "Actualizar las versiones de BIOS de forma remota durante horarios no laborables." },
+      { id: 3, texto: "Realizar análisis detallado de los pantallazos azules recurrentes para identificar patrones." },
+      { id: 4, texto: "Proponer una campaña de limpieza de almacenamiento para los equipos con poco espacio." }
+    ];
+    
+    // Variables globales
+    let insightCounter = insightsData.length;
+    let categoriaCounter = categoriasData.length;
+    let recomendacionCounter = recomendacionesData.length;
+    
+    // Funciones auxiliares
+    function crearElementoInsight(insight) {
+      const div = document.createElement('div');
+      div.className = 'flex-row';
+      div.dataset.id = insight.id;
+      
+      div.innerHTML = `
+        <div class="form-group flex-grow">
+          <label>Número:</label>
+          <input type="number" class="insight-numero" value="${insight.numero}">
+        </div>
+        <div class="form-group flex-grow">
+          <label>Etiqueta:</label>
+          <input type="text" class="insight-etiqueta" value="${insight.etiqueta}">
+        </div>
+        <div class="form-group" style="align-self: flex-end;">
+          <label>Porcentaje:</label>
+          <input type="checkbox" class="insight-porcentaje" ${insight.porcentaje ? 'checked' : ''}>
+        </div>
+        <div style="align-self: flex-end;">
+          <button class="button-danger delete-insight">Eliminar</button>
+        </div>
+      `;
+      
+      return div;
+    }
+    
+    function crearElementoCategoria(categoria) {
+      const div = document.createElement('div');
+      div.className = 'category-item';
+      div.dataset.id = categoria.id;
+      
+      div.innerHTML = `
+        <div class="flex-row">
+          <div class="form-group flex-grow">
+            <label>Categoría:</label>
+            <input type="text" class="categoria-nombre" value="${categoria.categoria}">
+          </div>
+          <div class="form-group flex-grow">
+            <label>Cantidad:</label>
+            <input type="number" class="categoria-cantidad" value="${categoria.cantidad}">
+          </div>
+          <div class="form-group flex-grow">
+            <label>Caso #:</label>
+            <input type="number" class="categoria-caso" value="${categoria.caso}">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Prioridad:</label>
+          <select class="categoria-prioridad">
+            <option value="alta" ${categoria.prioridad === 'alta' ? 'selected' : ''}>Alta</option>
+            <option value="media" ${categoria.prioridad === 'media' ? 'selected' : ''}>Media</option>
+            <option value="baja" ${categoria.prioridad === 'baja' ? 'selected' : ''}>Baja</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Observación:</label>
+          <textarea class="categoria-observacion">${categoria.observacion}</textarea>
+        </div>
+        
+        <button class="button-danger delete-categoria">Eliminar categoría</button>
+      `;
+      
+      return div;
+    }
+    
+    function crearElementoRecomendacion(recomendacion) {
+      const div = document.createElement('div');
+      div.className = 'flex-row';
+      div.dataset.id = recomendacion.id;
+      
+      div.innerHTML = `
+        <textarea class="flex-grow recomendacion-texto">${recomendacion.texto}</textarea>
+        <button class="button-danger delete-recomendacion">Eliminar</button>
+      `;
+      
+      return div;
+    }
+    
+    // Función para generar la vista previa
+    function generarVistaPrevia() {
+      const empresa = document.getElementById('empresa').value;
+      const fecha = document.getElementById('fecha').value;
+      const titulo = document.getElementById('titulo').value;
+      const analista = document.getElementById('analista').value;
+      const resumen = document.getElementById('resumen').value;
+      const estadoIntervencion = document.getElementById('estado-intervencion').value;
+      const notaImportante = document.getElementById('nota-importante').value;
+      const yearFooter = document.getElementById('year-footer').value;
+      const fechaGeneracion = document.getElementById('fecha-generacion').value;
+      
+      // Recopilar insights
+      const insights = [];
+      document.querySelectorAll('#insights-container .flex-row').forEach(row => {
+        insights.push({
+          numero: row.querySelector('.insight-numero').value,
+          etiqueta: row.querySelector('.insight-etiqueta').value,
+          porcentaje: row.querySelector('.insight-porcentaje').checked
+        });
+      });
+      
+      // Recopilar categorías
+      const categorias = [];
+      document.querySelectorAll('#categorias-container .category-item').forEach(item => {
+        categorias.push({
+          categoria: item.querySelector('.categoria-nombre').value,
+          cantidad: item.querySelector('.categoria-cantidad').value,
+          caso: item.querySelector('.categoria-caso').value,
+          prioridad: item.querySelector('.categoria-prioridad').value,
+          observacion: item.querySelector('.categoria-observacion').value
+        });
+      });
+      
+      // Recopilar recomendaciones
+      const recomendaciones = [];
+      document.querySelectorAll('#recomendaciones-container .flex-row').forEach(row => {
+        recomendaciones.push(row.querySelector('.recomendacion-texto').value);
+      });
+      
+      // Generar HTML de vista previa
+      const preview = document.getElementById('documento-preview');
+      
+      preview.innerHTML = `
+        <div class="header">
+          <div class="logo">
+            <div class="logo-circle">${empresa.charAt(0)}</div>
+            <h2>${empresa}</h2>
+          </div>
+          <p>Informe Mensual: ${fecha}</p>
+        </div>
+        
+        <div class="title-section">
+          <h1>${titulo}</h1>
+          <div class="analyst-badge">Analista: ${analista}</div>
+        </div>
+        
+        <div class="summary-section">
+          <div class="section-title">Resumen Ejecutivo</div>
+          <p>${resumen}</p>
+        </div>
+        
+        <div class="insights-grid">
+          ${insights.map(insight => `
+            <div class="insight-card">
+              <div class="insight-number">${insight.numero}${insight.porcentaje ? '%' : ''}</div>
+              <div class="insight-label">${insight.etiqueta}</div>
+            </div>
+          `).join('')}
+        </div>
+        
+        <div class="section-title">Aclaración por categoría detectada</div>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Categoría</th>
+              <th>Cantidad</th>
+              <th>Caso</th>
+              <th>Observación</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${categorias.map((cat, index) => `
+              <tr ${index % 2 === 1 ? 'class="highlight"' : ''}>
+                <td>${cat.categoria}</td>
+                <td>${cat.cantidad}</td>
+                <td>${cat.caso}</td>
+                <td>
+                  <div>
+                    <span class="alert-tag alert-${cat.prioridad}">
+                      ${cat.prioridad === 'alta' ? 'Alta prioridad' : 
+                        cat.prioridad === 'media' ? 'Media prioridad' : 'Baja prioridad'}
+                    </span>
+                  </div>
+                  <div>${cat.observacion}</div>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+        
+        <div class="intervention-status">
+          <div class="section-title">Estado de Intervención</div>
+          <p>${estadoIntervencion}</p>
+          
+          <div class="important-note">
+            <strong>Nota importante:</strong> ${notaImportante}
+          </div>
+        </div>
+        
+        <div class="recommendations">
+          <div class="section-title">Recomendaciones</div>
+          <ul>
+            ${recomendaciones.map(rec => `<li>${rec}</li>`).join('')}
+          </ul>
+        </div>
+        
+        <div class="footer">
+          <p>© MILENIO PC ${yearFooter} ${empresa} | HP Workforce Experience Platform  | Reporte generado el ${fechaGeneracion}</p>
+        </div>
+      `;
+    }
+    
+    // Inicialización del documento
+    document.addEventListener('DOMContentLoaded', function() {
+      // Cambio entre pestañas
+      document.getElementById('edit-tab').addEventListener('click', function() {
+        document.getElementById('edit-tab').classList.add('active');
+        document.getElementById('preview-tab').classList.remove('active');
+        document.getElementById('edit-section').classList.add('active');
+        document.getElementById('preview-section').classList.remove('active');
+      });
+      
+      document.getElementById('preview-tab').addEventListener('click', function() {
+        document.getElementById('preview-tab').classList.add('active');
+        document.getElementById('edit-tab').classList.remove('active');
+        document.getElementById('preview-section').classList.add('active');
+        document.getElementById('edit-section').classList.remove('active');
+        generarVistaPrevia();
+      });
+      
+      // Inicializar contenedores con datos
+      const insightsContainer = document.getElementById('insights-container');
+      insightsData.forEach(insight => {
+        insightsContainer.appendChild(crearElementoInsight(insight));
+      });
+      
+      const categoriasContainer = document.getElementById('categorias-container');
+      categoriasData.forEach(categoria => {
+        categoriasContainer.appendChild(crearElementoCategoria(categoria));
+      });
+      
+      const recomendacionesContainer = document.getElementById('recomendaciones-container');
+      recomendacionesData.forEach(recomendacion => {
+        recomendacionesContainer.appendChild(crearElementoRecomendacion(recomendacion));
+      });
+      
+      // Eventos para agregar nuevos elementos
+      document.getElementById('add-insight').addEventListener('click', function() {
+        insightCounter++;
+        const newInsight = { id: insightCounter, numero: 0, etiqueta: "Nueva estadística" };
+        insightsContainer.appendChild(crearElementoInsight(newInsight));
+      });
+      
+      document.getElementById('add-categoria').addEventListener('click', function() {
+        categoriaCounter++;
+        const newCategoria = {
+          id: categoriaCounter,
+          categoria: "Nueva categoría",
+          cantidad: 0,
+          caso: 100000,
+          prioridad: "media",
+          observacion: "Descripción de la nueva categoría"
+        };
+        categoriasContainer.appendChild(crearElementoCategoria(newCategoria));
+      });
+      
+      document.getElementById('add-recomendacion').addEventListener('click', function() {
+        recomendacionCounter++;
+        const newRecomendacion = { id: recomendacionCounter, texto: "Nueva recomendación" };
+        recomendacionesContainer.appendChild(crearElementoRecomendacion(newRecomendacion));
+      });
+      
+      // Eventos para eliminar elementos (delegación de eventos)
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('delete-insight')) {
+          e.target.closest('.flex-row').remove();
+        }
+        if (e.target.classList.contains('delete-categoria')) {
+          e.target.closest('.category-item').remove();
+        }
+        if (e.target.classList.contains('delete-recomendacion')) {
+          e.target.closest('.flex-row').remove();
+        }
+      });
+      
+      // Exportar a PDF
+      document.getElementById('export-pdf').addEventListener('click', function() {
+        // Obtener el elemento que contiene el informe
+        const element = document.getElementById('documento-preview');
+        
+        // Opciones para la generación del PDF
+        const opt = {
+          margin: 10,
+          filename: 'informe-tech-pulse.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, letterRendering: true },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        
+        // Generar el PDF
+        html2pdf().set(opt).from(element).save();
+      });
+    });
+  </script>
+</body>
+</html>
