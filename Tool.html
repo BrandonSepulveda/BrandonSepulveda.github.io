@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2RY7LG5R21');
+      
+      // Registrar visita web
+      gtag('event', 'tool_page_visit', {
+        'event_category': 'ToolboxBS',
+        'event_label': 'Web Visit',
+        'page_title': 'ToolboxBS PowerShell Script'
+      });
+    </script>
+    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="ToolboxBS PowerShell Script - Sistema de utilidades para Windows" />
+    <title>ToolboxBS - PowerShell Script</title>
+    
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0d1117;
+            color: #58a6ff;
+            padding: 20px;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #f0f6fc;
+            border-bottom: 2px solid #21262d;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #f0f6fc;
+            margin-top: 30px;
+        }
+        pre {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            overflow-x: auto;
+            color: #e6edf3;
+            margin: 10px 0;
+        }
+        .highlight {
+            background: #1f6feb;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .warning {
+            background: #332900;
+            border: 1px solid #9e6a03;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 16px 0;
+            color: #f0cc00;
+        }
+        .info {
+            background: #0d2837;
+            border: 1px solid #1f6feb;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 16px 0;
+            color: #58a6ff;
+        }
+        ol, ul {
+            padding-left: 20px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #1f6feb;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #388bfd;
+            color: white;
+        }
+        .copy-btn {
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .copy-btn:hover {
+            background: #2ea043;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 ToolboxBS - PowerShell Script</h1>
+        
+        <p>Este es el launcher de <strong>ToolboxBS</strong> - Una suite completa de utilidades del sistema para Windows que incluye:</p>
+        
+        <ul>
+            <li>✅ Información detallada del sistema</li>
+            <li>🔧 Optimización y limpieza del sistema</li>
+            <li>📦 Instalador de aplicaciones en lote</li>
+            <li>🛠️ Herramientas de diagnóstico y reparación</li>
+            <li>⚡ Verificación y reparación de archivos del sistema</li>
+        </ul>
+        
+        <div class="warning">
+            <strong>⚠️ Importante:</strong> Este script descarga y ejecuta la última versión de ToolboxBS directamente desde GitHub. Ejecuta como administrador para obtener todas las funcionalidades.
+        </div>
+        
+        <h2>🚀 Ejecución Rápida:</h2>
+        <div class="info">
+            <strong>Método 1 - Launcher URL:</strong>
+            <pre id="cmd1">irm "https://brandonsepulveda.github.io/Tool" | iex<button class="copy-btn" onclick="copyToClipboard('cmd1')">Copiar</button></pre>
+        </div>
+        
+        <div class="info">
+            <strong>Método 2 - Directo desde GitHub:</strong>
+            <pre id="cmd2">Invoke-Expression (Invoke-RestMethod https://github.com/BrandonSepulveda/ToolboxBS/releases/latest/download/ToolboxBS.ps1)<button class="copy-btn" onclick="copyToClipboard('cmd2')">Copiar</button></pre>
+        </div>
+        
+        <h2>📖 Instrucciones Paso a Paso:</h2>
+        <ol>
+            <li><strong>Abre PowerShell como Administrador</strong>
+                <ul><li>Presiona <kbd>Win + X</kbd> → Selecciona "Windows PowerShell (Admin)"</li></ul>
+            </li>
+            <li><strong>Copia uno de los comandos de arriba</strong></li>
+            <li><strong>Pega el comando en PowerShell</strong> (Ctrl+V)</li>
+            <li><strong>Presiona Enter</strong></li>
+            <li><strong>¡ToolboxBS se descargará y ejecutará automáticamente!</strong></li>
+        </ol>
+        
+        <h2>📋 Características de ToolboxBS:</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 20px 0;">
+            <div style="background: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d;">
+                <h4 style="color: #f0f6fc; margin-top: 0;">🖥️ Información del Sistema</h4>
+                <p>Muestra detalles completos del hardware, software y rendimiento del sistema.</p>
+            </div>
+            <div style="background: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d;">
+                <h4 style="color: #f0f6fc; margin-top: 0;">📦 Instalador de Apps</h4>
+                <p>Instala múltiples aplicaciones populares de forma simultánea y automática.</p>
+            </div>
+            <div style="background: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d;">
+                <h4 style="color: #f0f6fc; margin-top: 0;">🧹 Optimización</h4>
+                <p>Limpia archivos temporales, optimiza el registro y mejora el rendimiento.</p>
+            </div>
+            <div style="background: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d;">
+                <h4 style="color: #f0f6fc; margin-top: 0;">🔧 Reparación</h4>
+                <p>Verifica y repara archivos del sistema usando herramientas nativas de Windows.</p>
+            </div>
+        </div>
+        
+        <h2>🔗 Enlaces Relacionados:</h2>
+        <div style="margin: 20px 0;">
+            <a href="https://brandonsepulveda.github.io/" class="btn">🏠 Sitio Principal</a>
+            <a href="https://brandonsepulveda.github.io/toolboxbs.html" class="btn">📖 Documentación</a>
+            <a href="https://github.com/BrandonSepulveda/ToolboxBS" class="btn">📦 Repositorio GitHub</a>
+            <a href="https://github.com/BrandonSepulveda/ToolboxBS/releases" class="btn">⬇️ Descargas</a>
+        </div>
+        
+        <div class="info">
+            <strong>💡 Consejo:</strong> Marca esta página en favoritos para acceso rápido a las instrucciones y comandos de ToolboxBS.
+        </div>
+        
+        <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #21262d; text-align: center; color: #7d8590;">
+            <p>© 2024 <a href="https://brandonsepulveda.github.io/">Brandon Sepulveda</a> - <a href="mailto:jhonvaldessepulveda@gmail.com">📧 Contacto</a></p>
+            <p style="font-size: 12px; margin-top: 10px;">
+                <a href="https://www.instagram.com/brandonsepulveda_66">📷 Instagram</a> | 
+                <a href="https://github.com/BrandonSepulveda">💻 GitHub</a> | 
+                <a href="https://kick.com/papibrandon">🎮 Kick</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent.replace('Copiar', '').trim();
+            
+            navigator.clipboard.writeText(text).then(function() {
+                const btn = element.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copiado';
+                btn.style.background = '#238636';
+                
+                setTimeout(function() {
+                    btn.textContent = originalText;
+                    btn.style.background = '#238636';
+                }, 2000);
+            });
+        }
+        
+        // Registrar eventos de copia
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                gtag('event', 'copy_command', {
+                    'event_category': 'ToolboxBS',
+                    'event_label': 'PowerShell Command Copy',
+                    'value': 1
+                });
+            });
+        });
+        
+        // Registrar clics en enlaces
+        document.querySelectorAll('a[href^="http"]').forEach(link => {
+            link.addEventListener('click', function() {
+                gtag('event', 'external_link', {
+                    'event_category': 'Navigation',
+                    'event_label': this.href,
+                    'value': 1
+                });
+            });
+        });
+    </script>
+</body>
+</html>
