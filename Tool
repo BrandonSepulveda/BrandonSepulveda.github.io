@@ -1,2 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2RY7LG5R21');
+      
+      // Registrar visita web
+      gtag('event', 'tool_page_visit', {
+        'event_category': 'ToolboxBS',
+        'event_label': 'Web Visit',
+        'page_title': 'ToolboxBS PowerShell Script'
+      });
+    </script>
+    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ToolboxBS - PowerShell Script</title>
+    
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0d1117;
+            color: #58a6ff;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #f0f6fc;
+            border-bottom: 2px solid #21262d;
+            padding-bottom: 10px;
+        }
+        pre {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            overflow-x: auto;
+            color: #e6edf3;
+        }
+        .highlight {
+            background: #1f6feb;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .warning {
+            background: #332900;
+            border: 1px solid #9e6a03;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 16px 0;
+            color: #f0cc00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 ToolboxBS - PowerShell Script</h1>
+        
+        <p>Este es el launcher de <strong>ToolboxBS</strong> - Una suite de utilidades del sistema para Windows.</p>
+        
+        <div class="warning">
+            <strong>⚠️ Importante:</strong> Este script descarga y ejecuta la última versión de ToolboxBS desde GitHub.
+        </div>
+        
+        <h2>📋 Uso Rápido:</h2>
+        <pre><span class="highlight">irm "https://brandonsepulveda.github.io/Tool" | iex</span></pre>
+        
+        <h2>🔗 O ejecuta directamente:</h2>
+        <pre>Invoke-Expression (Invoke-RestMethod https://github.com/BrandonSepulveda/ToolboxBS/releases/latest/download/ToolboxBS.ps1)</pre>
+        
+        <h2>📖 Instrucciones:</h2>
+        <ol>
+            <li>Abre <strong>PowerShell como Administrador</strong></li>
+            <li>Copia y pega uno de los comandos de arriba</li>
+            <li>Presiona <strong>Enter</strong></li>
+            <li>¡ToolboxBS se descargará y ejecutará automáticamente!</li>
+        </ol>
+        
+        <h2>🔗 Enlaces:</h2>
+        <ul>
+            <li><a href="https://brandonsepulveda.github.io/">🏠 Sitio Principal</a></li>
+            <li><a href="https://brandonsepulveda.github.io/toolboxbs.html">📖 Documentación ToolboxBS</a></li>
+            <li><a href="https://github.com/BrandonSepulveda/ToolboxBS">📦 Repositorio GitHub</a></li>
+        </ul>
+        
+        <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #21262d; text-align: center; color: #7d8590;">
+            <p>© 2024 Brandon Sepulveda - <a href="mailto:jhonvaldessepulveda@gmail.com">Contacto</a></p>
+        </footer>
+    </div>
+</body>
+</html>
+
+<!-- 
+PowerShell ignorará todo el HTML de arriba y solo ejecutará esta línea:
+-->
 # Redirigir a la última versión de ToolboxBS.ps1
 Invoke-Expression (Invoke-RestMethod https://github.com/BrandonSepulveda/ToolboxBS/releases/latest/download/ToolboxBS.ps1)
