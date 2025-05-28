@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi novia? 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(45deg, #ff6b9d, #ff8fab, #ffa8cc, #ffc2dd);
+            background-size: 400% 400%;
+            animation: gradientMove 8s ease infinite;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 20px;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 500px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.02); }
+        }
+
+        h1 {
+            color: #e91e63;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: bounce 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-10px); }
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            height: 120px;
+            position: relative;
+            padding: 0 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-yes {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            position: static;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4); }
+            to { box-shadow: 0 5px 25px rgba(76, 175, 80, 0.8); }
+        }
+
+        .btn-no {
+            background: linear-gradient(45deg, #f44336, #e57373);
+            color: white;
+            position: absolute;
+            right: 30px;
+            top: 0;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+        }
+
+        .message {
+            margin-top: 30px;
+            font-size: 1.1em;
+            color: #666;
+            font-style: italic;
+        }
+
+        .celebration {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .celebration-content {
+            background: linear-gradient(45deg, #ff6b9d, #ffa8cc);
+            padding: 50px;
+            border-radius: 30px;
+            text-align: center;
+            color: white;
+            font-size: 1.5em;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: celebrationPulse 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes celebrationPulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+        .sparkle {
+            position: absolute;
+            color: gold;
+            font-size: 30px;
+            animation: sparkle 1s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .emoji {
+            font-size: 3em;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="container">
+        <h1>💕 ¿Quieres ser mi novia? 💕</h1>
+        <div class="emoji">😍</div>
+        
+        <div class="buttons-container">
+            <button class="btn btn-yes" onclick="acceptProposal()">¡SÍ! 💖</button>
+            <button class="btn btn-no" id="noBtn" onclick="moveButton()">No 😔</button>
+        </div>
+        
+        <div class="message" id="message">
+            Piénsalo bien... 😘
+        </div>
+    </div>
+
+    <div class="celebration" id="celebration">
+        <div class="celebration-content">
+            <h2>¡Eres afortunada de tener a alguien como yo! 😎</h2>
+            <p>Te amo mucho bebe 💕</p>
+            <div class="emoji">🥰</div>
+            <p>¡Sabía que dirías que sí! 😘</p>
+        </div>
+    </div>
+
+    <script>
+        let moveCount = 0;
+        const maxMoves = 15;
+        const messages = [
+            "Vamos, di que sí... 🥺",
+            "¿En serio? Piénsalo mejor 😏",
+            "No puedes escapar del amor 💕",
+            "¡Vamos, no seas tímida! 😊",
+            "El botón de SÍ está esperando... 💖",
+            "¿Por qué me haces esto? 😢",
+            "Sabes que me amas 😘",
+            "No puedes resistirte para siempre 😏",
+            "¡Solo di que sí! 💕",
+            "Está bien, una vez más... 🙄",
+            "¿De verdad vas a seguir? 😅",
+            "¡Eres imposible! 😆",
+            "Última oportunidad... 🥺",
+            "¡Ya me cansé! 😤",
+            "Bueno... ¿qué tal ahora? 😇"
+        ];
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const container = document.querySelector('.buttons-container');
+            const message = document.getElementById('message');
+            
+            if (moveCount < maxMoves) {
+                const containerRect = container.getBoundingClientRect();
+                const btnWidth = 120;
+                const btnHeight = 50;
+                
+                const maxX = containerRect.width - btnWidth;
+                const maxY = containerRect.height - btnHeight;
+                
+                const randomX = Math.random() * maxX;
+                const randomY = Math.random() * maxY;
+                
+                noBtn.style.left = randomX + 'px';
+                noBtn.style.top = randomY + 'px';
+                
+                // Cambiar mensaje
+                message.textContent = messages[moveCount] || "🤔";
+                moveCount++;
+                
+                // Efecto de vibración
+                noBtn.style.animation = 'shake 0.5s ease-in-out';
+                setTimeout(() => {
+                    noBtn.style.animation = '';
+                }, 500);
+                
+            } else {
+                // Después de 15 intentos, cambiar a SÍ
+                noBtn.textContent = "¡SÍ! 💖";
+                noBtn.className = "btn btn-yes";
+                noBtn.onclick = acceptProposal;
+                message.textContent = "¡Sabía que cambiarías de opinión! 😏";
+            }
+        }
+
+        function acceptProposal() {
+            const celebration = document.getElementById('celebration');
+            celebration.style.display = 'flex';
+            
+            // Crear más corazones y sparkles
+            createSparkles();
+            
+            // Música de celebración (opcional)
+            setTimeout(() => {
+                celebration.style.display = 'none';
+            }, 5000);
+        }
+
+        function createSparkles() {
+            const celebration = document.querySelector('.celebration-content');
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.textContent = '✨';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                celebration.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 3000);
+            }
+        }
+
+        // Crear corazones flotantes
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '💕';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.getElementById('hearts').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+
+        // Crear corazones cada segundo
+        setInterval(createHeart, 1000);
+
+        // Animación de shake para el botón NO
+        const shakeKeyframes = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        
+        const style = document.createElement('style');
+        style.textContent = shakeKeyframes;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
