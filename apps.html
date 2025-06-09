@@ -1,189 +1,581 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112"
-     crossorigin="anonymous"></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Listado de aplicaciones para descargar" />
-    <meta name="author" content="JBSV" />
-    <title>Apps - JBSV</title>
+    <title>Centro de Apps - Descargador Masivo | JBSV</title>
+    
+    <meta name="description" content="Selecciona y descarga múltiples aplicaciones esenciales para Windows de forma rápida y sencilla." />
+    <meta name="author" content="Jhon Brandon Sepulveda Valdes" />
     <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-27.ico" />
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-2RY7LG5R21');
+    </script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --bg-dark: #0D1117;
+            --bg-medium: #161B22;
+            --bg-light: #21262D;
+            --text-light: #F0F6FC;
+            --text-secondary: #8B949E;
+            --border-color: #30363D;
+            --accent-color: #2F81F7;
+            --accent-hover: #58A6FF;
+            --card-hover-border: #8B949E;
+        }
+
         body {
-            padding-top: 56px; /* Ajuste para la barra de navegación fija */
-            background-color: #f8f9fa; /* Color de fondo */
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding-top: 80px; /* Espacio para el header fijo */
         }
-        .form-check {
-            margin-bottom: 10px; /* Espaciado entre aplicaciones */
-        }
-        .form-check-label {
-            cursor: pointer; /* Cambia el cursor al pasar por encima de las etiquetas */
-        }
-        .projects-section {
-            padding: 80px 0; /* Espaciado en la sección principal */
-        }
-        .footer {
-            padding: 25px 0; /* Espaciado en el pie de página */
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background-color: #343a40; /* Color de fondo del pie de página */
-            color: white; /* Color del texto del pie de página */
-        }
+
+        /* --- Header --- */
         .navbar {
-            background-color: #ffffff; /* Color de fondo de la barra de navegación */
-            border-bottom: 1px solid #dee2e6; /* Borde inferior de la barra de navegación */
+            background-color: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
         }
-        .navbar-brand {
-            color: #007bff; /* Color del texto del logo/nombre en la barra de navegación */
+        .navbar-brand img { max-height: 40px; }
+        .navbar-dark .navbar-nav .nav-link { color: var(--text-secondary); }
+        .navbar-dark .navbar-nav .nav-link:hover,
+        .navbar-dark .navbar-nav .nav-link.active { color: var(--text-light); }
+        .navbar-dark .navbar-toggler { border-color: var(--border-color); }
+
+        /* --- Contenido Principal --- */
+        .page-header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
         }
-        .navbar-nav .nav-item .nav-link {
-            color: #000000 !important; /* Color del texto de los enlaces en la barra de navegación */
+        
+        .filter-controls .form-control {
+            background-color: var(--bg-light);
+            border-color: var(--border-color);
+            color: var(--text-light);
         }
-        .navbar-toggler {
-            border-color: #007bff; /* Color del borde del botón de hamburguesa */
+        .filter-controls .form-control::placeholder { color: var(--text-secondary); }
+        .filter-controls .form-control:focus {
+            background-color: var(--bg-light);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(47, 129, 247, 0.25);
+            color: var(--text-light);
         }
-        .btn-primary {
-            background-color: #007bff; /* Color de fondo del botón primario */
-            border-color: #007bff; /* Color del borde del botón primario */
+
+        .category-pills .btn {
+            background-color: var(--bg-light);
+            border-color: var(--border-color);
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
         }
-        .btn-primary:hover {
-            background-color: #0069d9; /* Color de fondo al pasar el ratón por encima */
-            border-color: #0062cc; /* Color del borde al pasar el ratón por encima */
+        .category-pills .btn:hover { background-color: #2a2f36; color: var(--text-light); }
+        .category-pills .btn.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: var(--text-light);
         }
-        <script type="text/javascript">
-	atOptions = {
-		'key' : 'e8075e2da328afe5e0393bc4f02729d3',
-		'format' : 'iframe',
-		'height' : 60,
-		'width' : 468,
-		'params' : {}
-	};
-</script>
-<script async="async" data-cfasync="false" src="//pl25636835.profitablecpmrate.com/2cdc3ac361f30cf12b0eb37ef5ff1a40/invoke.js"></script>
-<div id="container-2cdc3ac361f30cf12b0eb37ef5ff1a40"></div>
-<script type="text/javascript" src="//www.highperformanceformat.com/e8075e2da328afe5e0393bc4f02729d3/invoke.js"></script>
+
+        /* --- Tarjetas de Aplicaciones --- */
+        .app-card {
+            background-color: var(--bg-medium);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            height: 100%;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+        }
+        .app-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--card-hover-border);
+        }
+        .app-card.selected {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(47, 129, 247, 0.3);
+        }
+
+        .app-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+
+        .app-title {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+        
+        .app-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            flex-grow: 1; /* Para empujar las etiquetas hacia abajo */
+        }
+        
+        .app-tags .badge {
+            background-color: var(--bg-light) !important;
+            color: var(--text-secondary) !important;
+            font-size: 0.75rem;
+        }
+
+        .app-checkbox {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            accent-color: var(--accent-color);
+        }
+        
+        /* --- Botón Flotante de Descarga --- */
+        .floating-download-bar {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+            max-width: 90%;
+            background-color: rgba(22, 27, 34, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: bottom 0.4s ease-in-out;
+        }
+        .floating-download-bar.visible {
+            bottom: 20px;
+        }
+        
+        .btn-download {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        .btn-download:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
+        }
+        
+        /* --- Footer --- */
+        footer {
+            background-color: var(--bg-medium);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
     </style>
 </head>
 
-<body id="page-top">
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-        <div class="container px-4 px-lg-5">
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Brandon Sepulveda Logo" style="max-height: 45px; width: auto;">
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="JBSV Logo">
             </a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html#signup">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="apps.html">Apps</a></li>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html#projects">Proyectos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#contact">Contacto</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="apps.html">Apps</a></li>
                     <li class="nav-item"><a class="nav-link" href="toolboxbs.html">ToolboxBS</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content-->
-    <section class="projects-section bg-light" id="apps">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <h2 class="text-black mb-4">Lista de Aplicaciones</h2>
-                    <p class="text-black-50">Selecciona y descarga las aplicaciones disponibles.</p>
-                    <input type="text" id="searchInput" class="form-control mb-4" placeholder="Buscar aplicaciones..." />
+    <main class="container my-5">
+        <div class="page-header text-center">
+            <h1 class="display-4 fw-bold">Centro de Aplicaciones</h1>
+            <p class="lead text-secondary">Una forma sencilla de instalar tus herramientas esenciales. Selecciona las apps que necesitas y descárgalas todas a la vez.</p>
+        </div>
+
+        <div class="filter-controls row g-3 align-items-center mb-4">
+            <div class="col-lg-5">
+                <input type="text" id="searchInput" class="form-control" placeholder="Buscar aplicaciones por nombre...">
+            </div>
+            <div class="col-lg-7 text-lg-end">
+                <div class="btn-group category-pills flex-wrap" role="group" aria-label="Filtrar por categoría">
+                    </div>
+            </div>
+            <div class="col-12 mt-3">
+                 <button class="btn btn-sm btn-outline-secondary" id="selectAllBtn">Seleccionar Visibles</button>
+                 <button class="btn btn-sm btn-outline-secondary" id="deselectAllBtn">Limpiar Selección</button>
+            </div>
+        </div>
+        
+        <div id="appGrid" class="row g-4">
+            </div>
+    </main>
+
+    <div class="floating-download-bar" id="downloadBar">
+        <span id="selectionCount" class="fw-bold text-light"></span>
+        <button class="btn btn-primary btn-download" id="downloadBtn" data-bs-toggle="modal" data-bs-target="#confirmModal">
+            <i class="fas fa-download me-2"></i>
+            <span id="downloadBtnText">Descargar</span>
+        </button>
+    </div>
+
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header border-bottom border-secondary">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirmar Descarga</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Estás a punto de iniciar la descarga de <strong id="modalAppCount"></strong> aplicación(es).</p>
+                    <p class="text-secondary">Esto podría abrir varias pestañas en tu navegador y solicitar permisos de descarga. ¿Deseas continuar?</p>
+                </div>
+                <div class="modal-footer border-top border-secondary">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmDownloadBtn">Sí, descargar</button>
                 </div>
             </div>
-            <form id="appForm" class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-6 mb-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="https://anydesk.com/es/downloads/thank-you?dv=win_exe" id="appAnydesk">
-                        <label class="form-check-label" for="appAnydesk">
-                            Anydesk
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="https://laptop-updates.brave.com/download/BRV010?bitness=64" id="appBrave">
-                        <label class="form-check-label" for="appBrave">
-                            Brave
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="https://download.teamviewer.com/download/TeamViewer_Setup_x64.exe" id="appTeamViewer">
-                        <label class="form-check-label" for="appTeamViewer">
-                            TeamViewer
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="https://github.com/microsoft/PowerToys/releases/download/v0.82.0/PowerToysUserSetup-0.82.0-x64.exe" id="appPowerToys">
-                        <label class="form-check-label" for="appPowerToys">
-                            PowerToys
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.6.8/npp.8.6.8.Installer.x64.exe" id="appNotepadPlusPlus">
-                        <label class="form-check-label" for="appNotepadPlusPlus">
-                            Notepad++
-                        </label>
-                    </div>
-                    <!-- Agregar más aplicaciones aquí -->
-                </div>
-                <div class="col-12 text-center">
-                    <button type="button" class="btn btn-primary" onclick="downloadSelected()">Descargar</button>
-                </div>
-            </form>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer-->
-    <footer class="footer bg-black small text-center text-white-50">
-        <div class="container px-4 px-lg-5">&copy; 2024 Jhon Brandon Sepulveda Valdes</div>
+    <footer class="py-4 mt-auto">
+        <div class="container text-center small">&copy; 2025 Jhon Brandon Sepulveda Valdes</div>
     </footer>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
-    <!-- JavaScript personalizado para manejar la descarga de aplicaciones -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        function downloadSelected() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            checkboxes.forEach(checkbox => {
-                const link = document.createElement('a');
-                link.href = checkbox.value;
-                link.target = '_blank';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- Base de Datos de Aplicaciones ---
+        const apps = [
+            // Utilidades
+            {
+                id: 'powertoys', name: 'Microsoft PowerToys',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Microsoft_PowerToys_Logo.svg/512px-Microsoft_PowerToys_Logo.svg.png',
+                description: 'Conjunto de utilidades de Microsoft para optimizar Windows.',
+                category: 'Utilidades', url: 'https://github.com/microsoft/PowerToys/releases/latest/download/PowerToysUserSetup-0.81.0-x64.exe'
+            },
+            {
+                id: '7zip', name: '7-Zip',
+                logo: 'https://cdn.icon-icons.com/icons2/1381/PNG/512/7zip_93532.png',
+                description: 'Archivador de ficheros gratuito con una alta tasa de compresión.',
+                category: 'Utilidades', url: 'https://www.7-zip.org/a/7z2407-x64.exe'
+            },
+            {
+                id: 'nanazip', name: 'NanaZip',
+                logo: 'https://store-images.s-microsoft.com/image/apps.55982.14422225383184922.3876da2c-d922-4303-956a-1149c4f74a0a.7bb5ea5f-624a-466d-a412-3b7c84f670e3',
+                description: 'Un moderno archivador de archivos, derivado de 7-Zip.',
+                category: 'Utilidades', url: 'https://github.com/M2Team/NanaZip/releases/latest/download/NanaZip.x64.appx'
+            },
+            {
+                id: 'vlc', name: 'VLC Media Player',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/VLC_Icon.svg/2048px-VLC_Icon.svg.png',
+                description: 'Reproductor multimedia libre que reproduce la mayoría de archivos.',
+                category: 'Utilidades', url: 'https://get.videolan.org/vlc/3.0.21/win64/vlc-3.0.21-win64.exe'
+            },
+             {
+                id: 'obs', name: 'OBS Studio',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/OBS_Studio_Logo.svg/2048px-OBS_Studio_Logo.svg.png',
+                description: 'Software libre y de código abierto para grabación de video y transmisión en vivo.',
+                category: 'Utilidades', url: 'https://cdn-fastly.obsproject.com/downloads/OBS-Studio-30.2.2-Full-Installer-x64.exe'
+            },
+            {
+                id: 'rufus', name: 'Rufus',
+                logo: 'https://rufus.ie/pics/rufus.png',
+                description: 'Utilidad para formatear y crear unidades flash USB de arranque.',
+                category: 'Utilidades', url: 'https://github.com/pbatard/rufus/releases/latest/download/rufus-4.5.exe'
+            },
+            {
+                id: 'anydesk', name: 'AnyDesk',
+                logo: 'https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_anydesk_icon_130713.png',
+                description: 'Software de escritorio remoto rápido, seguro y ligero.',
+                category: 'Utilidades', url: 'https://anydesk.com/es/downloads/thank-you?dv=win_exe'
+            },
+            {
+                id: 'teamviewer', name: 'TeamViewer',
+                logo: 'https://cdn.icon-icons.com/icons2/2407/PNG/512/teamviewer_icon_146114.png',
+                description: 'Solución completa para acceso remoto y soporte en línea.',
+                category: 'Utilidades', url: 'https://download.teamviewer.com/download/TeamViewer_Setup_x64.exe'
+            },
+             {
+                id: 'cpu-z', name: 'CPU-Z',
+                logo: 'https://www.cpuid.com/medias/images/icon_cpuz_64.png',
+                description: 'Freeware que reúne información sobre algunos de los principales dispositivos de su sistema.',
+                category: 'Utilidades', url: 'https://download.cpuid.com/cpu-z/cpu-z_2.09-en.exe'
+            },
+            // Navegadores
+            {
+                id: 'brave', name: 'Brave',
+                logo: 'https://cdn.icon-icons.com/icons2/2845/PNG/512/brave_logo_icon_181349.png',
+                description: 'Navegador web rápido y seguro con bloqueo de anuncios integrado.',
+                category: 'Navegadores', url: 'https://laptop-updates.brave.com/download/BRV010?bitness=64'
+            },
+            // Desarrollo
+            {
+                id: 'notepadplusplus', name: 'Notepad++',
+                logo: 'https://cdn.icon-icons.com/icons2/1381/PNG/512/notepadplusplus_93660.png',
+                description: 'Editor de código fuente y reemplazo del Bloc de notas.',
+                category: 'Desarrollo', url: 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/latest/download/npp.Installer.x64.exe'
+            },
+             {
+                id: 'vsc', name: 'VS Code',
+                logo: 'https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_vscode_icon_130084.png',
+                description: 'Editor de código ligero pero potente que se ejecuta en tu escritorio.',
+                category: 'Desarrollo', url: 'https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user'
+            },
+            {
+                id: 'git', name: 'Git',
+                logo: 'https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png',
+                description: 'Sistema de control de versiones distribuido, gratuito y de código abierto.',
+                category: 'Desarrollo', url: 'https://github.com/git-for-windows/git/releases/latest/download/Git-2.45.2-64-bit.exe'
+            },
+            {
+                id: 'python', name: 'Python',
+                logo: 'https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_python_icon_130221.png',
+                description: 'Lenguaje de programación versátil y potente. Ideal para principiantes y expertos.',
+                category: 'Desarrollo', url: 'https://www.python.org/ftp/python/3.12.4/python-3.12.4-amd64.exe'
+            },
+            {
+                id: 'filezilla', name: 'FileZilla',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/FileZilla_logo.svg/2019px-FileZilla_logo.svg.png',
+                description: 'Solución FTP de código abierto, gratuita y multiplataforma.',
+                category: 'Desarrollo', url: 'https://dl3.cdn.filezilla-project.org/client/FileZilla_3.67.1_win64_sponsored-setup.exe'
+            },
+            // Comunicación
+            {
+                id: 'discord', name: 'Discord',
+                logo: 'https://cdn.icon-icons.com/icons2/3053/PNG/512/discord_macos_bigsur_icon_189912.png',
+                description: 'Plataforma de comunicación por voz, video y texto para comunidades.',
+                category: 'Comunicación', url: 'https://discord.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=win&arch=x64'
+            },
+             {
+                id: 'telegram', name: 'Telegram Desktop',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/2048px-Telegram_logo.svg.png',
+                description: 'Aplicación de mensajería enfocada en la velocidad y la seguridad.',
+                category: 'Comunicación', url: 'https://td.telegram.org/tsetup/tsetup.x64.exe'
+            },
+            // Juegos
+            {
+                id: 'steam', name: 'Steam',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png',
+                description: 'Plataforma de distribución digital de videojuegos de Valve.',
+                category: 'Juegos', url: 'https://cdn.akamai.steamstatic.com/client/installer/SteamSetup.exe'
+            },
+             {
+                id: 'epicgames', name: 'Epic Games Launcher',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Epic_Games_logo.svg/1200px-Epic_Games_logo.svg.png',
+                description: 'Lanzador de juegos y tienda digital de Epic Games.',
+                category: 'Juegos', url: 'https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi'
+            },
+            {
+                id: 'goggalaxy', name: 'GOG Galaxy',
+                logo: 'https://static.wikia.nocookie.net/logopedia/images/2/23/GOG_Galaxy_2.0_icon.svg',
+                description: 'Lanzador que permite unificar todos tus juegos y amigos en una sola aplicación.',
+                category: 'Juegos', url: 'https://content-system.gog.com/open_link/download?path=/open/galaxy/client/setup_galaxy_2.0.exe'
+            },
+            {
+                id: 'eaapp', name: 'EA App',
+                logo: 'https://cdn.worldvectorlogo.com/logos/ea-app.svg',
+                description: 'Plataforma de juegos de Electronic Arts para PC.',
+                category: 'Juegos', url: 'https://origin-a.akamaihd.net/EA-Desktop-Client-Download/installer-releases/EAappInstaller.exe'
+            },
+            // Creatividad
+            {
+                id: 'gimp', name: 'GIMP',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/The_GIMP_icon_-_gnome.svg/2048px-The_GIMP_icon_-_gnome.svg.png',
+                description: 'Editor de imágenes multiplataforma, gratuito y de código abierto.',
+                category: 'Creatividad', url: 'https://download.gimp.org/gimp/v2.10/windows/gimp-2.10.38-setup-1.exe'
+            },
+            {
+                id: 'krita', name: 'Krita',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Krita_icon.svg/2048px-Krita_icon.svg.png',
+                description: 'Programa de pintura digital e ilustración profesional, libre y de código abierto.',
+                category: 'Creatividad', url: 'https://download.kde.org/stable/krita/5.2.2/krita-x64-5.2.2-setup.exe'
+            },
+             {
+                id: 'blender', name: 'Blender',
+                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Blender_logo_no_text.svg/2048px-Blender_logo_no_text.svg.png',
+                description: 'Suite de creación 3D gratuita y de código abierto.',
+                category: 'Creatividad', url: 'https://mirror.clarkson.edu/blender/release/Blender4.1/blender-4.1.1-windows-x64.msi'
+            },
+        ];
+
+        const appGrid = document.getElementById('appGrid');
+        const categoryPillsContainer = document.querySelector('.category-pills');
+        const searchInput = document.getElementById('searchInput');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        const deselectAllBtn = document.getElementById('deselectAllBtn');
+        const downloadBar = document.getElementById('downloadBar');
+        const selectionCountSpan = document.getElementById('selectionCount');
+        const downloadBtnText = document.getElementById('downloadBtnText');
+        const modalAppCount = document.getElementById('modalAppCount');
+        const confirmDownloadBtn = document.getElementById('confirmDownloadBtn');
+        
+        let selectedApps = new Set();
+
+        // --- Funciones de Renderizado ---
+        function renderApps(appsToRender) {
+            appGrid.innerHTML = '';
+            if (appsToRender.length === 0) {
+                appGrid.innerHTML = `<div class="col-12 text-center text-secondary"><p class="fs-4">No se encontraron aplicaciones.</p></div>`;
+                return;
+            }
+            appsToRender.forEach(app => {
+                const isSelected = selectedApps.has(app.id);
+                const card = document.createElement('div');
+                card.className = 'col-lg-4 col-md-6';
+                card.innerHTML = `
+                    <div class="app-card d-flex flex-column ${isSelected ? 'selected' : ''}" data-app-id="${app.id}">
+                        <input class="form-check-input app-checkbox" type="checkbox" value="${app.url}" id="${app.id}" ${isSelected ? 'checked' : ''}>
+                        <img src="${app.logo}" alt="${app.name} Logo" class="app-logo">
+                        <h5 class="app-title">${app.name}</h5>
+                        <p class="app-description">${app.description}</p>
+                        <div class="app-tags mt-auto">
+                            <span class="badge rounded-pill">${app.category}</span>
+                        </div>
+                    </div>
+                `;
+                appGrid.appendChild(card);
+            });
+        }
+        
+        function renderCategories() {
+            const categories = ['Todas', ...new Set(apps.map(app => app.category))];
+            categoryPillsContainer.innerHTML = '';
+            categories.forEach(category => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'btn btn-sm m-1';
+                if (category === 'Todas') {
+                    btn.classList.add('active');
+                }
+                btn.textContent = category;
+                btn.dataset.category = category;
+                categoryPillsContainer.appendChild(btn);
             });
         }
 
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const filter = this.value.toLowerCase();
-            const formChecks = document.querySelectorAll('.form-check');
-            formChecks.forEach(formCheck => {
-                const label = formCheck.querySelector('label').textContent.toLowerCase();
-                if (label.includes(filter)) {
-                    formCheck.style.display = '';
-                } else {
-                    formCheck.style.display = 'none';
-                }
+        // --- Funciones de Lógica y Eventos ---
+        function updateDownloadBar() {
+            const count = selectedApps.size;
+            if (count > 0) {
+                selectionCountSpan.textContent = `${count} seleccionada(s)`;
+                downloadBtnText.textContent = `Descargar App${count > 1 ? 's' : ''}`;
+                downloadBar.classList.add('visible');
+            } else {
+                downloadBar.classList.remove('visible');
+            }
+        }
+        
+        function filterAndRender() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const activeCategoryBtn = document.querySelector('.category-pills .btn.active');
+            const activeCategory = activeCategoryBtn ? activeCategoryBtn.dataset.category : 'Todas';
+            
+            const filteredApps = apps.filter(app => {
+                const matchesCategory = activeCategory === 'Todas' || app.category === activeCategory;
+                const matchesSearch = app.name.toLowerCase().includes(searchTerm) || app.description.toLowerCase().includes(searchTerm);
+                return matchesCategory && matchesSearch;
             });
+            
+            renderApps(filteredApps);
+        }
+
+        appGrid.addEventListener('click', function(e) {
+            const card = e.target.closest('.app-card');
+            if (card) {
+                const appId = card.dataset.appId;
+                const checkbox = card.querySelector('.app-checkbox');
+                
+                if (e.target !== checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                }
+                
+                if (checkbox.checked) {
+                    selectedApps.add(appId);
+                    card.classList.add('selected');
+                } else {
+                    selectedApps.delete(appId);
+                    card.classList.remove('selected');
+                }
+                updateDownloadBar();
+            }
         });
+        
+        categoryPillsContainer.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON') {
+                const currentActive = document.querySelector('.category-pills .btn.active');
+                if(currentActive) currentActive.classList.remove('active');
+                e.target.classList.add('active');
+                filterAndRender();
+            }
+        });
+        
+        searchInput.addEventListener('input', filterAndRender);
+        
+        selectAllBtn.addEventListener('click', function() {
+            document.querySelectorAll('#appGrid .app-card').forEach(card => {
+                const appId = card.dataset.appId;
+                selectedApps.add(appId);
+                card.classList.add('selected');
+                card.querySelector('.app-checkbox').checked = true;
+            });
+            updateDownloadBar();
+        });
+
+        deselectAllBtn.addEventListener('click', function() {
+            selectedApps.clear();
+            document.querySelectorAll('.app-card.selected').forEach(card => {
+                card.classList.remove('selected');
+                card.querySelector('.app-checkbox').checked = false;
+            });
+            updateDownloadBar();
+        });
+        
+        confirmDownloadBtn.addEventListener('click', function() {
+            const checkedBoxes = document.querySelectorAll('.app-checkbox:checked');
+            checkedBoxes.forEach((checkbox, index) => {
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.href = checkbox.value;
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }, index * 300); // Pequeño retraso para evitar que los navegadores bloqueen todo
+            });
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('confirmModal'));
+            modal.hide();
+        });
+
+        document.getElementById('confirmModal').addEventListener('show.bs.modal', function () {
+            modalAppCount.textContent = selectedApps.size;
+        });
+
+        // --- Inicialización ---
+        renderCategories();
+        renderApps(apps);
+    });
     </script>
 </body>
 </html>
