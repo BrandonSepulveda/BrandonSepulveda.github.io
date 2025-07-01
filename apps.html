@@ -7,7 +7,7 @@
     
     <meta name="description" content="Selecciona y descarga múltiples aplicaciones esenciales para Windows de forma rápida y sencilla." />
     <meta name="author" content="Jhon Brandon Sepulveda Valdes" />
-    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-27.ico" />
+    <link rel="icon" type="image/x-xicon" href="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-27.ico" />
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
@@ -111,11 +111,20 @@
         }
 
         .app-logo {
+            font-size: 3rem; /* Tamaño para emojis */
+            line-height: 1;
+            margin-bottom: 1rem;
+            display: block; /* Para centrar si es necesario */
+            text-align: center;
+        }
+        /* Si se usan imágenes para logos, ajustar */
+        .app-logo img {
             width: 50px;
             height: 50px;
             object-fit: contain;
-            margin-bottom: 1rem;
+            margin: 0 auto 1rem auto; /* Centrar imagen */
         }
+
 
         .app-title {
             color: var(--text-light);
@@ -182,6 +191,35 @@
             border-top: 1px solid var(--border-color);
             color: var(--text-secondary);
         }
+
+        /* Estilos para el modal de script */
+        .modal-content {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        .modal-header, .modal-footer {
+            border-color: var(--border-color) !important;
+        }
+        .modal-title {
+            color: var(--text-light);
+        }
+        .btn-close {
+            filter: invert(1); /* Para que el botón de cerrar sea visible en fondo oscuro */
+        }
+        .powershell-script-box {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 300px;
+            overflow-y: auto;
+            color: var(--text-light);
+        }
     </style>
 </head>
 
@@ -208,7 +246,7 @@
     <main class="container my-5">
         <div class="page-header text-center">
             <h1 class="display-4 fw-bold">Centro de Aplicaciones</h1>
-            <p class="lead text-secondary">Una forma sencilla de instalar tus herramientas esenciales. Selecciona las apps que necesitas y descárgalas todas a la vez.</p>
+            <p class="lead text-secondary">Una forma sencilla de instalar tus herramientas esenciales. Selecciona las apps que necesitas y genera el script de instalación.</p>
         </div>
 
         <div class="filter-controls row g-3 align-items-center mb-4">
@@ -217,44 +255,75 @@
             </div>
             <div class="col-lg-7 text-lg-end">
                 <div class="btn-group category-pills flex-wrap" role="group" aria-label="Filtrar por categoría">
-                    </div>
+                </div>
             </div>
-            <div class="col-12 mt-3">
-                 <button class="btn btn-sm btn-outline-secondary" id="selectAllBtn">Seleccionar Visibles</button>
-                 <button class="btn btn-sm btn-outline-secondary" id="deselectAllBtn">Limpiar Selección</button>
+            <div class="col-12 mt-3 d-flex flex-wrap align-items-center justify-content-between">
+                <div>
+                    <button class="btn btn-sm btn-outline-secondary me-2" id="selectAllBtn">Seleccionar Visibles</button>
+                    <button class="btn btn-sm btn-outline-secondary" id="deselectAllBtn">Limpiar Selección</button>
+                </div>
+                <div class="d-flex flex-wrap">
+                    <div class="form-check form-check-inline ms-auto">
+                        <input class="form-check-input" type="radio" name="packageManager" id="wingetRadio" value="winget" checked>
+                        <label class="form-check-label" for="wingetRadio">winget</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="packageManager" id="chocolateyRadio" value="chocolatey">
+                        <label class="form-check-label" for="chocolateyRadio">Chocolatey</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="scriptType" id="ps1Radio" value="ps1" checked>
+                        <label class="form-check-label" for="ps1Radio">PowerShell (.ps1)</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="scriptType" id="batRadio" value="bat">
+                        <label class="form-check-label" for="batRadio">Batch (.bat)</label>
+                    </div>
+                </div>
             </div>
         </div>
         
         <div id="appGrid" class="row g-4">
-            </div>
+        </div>
     </main>
 
     <div class="floating-download-bar" id="downloadBar">
         <span id="selectionCount" class="fw-bold text-light"></span>
-        <button class="btn btn-primary btn-download" id="downloadBtn" data-bs-toggle="modal" data-bs-target="#confirmModal">
-            <i class="fas fa-download me-2"></i>
-            <span id="downloadBtnText">Descargar</span>
+        <button class="btn btn-primary btn-download" id="generateScriptBtn" data-bs-toggle="modal" data-bs-target="#scriptModal">
+            <i class="fas fa-file-code me-2"></i>
+            <span id="generateScriptBtnText">Generar Script</span>
         </button>
     </div>
 
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+    <!-- Modal para el script de PowerShell/Batch -->
+    <div class="modal fade" id="scriptModal" tabindex="-1" aria-labelledby="scriptModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content bg-dark text-light">
                 <div class="modal-header border-bottom border-secondary">
-                    <h5 class="modal-title" id="confirmModalLabel">Confirmar Descarga</h5>
+                    <h5 class="modal-title" id="scriptModalLabel">Script de Instalación</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Estás a punto de iniciar la descarga de <strong id="modalAppCount"></strong> aplicación(es).</p>
-                    <p class="text-secondary">Esto podría abrir varias pestañas en tu navegador y solicitar permisos de descarga. ¿Deseas continuar?</p>
+                    <p>Copia el siguiente script y ejecútalo en una ventana de PowerShell/CMD (como administrador) para instalar las aplicaciones seleccionadas:</p>
+                    <div class="powershell-script-box" id="scriptOutput">
+                        <!-- El script se insertará aquí -->
+                    </div>
+                    <p class="text-secondary mt-3 small">
+                        <strong>Nota:</strong> Asegúrate de ejecutar el script como administrador. Si usas Chocolatey, asegúrate de que esté instalado. El script intentará instalar winget/Chocolatey si no están presentes.
+                    </p>
                 </div>
                 <div class="modal-footer border-top border-secondary">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="confirmDownloadBtn">Sí, descargar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary me-2" id="copyScriptBtn">
+                        <i class="fas fa-copy me-2"></i>Copiar Script
+                    </button>
+                    <button type="button" class="btn btn-success" id="downloadScriptFromModalBtn">
+                        <i class="fas fa-download me-2"></i>Descargar Script
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <footer class="py-4 mt-auto">
         <div class="container text-center small">&copy; 2025 Jhon Brandon Sepulveda Valdes</div>
@@ -267,155 +336,42 @@
         // --- Base de Datos de Aplicaciones ---
         const apps = [
             // Utilidades
-            {
-                id: 'powertoys', name: 'Microsoft PowerToys',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Microsoft_PowerToys_Logo.svg/512px-Microsoft_PowerToys_Logo.svg.png',
-                description: 'Conjunto de utilidades de Microsoft para optimizar Windows.',
-                category: 'Utilidades', url: 'https://github.com/microsoft/PowerToys/releases/latest/download/PowerToysUserSetup-0.81.0-x64.exe'
-            },
-            {
-                id: '7zip', name: '7-Zip',
-                logo: 'https://cdn.icon-icons.com/icons2/1381/PNG/512/7zip_93532.png',
-                description: 'Archivador de ficheros gratuito con una alta tasa de compresión.',
-                category: 'Utilidades', url: 'https://www.7-zip.org/a/7z2407-x64.exe'
-            },
-            {
-                id: 'nanazip', name: 'NanaZip',
-                logo: 'https://store-images.s-microsoft.com/image/apps.55982.14422225383184922.3876da2c-d922-4303-956a-1149c4f74a0a.7bb5ea5f-624a-466d-a412-3b7c84f670e3',
-                description: 'Un moderno archivador de archivos, derivado de 7-Zip.',
-                category: 'Utilidades', url: 'https://github.com/M2Team/NanaZip/releases/latest/download/NanaZip.x64.appx'
-            },
-            {
-                id: 'vlc', name: 'VLC Media Player',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/VLC_Icon.svg/2048px-VLC_Icon.svg.png',
-                description: 'Reproductor multimedia libre que reproduce la mayoría de archivos.',
-                category: 'Utilidades', url: 'https://get.videolan.org/vlc/3.0.21/win64/vlc-3.0.21-win64.exe'
-            },
-             {
-                id: 'obs', name: 'OBS Studio',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/OBS_Studio_Logo.svg/2048px-OBS_Studio_Logo.svg.png',
-                description: 'Software libre y de código abierto para grabación de video y transmisión en vivo.',
-                category: 'Utilidades', url: 'https://cdn-fastly.obsproject.com/downloads/OBS-Studio-30.2.2-Full-Installer-x64.exe'
-            },
-            {
-                id: 'rufus', name: 'Rufus',
-                logo: 'https://rufus.ie/pics/rufus.png',
-                description: 'Utilidad para formatear y crear unidades flash USB de arranque.',
-                category: 'Utilidades', url: 'https://github.com/pbatard/rufus/releases/latest/download/rufus-4.5.exe'
-            },
-            {
-                id: 'anydesk', name: 'AnyDesk',
-                logo: 'https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_anydesk_icon_130713.png',
-                description: 'Software de escritorio remoto rápido, seguro y ligero.',
-                category: 'Utilidades', url: 'https://anydesk.com/es/downloads/thank-you?dv=win_exe'
-            },
-            {
-                id: 'teamviewer', name: 'TeamViewer',
-                logo: 'https://cdn.icon-icons.com/icons2/2407/PNG/512/teamviewer_icon_146114.png',
-                description: 'Solución completa para acceso remoto y soporte en línea.',
-                category: 'Utilidades', url: 'https://download.teamviewer.com/download/TeamViewer_Setup_x64.exe'
-            },
-             {
-                id: 'cpu-z', name: 'CPU-Z',
-                logo: 'https://www.cpuid.com/medias/images/icon_cpuz_64.png',
-                description: 'Freeware que reúne información sobre algunos de los principales dispositivos de su sistema.',
-                category: 'Utilidades', url: 'https://download.cpuid.com/cpu-z/cpu-z_2.09-en.exe'
-            },
+            { id: '7zip', name: '7-Zip', logo: '🗜️', description: 'Compresor/descompresor de archivos', category: 'Utilidades', wingetId: '7zip.7zip', chocolateyId: '7zip' },
+            { id: 'nanazip', name: 'NanaZip', logo: '📦', description: 'Compresor/descompresor moderno para Windows', category: 'Utilidades', wingetId: 'M2Team.NanaZip', chocolateyId: 'nanazip' },
+            { id: 'notepadplusplus', name: 'Notepad++', logo: '📝', description: 'Editor de texto avanzado', category: 'Utilidades', wingetId: 'Notepad++.Notepad++', chocolateyId: 'notepadplusplus' },
+            { id: 'windowsterminal', name: 'Windows Terminal', logo: '💻', description: 'Terminal moderna para Windows', category: 'Utilidades', wingetId: 'Microsoft.WindowsTerminal', chocolateyId: 'windowsterminal' },
+            { id: 'powershell', name: 'PowerShell (Latest)', logo: '🔧', description: 'Shell y lenguaje de scripting', category: 'Utilidades', wingetId: 'Microsoft.PowerShell', chocolateyId: 'powershell' },
+            { id: 'vscode', name: 'Visual Studio Code', logo: '⌨️', description: 'Editor de código ligero', category: 'Utilidades', wingetId: 'Microsoft.VisualStudioCode', chocolateyId: 'vscode' },
+            { id: 'powertoys', name: 'Microsoft PowerToys', logo: '🧰', description: 'Utilidades para potenciar Windows', category: 'Utilidades', wingetId: 'Microsoft.PowerToys', chocolateyId: 'powertoys' },
+            { id: 'cpu-z', name: 'CPU-Z', logo: '🔍', description: 'Información detallada del CPU', category: 'Utilidades', wingetId: 'CPUID.CPU-Z', chocolateyId: 'cpu-z' },
+            { id: 'crystaldiskinfo', name: 'CrystalDiskInfo', logo: '💾', description: 'Monitor de salud de discos', category: 'Utilidades', wingetId: 'CrystalDewWorld.CrystalDiskInfo', chocolateyId: 'crystaldiskinfo' },
+            { id: 'aida64extreme', name: 'AIDA64 Extreme (Trial)', logo: '📊', description: 'Diagnóstico del sistema', category: 'Utilidades', wingetId: 'FinalWire.AIDA64.Extreme', chocolateyId: '' },
+            { id: 'harddisksentinel', name: 'Hard Disk Sentinel', logo: '🔋', description: 'Monitor de salud de discos', category: 'Utilidades', wingetId: 'JanosMathe.HardDiskSentinel.Professional', chocolateyId: '' },
+            { id: 'rufus', name: 'Rufus', logo: '📀', description: 'Creador de USB booteable', category: 'Utilidades', wingetId: 'Rufus.Rufus', chocolateyId: 'rufus' },
+            { id: 'ventoy', name: 'Ventoy', logo: '💿', description: 'Multiboot USB Tool', category: 'Utilidades', wingetId: 'Ventoy.Ventoy', chocolateyId: 'ventoy' },
+            { id: 'unigetui', name: 'UnigetUI', logo: '📦', description: 'GUI para gestores de paquetes', category: 'Utilidades', wingetId: 'MartiCliment.UniGetU', chocolateyId: 'wingetui' },
+
             // Navegadores
-            {
-                id: 'brave', name: 'Brave',
-                logo: 'https://cdn.icon-icons.com/icons2/2845/PNG/512/brave_logo_icon_181349.png',
-                description: 'Navegador web rápido y seguro con bloqueo de anuncios integrado.',
-                category: 'Navegadores', url: 'https://laptop-updates.brave.com/download/BRV010?bitness=64'
-            },
-            // Desarrollo
-            {
-                id: 'notepadplusplus', name: 'Notepad++',
-                logo: 'https://cdn.icon-icons.com/icons2/1381/PNG/512/notepadplusplus_93660.png',
-                description: 'Editor de código fuente y reemplazo del Bloc de notas.',
-                category: 'Desarrollo', url: 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/latest/download/npp.Installer.x64.exe'
-            },
-             {
-                id: 'vsc', name: 'VS Code',
-                logo: 'https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_vscode_icon_130084.png',
-                description: 'Editor de código ligero pero potente que se ejecuta en tu escritorio.',
-                category: 'Desarrollo', url: 'https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user'
-            },
-            {
-                id: 'git', name: 'Git',
-                logo: 'https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png',
-                description: 'Sistema de control de versiones distribuido, gratuito y de código abierto.',
-                category: 'Desarrollo', url: 'https://github.com/git-for-windows/git/releases/latest/download/Git-2.45.2-64-bit.exe'
-            },
-            {
-                id: 'python', name: 'Python',
-                logo: 'https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_python_icon_130221.png',
-                description: 'Lenguaje de programación versátil y potente. Ideal para principiantes y expertos.',
-                category: 'Desarrollo', url: 'https://www.python.org/ftp/python/3.12.4/python-3.12.4-amd64.exe'
-            },
-            {
-                id: 'filezilla', name: 'FileZilla',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/FileZilla_logo.svg/2019px-FileZilla_logo.svg.png',
-                description: 'Solución FTP de código abierto, gratuita y multiplataforma.',
-                category: 'Desarrollo', url: 'https://dl3.cdn.filezilla-project.org/client/FileZilla_3.67.1_win64_sponsored-setup.exe'
-            },
+            { id: 'chrome', name: 'Google Chrome', logo: '🌐', description: 'Navegador web de Google', category: 'Navegadores', wingetId: 'Google.Chrome', chocolateyId: 'googlechrome' },
+            { id: 'brave', name: 'Brave Browser', logo: '🦁', description: 'Navegador centrado en privacidad', category: 'Navegadores', wingetId: 'BraveSoftware.BraveBrowser', chocolateyId: 'brave' },
+
             // Comunicación
-            {
-                id: 'discord', name: 'Discord',
-                logo: 'https://cdn.icon-icons.com/icons2/3053/PNG/512/discord_macos_bigsur_icon_189912.png',
-                description: 'Plataforma de comunicación por voz, video y texto para comunidades.',
-                category: 'Comunicación', url: 'https://discord.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=win&arch=x64'
-            },
-             {
-                id: 'telegram', name: 'Telegram Desktop',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/2048px-Telegram_logo.svg.png',
-                description: 'Aplicación de mensajería enfocada en la velocidad y la seguridad.',
-                category: 'Comunicación', url: 'https://td.telegram.org/tsetup/tsetup.x64.exe'
-            },
-            // Juegos
-            {
-                id: 'steam', name: 'Steam',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png',
-                description: 'Plataforma de distribución digital de videojuegos de Valve.',
-                category: 'Juegos', url: 'https://cdn.akamai.steamstatic.com/client/installer/SteamSetup.exe'
-            },
-             {
-                id: 'epicgames', name: 'Epic Games Launcher',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Epic_Games_logo.svg/1200px-Epic_Games_logo.svg.png',
-                description: 'Lanzador de juegos y tienda digital de Epic Games.',
-                category: 'Juegos', url: 'https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi'
-            },
-            {
-                id: 'goggalaxy', name: 'GOG Galaxy',
-                logo: 'https://static.wikia.nocookie.net/logopedia/images/2/23/GOG_Galaxy_2.0_icon.svg',
-                description: 'Lanzador que permite unificar todos tus juegos y amigos en una sola aplicación.',
-                category: 'Juegos', url: 'https://content-system.gog.com/open_link/download?path=/open/galaxy/client/setup_galaxy_2.0.exe'
-            },
-            {
-                id: 'eaapp', name: 'EA App',
-                logo: 'https://cdn.worldvectorlogo.com/logos/ea-app.svg',
-                description: 'Plataforma de juegos de Electronic Arts para PC.',
-                category: 'Juegos', url: 'https://origin-a.akamaihd.net/EA-Desktop-Client-Download/installer-releases/EAappInstaller.exe'
-            },
-            // Creatividad
-            {
-                id: 'gimp', name: 'GIMP',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/The_GIMP_icon_-_gnome.svg/2048px-The_GIMP_icon_-_gnome.svg.png',
-                description: 'Editor de imágenes multiplataforma, gratuito y de código abierto.',
-                category: 'Creatividad', url: 'https://download.gimp.org/gimp/v2.10/windows/gimp-2.10.38-setup-1.exe'
-            },
-            {
-                id: 'krita', name: 'Krita',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Krita_icon.svg/2048px-Krita_icon.svg.png',
-                description: 'Programa de pintura digital e ilustración profesional, libre y de código abierto.',
-                category: 'Creatividad', url: 'https://download.kde.org/stable/krita/5.2.2/krita-x64-5.2.2-setup.exe'
-            },
-             {
-                id: 'blender', name: 'Blender',
-                logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Blender_logo_no_text.svg/2048px-Blender_logo_no_text.svg.png',
-                description: 'Suite de creación 3D gratuita y de código abierto.',
-                category: 'Creatividad', url: 'https://mirror.clarkson.edu/blender/release/Blender4.1/blender-4.1.1-windows-x64.msi'
-            },
+            { id: 'anydesk', name: 'AnyDesk', logo: '🖥️', description: 'Control remoto rápido', category: 'Comunicación', wingetId: 'AnyDeskSoftwareGmbH.AnyDesk', chocolateyId: 'anydesk' },
+            { id: 'teamviewer', name: 'TeamViewer', logo: '👁️', description: 'Control remoto profesional', category: 'Comunicación', wingetId: 'TeamViewer.TeamViewer', chocolateyId: 'teamviewer' },
+            { id: 'discord', name: 'Discord', logo: '🎮', description: 'Chat y voz para comunidades', category: 'Comunicación', wingetId: 'Discord.Discord', chocolateyId: 'discord' },
+            { id: 'whatsapp', name: 'WhatsApp Desktop', logo: '📱', description: 'Cliente de WhatsApp', category: 'Comunicación', wingetId: 'WhatsApp.WhatsApp', chocolateyId: 'whatsapp' },
+
+            // Herramientas de Fabricante
+            { id: 'dellcommandupdate', name: 'Dell Command | Update', logo: '🔄', description: 'Actualizaciones para Dell', category: 'Herramientas de Fabricante', wingetId: 'Dell.CommandUpdate', chocolateyId: '' },
+            { id: 'hppchardware', name: 'HP PC Hardware Diagnostics Windows', logo: '🔎', description: 'Diagnóstico de HP', category: 'Herramientas de Fabricante', wingetId: 'HP.PCHardwareDiagnosticsWindows', chocolateyId: '' },
+            { id: 'hpimageassistant', name: 'HP Image Assistant', logo: '🖼️', description: 'Asistente de imágenes HP', category: 'Herramientas de Fabricante', wingetId: 'HP.ImageAssistant', chocolateyId: '' },
+            { id: 'hpsmart', name: 'HP Smart', logo: '🖨️', description: 'App para impresoras HP', category: 'Herramientas de Fabricante', wingetId: '9WZDNCRFHWLH', chocolateyId: '' },
+            { id: 'hpsupportassistant', name: 'HP Support Assistant', logo: '🛠️', description: 'Soporte para equipos HP', category: 'Herramientas de Fabricante', wingetId: 'HP.SupportAssistant', chocolateyId: '' },
+            { id: 'inteldriver', name: 'Intel Driver & Support Assistant', logo: '📦', description: 'Actualiza drivers Intel', category: 'Herramientas de Fabricante', wingetId: 'Intel.IntelDriverAndSupportAssistant', chocolateyId: '' },
+            { id: 'lenovovantage', name: 'Lenovo Vantage', logo: '📱', description: 'Centro de dispositivos Lenovo', category: 'Herramientas de Fabricante', wingetId: '9WZDNCRFJ4MV', chocolateyId: '' },
+            { id: 'lenovosystemupdate', name: 'Lenovo System Update', logo: '🔄', description: 'Actualizaciones para Lenovo', category: 'Herramientas de Fabricante', wingetId: 'Lenovo.SystemUpdate', chocolateyId: '' },
+            { id: 'myasus', name: 'MyASUS', logo: '💻', description: 'Centro de dispositivos ASUS', category: 'Herramientas de Fabricante', wingetId: '9N7R5S6B0ZZH', chocolateyId: '' },
+            { id: 'nzxtcam', name: 'NZXT CAM', logo: '⚙️', description: 'Monitor para hardware NZXT', category: 'Herramientas de Fabricante', wingetId: 'NZXT.CAM', chocolateyId: '' },
         ];
 
         const appGrid = document.getElementById('appGrid');
@@ -425,11 +381,19 @@
         const deselectAllBtn = document.getElementById('deselectAllBtn');
         const downloadBar = document.getElementById('downloadBar');
         const selectionCountSpan = document.getElementById('selectionCount');
-        const downloadBtnText = document.getElementById('downloadBtnText');
-        const modalAppCount = document.getElementById('modalAppCount');
-        const confirmDownloadBtn = document.getElementById('confirmDownloadBtn');
+        const generateScriptBtnText = document.getElementById('generateScriptBtnText');
+        const generateScriptBtn = document.getElementById('generateScriptBtn');
+        const scriptOutput = document.getElementById('scriptOutput');
+        const copyScriptBtn = document.getElementById('copyScriptBtn');
+        const downloadScriptFromModalBtn = document.getElementById('downloadScriptFromModalBtn');
+        const wingetRadio = document.getElementById('wingetRadio');
+        const chocolateyRadio = document.getElementById('chocolateyRadio');
+        const ps1Radio = document.getElementById('ps1Radio');
+        const batRadio = document.getElementById('batRadio');
         
         let selectedApps = new Set();
+        let selectedPackageManager = 'winget'; // Default package manager
+        let selectedScriptType = 'ps1'; // Default script type
 
         // --- Funciones de Renderizado ---
         function renderApps(appsToRender) {
@@ -444,12 +408,14 @@
                 card.className = 'col-lg-4 col-md-6';
                 card.innerHTML = `
                     <div class="app-card d-flex flex-column ${isSelected ? 'selected' : ''}" data-app-id="${app.id}">
-                        <input class="form-check-input app-checkbox" type="checkbox" value="${app.url}" id="${app.id}" ${isSelected ? 'checked' : ''}>
-                        <img src="${app.logo}" alt="${app.name} Logo" class="app-logo">
+                        <input class="form-check-input app-checkbox" type="checkbox" value="${app.id}" id="${app.id}" ${isSelected ? 'checked' : ''}>
+                        <div class="app-logo">${app.logo}</div>
                         <h5 class="app-title">${app.name}</h5>
                         <p class="app-description">${app.description}</p>
                         <div class="app-tags mt-auto">
                             <span class="badge rounded-pill">${app.category}</span>
+                            ${app.wingetId ? `<span class="badge rounded-pill bg-info text-dark ms-1">winget</span>` : ''}
+                            ${app.chocolateyId ? `<span class="badge rounded-pill bg-warning text-dark ms-1">choco</span>` : ''}
                         </div>
                     </div>
                 `;
@@ -478,7 +444,7 @@
             const count = selectedApps.size;
             if (count > 0) {
                 selectionCountSpan.textContent = `${count} seleccionada(s)`;
-                downloadBtnText.textContent = `Descargar App${count > 1 ? 's' : ''}`;
+                generateScriptBtnText.textContent = `Generar Script (${count})`;
                 downloadBar.classList.add('visible');
             } else {
                 downloadBar.classList.remove('visible');
@@ -498,6 +464,187 @@
             
             renderApps(filteredApps);
         }
+
+        function generatePowerShellScriptContent() {
+            let script = `# Script de Instalación de Aplicaciones
+# Generado por el Centro de Aplicaciones de JBSV
+# Ejecuta este script en PowerShell como administrador.
+
+# Función para verificar y (opcionalmente) instalar winget
+function Install-WinGet {
+    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+        Write-Host "winget no encontrado. Para instalarlo, por favor, descarga e instala el 'App Installer' desde la Microsoft Store o manualmente:" -ForegroundColor Yellow
+        Write-Host "https://www.microsoft.com/store/productId/9NVFJSZ3CHSJ" -ForegroundColor Cyan
+        Write-Host "O descarga el paquete directamente: https://github.com/microsoft/winget-cli/releases" -ForegroundColor Cyan
+        Write-Host "Una vez instalado, cierra y vuelve a abrir PowerShell para que winget esté disponible." -ForegroundColor Yellow
+        Read-Host "Presiona Enter para continuar (o Ctrl+C para salir)"
+        if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+            Write-Error "winget no se instaló correctamente o no está en el PATH. Las aplicaciones que requieran winget no se instalarán."
+            return $false
+        }
+    }
+    return $true
+}
+
+# Función para verificar y (opcionalmente) instalar Chocolatey
+function Install-Chocolatey {
+    if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
+        Write-Host "Chocolatey no encontrado. Intentando instalar..." -ForegroundColor Yellow
+        Write-Host "Ejecutando el comando de instalación de Chocolatey..." -ForegroundColor Cyan
+        Set-ExecutionPolicy Bypass -Scope Process -Force -ErrorAction SilentlyContinue
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+        iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+        
+        if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
+            Write-Error "Chocolatey no se instaló correctamente. No se pueden instalar aplicaciones con Chocolatey."
+            return $false
+        }
+        Write-Host "Chocolatey instalado exitosamente. Refrescando el entorno..." -ForegroundColor Green
+        & "$env:ProgramData\chocolatey\bin\RefreshEnv.cmd"
+        Write-Host "Entorno refrescado." -ForegroundColor Green
+    }
+    return $true
+}
+
+# Asegúrate de ejecutar como administrador
+if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Error "Este script debe ejecutarse con privilegios de administrador."
+    Write-Host "Haz clic derecho en el archivo .ps1 y selecciona 'Ejecutar como administrador'."
+    Exit
+}
+
+`;
+
+            const selectedAppsData = Array.from(selectedApps).map(appId => apps.find(app => app.id === appId));
+            
+            if (selectedPackageManager === 'winget') {
+                script += `
+# Verificando e instalando winget si es necesario
+if (Install-WinGet) {
+    Write-Host "Instalando aplicaciones con winget..." -ForegroundColor Green
+`;
+                selectedAppsData.forEach(app => {
+                    if (app.wingetId) {
+                        script += `    Write-Host "Instalando ${app.name} (${app.wingetId})..." -ForegroundColor Yellow
+    winget install --id "${app.wingetId}" -e --accept-package-agreements --accept-source-agreements
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "Falló la instalación de ${app.name}. Código de salida: $LASTEXITCODE"
+    }
+`;
+                    } else {
+                        script += `    Write-Host "Saltando ${app.name}: No tiene WingetID disponible para winget." -ForegroundColor DarkYellow
+`;
+                    }
+                });
+                script += `} else {
+    Write-Error "No se pudo continuar con la instalación de winget. Algunas aplicaciones pueden no haberse instalado."
+}
+`;
+            } else if (selectedPackageManager === 'chocolatey') {
+                script += `
+# Verificando e instalando Chocolatey si es necesario
+if (Install-Chocolatey) {
+    Write-Host "Instalando aplicaciones con Chocolatey..." -ForegroundColor Green
+`;
+                selectedAppsData.forEach(app => {
+                    if (app.chocolateyId) {
+                        script += `    Write-Host "Instalando ${app.name} (${app.chocolateyId})..." -ForegroundColor Yellow
+    choco install "${app.chocolateyId}" -y
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "Falló la instalación de ${app.name}. Código de salida: $LASTEXITCODE"
+    }
+`;
+                    } else {
+                        script += `    Write-Host "Saltando ${app.name}: No tiene ChocolateyID disponible para Chocolatey." -ForegroundColor DarkYellow
+`;
+                    }
+                });
+                script += `} else {
+    Write-Error "No se pudo continuar con la instalación de Chocolatey. Algunas aplicaciones pueden no haberse instalado."
+}
+`;
+            }
+            script += `
+Write-Host "Proceso de instalación completado." -ForegroundColor Green
+`;
+            return script;
+        }
+
+        function generateBatchScriptContent() {
+            let script = `@echo off
+cls
+:: Script de Instalación de Aplicaciones
+:: Generado por el Centro de Aplicaciones de JBSV
+:: Ejecuta este script como administrador.
+
+:: Check if the script is running as admin
+openfiles >nul 2>&1
+if %errorlevel% neq 0 (
+    color 4
+    echo Este script requiere privilegios de administrador.
+    echo Por favor, ejecuta este script como administrador.
+    pause
+    exit /b 1
+)
+
+:: Admin privileges confirmed, continue execution
+setlocal EnableExtensions DisableDelayedExpansion
+
+echo -- Instalando Chocolatey:
+powershell -command "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
+
+echo -- Refrescando el entorno:
+call "%ProgramData%\\chocolatey\\bin\\RefreshEnv.cmd"
+
+:: Update Winget as per user's example
+echo -- Actualizando Winget:
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "$v = winget -v; if ([version]($v.TrimStart('v')) -lt [version]'1.7.0') { Write-Output 'Old winget version detected, upgrading...'; Set-Location $env:USERPROFILE; Invoke-WebRequest -Uri 'https://aka.ms/getwinget' -OutFile 'winget.msixbundle'; Add-AppPackage -ForceApplicationShutdown .\\winget.msixbundle; Remove-Item .\\winget.msixbundle } else { Write-Output 'Winget is already up to date, skipping upgrade.' }"
+
+:: This is the crucial part from your working WinScript:
+:: Restart explorer.exe and launch a new cmd /k process for installations
+echo -- Refrescando el entorno (reiniciando explorer.exe) y continuando en una nueva ventana de CMD...
+taskkill /f /im explorer.exe && start explorer.exe && start cmd /k "
+    echo -- Instalando aplicaciones seleccionadas:
+`;
+            const selectedAppsData = Array.from(selectedApps).map(appId => apps.find(app => app.id === appId));
+            let installCommands = [];
+
+            if (selectedPackageManager === 'chocolatey') {
+                const chocoPackages = selectedAppsData
+                    .filter(app => app.chocolateyId)
+                    .map(app => app.chocolateyId)
+                    .join(' ');
+                if (chocoPackages) {
+                    installCommands.push(`choco install ${chocoPackages} -y --force --ignorepackageexitcodes`);
+                }
+            } else if (selectedPackageManager === 'winget') {
+                selectedAppsData.forEach(app => {
+                    if (app.wingetId) {
+                        installCommands.push(`winget install --id "${app.wingetId}" -e --accept-package-agreements --accept-source-agreements`);
+                    }
+                });
+            }
+
+            if (installCommands.length > 0) {
+                script += installCommands.map(cmd => `    ${cmd}`).join('\n');
+            } else {
+                script += `    echo No se seleccionaron aplicaciones o no hay IDs disponibles para el gestor de paquetes elegido.
+`;
+            }
+
+            script += `
+    echo -- Proceso de instalacion completado en esta ventana.
+    pause
+    exit
+"
+:: The original script continues here, after launching the new CMD window
+endlocal
+:: Restore previous environment and exit the original script
+taskkill /f /im explorer.exe & start explorer & exit /b 0
+`;
+            return script;
+        }
+
 
         appGrid.addEventListener('click', function(e) {
             const card = e.target.closest('.app-card');
@@ -550,31 +697,87 @@
             updateDownloadBar();
         });
         
-        confirmDownloadBtn.addEventListener('click', function() {
-            const checkedBoxes = document.querySelectorAll('.app-checkbox:checked');
-            checkedBoxes.forEach((checkbox, index) => {
-                setTimeout(() => {
-                    const link = document.createElement('a');
-                    link.href = checkbox.value;
-                    link.target = '_blank';
-                    link.rel = 'noopener noreferrer';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                }, index * 300); // Pequeño retraso para evitar que los navegadores bloqueen todo
+        // Event listener for package manager radio buttons
+        document.querySelectorAll('input[name="packageManager"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                selectedPackageManager = this.value;
             });
-            
-            const modal = bootstrap.Modal.getInstance(document.getElementById('confirmModal'));
-            modal.hide();
         });
 
-        document.getElementById('confirmModal').addEventListener('show.bs.modal', function () {
-            modalAppCount.textContent = selectedApps.size;
+        // Event listener for script type radio buttons
+        document.querySelectorAll('input[name="scriptType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                selectedScriptType = this.value;
+            });
+        });
+
+        // Event listener for the main "Generate Script" button (opens modal)
+        generateScriptBtn.addEventListener('click', function() {
+            let scriptContent;
+            if (selectedScriptType === 'ps1') {
+                scriptContent = generatePowerShellScriptContent();
+            } else if (selectedScriptType === 'bat') {
+                scriptContent = generateBatchScriptContent();
+            } else {
+                scriptContent = "Error: Tipo de script no válido seleccionado.";
+            }
+            scriptOutput.textContent = scriptContent;
+        });
+
+        // Event listener for "Copy Script" button inside the modal
+        copyScriptBtn.addEventListener('click', function() {
+            const scriptText = scriptOutput.textContent;
+            navigator.clipboard.writeText(scriptText).then(() => {
+                const originalText = copyScriptBtn.innerHTML;
+                copyScriptBtn.innerHTML = '<i class="fas fa-check me-2"></i>Copiado!';
+                setTimeout(() => {
+                    copyScriptBtn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Error al copiar el script: ', err);
+                // Fallback for older browsers or insecure contexts
+                const textArea = document.createElement("textarea");
+                textArea.value = scriptText;
+                textArea.style.position = "fixed"; 
+                textArea.style.left = "-9999px";
+                textArea.style.top = "-9999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    const originalText = copyScriptBtn.innerHTML;
+                    copyScriptBtn.innerHTML = '<i class="fas fa-check me-2"></i>Copiado!';
+                    setTimeout(() => {
+                        copyScriptBtn.innerHTML = originalText;
+                    }, 2000);
+                } catch (err) {
+                    console.error('Fallback: No se pudo copiar el texto', err);
+                }
+                document.body.removeChild(textArea);
+            });
+        });
+
+        // Event listener for "Download Script" button inside the modal
+        downloadScriptFromModalBtn.addEventListener('click', function() {
+            const scriptContent = scriptOutput.textContent;
+            const filename = `install_apps_${selectedPackageManager}.${selectedScriptType}`;
+
+            const blob = new Blob([scriptContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url); // Clean up the object URL
         });
 
         // --- Inicialización ---
         renderCategories();
         renderApps(apps);
+        updateDownloadBar(); // Initial update
     });
     </script>
 </body>
