@@ -401,6 +401,7 @@
             font-size: 1rem;
             transition: all var(--transition-speed) ease;
             border: 2px solid transparent;
+            cursor: pointer;
         }
 
         .btn-primary {
@@ -618,6 +619,100 @@
         .copyright { font-size: 0.9rem; margin-top: 30px; }
         .copyright a { color: var(--primary-light); text-decoration: none; }
         .copyright a:hover { text-decoration: underline; }
+        
+        /* --- START: New Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(13, 17, 23, 0.7);
+            backdrop-filter: blur(8px);
+            display: none; /* Changed from flex to none */
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .modal-overlay.active {
+            display: flex; /* Activated by JS */
+            opacity: 1;
+        }
+        .modal-content {
+            background-color: var(--bg-medium);
+            color: var(--text-light);
+            padding: 35px;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.4s ease;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .modal-close:hover {
+            color: var(--text-light);
+            transform: rotate(90deg);
+        }
+        .modal-content h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .modal-content p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        .modal-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .modal-button-primary {
+            background-color: var(--primary-color); /* Changed from #7e22ce */
+            color: white;
+            box-shadow: 0 4px 20px var(--shadow-color); /* Using the existing shadow color */
+        }
+        .modal-button-primary:hover {
+            background-color: var(--primary-light); /* Changed from #9333ea */
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow-color); /* Using the existing shadow color */
+        }
+        .modal-button-secondary {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+        .modal-button-secondary:hover {
+            background-color: #2a2f36;
+            border-color: var(--text-secondary);
+        }
+        /* --- END: New Modal Styles --- */
+
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -643,46 +738,35 @@
     </style>
 </head>
 <body class="intro-active">
-    <!-- Intro Page Container -->
     <div id="introPage" class="intro-page">
-        <!-- Botón para saltar la intro -->
         <button class="skip-intro-btn" onclick="skipIntro()">Saltar Intro</button>
 
-        <!-- Partículas de fondo -->
         <div class="particles" id="particles"></div>
 
-        <!-- Círculos de energía -->
         <div class="energy-rings"></div>
         <div class="energy-rings"></div>
         <div class="energy-rings"></div>
 
-        <!-- Lluvia de código -->
         <div class="code-rain" id="codeRain"></div>
 
-        <!-- Logo principal -->
         <div class="logo-container">
             <div class="logo">
-                <!-- Tu logo de imagen de ToolboxBS -->
                 <img src="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico" alt="ToolboxBS Logo">
             </div>
         </div>
 
-        <!-- Texto principal -->
         <div class="main-text">
             <h1 class="title">ToolboxBS</h1>
             <p class="subtitle">Suite de Optimización Definitiva</p>
             <p class="tagline">Superpoderes para tu Windows</p>
-            <!-- New author credit -->
             <p class="author-credit">By: Brandon Sepulveda</p>
         </div>
 
-        <!-- Botón continuar -->
         <button class="continue-btn" onclick="startMainPage()">
             Comenzar Experiencia →
         </button>
     </div>
 
-    <!-- Main Page Container -->
     <div id="mainPage" class="main-page">
         <nav class="navbar" id="navbar">
             <div class="container navbar-content">
@@ -708,7 +792,7 @@
                     <h1 class="hero-title">Dale a tu Windows el Superpoder que Merece</h1>
                     <p class="hero-subtitle">ToolboxBS es la suite de herramientas definitiva, diseñada para entusiastas y profesionales que buscan exprimir al máximo el rendimiento, la estabilidad y el control de su sistema.</p>
                     <div class="hero-buttons">
-                        <a href="#download" class="btn btn-primary"><i class="fas fa-bolt"></i> Descargar Última Versión</a>
+                        <a href="javascript:void(0);" onclick="openExecutionModal()" class="btn btn-primary"><i class="fas fa-bolt"></i> Ejecutar ahora</a>
                         <a href="#features" class="btn btn-secondary"><i class="fas fa-star"></i> Ver Características</a>
                     </div>
                 </div>
@@ -813,7 +897,7 @@
                         </div>
                         <div class="testimonial-card animated-element" style="transition-delay: 200ms;">
                             <p class="testimonial-text">"Como gamer y ingeniero, la optimización de RAM es esencial. Con esta herramienta, noto una mejora real en la fluidez de mis juegos. ¡Totalmente recomendado!"</p>
-                               <div class="testimonial-author">
+                              <div class="testimonial-author">
                                 
                                 <div class="author-info">
                                     <h4>Francisco T.</h4>
@@ -823,7 +907,7 @@
                         </div>
                         <div class="testimonial-card animated-element" style="transition-delay: 300ms;">
                             <p class="testimonial-text">"La función de instalación por PowerShell es una genialidad. Es seguro, rápido y me da la confianza de que no estoy descargando nada raro. Excelente trabajo."</p>
-                               <div class="testimonial-author">
+                              <div class="testimonial-author">
                                 
                                 <div class="author-info">
                                     <h4>Julio Valencia.</h4>
@@ -904,7 +988,16 @@
             </div>
         </footer>
     </div>
-
+    
+    <div id="executionModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeExecutionModal()">&times;</span>
+            <h2>Empezar</h2>
+            <p>Comienza con la versión de escritorio para una experiencia completa o utiliza la versión en línea para un acceso rápido. Elige la opción que mejor se adapte a tus necesidades.</p>
+            <button class="modal-button modal-button-primary" onclick="executeLocalScript()">Desktop Version →</button>
+            <button class="modal-button modal-button-secondary" onclick="openOnlineVersion()">Online Version →</button>
+        </div>
+    </div>
     <script>
         // Función para generar un carácter hexadecimal o número aleatorio
         function getRandomChar() {
@@ -915,6 +1008,7 @@
         // Crear partículas que flotan en el fondo de la intro
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
             const numParticles = 50; // Cantidad de partículas
             for (let i = 0; i < numParticles; i++) {
                 const particle = document.createElement('div');
@@ -929,6 +1023,7 @@
         // Crear lluvia de código con caracteres cambiantes para la intro
         function createCodeRain() {
             const codeRainContainer = document.getElementById('codeRain');
+            if (!codeRainContainer) return;
             const numColumns = 30; // Número de columnas de código
             const columnHeight = window.innerHeight; // Altura de la ventana para la columna
             const charHeight = 14 * 1.2; // Tamaño de fuente * line-height
@@ -986,6 +1081,40 @@
             startMainPage();
         }
 
+        // --- START: NUEVA LÓGICA DEL MODAL ---
+        const executionModal = document.getElementById('executionModal');
+
+        function openExecutionModal() {
+            if (executionModal) {
+                executionModal.classList.add('active');
+            }
+        }
+
+        function closeExecutionModal() {
+            if (executionModal) {
+                executionModal.classList.remove('active');
+            }
+        }
+
+        function openOnlineVersion() {
+            window.open('https://brandonsepulveda.github.io/ToolboxBSweb', '_blank');
+            closeExecutionModal();
+        }
+
+        function executeLocalScript() {
+            const command = 'irm "https://cutt.ly/ToolboxBS" | iex';
+            navigator.clipboard.writeText(command).then(() => {
+                alert('Comando copiado al portapapeles.\n\nPégalo en una ventana de PowerShell (ejecutada como Administrador) para iniciar.');
+                closeExecutionModal();
+            }).catch(err => {
+                console.error('No se pudo copiar el comando: ', err);
+                prompt('No se pudo copiar automáticamente. Por favor, copia este comando:', command);
+                closeExecutionModal();
+            });
+        }
+        // --- END: NUEVA LÓGICA DEL MODAL ---
+
+
         // Inicializar los scripts de la página principal (animaciones, copy-btn, FAQ)
         function initializeMainPageScripts() {
             // --- Animaciones de Scroll para la página principal ---
@@ -1007,7 +1136,6 @@
             if(copyBtn) {
                 copyBtn.addEventListener('click', function() {
                     const codeText = this.previousElementSibling.querySelector('.code-text').textContent;
-                    // Usando document.execCommand('copy') para compatibilidad con iframe
                     const textarea = document.createElement('textarea');
                     textarea.value = codeText;
                     document.body.appendChild(textarea);
@@ -1045,6 +1173,13 @@
                     }
                 });
             });
+
+            // --- Cierre del modal al hacer clic fuera ---
+            window.addEventListener('click', function(event) {
+                if (event.target == executionModal) {
+                    closeExecutionModal();
+                }
+            });
         }
 
         // Inicializar los efectos de la intro cuando el DOM esté completamente cargado
@@ -1055,14 +1190,13 @@
             // Auto-avance o "urgencia" del botón después de un tiempo
             setTimeout(() => {
                 const btn = document.querySelector('.continue-btn');
-                if (btn) {
+                if (btn && !document.querySelector('.intro-page.hidden')) { // only animate if intro is still active
                     btn.style.animation += ', btnUrgent 1s infinite'; 
                 }
             }, 8000); // Después de 8 segundos, el botón empieza a pulsar
         });
 
         // Añadir estilo para el efecto de urgencia del botón (definido en JS para mejor control)
-        // Se añade un ID para evitar la re-declaración si el script se ejecuta múltiples veces
         if (!document.getElementById('urgent-style')) {
             const urgentStyle = document.createElement('style');
             urgentStyle.id = 'urgent-style'; // Asignar un ID
