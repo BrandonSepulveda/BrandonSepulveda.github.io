@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOOLBOXBS</title>
+    <!-- Librería JSZip para crear archivos ZIP en el navegador -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(45deg, #00ff88, #00ccdd);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #00ff88;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .window-btn {
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .window-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 60px 30px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 60px;
+            color: #fff;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00ff88, #00ccdd);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .tool-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #00ff88;
+        }
+
+        .tool-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .tool-description {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.4;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #2d2d2d;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid #4a5568;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #00ff88;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #ff4444;
+        }
+
+        .tool-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tool-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .tool-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+
+        .tool-item.selected {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .tool-item-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .tool-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #666;
+            border-radius: 4px;
+            background: transparent;
+            position: relative;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .tool-checkbox.checked {
+            background: #00ff88;
+            border-color: #00ff88;
+        }
+
+        .tool-checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .tool-item-text {
+            font-size: 16px;
+            color: white;
+            flex: 1;
+        }
+
+        .tool-item-arrow {
+            color: #00ff88;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            color: #00ccdd;
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        /* Floating Action Button */
+        .fab-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .fab {
+            background: linear-gradient(45deg, #00ff88, #00ccdd);
+            border: none;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.4);
+            transition: all 0.3s ease;
+            text-decoration: none; /* For anchor tag */
+        }
+
+        .fab:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 255, 136, 0.6);
+        }
+
+        .fab:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            opacity: 0.7;
+        }
+
+        .fab-icon {
+            font-size: 28px;
+            margin-bottom: 2px;
+        }
+
+        .fab-count {
+            font-size: 14px;
+        }
+
+        /* Message Box */
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2d2d2d;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 1002;
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid #00ff88;
+        }
+
+        .message-box p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: white;
+            line-height: 1.5;
+        }
+
+        .message-box button {
+            background: linear-gradient(45deg, #00ff88, #00ccdd);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .message-box button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Code Display Box */
+        .code-display-box {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .code-display-box .modal-content {
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+        }
+
+        .code-display-box pre {
+            background-color: #1a1a1a;
+            color: #00ff88;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            text-align: left;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            flex-grow: 1;
+            max-height: 50vh;
+        }
+
+        .code-display-box .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .code-display-box .actions button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .code-display-box .actions .copy-btn {
+            background: #00ccdd;
+            color: #000;
+        }
+
+        .code-display-box .actions .download-btn {
+            background: #00ff88;
+            color: #000;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+
+            .fab-container {
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .fab {
+                width: 60px;
+                height: 60px;
+            }
+
+            .fab-icon {
+                font-size: 24px;
+            }
+
+            .fab-count {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">TB</div>
+            <div class="logo-text">
+                <h1>TOOLBOXBS</h1>
+                <p>By: Brandon Sepulveda</p>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href="#" onclick="openModal('home-modal')">Inicio</a>
+            <a href="#" onclick="openModal('tools-modal')">Herramientas</a>
+            <a href="#" onclick="openModal('about-modal')">Sobre</a>
+            <a href="#" onclick="openExternalLink('https://brandonsepulveda.github.io/Documentacion.html')">Documentación</a>
+            <a href="#" onclick="toggleDarkMode()">Modo Oscuro/Claro</a>
+        </nav>
+        <div class="window-controls">
+            <button class="window-btn">–</button>
+            <button class="window-btn">□</button>
+            <button class="window-btn">✕</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <h1 class="page-title">Herramientas Disponibles</h1>
+        <div class="tools-grid">
+            <div class="tool-card" onclick="openModal('info-modal')">
+                <div class="tool-icon">💻</div>
+                <div class="tool-title">Info. Sistema</div>
+                <div class="tool-description">Datos del hardware y software</div>
+            </div>
+            <div class="tool-card" onclick="openExternalLink('https://brandonsepulveda.github.io/apps.html')">
+                <div class="tool-icon">⬇️</div>
+                <h3 class="tool-title">Descargas Apps</h3>
+                <p class="tool-description">Instaladores de aplicaciones populares</p>
+            </div>
+            <div class="tool-card" onclick="openModal('repair-modal')">
+                <div class="tool-icon">🔧</div>
+                <div class="tool-title">Reparación</div>
+                <div class="tool-description">Reparación y verificación del sistema</div>
+            </div>
+            <div class="tool-card" onclick="openModal('tweaks-modal')">
+                <div class="tool-icon">⚙️</div>
+                <div class="tool-title">Tweaks</div>
+                <div class="tool-description">Tweaks y utilidades para optimización</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <button class="fab" id="fabButton" onclick="showGeneratedCode()" disabled>
+            <span class="fab-icon">📄</span>
+            <span class="fab-count" id="fabCount">0</span>
+        </button>
+    </div>
+
+    <!-- Modal for Info Sistema -->
+    <div id="info-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">INFORMACIÓN DEL SISTEMA</h2>
+                <button class="close-btn" onclick="closeModal('info-modal')">✕</button>
+            </div>
+            <div class="subtitle">Selecciona la información que deseas ver</div>
+            <div class="tool-list">
+                <div class="tool-item" onclick="toggleSelection(this, 'info-hardware', 'info')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Ver Información del Hardware</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'info-software', 'info')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Ver Información del Software</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'info-network', 'info')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Información de Red</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Reparación -->
+    <div id="repair-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">HERRAMIENTAS DE REPARACION Y MANTENIMIENTO</h2>
+                <button class="close-btn" onclick="closeModal('repair-modal')">✕</button>
+            </div>
+            <div class="subtitle">Selecciona una herramienta</div>
+            <div class="tool-list">
+                <div class="tool-item" onclick="toggleSelection(this, 'create-restore-point', 'repair')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">1. Crear Punto de Restauración</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'os-maintenance', 'repair')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">2. Mantenimiento del S.O.</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'bsod-info', 'repair')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">3. Información de Pantallazos Azules</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'battery-status', 'repair')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">4. Ver Estado de la Batería</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'driver-info', 'repair')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">5. Información de Drivers</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'repair-network', 'repair')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">6. Reparar Red</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="openModal('cleanup-sub-modal')">
+                    <div class="tool-item-content">
+                        <span class="tool-item-text">7. Limpieza (Archivos Temporales y RAM)</span>
+                    </div>
+                    <span class="tool-item-arrow">→</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Tweaks -->
+    <div id="tweaks-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">MEJORAS Y UTILIDADES</h2>
+                <button class="close-btn" onclick="closeModal('tweaks-modal')">✕</button>
+            </div>
+            <div class="subtitle">Selecciona una utilidad</div>
+            <div class="tool-list">
+                <div class="tool-item" onclick="toggleSelection(this, 'winutil', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Ejecutar WinUtil</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'install-winget', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Instalar Winget</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'activate-windows', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Activar Windows</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'run-optimizer', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Ejecutar Optimizer</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'find-drivers', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Buscar Drivers</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'update-windows', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Actualizar Windows</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'optimize-os', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Analizar y Optimizar S.O.</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'system-properties', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Propiedades del Sistema</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'disable-transparency', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Deshabilitar Transparencia</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'reboot-bios', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Apagar y Entrar a BIOS</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'recovery-env', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Ingresar al Entorno de Recuperación</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'update-apps', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Actualizar Apps</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sub-modal for Limpieza (within Reparación) -->
+    <div id="cleanup-sub-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">OPCIONES DE LIMPIEZA</h2>
+                <button class="close-btn" onclick="closeModal('cleanup-sub-modal')">✕</button>
+            </div>
+            <div class="subtitle">Selecciona las opciones de limpieza</div>
+            <div class="tool-list">
+                <div class="tool-item" onclick="toggleSelection(this, 'cleanup-temp-files', 'repairCleanup')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Limpiar Archivos Temporales</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'cleanup-optimize-ram', 'repairCleanup')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Optimizar RAM</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Box -->
+    <div id="messageBox" class="message-box">
+        <p id="messageText"></p>
+        <button onclick="hideMessageBox()">Cerrar</button>
+    </div>
+    
+    <!-- Code Display Box -->
+    <div id="codeDisplayBox" class="code-display-box">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Script Generado</h2>
+                <button class="close-btn" onclick="closeModal('codeDisplayBox')">✕</button>
+            </div>
+            <pre id="codeContent"></pre>
+            <div class="actions">
+                <button class="copy-btn" onclick="copyCodeFromDisplay()">Copiar Código</button>
+                <button class="download-btn" onclick="downloadZipFromDisplay()">Descargar ZIP</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal for Home (Inicio) -->
+    <div id="home-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">MENÚ DE INICIO</h2>
+                <button class="close-btn" onclick="closeModal('home-modal')">✕</button>
+            </div>
+            <div class="subtitle">Accesos rápidos y herramientas esenciales</div>
+            <div class="tool-list">
+                <div class="tool-item" onclick="toggleSelection(this, 'home-control-panel', 'home')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Panel de Control</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'home-quick-diagnostic', 'home')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Diagnóstico Rápido</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'home-windows-settings', 'home')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Ajustes de Windows</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'home-file-explorer', 'home')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Explorador de Archivos</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'home-powershell-console', 'home')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">PowerShell</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'home-system-info-app', 'home')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Información del Sistema</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'home-install-powershell7', 'home')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Instalar PowerShell 7</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Herramientas (Tools) -->
+    <div id="tools-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">MENÚ DE HERRAMIENTAS</h2>
+                <button class="close-btn" onclick="closeModal('tools-modal')">✕</button>
+            </div>
+            <div class="subtitle">Todas las herramientas de optimización y reparación</div>
+            <div class="tool-list">
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-run-toolboxbs', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Ejecutar ToolboxBS</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-download-windows', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Descargar Windows</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-run-winscript', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Ejecutar WinScript</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-install-sentinel', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Instalar Sentinel</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-optimize-system', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Optimizar y mejorar el sistema</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-install-intel-drivers', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Instalar Intel Driver Support</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-windows-repair', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Reparación de Windows</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-task-manager', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Administrador de Tareas</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-device-manager', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Administrador de Dispositivos</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-windows-services', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Servicios</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-disk-cleanup', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Limpieza de Disco</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-registry-editor', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Editor del Registro</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-winget-cli', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">WinGet (CLI)</span>
+                    </div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-check-updates', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Verificar Actualizaciones</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for About -->
+    <div id="about-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">SOBRE TOOLBOXBS</h2>
+                <button class="close-btn" onclick="closeModal('about-modal')">✕</button>
+            </div>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Logo de ToolboxBS" style="width: 100px; height: 100px; border-radius: 10px; margin-bottom: 15px;">
+                <h3 style="font-size: 20px; color: #00ff88; margin-bottom: 10px;">ToolboxBS</h3>
+                <p style="font-size: 14px; color: #aaa; line-height: 1.5;">
+                    ToolboxBS es una herramienta de optimización y mantenimiento para sistemas Windows.
+                    Proporciona una interfaz amigable para ejecutar tareas comunes de mantenimiento y optimización del sistema.
+                </p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 10px; padding: 15px; margin-bottom: 15px; text-align: left;">
+                <p style="font-weight: bold; color: #00ff88; margin-bottom: 5px;">Autor:</p>
+                <p style="color: white; margin-bottom: 10px;">Jhon Brandon Sepulveda Valdes</p>
+                <p style="font-weight: bold; color: #00ff88; margin-bottom: 5px;">GitHub:</p>
+                <p><a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank" style="color: #00ccdd; text-decoration: underline;">github.com/BrandonSepulveda/ToolboxBS</a></p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 10px; padding: 15px; text-align: left;">
+                <p style="font-weight: bold; color: #00ff88; margin-bottom: 5px;">Versión:</p>
+                <p style="color: white; margin-bottom: 10px;">2.2</p>
+                <p style="font-weight: bold; color: #00ff88; margin-bottom: 5px;">Licencia:</p>
+                <p style="color: white;">MIT License - Copyright (c) 2023 Jhon Brandon Sepulveda Valdes</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Objeto para almacenar las herramientas seleccionadas por categoría
+        let selectedTools = {
+            'info': [],
+            'repair': [],
+            'repairCleanup': [], // Sub-category for cleanup options
+            'tweaks': [],
+            'home': [], // New category for Home menu selections
+            'tools': [] // New category for Tools menu selections
+        };
+        
+        // Variables globales para almacenar el contenido de los archivos generados
+        let currentPs1Content = '';
+        let currentBatContent = '';
+
+        // ==================================================================
+        // COMANDOS DE POWERSHELL SIMPLIFICADOS
+        // ==================================================================
+        const powershellCommands = {
+            // Info. Sistema
+            'info-hardware': `irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/infosystem.ps1' | iex`,
+            'info-software': `irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/infosystem.ps1' | iex`,
+            'info-network': `irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/infosystem.ps1' | iex`,
+
+            // Reparación
+            'create-restore-point': `
+                try {
+                    Checkpoint-Computer -Description "Punto de restauracion creado por ToolboxBS" -RestorePointType "MODIFY_SETTINGS"
+                    Write-Host "Se ha creado un punto de restauracion." -ForegroundColor Green
+                } catch {
+                    Write-Host "Error al crear punto de restauracion: $_" -ForegroundColor Red
+                }
+            `,
+            'os-maintenance': `
+                if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+                    Write-Host "Debes ejecutar el script como administrador para verificar y reparar archivos del sistema." -ForegroundColor Red
+                    exit
+                }
+                Write-Host "Iniciando mantenimiento de Windows..." -ForegroundColor Green
+                $totalRAM = (Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).Sum / 1GB
+                if ($totalRAM -ge 16) {
+                    fsutil behavior set memoryusage 2
+                } else {
+                    fsutil behavior set memoryusage 1
+                }
+                bcdedit /set useplatformtick yes
+                bcdedit /set disabledynamictick yes
+                sfc /scannow
+                DISM.exe /Online /Cleanup-image /CheckHealth
+                DISM.exe /Online /Cleanup-image /Restorehealth
+                sfc /scannow
+                Dism.exe /Online /Cleanup-Image /startComponentCleanup
+                Write-Host "Mantenimiento completado. ¡Reinicia tu PC para aplicar los cambios!" -ForegroundColor Green
+            `,
+            'bsod-info': `
+                Write-Host "Abriendo BlueScreenView para analizar pantallazos azules..." -ForegroundColor Yellow
+                $Url = "https://www.nirsoft.net/utils/bluescreenview.zip"
+                $ZipPath = Join-Path $env:TEMP "bluescreenview.zip"
+                $ExtractPath = Join-Path $env:TEMP "BlueScreenView"
+                try { Invoke-WebRequest -Uri $Url -OutFile $ZipPath } catch { Write-Host "Error al descargar BlueScreenView: $_" -ForegroundColor Red; exit }
+                try { Expand-Archive -Path $ZipPath -DestinationPath $ExtractPath -Force } catch { Write-Host "Error al extraer BlueScreenView: $_" -ForegroundColor Red; exit }
+                $ExePath = Join-Path $ExtractPath "BlueScreenView.exe"
+                if (Test-Path -Path $ExePath) { Start-Process -FilePath $ExePath } else { Write-Host "No se encontro BlueScreenView.exe." -ForegroundColor Red }
+                Write-Host "Ejecutando script remoto para mas informacion de pantallazos azules..." -ForegroundColor Yellow
+                irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/pantalla%20azul.ps1' | iex
+            `,
+            'battery-status': `
+                Write-Host "Generando informe de bateria..." -ForegroundColor Yellow
+                $batteryReportPath = "C:\\battery_report.html"
+                powercfg /batteryreport /output "$batteryReportPath"
+                if (Test-Path $batteryReportPath) {
+                    Start-Process $batteryReportPath
+                    Write-Host "Informe de bateria generado en $batteryReportPath" -ForegroundColor Green
+                } else {
+                    Write-Host "No se pudo generar el informe de bateria." -ForegroundColor Red
+                }
+                Write-Host "Abriendo BatteryInfoView..." -ForegroundColor Yellow
+                $url = "https://www.nirsoft.net/utils/batteryinfoview.zip"
+                $outputPath = Join-Path $env:TEMP "BatteryInfoView.zip"
+                $extractPath = Join-Path $env:TEMP "BatteryInfoView"
+                try { (New-Object System.Net.WebClient).DownloadFile($url, $outputPath) } catch { Write-Host "Error al descargar BatteryInfoView: $_" -ForegroundColor Red; exit }
+                try { Expand-Archive -Path $outputPath -DestinationPath $extractPath -Force } catch { Write-Host "Error al extraer BatteryInfoView: $_" -ForegroundColor Red; exit }
+                $exePath = Join-Path $extractPath "BatteryInfoView.exe"
+                if (Test-Path -Path $exePath) { Start-Process -FilePath $exePath } else { Write-Host "No se encontro BatteryInfoView.exe." -ForegroundColor Red }
+            `,
+            'driver-info': `
+                Write-Host "Exportando informacion de drivers..." -ForegroundColor Yellow
+                $outputPath = "C:\\informacion_controladores.txt"
+                Get-WmiObject -Query 'SELECT * FROM Win32_SystemDriver' | Select-Object DisplayName, Description, PathName, StartMode, State, Status | Format-List | Out-File -FilePath $outputPath -Encoding UTF8
+                Invoke-Item -Path $outputPath
+                Write-Host "Informacion de controladores exportada a $outputPath" -ForegroundColor Green
+                Start-Process "devmgmt.msc"
+            `,
+            'repair-network': `
+                Write-Host "Reparando red..." -ForegroundColor Yellow
+                netsh winsock reset
+                netsh int ip reset
+                ipconfig /release
+                ipconfig /renew
+                ipconfig /flushdns
+                Write-Host "Reparacion de red completada. Reinicia tu equipo." -ForegroundColor Green
+                Start-Process "msdt.exe" -ArgumentList "-id NetworkDiagnostic"
+            `,
+            // Limpieza (Sub-options)
+            'cleanup-temp-files': `
+                $userTempPath = $env:TEMP
+                $windowsTempPath = "C:\\Windows\\Temp"
+                $downloadsTempPath = "C:\\Users\\$env:USERNAME\\Downloads\\Temp"
+                $deletedFiles = 0
+                $deletedBytes = 0
+                function Remove-TempFiles {
+                    param([string]$Path, [bool]$SkipInUse = $true)
+                    $files = Get-ChildItem -Path $Path -File -ErrorAction SilentlyContinue
+                    foreach ($file in $files) {
+                        try {
+                            if ($SkipInUse -and ($file.IsReadOnly -or $file.InUse)) { continue }
+                            Remove-Item $file.FullName -Force -ErrorAction Stop
+                            $script:deletedFiles++
+                            $script:deletedBytes += $file.Length
+                        } catch {}
+                    }
+                    $folders = Get-ChildItem -Path $Path -Directory -ErrorAction SilentlyContinue
+                    foreach ($folder in $folders) {
+                        try {
+                            if (($folder.GetFiles().Count -eq 0) -and ($folder.GetDirectories().Count -eq 0)) {
+                                Remove-Item $folder.FullName -Force -ErrorAction Stop
+                            }
+                        } catch {}
+                    }
+                }
+                Remove-TempFiles -Path $userTempPath
+                if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+                    Remove-TempFiles -Path $windowsTempPath -SkipInUse $false
+                    if (Test-Path $downloadsTempPath) { Remove-TempFiles -Path $downloadsTempPath }
+                }
+                Write-Host "Limpieza completada. Archivos eliminados: $deletedFiles, Espacio liberado: $([math]::Round($deletedBytes / 1MB, 2)) MB" -ForegroundColor Green
+            `,
+            'cleanup-optimize-ram': `
+                $zipUrl = "https://download.sysinternals.com/files/RAMMap.zip"
+                $downloadPath = "$env:TEMP\\RAMMap.zip"
+                $extractPath = "$env:TEMP\\RAMMap"
+                try { Invoke-WebRequest -Uri $zipUrl -OutFile $downloadPath } catch { Write-Host "Error al descargar RAMMap: $_" -ForegroundColor Red; exit }
+                try { Expand-Archive -Path $downloadPath -DestinationPath $extractPath -Force } catch { Write-Host "Error al descomprimir RAMMap: $_" -ForegroundColor Red; exit }
+                $executablePath = Join-Path $extractPath "RAMMap.exe"
+                if (Test-Path -Path $executablePath) { Start-Process -FilePath $executablePath } else { Write-Host "No se encontro RAMMap.exe." -ForegroundColor Red }
+            `,
+
+            // Tweaks
+            'winutil': `irm christitus.com/win | iex`,
+            'install-winget': `Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle; Invoke-WebRequest -Uri https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx -OutFile Microsoft.VCLibs.x64.14.00.Desktop.appx; Invoke-WebRequest -Uri https://github.com/microsoft/microsoft-ui-xaml/releases/download/v2.7.3/Microsoft.UI.Xaml.2.7.x64.appx -OutFile Microsoft.UI.Xaml.2.7.x64.appx; Add-AppxPackage Microsoft.VCLibs.x64.14.00.Desktop.appx; Add-AppxPackage Microsoft.UI.Xaml.2.7.x64.appx; Add-AppxPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle`,
+            'activate-windows': `
+                $clave = (Get-WmiObject SoftwareLicensingService | Select-Object -ExpandProperty OA3xOriginalProductKey)
+                Write-Host "La clave digital es: $clave"
+                slmgr.vbs /ipk $clave
+                Write-Host "Clave establecida como predefinida correctamente." -ForegroundColor Green
+            `,
+            'run-optimizer': `
+                $url = "https://github.com/hellzerg/optimizer/releases/download/16.7/Optimizer-16.7.exe"
+                $outputFolder = "C:\\ToolboxBS"
+                $outputPath = Join-Path $outputFolder "Optimizer-16.7.exe"
+                if (-not (Test-Path -Path $outputFolder -PathType Container)) { New-Item -ItemType Directory -Force -Path $outputFolder | Out-Null }
+                try { Invoke-WebRequest -Uri $url -OutFile $outputPath } catch { Write-Host "Error al descargar Optimizer: $_" -ForegroundColor Red; exit }
+                try { Start-Process -FilePath $outputPath } catch { Write-Host "Error al ejecutar Optimizer: $_" -ForegroundColor Red }
+            `,
+            'find-drivers': `
+                $modelo = (Get-WmiObject -Class:Win32_ComputerSystem).Model
+                $serial = (Get-WmiObject -Class:Win32_BIOS).SerialNumber
+                Write-Host "Tu equipo es: $modelo, Numero de serie: $serial"
+                $url = "https://www.google.com/search?q=$modelo+$serial+drivers"
+                Start-Process $url
+            `,
+            'update-windows': `Start-Process "C:\\Windows\\System32\\UsoClient.exe" -ArgumentList "StartInteractiveScan"`,
+            'optimize-os': `irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/Analizador.ps1' | iex`,
+            'system-properties': `control.exe sysdm.cpl`,
+            'disable-transparency': `
+                $registryPath = "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"
+                Set-ItemProperty -Path $registryPath -Name "EnableTransparency" -Value 0
+                Write-Host "Transparencia deshabilitada correctamente." -ForegroundColor Green
+            `,
+            'reboot-bios': `
+                $result = [System.Windows.MessageBox]::Show("Se apagara el sistema y entrara a la BIOS. Desea continuar?", "Confirmar", [System.Windows.MessageBoxButton]::YesNo, [System.Windows.MessageBoxImage]::Question)
+                if ($result -eq 'Yes') { shutdown /r /fw /t 1 }
+            `,
+            'recovery-env': `
+                $result = [System.Windows.MessageBox]::Show("Se reiniciara el sistema y entrara al entorno de recuperacion. Desea continuar?", "Confirmar", [System.Windows.MessageBoxButton]::YesNo, [System.Windows.MessageBoxImage]::Question)
+                if ($result -eq 'Yes') { shutdown /r /o /f /t 00 }
+            `,
+            'update-apps': `winget update --all`,
+
+            // Home Menu Commands
+            'home-control-panel': `Start-Process "control.exe"`,
+            'home-quick-diagnostic': `
+                $diagnosticReport = New-Object System.Text.StringBuilder
+                $diagnosticReport.AppendLine("DIAGNÓSTICO RÁPIDO DEL SISTEMA") | Out-Null
+                $diagnosticReport.AppendLine("=============================") | Out-Null
+                $diagnosticReport.AppendLine("") | Out-Null
+                $criticalDrives = Get-WmiObject -Class Win32_LogicalDisk -Filter "DriveType=3" | Where-Object { ($_.FreeSpace / $_.Size) -lt 0.1 }
+                if ($criticalDrives) {
+                    $diagnosticReport.AppendLine("⚠️ ALERTA: Poco espacio en disco") | Out-Null
+                    foreach ($drive in $criticalDrives) {
+                        $freeGB = [Math]::Round($drive.FreeSpace / 1GB, 2)
+                        $totalGB = [Math]::Round($drive.Size / 1GB, 2)
+                        $percentFree = [Math]::Round(($drive.FreeSpace / $drive.Size) * 100, 1)
+                        $diagnosticReport.AppendLine("   Unidad $($drive.DeviceID): $freeGB GB libres de $totalGB GB ($percentFree% libre)") | Out-Null
+                    }
+                    $diagnosticReport.AppendLine("") | Out-Null
+                }
+                $os = Get-WmiObject -Class Win32_OperatingSystem
+                $memoryUsage = [Math]::Round((($os.TotalVisibleMemorySize - $os.FreePhysicalMemory) / $os.TotalVisibleMemorySize) * 100, 1)
+                if ($memoryUsage -gt 80) {
+                    $diagnosticReport.AppendLine("⚠️ ALERTA: Alto uso de memoria") | Out-Null
+                    $diagnosticReport.AppendLine("   Uso actual: $memoryUsage%") | Out-Null
+                    $diagnosticReport.AppendLine("") | Out-Null
+                }
+                $criticalServices = @("wuauserv", "WinDefend", "MpsSvc")
+                $serviceStatus = @()
+                foreach ($service in $criticalServices) {
+                    $svc = Get-Service -Name $service -ErrorAction SilentlyContinue
+                    if ($svc -and $svc.Status -ne "Running") {
+                        $serviceStatus += "$($svc.DisplayName) ($($svc.Status))"
+                    }
+                }
+                if ($serviceStatus.Count -gt 0) {
+                    $diagnosticReport.AppendLine("⚠️ ALERTA: Servicios criticos detenidos") | Out-Null
+                    foreach ($status in $serviceStatus) {
+                        $diagnosticReport.AppendLine("   $status") | Out-Null
+                    }
+                    $diagnosticReport.AppendLine("") | Out-Null
+                }
+                try {
+                    $updateSession = New-Object -ComObject Microsoft.Update.Session
+                    $updateSearcher = $updateSession.CreateUpdateSearcher()
+                    $pendingUpdates = $updateSearcher.Search("IsInstalled=0").Updates.Count
+                    if ($pendingUpdates -gt 0) {
+                        $diagnosticReport.AppendLine("⚠️ AVISO: Actualizaciones pendientes") | Out-Null
+                        $diagnosticReport.AppendLine("   Hay $pendingUpdates actualizaciones pendientes") | Out-Null
+                        $diagnosticReport.AppendLine("") | Out-Null
+                    }
+                } catch {}
+                try {
+                    $criticalEvents = Get-WinEvent -LogName System -MaxEvents 50 | Where-Object { $_.Level -eq 1 -or $_.Level -eq 2 } | Select-Object -First 5
+                    if ($criticalEvents.Count -gt 0) {
+                        $diagnosticReport.AppendLine("⚠️ ALERTA: Eventos criticos recientes") | Out-Null
+                        foreach ($event in $criticalEvents) {
+                            $eventTime = $event.TimeCreated.ToString("dd/MM/yyyy HH:mm")
+                            $diagnosticReport.AppendLine("   $eventTime - ID: $($event.Id) - $($event.ProviderName)") | Out-Null
+                        }
+                        $diagnosticReport.AppendLine("") | Out-Null
+                    }
+                } catch {}
+                if ($diagnosticReport.Length -eq 81) {
+                    $diagnosticReport.AppendLine("✓ No se encontraron problemas criticos") | Out-Null
+                    $diagnosticReport.AppendLine("  El sistema parece estar funcionando correctamente") | Out-Null
+                }
+                $diagnosticReport.AppendLine("") | Out-Null
+                $diagnosticReport.AppendLine("RECOMENDACIONES:") | Out-Null
+                $diagnosticReport.AppendLine("- Para un analisis completo, use la funcion Info. Sistema") | Out-Null
+                $diagnosticReport.AppendLine("- Ejecute regularmente la funcion Mantenimiento del S.O.") | Out-Null
+                Write-Host $diagnosticReport.ToString()
+            `,
+            'home-windows-settings': `Start-Process "ms-settings:"`,
+            'home-file-explorer': `Start-Process "explorer.exe"`,
+            'home-powershell-console': `
+                $pwsh7Path = (Get-Command "pwsh" -ErrorAction SilentlyContinue).Source
+                if ($pwsh7Path) { Start-Process $pwsh7Path } else { Start-Process "powershell.exe" }
+            `,
+            'home-system-info-app': `Start-Process "msinfo32.exe"`,
+            'home-install-powershell7': `
+                $pwsh7Path = (Get-Command "pwsh" -ErrorAction SilentlyContinue).Source
+                if ($pwsh7Path) {
+                    Write-Host "PowerShell 7 ya esta instalado en: $pwsh7Path\`n\`nVersion: $((Get-Command pwsh).Version)" -ForegroundColor Green
+                    exit
+                }
+                $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+                $isAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+                if (-not $isAdmin) {
+                    Write-Host "Se requieren permisos de administrador para instalar PowerShell 7." -ForegroundColor Red
+                    exit
+                }
+                $wingetInstalled = $null -ne (Get-Command winget -ErrorAction SilentlyContinue)
+                if ($wingetInstalled) {
+                    Write-Host "Intentando instalar PowerShell 7 con Winget..." -ForegroundColor Cyan
+                    $process = Start-Process winget -ArgumentList "install", "Microsoft.PowerShell", "--accept-source-agreements", "--accept-package-agreements", "-h" -PassThru -Wait
+                    if ($process.ExitCode -eq 0) { Write-Host "PowerShell 7 instalado correctamente." -ForegroundColor Green }
+                    else { Write-Host "Error al instalar PowerShell 7 con Winget. Codigo de salida: " + $process.ExitCode -ForegroundColor Red }
+                } else {
+                    Write-Host "Winget no disponible. Descargando instalador MSI..." -ForegroundColor Yellow
+                    $msiUrl = "https://github.com/PowerShell/PowerShell/releases/download/v7.3.9/PowerShell-7.3.9-win-x64.msi"
+                    $msiPath = "$env:TEMP\\PowerShell-7-win-x64.msi"
+                    try { Invoke-WebRequest -Uri $msiUrl -OutFile $msiPath } catch { Write-Host "Error al descargar o instalar PowerShell 7: $_" -ForegroundColor Red; exit }
+                    $process = Start-Process msiexec -ArgumentList "/i \`"$msiPath\`" /qn /norestart" -PassThru -Wait
+                    if ($process.ExitCode -eq 0 -or $process.ExitCode -eq 3010) { Write-Host "PowerShell 7 instalado correctamente." -ForegroundColor Green }
+                    else { Write-Host "Error al instalar PowerShell 7. Codigo de salida: " + $process.ExitCode -ForegroundColor Red }
+                }
+            `,
+
+            // Tools Menu Commands
+            'tools-run-toolboxbs': `irm https://brandonsepulveda.github.io/Tool | iex`,
+            'tools-download-windows': `irm https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/windows%20instalador.ps1 | iex`,
+            'tools-run-winscript': `irm https://winscript.cc/irm | iex`,
+            'tools-install-sentinel': `
+                $downloadURL = "https://www.harddisksentinel.com/hdsentinel_pro_portable.zip"
+                $downloadPath = [System.IO.Path]::Combine($env:TEMP, "HDSentinel.zip")
+                $extractPath = [System.IO.Path]::Combine($env:TEMP, "HDSentinel")
+                if (-not (Test-Path -Path $extractPath)) { New-Item -Path $extractPath -ItemType Directory -Force | Out-Null }
+                Write-Host "Descargando Hard Disk Sentinel..." -ForegroundColor Yellow
+                try {
+                    $ProgressPreference = 'Continue'
+                    Invoke-WebRequest -Uri $downloadURL -OutFile $downloadPath -UseBasicParsing
+                } catch { Write-Host "Error al descargar Hard Disk Sentinel: $_" -ForegroundColor Red; exit }
+                Write-Host "Extrayendo archivos..." -ForegroundColor Yellow
+                try {
+                    Add-Type -AssemblyName System.IO.Compression.FileSystem
+                    [System.IO.Compression.ZipFile]::ExtractToDirectory($downloadPath, $extractPath)
+                } catch { Write-Host "Error al extraer los archivos: $_" -ForegroundColor Red; exit }
+                $hdSentinelExe = Get-ChildItem -Path $extractPath -Recurse -Filter "HDSentinel.exe" | Select-Object -First 1
+                if ($hdSentinelExe) {
+                    Write-Host "Ejecutando Hard Disk Sentinel..." -ForegroundColor Yellow
+                    try { Start-Process -FilePath $hdSentinelExe.FullName -Wait } catch { Write-Host "Error al ejecutar Hard Disk Sentinel: $_" -ForegroundColor Red; exit }
+                } else { Write-Host "No se encontro el ejecutable HDSentinel.exe." -ForegroundColor Red }
+                Write-Host "Limpiando archivos temporales..." -ForegroundColor Yellow
+                try {
+                    Remove-Item -Path $downloadPath -Force -ErrorAction SilentlyContinue
+                    Remove-Item -Path $extractPath -Recurse -Force -ErrorAction SilentlyContinue
+                } catch { Write-Host "Error al eliminar archivos temporales: $_" -ForegroundColor Red }
+            `,
+            'tools-optimize-system': `
+                if (-not (Test-Path "$env:TEMP\\ToolboxBS")) { New-Item -Path "$env:TEMP\\ToolboxBS" -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null }
+                Invoke-WebRequest -Uri "https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/performance.bat" -OutFile "$env:TEMP\\ToolboxBS\\performance.bat"
+                Start-Process -FilePath "cmd.exe" -ArgumentList "/c", "$env:TEMP\\ToolboxBS\\performance.bat"
+            `,
+            'tools-install-intel-drivers': `
+                Write-Host "Descargando Intel Driver Support Assistant..." -ForegroundColor Yellow
+                $downloadPath = Join-Path $env:TEMP "IntelDriverSupport.exe"
+                try {
+                    Invoke-WebRequest -Uri "https://dsadata.intel.com/installer" -OutFile $downloadPath
+                    if (Test-Path $downloadPath) {
+                        Write-Host "Iniciando instalacion..." -ForegroundColor Green
+                        Start-Process -FilePath $downloadPath -Wait
+                        Write-Host "Eliminando archivos temporales..." -ForegroundColor Yellow
+                        Remove-Item -Path $downloadPath -Force
+                        Write-Host "Instalacion completada y archivos temporales eliminados." -ForegroundColor Green
+                    } else { Write-Host "Error: No se pudo descargar el instalador" -ForegroundColor Red }
+                } catch { Write-Host "Error: $_" -ForegroundColor Red }
+            `,
+            'tools-windows-repair': `sfc /scannow; DISM.exe /Online /Cleanup-image /Restorehealth`,
+            'tools-task-manager': `Start-Process "taskmgr.exe"`,
+            'tools-device-manager': `Start-Process "devmgmt.msc"`,
+            'tools-windows-services': `Start-Process "services.msc"`,
+            'tools-disk-cleanup': `Start-Process "cleanmgr.exe"`,
+            'tools-registry-editor': `Start-Process "regedit.exe"`,
+            'tools-winget-cli': `Start-Process powershell -ArgumentList "-NoExit", "-Command", "winget"`,
+            'tools-check-updates': `Start-Process "ms-settings:windowsupdate"`
+        };
+
+        // Función para alternar la selección de un elemento
+        function toggleSelection(element, toolId, category) {
+            const checkbox = element.querySelector('.tool-checkbox');
+            const isSelected = element.classList.contains('selected');
+            
+            if (isSelected) {
+                element.classList.remove('selected');
+                if (checkbox) checkbox.classList.remove('checked');
+                selectedTools[category] = selectedTools[category].filter(id => id !== toolId);
+            } else {
+                element.classList.add('selected');
+                if (checkbox) checkbox.classList.add('checked');
+                selectedTools[category].push(toolId);
+            }
+            
+            updateGlobalFloatingButton(); // Update global button on any selection change
+        }
+
+        // Función para actualizar el estado del botón de ejecución y el contador
+        function updateGlobalFloatingButton() {
+            let totalSelected = 0;
+            let selectedTitles = [];
+            for (const category in selectedTools) {
+                totalSelected += selectedTools[category].length;
+                selectedTools[category].forEach(toolId => {
+                     const toolItem = document.querySelector(`.tool-item[onclick*="'${toolId}'"]`);
+                     if(toolItem) {
+                        selectedTitles.push(toolItem.querySelector('.tool-item-text').textContent.trim());
+                     }
+                });
+            }
+            
+            const fabButton = document.getElementById('fabButton');
+            const fabCount = document.getElementById('fabCount');
+
+            fabCount.textContent = totalSelected;
+            fabButton.disabled = totalSelected === 0;
+
+            if (totalSelected > 0) {
+                fabButton.title = 'Seleccionado:\n- ' + selectedTitles.join('\n- ');
+            } else {
+                fabButton.title = 'Generar Script';
+            }
+        }
+
+        // Función para limpiar todas las selecciones de una categoría específica (used by clear buttons in modals)
+        function clearSelections(category) {
+            selectedTools[category] = [];
+            const modalId = getModalIdFromCategory(category);
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                const items = modal.querySelectorAll('.tool-item');
+                items.forEach(item => {
+                    item.classList.remove('selected');
+                    const checkbox = item.querySelector('.tool-checkbox');
+                    if (checkbox) checkbox.classList.remove('checked');
+                });
+            }
+            updateGlobalFloatingButton(); // Update global button after clearing a category
+        }
+
+        // Función para obtener el ID del modal a partir de la categoría
+        function getModalIdFromCategory(category) {
+            switch(category) {
+                case 'info': return 'info-modal';
+                case 'repair': return 'repair-modal';
+                case 'repairCleanup': return 'cleanup-sub-modal';
+                case 'tweaks': return 'tweaks-modal';
+                case 'home': return 'home-modal';
+                case 'tools': return 'tools-modal';
+                case 'about': return 'about-modal';
+                default: return '';
+            }
+        }
+
+        // ==================================================================
+        // NUEVAS FUNCIONES PARA MOSTRAR CÓDIGO Y DESCARGAR ZIP
+        // ==================================================================
+
+        function showGeneratedCode() {
+             // 1. Recopilar todos los comandos seleccionados.
+            const allCommands = [];
+            let hasSelections = false;
+            for (const category in selectedTools) {
+                for (const toolId of selectedTools[category]) {
+                    const command = powershellCommands[toolId];
+                    if (command) {
+                        const toolItem = document.querySelector(`.tool-item[onclick*="'${toolId}'"]`);
+                        const toolText = toolItem ? toolItem.querySelector('.tool-item-text').textContent.trim() : `Tarea`;
+                        allCommands.push({ text: toolText, script: command });
+                        hasSelections = true;
+                    }
+                }
+            }
+
+            if (!hasSelections) {
+                showMessageBox("Por favor, selecciona al menos una función para generar el script.");
+                return;
+            }
+
+            // 2. Construir el contenido del script .ps1 y .bat.
+            let ps1Content = `# Script de ToolboxBS generado el ${new Date().toLocaleString()}\n\n`;
+            allCommands.forEach((cmd, index) => {
+                ps1Content += `Write-Host ""\n`;
+                ps1Content += `Write-Host "=================================================================" -ForegroundColor Green\n`;
+                ps1Content += `Write-Host "      EJECUTANDO TAREA ${index + 1}/${allCommands.length}: ${cmd.text}" -ForegroundColor Yellow\n`;
+                ps1Content += `Write-Host "=================================================================" -ForegroundColor Green\n\n`;
+                ps1Content += `${cmd.script.trim()}\n\n`;
+            });
+            ps1Content += `Write-Host "Todas las tareas han finalizado." -ForegroundColor Green\n`;
+            ps1Content += `Read-Host "Presiona ENTER para salir"\n`;
+
+            let batContent = `@echo off\n`;
+            batContent += `chcp 65001 > nul\n`;
+            batContent += `echo Ejecutando el script de PowerShell...\n`;
+            batContent += `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0ToolboxBS_Script.ps1"\n`;
+            batContent += `pause\n`;
+
+            // Guardar contenido para la descarga
+            currentPs1Content = ps1Content;
+            currentBatContent = batContent;
+
+            // 3. Mostrar el modal con el código .ps1
+            document.getElementById('codeContent').textContent = ps1Content;
+            openModal('codeDisplayBox');
+        }
+
+        function copyCodeFromDisplay() {
+            const codeContent = document.getElementById('codeContent').textContent;
+            navigator.clipboard.writeText(codeContent).then(() => {
+                showMessageBox("¡Código copiado al portapapeles!");
+            }, (err) => {
+                console.error('Error al copiar: ', err);
+                showMessageBox("Error al copiar el código.");
+            });
+        }
+
+        async function downloadZipFromDisplay() {
+            try {
+                const zip = new JSZip();
+                zip.file("ToolboxBS_Script.ps1", currentPs1Content);
+                zip.file("EJECUTAR_ESTE_ARCHIVO.bat", currentBatContent);
+                
+                const zipBlob = await zip.generateAsync({ type: "blob" });
+
+                const url = URL.createObjectURL(zipBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `ToolboxBS_Script.zip`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                closeModal('codeDisplayBox');
+
+                showMessageBox("<h3>¡ZIP generado!</h3><p>1. Extrae el archivo descargado.<br>2. Haz clic derecho en 'EJECUTAR_ESTE_ARCHIVO.bat' y selecciona 'Ejecutar como administrador'.</p>");
+
+            } catch (error) {
+                console.error("Error al generar el ZIP:", error);
+                showMessageBox("Ocurrió un error al generar el archivo ZIP.");
+            }
+
+            // Limpiar selecciones
+            for (const category in selectedTools) {
+                clearSelections(category);
+            }
+            updateGlobalFloatingButton();
+        }
+
+
+        // Funciones para abrir y cerrar modales
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Funciones de navegación
+        function openExternalLink(url) {
+            window.open(url, '_blank');
+        }
+
+        // Funcionalidad de Modo Oscuro/Claro (simple toggle)
+        let isDarkMode = true;
+        function toggleDarkMode() {
+            document.body.classList.toggle('light-mode');
+            isDarkMode = !isDarkMode;
+        }
+
+        // Funciones para el Message Box personalizado
+        function showMessageBox(message) {
+            const messageBox = document.getElementById('messageBox');
+            const messageText = document.getElementById('messageText');
+            messageText.innerHTML = message;
+            messageBox.style.display = 'flex';
+        }
+
+        function hideMessageBox() {
+            document.getElementById('messageBox').style.display = 'none';
+        }
+
+        // Inicializar el estado de los botones al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            updateGlobalFloatingButton(); // Initial update for the FAB
+        });
+
+    </script>
+</body>
+</html>
