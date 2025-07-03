@@ -46,15 +46,301 @@
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-secondary);
             font-family: 'Manrope', sans-serif;
+            background-color: var(--bg-dark); /* Default background for main page */
+            color: var(--text-secondary);
             line-height: 1.7;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
             position: relative;
         }
-        
-        /* Efecto de fondo Aurora */
+
+        /* Styles for the intro page container */
+        .intro-page {
+            position: fixed; /* Fixed to cover the whole viewport */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, rgba(33, 150, 243, 0.1) 0%, var(--bg-dark) 70%);
+            z-index: 9999; /* Ensure it's on top */
+            transition: opacity 1s ease-out; /* For fade out effect */
+            opacity: 1; /* Initially visible */
+        }
+
+        .intro-page.hidden {
+            opacity: 0;
+            pointer-events: none; /* Disable interactions when hidden */
+        }
+
+        /* Styles for the main content page container */
+        .main-page {
+            display: none; /* Hidden by default */
+            opacity: 0;
+            transition: opacity 1s ease-in; /* For fade in effect */
+            min-height: 100vh; /* Ensure it takes full height for scrolling */
+            position: relative; /* Allows z-index and positioning */
+        }
+
+        .main-page.visible {
+            display: block; /* Show when active */
+            opacity: 1;
+        }
+
+        /* Body overflow control based on active page */
+        body.intro-active {
+            overflow: hidden; /* Hide scrollbars during intro */
+            height: 100vh; /* Ensure intro takes full height */
+        }
+
+        body.main-active {
+            overflow-y: auto; /* Allow vertical scrolling on main page */
+            height: auto; /* Allow content to dictate height */
+        }
+
+        /* --- Intro Specific Styles --- */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0%, 100% { opacity: 0; transform: translateY(100vh) scale(0); }
+            50% { opacity: 1; transform: translateY(-100vh) scale(1); }
+        }
+
+        .energy-rings {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+            animation: pulse 2s infinite ease-in-out;
+            opacity: 0;
+        }
+
+        .energy-rings:nth-child(1) { animation-delay: 0s; }
+        .energy-rings:nth-child(2) { animation-delay: 0.5s; border-color: var(--primary-light); }
+        .energy-rings:nth-child(3) { animation-delay: 1s; border-color: var(--primary-dark); }
+
+        @keyframes pulse {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 0.6; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        .code-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+
+        .code-column {
+            position: absolute;
+            top: -100%;
+            color: var(--primary-color);
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.2;
+            animation: codefall 8s linear infinite;
+            white-space: pre;
+        }
+
+        @keyframes codefall {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+
+        .logo-container {
+            position: relative;
+            z-index: 10;
+            animation: logoEntrance 1.5s ease-out forwards;
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 40px rgba(33, 150, 243, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes logoEntrance {
+            0% { opacity: 0; transform: scale(0.5) rotateY(-180deg); }
+            70% { opacity: 1; transform: scale(1.1) rotateY(0deg); }
+            100% { opacity: 1; transform: scale(1) rotateY(0deg); }
+        }
+
+        .main-text {
+            margin-top: 40px;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .title {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary-light), var(--text-light), var(--primary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleReveal 1.5s ease-out 0.5s forwards;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-top: 20px;
+            animation: subtitleReveal 1.5s ease-out 1s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--primary-light);
+            margin-top: 15px;
+            font-weight: 600;
+            animation: taglineReveal 1.5s ease-out 1.5s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* New style for author credit */
+        .author-credit {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            font-weight: 500;
+            animation: taglineReveal 1.5s ease-out 2s forwards; /* Delayed after tagline */
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes titleReveal {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes subtitleReveal {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes taglineReveal {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .continue-btn {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            animation: btnAppear 1s ease-out 2.5s forwards, btnPulse 2s infinite 3.5s;
+            opacity: 0;
+            transform: translateX(-50%) translateY(20px);
+            box-shadow: 0 10px 30px rgba(33, 150, 243, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .continue-btn:hover {
+            transform: translateX(-50%) translateY(-5px);
+            box-shadow: 0 15px 40px rgba(33, 150, 243, 0.5);
+        }
+
+        @keyframes btnAppear {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        @keyframes btnPulse {
+            0%, 100% { box-shadow: 0 10px 30px rgba(33, 150, 243, 0.3); }
+            50% { box-shadow: 0 15px 40px rgba(33, 150, 243, 0.6); }
+        }
+
+        .skip-intro-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(33, 150, 243, 0.2);
+            color: var(--text-secondary);
+            border: 1px solid var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            z-index: 100;
+            opacity: 0;
+            animation: btnAppear 0.5s ease-out 2s forwards;
+            transition: all 0.3s ease;
+        }
+
+        .skip-intro-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* --- Main Page Specific Styles (from your original HTML) --- */
         body::before {
             content: '';
             position: fixed;
@@ -81,7 +367,6 @@
             padding: 0 20px;
         }
 
-        /* --- Componentes Reutilizables --- */
         .section {
             padding: 100px 0;
             position: relative;
@@ -149,7 +434,6 @@
             transform: translateY(0);
         }
 
-        /* --- Navbar --- */
         .navbar {
             background-color: rgba(13, 17, 23, 0.8);
             backdrop-filter: blur(12px);
@@ -184,7 +468,6 @@
         
         .hamburger { display: none; }
 
-        /* --- Hero Section --- */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -205,7 +488,6 @@
         }
         .hero-buttons { display: flex; gap: 20px; justify-content: center; }
         
-        /* --- Benefits Section --- */
         .benefits-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -232,7 +514,6 @@
             margin-bottom: 15px;
         }
 
-        /* --- Features Section --- */
         .features-grid { display: grid; grid-template-columns: 1fr; gap: 100px; }
         .feature-item {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -262,7 +543,6 @@
             top: 2px;
         }
 
-        /* --- Installation Section --- */
         .installation-section { background-color: var(--bg-medium); }
         .code-block {
             background-color: var(--bg-dark);
@@ -294,7 +574,6 @@
         }
         #copy-notification.active { bottom: -50px; opacity: 1; }
 
-        /* --- Testimonials Section --- */
         .testimonials-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
@@ -309,7 +588,6 @@
         .author-info h4 { font-size: 1.1rem; color: var(--text-light); margin: 0; }
         .author-info p { font-size: 0.9rem; color: var(--primary-light); margin: 0; }
 
-        /* --- FAQ Section --- */
         .faq-container { max-width: 800px; margin: auto; }
         .faq-item {
             background: var(--bg-light); border: 1px solid var(--border-color);
@@ -329,7 +607,6 @@
         }
         .faq-answer p { padding: 0 20px 20px; margin: 0; border-top: 1px solid var(--border-color); padding-top: 20px;}
 
-        /* --- Footer --- */
         footer {
             background-color: var(--bg-medium);
             padding: 60px 20px; text-align: center;
@@ -342,8 +619,18 @@
         .copyright a { color: var(--primary-light); text-decoration: none; }
         .copyright a:hover { text-decoration: underline; }
 
-        /* --- Responsive Design --- */
+        /* Responsive */
         @media (max-width: 768px) {
+            /* Intro Responsive */
+            .intro-page .title { font-size: 2.5rem; }
+            .intro-page .subtitle { font-size: 1.2rem; }
+            .intro-page .tagline { font-size: 1rem; }
+            .intro-page .logo { width: 80px; height: 80px; border-radius: 15px;}
+            .intro-page .energy-rings { width: 250px; height: 250px; }
+            .intro-page .continue-btn { padding: 12px 25px; font-size: 1rem; bottom: 30px; }
+            .intro-page .skip-intro-btn { top: 15px; right: 15px; padding: 6px 12px; font-size: 0.8rem; }
+
+            /* Main Page Responsive */
             .navbar-links { display: none; /* Simplificado para el ejemplo, se puede hacer un menú completo */ }
             .hamburger { display: block; cursor: pointer; font-size: 1.5rem; }
             .hero-buttons { flex-direction: column; }
@@ -353,285 +640,440 @@
             .feature-item:nth-child(even) .feature-image { order: 0; }
             .feature-text ul { text-align: left; }
         }
-
     </style>
 </head>
+<body class="intro-active">
+    <!-- Intro Page Container -->
+    <div id="introPage" class="intro-page">
+        <!-- Botón para saltar la intro -->
+        <button class="skip-intro-btn" onclick="skipIntro()">Saltar Intro</button>
 
-<body>
-    <nav class="navbar" id="navbar">
-        <div class="container navbar-content">
-            <a href="index.html" class="navbar-logo">
-                <img src="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico" alt="Logo ToolboxBS">
-                ToolboxBS
-            </a>
-            <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
-            <div class="navbar-links" id="navbar-links">
-                <a href="#benefits">Beneficios</a>
-                <a href="#features">Características</a>
-                <a href="#install">Instalación</a>
-                <a href="#faq">FAQ</a>
-                <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank">GitHub</a>
-                <a href="https://brandonsepulveda.github.io/">Portafolio</a>
+        <!-- Partículas de fondo -->
+        <div class="particles" id="particles"></div>
+
+        <!-- Círculos de energía -->
+        <div class="energy-rings"></div>
+        <div class="energy-rings"></div>
+        <div class="energy-rings"></div>
+
+        <!-- Lluvia de código -->
+        <div class="code-rain" id="codeRain"></div>
+
+        <!-- Logo principal -->
+        <div class="logo-container">
+            <div class="logo">
+                <!-- Tu logo de imagen de ToolboxBS -->
+                <img src="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico" alt="ToolboxBS Logo">
             </div>
         </div>
-    </nav>
 
-    <main>
-        <section class="hero section">
-            <div class="container hero-content animated-element">
-                <h1 class="hero-title">Dale a tu Windows el Superpoder que Merece</h1>
-                <p class="hero-subtitle">ToolboxBS es la suite de herramientas definitiva, diseñada para entusiastas y profesionales que buscan exprimir al máximo el rendimiento, la estabilidad y el control de su sistema.</p>
-                <div class="hero-buttons">
-                    <a href="#download" class="btn btn-primary"><i class="fas fa-bolt"></i> Descargar Última Versión</a>
-                    <a href="#features" class="btn btn-secondary"><i class="fas fa-star"></i> Ver Características</a>
-                </div>
-            </div>
-        </section>
+        <!-- Texto principal -->
+        <div class="main-text">
+            <h1 class="title">ToolboxBS</h1>
+            <p class="subtitle">Suite de Optimización Definitiva</p>
+            <p class="tagline">Superpoderes para tu Windows</p>
+            <!-- New author credit -->
+            <p class="author-credit">By: Brandon Sepulveda</p>
+        </div>
 
-        <section id="benefits" class="section benefits-section">
-            <div class="container">
-                <h2 class="section-title animated-element">¿Por qué <span>ToolboxBS</span>?</h2>
-                <p class="section-intro animated-element">Simplificamos lo complejo. Obtén resultados profesionales sin necesidad de ser un experto.</p>
-                <div class="benefits-grid">
-                    <div class="benefit-card animated-element" style="transition-delay: 100ms;">
-                        <i class="fas fa-tachometer-alt benefit-icon"></i>
-                        <h3 class="benefit-title">Máximo Rendimiento</h3>
-                        <p>Libera recursos, limpia archivos basura y optimiza la memoria RAM para una experiencia más rápida y fluida en juegos y aplicaciones.</p>
-                    </div>
-                    <div class="benefit-card animated-element" style="transition-delay: 200ms;">
-                        <i class="fas fa-user-shield benefit-icon"></i>
-                        <h3 class="benefit-title">Control Total</h3>
-                        <p>Accede a herramientas de diagnóstico y personalización avanzadas. Modifica, repara y ajusta tu sistema a tu gusto con total seguridad.</p>
-                    </div>
-                    <div class="benefit-card animated-element" style="transition-delay: 300ms;">
-                        <i class="fas fa-magic benefit-icon"></i>
-                        <h3 class="benefit-title">Simplicidad Poderosa</h3>
-                        <p>Una interfaz gráfica intuitiva que agrupa decenas de comandos y scripts complejos en simples clics. Optimizar nunca fue tan fácil.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Botón continuar -->
+        <button class="continue-btn" onclick="startMainPage()">
+            Comenzar Experiencia →
+        </button>
+    </div>
 
-        <section id="features" class="section">
-            <div class="container">
-                <h2 class="section-title animated-element">Un Arsenal de <span>Herramientas</span> a tu Disposición</h2>
-                <div class="features-grid">
-                    <div class="feature-item animated-element">
-                        <div class="feature-text">
-                            <h3 class="feature-title">Diagnóstico Integral</h3>
-                            <ul>
-                                <li>Visión completa de tu hardware y software.</li>
-                                <li>Monitorización de temperaturas y rendimiento.</li>
-                                <li>Chequeo y reparación de archivos del sistema (SFC & DISM).</li>
-                            </ul>
-                        </div>
-                        <div class="feature-image">
-                            <img src="https://github.com/user-attachments/assets/d3706118-15b7-4665-9783-edba2228b003" alt="Información del Sistema">
-                        </div>
+    <!-- Main Page Container -->
+    <div id="mainPage" class="main-page">
+        <nav class="navbar" id="navbar">
+            <div class="container navbar-content">
+                <a href="index.html" class="navbar-logo">
+                    <img src="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico" alt="Logo ToolboxBS">
+                    ToolboxBS
+                </a>
+                <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+                <div class="navbar-links" id="navbar-links">
+                    <a href="#benefits">Beneficios</a>
+                    <a href="#features">Características</a>
+                    <a href="#install">Instalación</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank">GitHub</a>
+                    <a href="https://brandonsepulveda.github.io/">Portafolio</a>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <section class="hero section">
+                <div class="container hero-content animated-element">
+                    <h1 class="hero-title">Dale a tu Windows el Superpoder que Merece</h1>
+                    <p class="hero-subtitle">ToolboxBS es la suite de herramientas definitiva, diseñada para entusiastas y profesionales que buscan exprimir al máximo el rendimiento, la estabilidad y el control de su sistema.</p>
+                    <div class="hero-buttons">
+                        <a href="#download" class="btn btn-primary"><i class="fas fa-bolt"></i> Descargar Última Versión</a>
+                        <a href="#features" class="btn btn-secondary"><i class="fas fa-star"></i> Ver Características</a>
                     </div>
-                    <div class="feature-item animated-element">
-                        <div class="feature-image">
-                            <img src="https://github.com/user-attachments/assets/294126ed-5dbd-479a-be68-9b607232e8f2" alt="Limpieza y Optimización">
+                </div>
+            </section>
+
+            <section id="benefits" class="section benefits-section">
+                <div class="container">
+                    <h2 class="section-title animated-element">¿Por qué <span>ToolboxBS</span>?</h2>
+                    <p class="section-intro animated-element">Simplificamos lo complejo. Obtén resultados profesionales sin necesidad de ser un experto.</p>
+                    <div class="benefits-grid">
+                        <div class="benefit-card animated-element" style="transition-delay: 100ms;">
+                            <i class="fas fa-tachometer-alt benefit-icon"></i>
+                            <h3 class="benefit-title">Máximo Rendimiento</h3>
+                            <p>Libera recursos, limpia archivos basura y optimiza la memoria RAM para una experiencia más rápida y fluida en juegos y aplicaciones.</p>
                         </div>
-                        <div class="feature-text">
-                            <h3 class="feature-title">Optimización Profesional</h3>
-                             <ul>
-                                <li>Limpieza profunda de archivos temporales y caché.</li>
-                                <li>Optimización de memoria RAM con un solo clic.</li>
-                                <li>Gestión de aplicaciones de inicio para un arranque más rápido.</li>
-                            </ul>
+                        <div class="benefit-card animated-element" style="transition-delay: 200ms;">
+                            <i class="fas fa-user-shield benefit-icon"></i>
+                            <h3 class="benefit-title">Control Total</h3>
+                            <p>Accede a herramientas de diagnóstico y personalización avanzadas. Modifica, repara y ajusta tu sistema a tu gusto con total seguridad.</p>
                         </div>
-                    </div>
-                    <div class="feature-item animated-element">
-                        <div class="feature-text">
-                            <h3 class="feature-title">Instalación y Tweaks</h3>
-                            <ul>
-                                <li>Instalador de software masivo vía Chocolatey.</li>
-                                <li>Aplicación de "Tweaks" para mejorar la privacidad y el rendimiento.</li>
-                                <li>Acceso directo a herramientas ocultas de Windows.</li>
-                            </ul>
-                        </div>
-                        <div class="feature-image">
-                             <img src="https://github.com/user-attachments/assets/d6084aa9-2d34-4a88-b54f-d69efbc5f330" alt="Gestor de Aplicaciones">
+                        <div class="benefit-card animated-element" style="transition-delay: 300ms;">
+                            <i class="fas fa-magic benefit-icon"></i>
+                            <h3 class="benefit-title">Simplicidad Poderosa</h3>
+                            <p>Una interfaz gráfica intuitiva que agrupa decenas de comandos y scripts complejos en simples clics. Optimizar nunca fue tan fácil.</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        
-        <section id="install" class="section installation-section">
-            <div class="container">
-                <h2 class="section-title animated-element">Instalación <span>Instantánea</span></h2>
-                <p class="section-intro animated-element">No necesitas instalar nada. Solo abre una terminal PowerShell como Administrador, pega el siguiente comando y presiona Enter.</p>
-                <div class="code-block animated-element">
-                    <pre><code class="code-text">irm "https://cutt.ly/ToolboxBS" | iex</code></pre>
-                    <button class="copy-btn" id="copy-btn" title="Copiar comando"><i class="fas fa-copy"></i></button>
-                    <div id="copy-notification">¡Copiado!</div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="testimonials" class="section">
-            <div class="container">
-                <h2 class="section-title animated-element">Lo que dicen los <span>Usuarios</span></h2>
-                <div class="testimonials-grid">
-                    <div class="testimonial-card animated-element" style="transition-delay: 100ms;">
-                        <p class="testimonial-text">"Increíble. ToolboxBS reunió todas las herramientas que usaba por separado en un solo lugar. Me ahorró horas de trabajo en el mantenimiento de mi PC."</p>
-                        <div class="testimonial-author">
-                            
-                            <div class="author-info">
-                                <h4>John Muñóz.</h4>
-                                <p>Coordinador Tecnico, Ingeniero de sistemas </p>
+            </section>
+
+            <section id="features" class="section">
+                <div class="container">
+                    <h2 class="section-title animated-element">Un Arsenal de <span>Herramientas</span> a tu Disposición</h2>
+                    <div class="features-grid">
+                        <div class="feature-item animated-element">
+                            <div class="feature-text">
+                                <h3 class="feature-title">Diagnóstico Integral</h3>
+                                <ul>
+                                    <li>Visión completa de tu hardware y software.</li>
+                                    <li>Monitorización de temperaturas y rendimiento.</li>
+                                    <li>Chequeo y reparación de archivos del sistema (SFC & DISM).</li>
+                                </ul>
+                            </div>
+                            <div class="feature-image">
+                                <img src="https://github.com/user-attachments/assets/d3706118-15b7-4665-9783-edba2228b003" alt="Información del Sistema">
                             </div>
                         </div>
-                    </div>
-                    <div class="testimonial-card animated-element" style="transition-delay: 200ms;">
-                        <p class="testimonial-text">"Como gamer y ingeniero, la optimización de RAM es esencial. Con esta herramienta, noto una mejora real en la fluidez de mis juegos. ¡Totalmente recomendado!"</p>
-                         <div class="testimonial-author">
-                            
-                            <div class="author-info">
-                                <h4>Francisco T.</h4>
-                                <p>Ingeniero de sistemas</p>
+                        <div class="feature-item animated-element">
+                            <div class="feature-image">
+                                <img src="https://github.com/user-attachments/assets/294126ed-5dbd-479a-be68-9b607232e8f2" alt="Limpieza y Optimización">
+                            </div>
+                            <div class="feature-text">
+                                <h3 class="feature-title">Optimización Profesional</h3>
+                                 <ul>
+                                    <li>Limpieza profunda de archivos temporales y caché.</li>
+                                    <li>Optimización de memoria RAM con un solo clic.</li>
+                                    <li>Gestión de aplicaciones de inicio para un arranque más rápido.</li>
+                                </ul>
                             </div>
                         </div>
-                    </div>
-                    <div class="testimonial-card animated-element" style="transition-delay: 300ms;">
-                        <p class="testimonial-text">"La función de instalación por PowerShell es una genialidad. Es seguro, rápido y me da la confianza de que no estoy descargando nada raro. Excelente trabajo."</p>
-                         <div class="testimonial-author">
-                            
-                            <div class="author-info">
-                                <h4>Julio Valencia.</h4>
-                                <p>Desarrollador</p>
+                        <div class="feature-item animated-element">
+                            <div class="feature-text">
+                                <h3 class="feature-title">Instalación y Tweaks</h3>
+                                <ul>
+                                    <li>Instalador de software masivo vía Chocolatey.</li>
+                                    <li>Aplicación de "Tweaks" para mejorar la privacidad y el rendimiento.</li>
+                                    <li>Acceso directo a herramientas ocultas de Windows.</li>
+                                </ul>
+                            </div>
+                            <div class="feature-image">
+                                 <img src="https://github.com/user-attachments/assets/d6084aa9-2d34-4a88-b54f-d69efbc5f330" alt="Gestor de Aplicaciones">
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section id="faq" class="section faq-section">
-            <div class="container">
-                <h2 class="section-title animated-element">Preguntas <span>Frecuentes</span></h2>
-                <div class="faq-container animated-element">
-                    <div class="faq-item">
-                        <button class="faq-question">
-                            ¿Es ToolboxBS seguro de usar?
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Absolutamente. ToolboxBS es un script de PowerShell de código abierto. Puedes revisar cada línea de código en nuestro <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank">repositorio de GitHub</a> para verificar exactamente qué hace. No instala software malicioso y utiliza herramientas nativas de Windows o de confianza como Chocolatey.</p>
-                        </div>
+            </section>
+            
+            <section id="install" class="section installation-section">
+                <div class="container">
+                    <h2 class="section-title animated-element">Instalación <span>Instantánea</span></h2>
+                    <p class="section-intro animated-element">No necesitas instalar nada. Solo abre una terminal PowerShell como Administrador, pega el siguiente comando y presiona Enter.</p>
+                    <div class="code-block animated-element">
+                        <pre><code class="code-text">irm "https://cutt.ly/ToolboxBS" | iex</code></pre>
+                        <button class="copy-btn" id="copy-btn" title="Copiar comando"><i class="fas fa-copy"></i></button>
+                        <div id="copy-notification">¡Copiado!</div>
                     </div>
-                    <div class="faq-item">
-                        <button class="faq-question">
-                           ¿Qué sistemas operativos son compatibles?
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="faq-answer">
-                            <p>ToolboxBS está diseñado y probado para funcionar en <strong>Windows 10 y Windows 11</strong>. Algunas funciones pueden ser compatibles con versiones anteriores, pero no se garantiza su total funcionamiento.</p>
+                </div>
+            </section>
+            
+            <section id="testimonials" class="section">
+                <div class="container">
+                    <h2 class="section-title animated-element">Lo que dicen los <span>Usuarios</span></h2>
+                    <div class="testimonials-grid">
+                        <div class="testimonial-card animated-element" style="transition-delay: 100ms;">
+                            <p class="testimonial-text">"Increíble. ToolboxBS reunió todas las herramientas que usaba por separado en un solo lugar. Me ahorró horas de trabajo en el mantenimiento de mi PC."</p>
+                            <div class="testimonial-author">
+                                
+                                <div class="author-info">
+                                    <h4>John Muñóz.</h4>
+                                    <p>Coordinador Tecnico, Ingeniero de sistemas </p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                     <div class="faq-item">
-                        <button class="faq-question">
-                           ¿Necesito conocimientos avanzados para usarlo?
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="faq-answer">
-                            <p>¡No! Aunque está construido con herramientas potentes, su interfaz gráfica está diseñada para ser intuitiva para todo tipo de usuarios. Las opciones están claramente etiquetadas para que sepas qué hace cada una antes de ejecutarla.</p>
+                        <div class="testimonial-card animated-element" style="transition-delay: 200ms;">
+                            <p class="testimonial-text">"Como gamer y ingeniero, la optimización de RAM es esencial. Con esta herramienta, noto una mejora real en la fluidez de mis juegos. ¡Totalmente recomendado!"</p>
+                               <div class="testimonial-author">
+                                
+                                <div class="author-info">
+                                    <h4>Francisco T.</h4>
+                                    <p>Ingeniero de sistemas</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">
-                           ¿Es totalmente gratis?
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Sí, ToolboxBS es y siempre será un proyecto gratuito y de código abierto, licenciado bajo la licencia MIT. Si te gusta el proyecto, puedes considerar apoyarlo en GitHub.</p>
+                        <div class="testimonial-card animated-element" style="transition-delay: 300ms;">
+                            <p class="testimonial-text">"La función de instalación por PowerShell es una genialidad. Es seguro, rápido y me da la confianza de que no estoy descargando nada raro. Excelente trabajo."</p>
+                               <div class="testimonial-author">
+                                
+                                <div class="author-info">
+                                    <h4>Julio Valencia.</h4>
+                                    <p>Desarrollador</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        
-        <section id="download" class="section download-section">
-             <div class="container text-center">
-                 <h2 class="section-title animated-element">Listo para <span>Transformar</span> tu PC?</h2>
-                 <p class="section-intro animated-element">Descarga la última versión ejecutable o explora el código fuente en GitHub. Tú eliges.</p>
-                 <div class="hero-buttons animated-element">
-                    <a href="https://github.com/BrandonSepulveda/ToolboxBS/releases/download/2.0.0/ToolboxBS.exe" class="btn btn-primary"><i class="fas fa-download"></i> Descargar (.exe)</a>
-                    <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank" class="btn btn-secondary"><i class="fab fa-github"></i> Ver en GitHub</a>
+            </section>
+
+            <section id="faq" class="section faq-section">
+                <div class="container">
+                    <h2 class="section-title animated-element">Preguntas <span>Frecuentes</span></h2>
+                    <div class="faq-container animated-element">
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                ¿Es ToolboxBS seguro de usar?
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Absolutamente. ToolboxBS es un script de PowerShell de código abierto. Puedes revisar cada línea de código en nuestro <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank">repositorio de GitHub</a> para verificar exactamente qué hace. No instala software malicioso y utiliza herramientas nativas de Windows o de confianza como Chocolatey.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                ¿Qué sistemas operativos son compatibles?
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <p>ToolboxBS está diseñado y probado para funcionar en <strong>Windows 10 y Windows 11</strong>. Algunas funciones pueden ser compatibles con versiones anteriores, pero no se garantiza su total funcionamiento.</p>
+                            </div>
+                        </div>
+                           <div class="faq-item">
+                            <button class="faq-question">
+                                ¿Necesito conocimientos avanzados para usarlo?
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <p>¡No! Aunque está construido con herramientas potentes, su interfaz gráfica está diseñada para ser intuitiva para todo tipo de usuarios. Las opciones están claramente etiquetadas para que sepas qué hace cada una antes de ejecutarla.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">
+                                ¿Es totalmente gratis?
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Sí, ToolboxBS es y siempre será un proyecto gratuito y de código abierto, licenciado bajo la licencia MIT. Si te gusta el proyecto, puedes considerar apoyarlo en GitHub.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="download" class="section download-section">
+                 <div class="container text-center">
+                     <h2 class="section-title animated-element">Listo para <span>Transformar</span> tu PC?</h2>
+                     <p class="section-intro animated-element">Descarga la última versión ejecutable o explora el código fuente en GitHub. Tú eliges.</p>
+                     <div class="hero-buttons animated-element">
+                         <a href="https://github.com/BrandonSepulveda/ToolboxBS/releases/download/2.0.0/ToolboxBS.exe" class="btn btn-primary"><i class="fas fa-download"></i> Descargar (.exe)</a>
+                         <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank" class="btn btn-secondary"><i class="fab fa-github"></i> Ver en GitHub</a>
+                     </div>
                  </div>
-             </div>
-        </section>
-    </main>
-    
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <a href="https://github.com/BrandonSepulveda" target="_blank" class="social-link" title="GitHub Personal"><i class="fab fa-github"></i></a>
-                <a href="https://kick.com/papibrandon" target="_blank" class="social-link" title="Kick"><i class="fab fa-kickstarter-k"></i></a>
-                <a href="https://www.instagram.com/brandonsepulveda_66" target="_blank" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://brandonsepulveda.github.io/" target="_blank" class="social-link" title="Portafolio Personal"><i class="fas fa-globe"></i></a>
+            </section>
+        </main>
+        
+        <footer>
+            <div class="container">
+                <div class="social-links">
+                    <a href="https://github.com/BrandonSepulveda" target="_blank" class="social-link" title="GitHub Personal"><i class="fab fa-github"></i></a>
+                    <a href="https://kick.com/papibrandon" target="_blank" class="social-link" title="Kick"><i class="fab fa-kickstarter-k"></i></a>
+                    <a href="https://www.instagram.com/brandonsepulveda_66" target="_blank" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://brandonsepulveda.github.io/" target="_blank" class="social-link" title="Portafolio Personal"><i class="fas fa-globe"></i></a>
+                </div>
+                <p class="copyright">&copy; 2023-2025 Jhon Brandon Sepulveda Valdes. <br>Un proyecto de código abierto con ♥ desde Colombia.</p>
+                <p class="copyright">Ver <a href="https://github.com/BrandonSepulveda/ToolboxBS/blob/main/LICENSE" target="_blank">Licencia MIT</a>.</p>
             </div>
-            <p class="copyright">&copy; 2023-2025 Jhon Brandon Sepulveda Valdes. <br>Un proyecto de código abierto con ♥ desde Colombia.</p>
-            <p class="copyright">Ver <a href="https://github.com/BrandonSepulveda/ToolboxBS/blob/main/LICENSE" target="_blank">Licencia MIT</a>.</p>
-        </div>
-    </footer>
+        </footer>
+    </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // --- Animaciones de Scroll ---
-        const animatedElements = document.querySelectorAll('.animated-element');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+        // Función para generar un carácter hexadecimal o número aleatorio
+        function getRandomChar() {
+            const chars = '0123456789ABCDEF';
+            return chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+
+        // Crear partículas que flotan en el fondo de la intro
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const numParticles = 50; // Cantidad de partículas
+            for (let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%'; // Posición horizontal aleatoria
+                particle.style.animationDelay = Math.random() * 6 + 's'; // Retraso de animación aleatorio
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's'; // Duración de animación aleatoria
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Crear lluvia de código con caracteres cambiantes para la intro
+        function createCodeRain() {
+            const codeRainContainer = document.getElementById('codeRain');
+            const numColumns = 30; // Número de columnas de código
+            const columnHeight = window.innerHeight; // Altura de la ventana para la columna
+            const charHeight = 14 * 1.2; // Tamaño de fuente * line-height
+            const charsPerColumn = Math.ceil(columnHeight / charHeight); // Caracteres por columna
+
+            for (let i = 0; i < numColumns; i++) {
+                const column = document.createElement('div');
+                column.className = 'code-column';
+                column.style.left = Math.random() * 100 + '%'; // Posición horizontal aleatoria
+                column.style.animationDelay = Math.random() * 8 + 's'; // Retraso de animación aleatorio
+                column.style.animationDuration = (Math.random() * 4 + 6) + 's'; // Duración de animación aleatoria
+
+                // Generar contenido inicial aleatorio para la columna
+                let codeText = '';
+                for (let j = 0; j < charsPerColumn; j++) {
+                    codeText += getRandomChar() + '\n';
                 }
+                column.textContent = codeText;
+                
+                codeRainContainer.appendChild(column);
+
+                // Actualizar el contenido de la columna periódicamente para el efecto "Matrix"
+                setInterval(() => {
+                    let newCodeText = '';
+                    for (let j = 0; j < charsPerColumn; j++) {
+                        newCodeText += getRandomChar() + '\n';
+                    }
+                    column.textContent = newCodeText;
+                }, Math.random() * 200 + 50); // Cambia cada 50-250ms
+            }
+        }
+
+        // Función para iniciar la transición a la página principal
+        function startMainPage() {
+            const introPage = document.getElementById('introPage');
+            const mainPage = document.getElementById('mainPage');
+            
+            // Oculta la página de intro
+            introPage.classList.add('hidden');
+            
+            // Permite el scroll en el body y ajusta la altura
+            document.body.classList.remove('intro-active');
+            document.body.classList.add('main-active');
+
+            // Muestra la página principal después de un breve retraso para la transición
+            setTimeout(() => {
+                mainPage.classList.add('visible');
+                // Inicializa los scripts de la página principal una vez que es visible
+                initializeMainPageScripts();
+            }, 1000); // Coincide con la duración de la transición de opacidad de introPage
+        }
+
+        // Función para saltar la intro (misma lógica que startMainPage)
+        function skipIntro() {
+            startMainPage();
+        }
+
+        // Inicializar los scripts de la página principal (animaciones, copy-btn, FAQ)
+        function initializeMainPageScripts() {
+            // --- Animaciones de Scroll para la página principal ---
+            const animatedElements = document.querySelectorAll('.animated-element');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            animatedElements.forEach(el => {
+                observer.observe(el);
             });
-        }, { threshold: 0.1 });
 
-        animatedElements.forEach(el => {
-            observer.observe(el);
-        });
+            // --- Copiar al Portapapeles ---
+            const copyBtn = document.getElementById('copy-btn');
+            if(copyBtn) {
+                copyBtn.addEventListener('click', function() {
+                    const codeText = this.previousElementSibling.querySelector('.code-text').textContent;
+                    // Usando document.execCommand('copy') para compatibilidad con iframe
+                    const textarea = document.createElement('textarea');
+                    textarea.value = codeText;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
 
-        // --- Copiar al Portapapeles ---
-        const copyBtn = document.getElementById('copy-btn');
-        if(copyBtn) {
-            copyBtn.addEventListener('click', function() {
-                const codeText = this.previousElementSibling.querySelector('.code-text').textContent;
-                navigator.clipboard.writeText(codeText).then(() => {
                     const notification = document.getElementById('copy-notification');
                     notification.classList.add('active');
                     setTimeout(() => {
                         notification.classList.remove('active');
                     }, 2000);
                 });
+            }
+            
+            // --- Acordeón para FAQ ---
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    const isActive = question.classList.contains('active');
+
+                    // Cierra todas las respuestas
+                    document.querySelectorAll('.faq-answer').forEach(ans => {
+                        ans.style.maxHeight = null;
+                        ans.previousElementSibling.classList.remove('active');
+                    });
+                    
+                    // Abre la respuesta clickeada si no estaba activa
+                    if (!isActive) {
+                        question.classList.add('active');
+                        answer.style.maxHeight = answer.scrollHeight + "px";
+                        answer.style.paddingTop = '20px';
+                        answer.style.paddingBottom = '20px';
+                    }
+                });
             });
         }
-        
-        // --- Acordeón para FAQ ---
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        faqQuestions.forEach(question => {
-            question.addEventListener('click', () => {
-                const answer = question.nextElementSibling;
-                const isActive = question.classList.contains('active');
 
-                // Cierra todas las respuestas
-                document.querySelectorAll('.faq-answer').forEach(ans => {
-                    ans.style.maxHeight = null;
-                    ans.previousElementSibling.classList.remove('active');
-                });
-                
-                // Abre la respuesta clickeada si no estaba activa
-                if (!isActive) {
-                    question.classList.add('active');
-                    answer.style.maxHeight = answer.scrollHeight + "px";
-                    answer.style.paddingTop = '20px';
-                    answer.style.paddingBottom = '20px';
+        // Inicializar los efectos de la intro cuando el DOM esté completamente cargado
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            createCodeRain();
+            
+            // Auto-avance o "urgencia" del botón después de un tiempo
+            setTimeout(() => {
+                const btn = document.querySelector('.continue-btn');
+                if (btn) {
+                    btn.style.animation += ', btnUrgent 1s infinite'; 
                 }
-            });
+            }, 8000); // Después de 8 segundos, el botón empieza a pulsar
         });
-    });
+
+        // Añadir estilo para el efecto de urgencia del botón (definido en JS para mejor control)
+        // Se añade un ID para evitar la re-declaración si el script se ejecuta múltiples veces
+        if (!document.getElementById('urgent-style')) {
+            const urgentStyle = document.createElement('style');
+            urgentStyle.id = 'urgent-style'; // Asignar un ID
+            urgentStyle.textContent = `
+                @keyframes btnUrgent {
+                    0%, 100% { transform: translateX(-50%) translateY(0) scale(1); }
+                    50% { transform: translateX(-50%) translateY(-3px) scale(1.05); }
+                }
+            `;
+            document.head.appendChild(urgentStyle);
+        }
     </script>
 </body>
 </html>
