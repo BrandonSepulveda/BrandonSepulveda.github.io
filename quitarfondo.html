@@ -1,976 +1,509 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112"
-     crossorigin="anonymous"></script>
-    
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2RY7LG5R21');
-</script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Removedor de Fondos | Brandon Sepulveda</title>
-    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico" />
-    <script src="https://kit.fontawesome.com/3a414500e4.js" crossorigin="anonymous"></script>
+    
+    <!-- Analytics -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2RY7LG5R21');
+    </script>
+    
+    <!-- Stylesheets (Unificadas y Mejoradas) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Fonts (Unificadas con el portafolio principal) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
     <style>
+        /* --- Paleta de Colores y Estilos Base (Unificados con el Portafolio) --- */
         :root {
-            --primary-color: #000000;
-            --accent-color: #33ff00;
-            --text-light: #ffffff;
+            --bg-dark: #000000;
+            --bg-medium: #111111;
+            --bg-light: #1A1A1A;
+            --text-light: #FFFFFF;
+            --text-muted: #999999;
+            --text-muted-lighter: #b0b0b0;
+            --accent-primary: #FFFFFF;
+            --accent-secondary: #333333;
+            --kick-color: #53FC18; /* Kick Green */
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(255, 255, 255, 0.05);
+            --transition-speed: 0.4s;
         }
 
         body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url('https://source.unsplash.com/random/1600x900/?tech,dark');
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-muted);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            flex-direction: column;
             min-height: 100vh;
-            padding-top: 70px;
         }
 
-        .navbar {
-            background-color: rgba(0, 0, 0, 0.9);
-            padding: 0.75rem 1.5rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
+        main { flex: 1 0 auto; }
+        h1, h2, h3, h4, h5, h6 { font-weight: 800; color: var(--text-light); }
+        .section { padding: 6rem 0; }
+        .section-title { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 900; margin-bottom: 1rem; }
+        .section-subtitle { font-size: 1.1rem; max-width: 650px; margin-left: auto; margin-right: auto; margin-bottom: 4rem; color: var(--text-muted-lighter); }
 
-        .navbar-brand {
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 700;
-        }
+        /* --- Navigation Bar (Estilo unificado) --- */
+        #mainNav { background-color: transparent; padding: 1.25rem 0; transition: all var(--transition-speed) ease; }
+        #mainNav.navbar-scrolled { background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(15px); padding: 0.75rem 0; border-bottom: 1px solid var(--border-color); }
+        #mainNav .navbar-brand { color: var(--text-light); font-weight: 800; font-size: 1.25rem; }
+        #mainNav .navbar-brand img { transition: transform var(--transition-speed) ease; }
+        #mainNav .navbar-brand:hover img { transform: rotate(-15deg); }
+        #mainNav .nav-link { color: var(--text-muted); font-weight: 600; padding: 0.5rem 1rem; transition: color var(--transition-speed) ease; }
+        #mainNav .nav-link:hover, #mainNav .nav-link.active { color: var(--text-light); }
+        #mainNav .navbar-toggler { border: 1px solid var(--border-color); }
+        #mainNav .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
 
-        .nav-link {
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 600;
-            padding: 0.75rem 1rem;
-        }
-
-        .container-main {
-            background: rgba(20, 20, 20, 0.8);
+        /* --- MEJORA: Contenedor principal de la herramienta --- */
+        .tool-container {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
             border-radius: 15px;
             padding: 2rem;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            border: 1px solid rgba(51, 255, 0, 0.2);
-            max-width: 1000px;
-            margin: 2rem auto;
         }
 
+        /* --- MEJORA: Área de carga de archivos --- */
         .upload-area {
-            border: 2px dashed var(--accent-color);
+            border: 2px dashed var(--border-color);
             border-radius: 10px;
             padding: 2.5rem;
             text-align: center;
-            margin-bottom: 2rem;
             cursor: pointer;
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: var(--bg-medium);
+            transition: all var(--transition-speed) ease;
+        }
+        .upload-area.dragover {
+            border-color: var(--kick-color);
+            background-color: var(--accent-secondary);
+            transform: scale(1.02);
+        }
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--kick-color);
+            margin-bottom: 1rem;
         }
 
-        .upload-area:hover {
-            background-color: rgba(51, 255, 0, 0.1);
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        .control-group {
-            background-color: rgba(255, 255, 255, 0.1);
+        /* --- MEJORA: Paneles de control --- */
+        .control-panel {
+            background-color: var(--bg-medium);
             border-radius: 10px;
-            padding: 1.2rem;
-            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
         }
-
-        label {
+        .control-panel label {
             font-weight: 600;
-            color: var(--text-light);
-            margin-bottom: 0.7rem;
+            color: var(--text-muted-lighter);
+            margin-bottom: 0.75rem;
             display: block;
         }
 
-        button {
-            background-color: var(--primary-color);
-            color: var(--text-light);
-            border: 2px solid var(--accent-color);
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
+        /* --- MEJORA: Estilos de controles (Color, Slider) --- */
+        input[type="color"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 50px;
+            height: 50px;
+            background-color: transparent;
+            border: none;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
+            padding: 0;
         }
-
-        button:hover:not(:disabled) {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-        }
-
-        button:disabled {
-            background-color: #333;
-            border-color: #555;
-            color: #777;
-            cursor: not-allowed;
-        }
-
-        .preview-area {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .image-container {
-            flex: 1;
-            min-width: 300px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .image-container h3 {
-            margin-top: 0;
-            color: var(--text-light);
-            font-weight: 600;
-            margin-bottom: 1.2rem;
-            padding-bottom: 0.7rem;
-            border-bottom: 1px solid rgba(51, 255, 0, 0.2);
-        }
-
-        canvas {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 5px;
-            margin-bottom: 1.2rem;
-            background-color: #222;
-        }
-
-        .download-btn {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            width: 100%;
-            margin-top: 1.2rem;
-        }
-
-        .color-preview {
-            width: 30px;
-            height: 30px;
+        input[type="color"]::-webkit-color-swatch {
             border-radius: 50%;
-            border: 2px solid #555;
-            display: inline-block;
-            vertical-align: middle;
-            margin-left: 10px;
+            border: 2px solid var(--border-color);
         }
-
-        .slider-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 0.5rem;
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            background: var(--accent-secondary);
+            border-radius: 5px;
+            outline: none;
         }
-
-        .slider-container input {
-            flex: 1;
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--kick-color);
+            cursor: pointer;
+            border-radius: 50%;
         }
-
         .slider-value {
             min-width: 40px;
             text-align: center;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: var(--bg-light);
             padding: 5px 10px;
             border-radius: 10px;
+            font-weight: 600;
         }
 
-        .loading {
-            display: none;
+        /* --- MEJORA: Área de previsualización --- */
+        .preview-container {
+            background-color: var(--bg-medium);
+            border-radius: 10px;
+            padding: 1.5rem;
             text-align: center;
-            margin: 2rem 0;
+            border: 1px solid var(--border-color);
         }
+        .preview-container h5 {
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+        canvas {
+            max-width: 100%;
+            border-radius: 5px;
+            background-image: 
+                linear-gradient(45deg, var(--accent-secondary) 25%, transparent 25%), 
+                linear-gradient(-45deg, var(--accent-secondary) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, var(--accent-secondary) 75%),
+                linear-gradient(-45deg, transparent 75%, var(--accent-secondary) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+        
+        /* --- Botones (Estilo unificado) --- */
+        .btn { padding: 0.8rem 2rem; font-weight: 700; border-radius: 50px; transition: all var(--transition-speed) ease; border: 2px solid transparent; }
+        .btn-kick { background-color: var(--kick-color); color: var(--bg-dark); box-shadow: 0 0 20px rgba(83, 252, 24, 0.3); }
+        .btn-kick:hover:not(:disabled) { background-color: var(--kick-color); color: var(--bg-dark); transform: translateY(-3px) scale(1.05); box-shadow: 0 0 30px rgba(83, 252, 24, 0.5); }
+        .btn-outline-light { color: var(--text-light); border-color: var(--accent-secondary); }
+        .btn-outline-light:hover:not(:disabled) { background-color: var(--accent-primary); color: var(--bg-dark); border-color: var(--accent-primary); transform: translateY(-3px); }
+        .btn.disabled, .btn:disabled { background-color: var(--accent-secondary); border-color: var(--accent-secondary); color: var(--text-muted); cursor: not-allowed; transform: none; box-shadow: none; }
 
-        .spinner {
-            border: 4px solid rgba(51, 255, 0, 0.1);
+        /* --- MEJORA: Spinner de carga --- */
+        .loading-spinner {
+            border: 4px solid var(--border-color);
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border-left-color: var(--accent-color);
+            border-left-color: var(--kick-color);
             animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
         }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .footer {
-            background-color: rgba(0,0,0,0.8);
-            border-top: 1px solid rgba(51, 255, 0, 0.2);
-            padding: 2rem 0;
-            margin-top: 2rem;
-            text-align: center;
-        }
-
-        @media (max-width: 768px) {
-            .preview-area {
-                flex-direction: column;
-            }
-        }
+        /* --- Footer (Estilo unificado) --- */
+        footer { background-color: var(--bg-medium); padding: 3rem 0; border-top: 1px solid var(--border-color); }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <!-- Navegación Unificada -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Brandon Sepulveda Logo" style="max-height: 30px; width: auto;">
-                Brandon Sepulveda 
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Logo" style="height: 30px; width: auto; margin-right: 10px;">
+                Brandon Sepulveda
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html#proyectos">Proyectos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html#signup">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="herramientas.html">Herramientas</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Removedor de Fondos</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="container container-main">
-        <h2 class="text-center mb-4"><i class="fas fa-cut me-2"></i>Removedor de Fondos de Imágenes</h2>
-        <p class="text-center mb-4">
-            Esta herramienta te permite eliminar el fondo de tus imágenes de manera fácil y rápida.
-        </p>
-        
-        <div class="upload-area" id="uploadArea">
-            <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #33ff00; margin-bottom: 1rem;"></i>
-            <h3>Seleccionar Imagen</h3>
-            <p>Haz clic o arrastra una imagen aquí</p>
-            <input type="file" id="fileInput" accept="image/*">
-        </div>
-        
-        <div class="control-group">
-            <label><i class="fas fa-palette me-2"></i>Color de fondo a remover:</label>
-            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                <input type="color" id="colorPicker" value="#ffffff" style="width: 60px; height: 40px;">
-                <div class="color-preview" id="colorPreview"></div>
-                <button id="pickFromImage">
-                    <i class="fas fa-eye-dropper me-2"></i>Seleccionar de la imagen
-                </button>
-            </div>
-        </div>
-        
-        <div class="control-group">
-            <label><i class="fas fa-sliders-h me-2"></i>Tolerancia:</label>
-            <div class="slider-container">
-                <input type="range" id="toleranceSlider" min="0" max="100" value="30">
-                <span class="slider-value" id="toleranceValue">30</span>
-            </div>
-            <small style="color: #aaa;">A mayor tolerancia, más colores similares se eliminarán</small>
-        </div>
-        
-        <button id="processButton" disabled>
-            <i class="fas fa-magic me-2"></i>Procesar Imagen
-        </button>
-        
-        <div class="loading" id="loadingIndicator">
-            <div class="spinner"></div>
-            <p>Procesando imagen...</p>
-        </div>
-        
-        <div class="preview-area" id="previewArea" style="display: none;">
-            <div class="image-container">
-                <h3><i class="fas fa-image me-2"></i>Imagen Original</h3>
-                <canvas id="originalCanvas"></canvas>
-            </div>
-            
-            <div class="image-container">
-                <h3><i class="fas fa-cut me-2"></i>Imagen con Fondo Transparente</h3>
-                <canvas id="transparentCanvas"></canvas>
-                <button id="downloadButton" class="download-btn">
-                    <i class="fas fa-download me-2"></i>Descargar PNG Transparente
-                </button>
-            </div>
-        </div>
-    </div>
+    <!-- Contenido Principal -->
+    <main>
+        <section class="section">
+            <div class="container">
+                <!-- Cabecera de la sección -->
+                <div class="text-center" data-aos="fade-up">
+                    <h2 class="section-title">Removedor de Fondos Mágico</h2>
+                    <p class="section-subtitle">
+                        Sube una imagen, elige el color a eliminar y ajusta la tolerancia para un recorte perfecto. Todo el procesamiento se realiza en tu navegador.
+                    </p>
+                </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>
-                Herramienta desarrollada por 
-                <a href="https://github.com/BrandonSepulveda" 
-                   target="_blank" 
-                   style="color: #33ff00; text-decoration: none; font-weight: bold;">
-                    Brandon Sepulveda
-                </a>
-            </p>
-            <div class="mt-3">
-                <a href="herramientas.html" 
-                   class="btn btn-outline-light btn-sm">
-                    <i class="fas fa-tools me-1"></i>Más Herramientas
-                </a>
+                <div class="tool-container" data-aos="fade-up" data-aos-delay="100">
+                    <div class="row g-4">
+                        <!-- Columna de Controles -->
+                        <div class="col-lg-4">
+                            <!-- Paso 1: Cargar Imagen -->
+                            <div class="upload-area mb-4" id="uploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h5>Cargar Imagen</h5>
+                                <p class="small text-muted">Haz clic o arrastra un archivo aquí</p>
+                                <input type="file" id="fileInput" accept="image/*" class="d-none">
+                            </div>
+
+                            <!-- Paso 2: Controles de Ajuste -->
+                            <div id="controlsPanel" class="d-none">
+                                <div class="control-panel mb-3">
+                                    <label><i class="fas fa-palette me-2"></i>Color a Remover</label>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <input type="color" id="colorPicker" value="#ffffff">
+                                        <button id="pickFromImageBtn" class="btn btn-outline-light flex-grow-1" style="padding: 0.5rem 1rem;">
+                                            <i class="fas fa-eye-dropper"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="control-panel">
+                                    <label><i class="fas fa-sliders-h me-2"></i>Tolerancia</label>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <input type="range" id="toleranceSlider" min="0" max="200" value="30">
+                                        <span class="slider-value" id="toleranceValue">30</span>
+                                    </div>
+                                </div>
+                                <div class="d-grid mt-4">
+                                    <button id="processButton" class="btn btn-kick"><i class="fas fa-magic me-2"></i>Procesar Imagen</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Columna de Previsualización -->
+                        <div class="col-lg-8">
+                            <div id="previewArea" class="d-none">
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="preview-container">
+                                            <h5><i class="fas fa-image me-2"></i>Original</h5>
+                                            <canvas id="originalCanvas"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="preview-container">
+                                            <h5><i class="fas fa-wand-magic-sparkles me-2"></i>Resultado</h5>
+                                            <canvas id="transparentCanvas"></canvas>
+                                            <div id="loadingIndicator" class="d-none justify-content-center my-3">
+                                                <div class="loading-spinner"></div>
+                                            </div>
+                                            <div id="downloadContainer" class="d-grid d-none">
+                                                <button id="downloadButton" class="btn btn-kick"><i class="fas fa-download me-2"></i>Descargar PNG</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="welcomeMessage" class="d-flex align-items-center justify-content-center h-100 text-center text-muted p-5" style="border: 2px dashed var(--border-color); border-radius: 10px;">
+                                <div>
+                                    <i class="fas fa-image fa-3x mb-3"></i>
+                                    <h4>El área de previsualización aparecerá aquí</h4>
+                                    <p>Comienza por cargar una imagen.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </section>
+    </main>
+    
+    <!-- Footer Unificado -->
+    <footer class="footer text-center">
+        <div class="container">
+            <p class="text-muted mb-0">Copyright &copy; Jhon Brandon Sepulveda Valdes 2025</p>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        // Variables globales
-        let originalImage = null;
-        let isPickingColor = false;
-        
-        // Elementos DOM
-        const fileInput = document.getElementById('fileInput');
-        const uploadArea = document.getElementById('uploadArea');
-        const colorPicker = document.getElementById('colorPicker');
-        const colorPreview = document.getElementById('colorPreview');
-        const pickFromImageBtn = document.getElementById('pickFromImage');
-        const toleranceSlider = document.getElementById('toleranceSlider');
-        const toleranceValue = document.getElementById('toleranceValue');
-        const processButton = document.getElementById('processButton');
-        const loadingIndicator = document.getElementById('loadingIndicator');
-        const previewArea = document.getElementById('previewArea');
-        const originalCanvas = document.getElementById('originalCanvas');
-        const transparentCanvas = document.getElementById('transparentCanvas');
-        const downloadButton = document.getElementById('downloadButton');
-        
-        // Contextos de canvas
-        const originalCtx = originalCanvas.getContext('2d', { alpha: true, willReadFrequently: true });
-        const transparentCtx = transparentCanvas.getContext('2d', { alpha: true, willReadFrequently: true });
-        
-        // Actualizar el preview del color
-        function updateColorPreview() {
-            colorPreview.style.backgroundColor = colorPicker.value;
-        }
-        
-        // Cargar imagen desde archivo
-        function loadImage(file) {
-            if (!file || !file.type.match('image.*')) {
-                alert('Por favor selecciona una imagen válida.');
-                return;
+        document.addEventListener('DOMContentLoaded', function () {
+            // Inicializar AOS
+            AOS.init({ duration: 800, once: true, offset: 50 });
+
+            // Efecto de scroll para la barra de navegación
+            const mainNav = document.getElementById('mainNav');
+            if (mainNav) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) mainNav.classList.add('navbar-scrolled');
+                    else mainNav.classList.remove('navbar-scrolled');
+                });
             }
-            
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                originalImage = new Image();
-                originalImage.onload = function() {
-                    // Usar las dimensiones originales de la imagen para mejor calidad
-                    const maxDimension = 800;
-                    
-                    let displayWidth, displayHeight;
-                    
-                    // Mantener relación de aspecto pero limitar tamaño máximo
-                    if (originalImage.width > originalImage.height) {
-                        if (originalImage.width > maxDimension) {
-                            displayWidth = maxDimension;
-                            displayHeight = (originalImage.height / originalImage.width) * maxDimension;
-                        } else {
-                            displayWidth = originalImage.width;
-                            displayHeight = originalImage.height;
-                        }
-                    } else {
-                        if (originalImage.height > maxDimension) {
-                            displayHeight = maxDimension;
-                            displayWidth = (originalImage.width / originalImage.height) * maxDimension;
-                        } else {
-                            displayWidth = originalImage.width;
-                            displayHeight = originalImage.height;
-                        }
-                    }
-                    
-                    // Usar tamaños originales para los canvas (o limitados al máximo)
-                    originalCanvas.width = displayWidth;
-                    originalCanvas.height = displayHeight;
-                    
-                    // Configurar el canvas transparente con las mismas dimensiones
-                    transparentCanvas.width = displayWidth;
-                    transparentCanvas.height = displayHeight;
-                    
-                    processButton.disabled = false;
-                    previewArea.style.display = 'flex';
-                    
-                    // Dibujar imagen original
-                    drawOriginalImage();
+
+            // --- LÓGICA DEL REMOVEDOR DE FONDOS ---
+            let originalImage = null;
+            let isPickingColor = false;
+
+            // Elementos del DOM
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.getElementById('uploadArea');
+            const colorPicker = document.getElementById('colorPicker');
+            const pickFromImageBtn = document.getElementById('pickFromImageBtn');
+            const toleranceSlider = document.getElementById('toleranceSlider');
+            const toleranceValue = document.getElementById('toleranceValue');
+            const processButton = document.getElementById('processButton');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            const previewArea = document.getElementById('previewArea');
+            const originalCanvas = document.getElementById('originalCanvas');
+            const transparentCanvas = document.getElementById('transparentCanvas');
+            const downloadContainer = document.getElementById('downloadContainer');
+            const downloadButton = document.getElementById('downloadButton');
+            const controlsPanel = document.getElementById('controlsPanel');
+
+            // Contextos de los canvas
+            const originalCtx = originalCanvas.getContext('2d', { willReadFrequently: true });
+            const transparentCtx = transparentCanvas.getContext('2d');
+
+            // Cargar y mostrar la imagen
+            const loadImage = (file) => {
+                if (!file || !file.type.match('image.*')) return;
+
+                const reader = new FileReader();
+                reader.onload = e => {
+                    originalImage = new Image();
+                    originalImage.onload = () => {
+                        // Mostrar paneles y ocultar mensaje de bienvenida
+                        welcomeMessage.classList.add('d-none');
+                        previewArea.classList.remove('d-none');
+                        controlsPanel.classList.remove('d-none');
+                        downloadContainer.classList.add('d-none');
+                        
+                        // Ajustar tamaño del canvas manteniendo la proporción
+                        const maxCanvasWidth = originalCanvas.parentElement.clientWidth;
+                        const scale = Math.min(1, maxCanvasWidth / originalImage.width);
+                        const canvasWidth = originalImage.width * scale;
+                        const canvasHeight = originalImage.height * scale;
+
+                        originalCanvas.width = transparentCanvas.width = canvasWidth;
+                        originalCanvas.height = transparentCanvas.height = canvasHeight;
+
+                        // Dibujar imagen original
+                        originalCtx.drawImage(originalImage, 0, 0, canvasWidth, canvasHeight);
+                    };
+                    originalImage.src = e.target.result;
                 };
-                originalImage.src = e.target.result;
+                reader.readAsDataURL(file);
             };
             
-            reader.readAsDataURL(file);
-        }
-        
-        // Dibujar imagen original en el canvas
-        function drawOriginalImage() {
-            if (!originalImage) return;
-            
-            originalCtx.clearRect(0, 0, originalCanvas.width, originalCanvas.height);
-            originalCtx.drawImage(originalImage, 0, 0, originalCanvas.width, originalCanvas.height);
-        }
-        
-        // Procesar imagen para hacerla transparente
-        function processImage() {
-    if (!originalImage) return;
-    
-    loadingIndicator.style.display = 'block';
-    
-    // Usamos setTimeout para permitir que la UI se actualice antes de procesar
-    setTimeout(() => {
-        // Crear un canvas temporal con el tamaño original de la imagen
-        const tempCanvas = document.createElement('canvas');
-        tempCanvas.width = originalCanvas.width;
-        tempCanvas.height = originalCanvas.height;
-        const tempCtx = tempCanvas.getContext('2d', { alpha: true, willReadFrequently: true });
-        
-        // Dibujar imagen original a tamaño completo para mantener calidad
-        tempCtx.drawImage(originalImage, 0, 0, tempCanvas.width, tempCanvas.height);
-        
-        // Obtener datos de la imagen
-        const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
-        const data = imageData.data;
-        
-        // Color seleccionado para remover
-        const targetColor = hexToRgb(colorPicker.value);
-        const tolerance = parseInt(toleranceSlider.value);
-        
-        // Optimización para detección de texto (bordes más nítidos)
-        const textThreshold = tolerance * 0.6; // Umbral para texto (más estricto)
-        
-        // Procesar cada píxel con preservación de texto mejorada
-        for (let i = 0; i < data.length; i += 4) {
-            const r = data[i];
-            const g = data[i + 1];
-            const b = data[i + 2];
-            
-            // Calcular la diferencia de color (distancia euclidiana)
-            const diff = Math.sqrt(
-                Math.pow(r - targetColor.r, 2) +
-                Math.pow(g - targetColor.g, 2) +
-                Math.pow(b - targetColor.b, 2)
-            );
-            
-            // Calcular luminosidad (para identificar mejor el texto)
-            const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
-            
-            // Detectar borde de texto potencial (alto contraste)
-            const isEdge = isPixelEdge(i, data, imageData.width);
-            
-            // Si la diferencia es menor que la tolerancia, hacer transparente
-            if (diff <= textThreshold && !isEdge) {
-                // Color muy cercano al fondo y no es un borde - hacerlo totalmente transparente
-                data[i + 3] = 0;
-            } else if (diff <= tolerance) {
-                if (isEdge && Math.abs(luminance - getTargetLuminance(targetColor)) > 30) {
-                    // Preservar bordes de alto contraste (como texto)
-                    // Mantener la opacidad para el texto
-                    data[i + 3] = 255;
-                } else {
-                    // Aplicar transparencia basada en la diferencia
-                    const alpha = Math.round(255 * (diff / tolerance));
-                    data[i + 3] = alpha;
-                }
-            }
-        }
-        
-        // Aplicar un segundo pase para mejorar la preservación del texto
-        improveTextPreservation(data, imageData.width, imageData.height);
-        
-        // Limpiar el canvas transparente
-        transparentCtx.clearRect(0, 0, transparentCanvas.width, transparentCanvas.height);
-        
-        // Aplicar datos de imagen procesados
-        transparentCtx.putImageData(imageData, 0, 0);
-        
-        loadingIndicator.style.display = 'none';
-    }, 50);
-}
+            // Procesar la imagen para remover el fondo
+            const processImage = () => {
+                if (!originalImage) return;
 
-// Función para detectar bordes (útil para preservar texto)
-function isPixelEdge(i, data, width) {
-    const pixelWidth = 4; // 4 bytes por píxel (RGBA)
-    const row = Math.floor(i / (width * pixelWidth));
-    const col = Math.floor((i % (width * pixelWidth)) / pixelWidth);
-    
-    // Solo verificar píxeles que no estén en los bordes de la imagen
-    if (row <= 0 || col <= 0 || row >= width - 1 || col >= width - 1) {
-        return false;
-    }
-    
-    // Obtener valores de píxeles adyacentes
-    const current = {
-        r: data[i],
-        g: data[i + 1],
-        b: data[i + 2]
-    };
-    
-    // Píxel de arriba
-    const topIndex = i - (width * pixelWidth);
-    const top = {
-        r: data[topIndex],
-        g: data[topIndex + 1],
-        b: data[topIndex + 2]
-    };
-    
-    // Píxel de abajo
-    const bottomIndex = i + (width * pixelWidth);
-    const bottom = {
-        r: data[bottomIndex],
-        g: data[bottomIndex + 1],
-        b: data[bottomIndex + 2]
-    };
-    
-    // Píxel izquierdo
-    const leftIndex = i - pixelWidth;
-    const left = {
-        r: data[leftIndex],
-        g: data[leftIndex + 1],
-        b: data[leftIndex + 2]
-    };
-    
-    // Píxel derecho
-    const rightIndex = i + pixelWidth;
-    const right = {
-        r: data[rightIndex],
-        g: data[rightIndex + 1],
-        b: data[rightIndex + 2]
-    };
-    
-    // Calcular diferencias con vecinos
-    const diffTop = colorDifference(current, top);
-    const diffBottom = colorDifference(current, bottom);
-    const diffLeft = colorDifference(current, left);
-    const diffRight = colorDifference(current, right);
-    
-    // Si hay una diferencia significativa con algún vecino, es un borde
-    const edgeThreshold = 30; // Umbral para considerar un borde
-    return (diffTop > edgeThreshold || diffBottom > edgeThreshold || 
-            diffLeft > edgeThreshold || diffRight > edgeThreshold);
-}
+                loadingIndicator.classList.remove('d-none');
+                downloadContainer.classList.add('d-none');
+                transparentCtx.clearRect(0, 0, transparentCanvas.width, transparentCanvas.height);
 
-// Calcular diferencia entre dos colores
-function colorDifference(color1, color2) {
-    return Math.sqrt(
-        Math.pow(color1.r - color2.r, 2) + 
-        Math.pow(color1.g - color2.g, 2) + 
-        Math.pow(color1.b - color2.b, 2)
-    );
-}
+                setTimeout(() => {
+                    // Usar un canvas temporal con la resolución original para el procesamiento
+                    const tempCanvas = document.createElement('canvas');
+                    tempCanvas.width = originalImage.width;
+                    tempCanvas.height = originalImage.height;
+                    const tempCtx = tempCanvas.getContext('2d', { willReadFrequently: true });
+                    tempCtx.drawImage(originalImage, 0, 0);
 
-// Calcular luminosidad de un color
-function getTargetLuminance(color) {
-    return 0.299 * color.r + 0.587 * color.g + 0.114 * color.b;
-}
+                    const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+                    const data = imageData.data;
+                    const targetColor = hexToRgb(colorPicker.value);
+                    const tolerance = parseInt(toleranceSlider.value);
 
-// Segundo pase para mejorar la preservación del texto
-function improveTextPreservation(data, width, height) {
-    // Crear una copia de los datos para no modificar durante la iteración
-    const tempData = new Uint8ClampedArray(data);
-    
-    const pixelWidth = 4; // RGBA
-    
-    // Para cada píxel (excepto bordes)
-    for (let y = 1; y < height - 1; y++) {
-        for (let x = 1; x < width - 1; x++) {
-            const i = (y * width + x) * pixelWidth;
-            
-            // Si es parcialmente transparente
-            if (tempData[i + 3] > 0 && tempData[i + 3] < 255) {
-                let alphaSum = 0;
-                let count = 0;
-                
-                // Verificar vecinos en un área de 3x3
-                for (let ny = -1; ny <= 1; ny++) {
-                    for (let nx = -1; nx <= 1; nx++) {
-                        if (nx === 0 && ny === 0) continue; // Saltar el píxel actual
-                        
-                        const ni = ((y + ny) * width + (x + nx)) * pixelWidth;
-                        alphaSum += tempData[ni + 3];
-                        count++;
+                    for (let i = 0; i < data.length; i += 4) {
+                        const r = data[i];
+                        const g = data[i + 1];
+                        const b = data[i + 2];
+
+                        const diff = Math.sqrt(
+                            Math.pow(r - targetColor.r, 2) +
+                            Math.pow(g - targetColor.g, 2) +
+                            Math.pow(b - targetColor.b, 2)
+                        );
+
+                        if (diff < tolerance) {
+                            data[i + 3] = 0; // Hacer transparente
+                        }
                     }
+
+                    tempCtx.putImageData(imageData, 0, 0);
+                    
+                    // Dibujar el resultado en el canvas visible
+                    transparentCtx.drawImage(tempCanvas, 0, 0, transparentCanvas.width, transparentCanvas.height);
+
+                    loadingIndicator.classList.add('d-none');
+                    downloadContainer.classList.remove('d-none');
+                }, 50);
+            };
+
+            // Descargar la imagen resultante
+            const downloadImage = () => {
+                const link = document.createElement('a');
+                link.download = 'imagen_sin_fondo.png';
+                link.href = transparentCanvas.toDataURL('image/png');
+                link.click();
+            };
+
+            // Activar/desactivar el modo de selección de color
+            const toggleColorPicking = (enable) => {
+                isPickingColor = enable;
+                originalCanvas.style.cursor = enable ? 'crosshair' : 'default';
+                pickFromImageBtn.classList.toggle('active', enable);
+                if (enable) {
+                    pickFromImageBtn.innerHTML = '<i class="fas fa-times"></i>';
+                } else {
+                    pickFromImageBtn.innerHTML = '<i class="fas fa-eye-dropper"></i>';
                 }
-                
-                // Promedio de alfa de los vecinos
-                const avgAlpha = alphaSum / count;
-                
-                // Si los vecinos son en su mayoría transparentes y este no es un borde claro
-                if (avgAlpha < 50) {
-                    data[i + 3] = 0; // Hacer transparente
-                }
-                // Si los vecinos son en su mayoría opacos y este se parece a texto
-                else if (avgAlpha > 200 && isLikelyText(tempData, i, width)) {
-                    data[i + 3] = 255; // Hacer completamente opaco
-                }
-            }
-        }
-    }
-}
-
-// Función para identificar píxeles que probablemente forman parte de texto
-function isLikelyText(data, i, width) {
-    const r = data[i];
-    const g = data[i + 1];
-    const b = data[i + 2];
-    
-    // Calcular luminancia
-    const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
-    
-    // Verificar si el píxel es muy oscuro o muy claro (típico de texto)
-    const isExtremeLuminance = luminance < 50 || luminance > 200;
-    
-    // Verificar si hay píxeles adyacentes con alta opacidad
-    const hasOpaqueNeighbors = checkOpaqueNeighbors(data, i, width);
-    
-    return isExtremeLuminance && hasOpaqueNeighbors;
-}
-
-// Verificar si hay vecinos opacos cercanos
-function checkOpaqueNeighbors(data, i, width) {
-    const pixelWidth = 4;
-    
-    // Verificar los píxeles adyacentes directos (arriba, abajo, izquierda, derecha)
-    const indices = [
-        i - (width * pixelWidth), // arriba
-        i + (width * pixelWidth), // abajo
-        i - pixelWidth,           // izquierda
-        i + pixelWidth            // derecha
-    ];
-    
-    let opaqueCount = 0;
-    
-    for (const idx of indices) {
-        if (idx >= 0 && idx < data.length && data[idx + 3] > 200) {
-            opaqueCount++;
-        }
-    }
-    
-    // Si al menos 2 vecinos son opacos, probablemente es parte de texto
-    return opaqueCount >= 2;
-}
-
-// ¡También agrega este nuevo slider para control de nitidez de texto!
-// (Esto se debe agregar al HTML, después de la sección del slider de tolerancia)
-/*
-<div class="control-group">
-    <label><i class="fas fa-font me-2"></i>Preservación de texto:</label>
-    <div class="slider-container">
-        <input type="range" id="textPreservationSlider" min="0" max="100" value="50">
-        <span class="slider-value" id="textPreservationValue">50</span>
-    </div>
-    <small style="color: #aaa;">Aumenta para preservar mejor el texto y las letras</small>
-</div>
-*/
-        
-        // Convertir color hex a RGB
-        function hexToRgb(hex) {
-            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? {
-                r: parseInt(result[1], 16),
-                g: parseInt(result[2], 16),
-                b: parseInt(result[3], 16)
-            } : null;
-        }
-        
-        // Función para seleccionar un color de la imagen
-        function enableColorPicking() {
-    if (!originalImage) {
-        alert('Primero debes cargar una imagen.');
-        return;
-    }
-    
-    isPickingColor = true;
-    originalCanvas.style.cursor = 'crosshair';
-    document.getElementById('pickFromImage').innerHTML = '<i class="fas fa-times me-2"></i>Cancelar selección';
-    document.getElementById('pickFromImage').classList.add('active');
-    
-    // Mostrar instrucciones temporales
-    const instructionEl = document.createElement('div');
-    instructionEl.id = 'colorPickInstruction';
-    instructionEl.style.cssText = `
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: rgba(0,0,0,0.8);
-        color: #33ff00;
-        padding: 8px 15px;
-        border-radius: 20px;
-        border: 1px solid #33ff00;
-        font-size: 14px;
-        z-index: 1000;
-    `;
-    instructionEl.innerHTML = '<i class="fas fa-info-circle me-2"></i>Haz clic en el color de fondo que deseas eliminar';
-    document.querySelector('.image-container').appendChild(instructionEl);
-}
-
-// Mejorar la función para obtener un color más preciso
-function getPixelColor(x, y) {
-    // Obtener el color exacto del pixel
-    const pixelData = originalCtx.getImageData(x, y, 1, 1).data;
-    
-    // Color básico del pixel seleccionado
-    const selectedColor = {
-        r: pixelData[0],
-        g: pixelData[1],
-        b: pixelData[2]
-    };
-    
-    // Para una mejor selección de color de fondo, podemos analizar un área pequeña
-    // alrededor del pixel para determinar si hay un color dominante
-    const area = 5; // Área de 5x5 píxeles alrededor del punto seleccionado
-    const areaData = originalCtx.getImageData(
-        Math.max(0, x - Math.floor(area/2)),
-        Math.max(0, y - Math.floor(area/2)),
-        area, area
-    ).data;
-    
-    // Recopilar todos los colores en el área
-    const colors = [];
-    for (let i = 0; i < areaData.length; i += 4) {
-        colors.push({
-            r: areaData[i],
-            g: areaData[i + 1],
-            b: areaData[i + 2]
-        });
-    }
-    
-    // Si la mayoría de los colores son similares, usar un promedio para mayor precisión
-    if (areColorsSimilar(colors, 15)) { // 15 es el umbral de similaridad
-        const avgColor = getAverageColor(colors);
-        return avgColor;
-    }
-    
-    // Si hay mucha variación, probablemente sea un borde o texto
-    // En ese caso, es mejor usar solo el pixel exacto que se seleccionó
-    return selectedColor;
-}
-
-// Verificar si los colores en un área son similares (para detectar áreas uniformes)
-function areColorsSimilar(colors, threshold) {
-    if (colors.length <= 1) return true;
-    
-    const baseColor = colors[0];
-    let similarCount = 0;
-    
-    for (let i = 1; i < colors.length; i++) {
-        const diff = Math.sqrt(
-            Math.pow(baseColor.r - colors[i].r, 2) +
-            Math.pow(baseColor.g - colors[i].g, 2) +
-            Math.pow(baseColor.b - colors[i].b, 2)
-        );
-        
-        if (diff <= threshold) {
-            similarCount++;
-        }
-    }
-    
-    // Si más del 70% de los colores son similares, consideramos el área uniforme
-    return (similarCount / (colors.length - 1)) > 0.7;
-}
-
-// Calcular el color promedio de un área
-function getAverageColor(colors) {
-    let rSum = 0, gSum = 0, bSum = 0;
-    
-    for (const color of colors) {
-        rSum += color.r;
-        gSum += color.g;
-        bSum += color.b;
-    }
-    
-    return {
-        r: Math.round(rSum / colors.length),
-        g: Math.round(gSum / colors.length),
-        b: Math.round(bSum / colors.length)
-    };
-}
-
-// Modificar el event listener del canvas para mejorar la selección de color
-originalCanvas.addEventListener('click', (e) => {
-    if (!isPickingColor) return;
-    
-    const rect = originalCanvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const color = getPixelColor(x, y);
-    const hexColor = rgbToHex(color.r, color.g, color.b);
-    
-    colorPicker.value = hexColor;
-    updateColorPreview();
-    
-    // Restablecer el estado
-    isPickingColor = false;
-    originalCanvas.style.cursor = 'default';
-    document.getElementById('pickFromImage').innerHTML = '<i class="fas fa-eye-dropper me-2"></i>Seleccionar de la imagen';
-    document.getElementById('pickFromImage').classList.remove('active');
-    
-    // Eliminar instrucciones temporales si existen
-    const instruction = document.getElementById('colorPickInstruction');
-    if (instruction) {
-        instruction.remove();
-    }
-    
-    // Opcional: procesar la imagen automáticamente después de seleccionar un color
-    // processImage();
-});
-
-// Agregar nuevo evento para cancelar la selección con Escape
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isPickingColor) {
-        isPickingColor = false;
-        originalCanvas.style.cursor = 'default';
-        document.getElementById('pickFromImage').innerHTML = '<i class="fas fa-eye-dropper me-2"></i>Seleccionar de la imagen';
-        document.getElementById('pickFromImage').classList.remove('active');
-        
-        // Eliminar instrucciones temporales si existen
-        const instruction = document.getElementById('colorPickInstruction');
-        if (instruction) {
-            instruction.remove();
-        }
-    }
-});
-
-// Modificar el event listener del botón para alternar la selección
-document.getElementById('pickFromImage').addEventListener('click', (e) => {
-    if (isPickingColor) {
-        // Cancelar el modo de selección
-        isPickingColor = false;
-        originalCanvas.style.cursor = 'default';
-        e.target.innerHTML = '<i class="fas fa-eye-dropper me-2"></i>Seleccionar de la imagen';
-        e.target.classList.remove('active');
-        
-        // Eliminar instrucciones temporales si existen
-        const instruction = document.getElementById('colorPickInstruction');
-        if (instruction) {
-            instruction.remove();
-        }
-    } else {
-        // Activar modo de selección
-        enableColorPicking();
-    }
-});
-
-// Agregar estilos para el botón activo
-const style = document.createElement('style');
-style.textContent = `
-    #pickFromImage.active {
-        background-color: #33ff00;
-        color: var(--primary-color);
-    }
-    
-    #colorPickInstruction {
-        animation: pulse 1.5s infinite;
-    }
-    
-    @keyframes pulse {
-        0% { opacity: 0.7; }
-        50% { opacity: 1; }
-        100% { opacity: 0.7; }
-    }
-`;
-document.head.appendChild(style);
-        
-        // Convertir RGB a HEX
-        function rgbToHex(r, g, b) {
-            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-        }
-        
-        // Función para descargar la imagen transparente en alta calidad
-        function downloadTransparentImage() {
-            // Crear un canvas temporal del mismo tamaño que el original para máxima calidad
-            const downloadCanvas = document.createElement('canvas');
-            downloadCanvas.width = originalImage.width;
-            downloadCanvas.height = originalImage.height;
-            const downloadCtx = downloadCanvas.getContext('2d', { alpha: true });
+            };
             
-            // Dibujar la imagen transparente a tamaño completo
-            downloadCtx.drawImage(transparentCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height);
+            // Convertir color HEX a RGB
+            const hexToRgb = (hex) => {
+                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
+            };
+
+            // Convertir RGB a HEX
+            const rgbToHex = (r, g, b) => "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+
+            // Event Listeners
+            uploadArea.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', e => loadImage(e.target.files[0]));
             
-            // Obtener dataURL con calidad máxima
-            const dataURL = downloadCanvas.toDataURL('image/png', 1.0);
-            
-            // Crear enlace de descarga
-            const link = document.createElement('a');
-            link.href = dataURL;
-            link.download = 'imagen_transparente.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-        
-        // Event Listeners
-        uploadArea.addEventListener('click', () => fileInput.click());
-        
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                loadImage(e.target.files[0]);
-            }
-        });
-        
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.style.borderColor = '#33ff00';
-        });
-        
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.style.borderColor = '#33ff00';
-        });
-        
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.style.borderColor = '#33ff00';
-            if (e.dataTransfer.files.length > 0) {
+            // Drag & Drop
+            uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+            uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+            uploadArea.addEventListener('drop', e => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
                 loadImage(e.dataTransfer.files[0]);
-            }
+            });
+
+            toleranceSlider.addEventListener('input', () => toleranceValue.textContent = toleranceSlider.value);
+            processButton.addEventListener('click', processImage);
+            downloadButton.addEventListener('click', downloadImage);
+            
+            pickFromImageBtn.addEventListener('click', () => toggleColorPicking(!isPickingColor));
+
+            originalCanvas.addEventListener('click', e => {
+                if (!isPickingColor) return;
+                const rect = originalCanvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Escalar coordenadas al tamaño real de la imagen
+                const scaleX = originalCanvas.width / rect.width;
+                const scaleY = originalCanvas.height / rect.height;
+
+                const pixelData = originalCtx.getImageData(x * scaleX, y * scaleY, 1, 1).data;
+                colorPicker.value = rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
+                toggleColorPicking(false);
+            });
         });
-        
-        colorPicker.addEventListener('input', updateColorPreview);
-        
-        toleranceSlider.addEventListener('input', () => {
-            toleranceValue.textContent = toleranceSlider.value;
-        });
-        
-        processButton.addEventListener('click', processImage);
-        
-        downloadButton.addEventListener('click', downloadTransparentImage);
-        
-        pickFromImageBtn.addEventListener('click', enableColorPicking);
-        
-        originalCanvas.addEventListener('click', (e) => {
-            if (!isPickingColor) return;
-            
-            const rect = originalCanvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const color = getPixelColor(x, y);
-            const hexColor = rgbToHex(color.r, color.g, color.b);
-            
-            colorPicker.value = hexColor;
-            updateColorPreview();
-            
-            isPickingColor = false;
-            originalCanvas.style.cursor = 'default';
-        });
-        
-        // Inicializar
-        updateColorPreview();
     </script>
 </body>
 </html>
