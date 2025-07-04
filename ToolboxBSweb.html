@@ -36,19 +36,16 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
         }
 
         .logo-icon {
-            width: 30px;
-            height: 30px;
-            background: linear-gradient(45deg, #00ff88, #00ccdd);
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 16px;
+            width: 50px;
+            height: 50px;
+            background-image: url('https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
         }
 
         .logo-text h1 {
@@ -66,11 +63,16 @@
             gap: 30px;
         }
 
+        .nav a, .window-btn {
+            position: relative; /* Needed for tooltip positioning */
+        }
+        
         .nav a {
             color: white;
             text-decoration: none;
             font-size: 14px;
             transition: color 0.3s;
+            padding: 5px 0;
         }
 
         .nav a:hover {
@@ -172,6 +174,37 @@
             color: #aaa;
             line-height: 1.4;
         }
+        
+        /* Estilo del Tooltip Genérico */
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px) scale(0.95);
+            background-color: rgba(18, 18, 18, 0.95);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            font-size: 13px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+            pointer-events: none;
+            z-index: 10;
+            margin-bottom: 8px;
+        }
+
+        .tool-card:hover .tooltip,
+        .nav a:hover .tooltip,
+        .window-btn:hover .tooltip,
+        .tool-item:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0) scale(1);
+        }
+
 
         /* Modal */
         .modal {
@@ -506,23 +539,23 @@
     <!-- Header -->
     <div class="header">
         <div class="logo">
-            <div class="logo-icon">TB</div>
+            <div class="logo-icon"></div>
             <div class="logo-text">
                 <h1>TOOLBOXBS</h1>
                 <p>By: Brandon Sepulveda</p>
             </div>
         </div>
         <nav class="nav">
-            <a href="#" onclick="openModal('home-modal')">Inicio</a>
-            <a href="#" onclick="openModal('tools-modal')">Herramientas</a>
-            <a href="#" onclick="openModal('about-modal')">Sobre</a>
-            <a href="#" onclick="openExternalLink('https://brandonsepulveda.github.io/Documentacion.html')">Documentación</a>
-            <a href="#" onclick="toggleDarkMode()">Modo Oscuro/Claro</a>
+            <a href="#" onclick="openModal('home-modal')">Inicio<div class="tooltip">Menú Principal</div></a>
+            <a href="#" onclick="openModal('tools-modal')">Herramientas<div class="tooltip">Ver todas las herramientas</div></a>
+            <a href="#" onclick="openModal('about-modal')">Sobre<div class="tooltip">Información de la App</div></a>
+            <a href="#" onclick="openExternalLink('https://brandonsepulveda.github.io/Documentacion.html')">Documentación<div class="tooltip">Abrir documentación en web</div></a>
+            <a href="#" onclick="toggleDarkMode()">Modo Oscuro/Claro<div class="tooltip">Cambiar tema visual</div></a>
         </nav>
         <div class="window-controls">
-            <button class="window-btn">–</button>
-            <button class="window-btn">□</button>
-            <button class="window-btn">✕</button>
+            <button class="window-btn">–<div class="tooltip">Minimizar</div></button>
+            <button class="window-btn">□<div class="tooltip">Maximizar</div></button>
+            <button class="window-btn">✕<div class="tooltip">Cerrar</div></button>
         </div>
     </div>
 
@@ -534,21 +567,25 @@
                 <div class="tool-icon">💻</div>
                 <div class="tool-title">Info. Sistema</div>
                 <div class="tool-description">Datos del hardware y software</div>
+                <div class="tooltip">Ver detalles del sistema</div>
             </div>
             <div class="tool-card" onclick="openExternalLink('https://brandonsepulveda.github.io/apps.html')">
                 <div class="tool-icon">⬇️</div>
                 <h3 class="tool-title">Descargas Apps</h3>
                 <p class="tool-description">Instaladores de aplicaciones populares</p>
+                <div class="tooltip">Acceder a la página de descargas</div>
             </div>
             <div class="tool-card" onclick="openModal('repair-modal')">
                 <div class="tool-icon">🔧</div>
                 <div class="tool-title">Reparación</div>
                 <div class="tool-description">Reparación y verificación del sistema</div>
+                <div class="tooltip">Ejecutar herramientas de reparación</div>
             </div>
             <div class="tool-card" onclick="openModal('tweaks-modal')">
                 <div class="tool-icon">⚙️</div>
                 <div class="tool-title">Tweaks</div>
                 <div class="tool-description">Tweaks y utilidades para optimización</div>
+                <div class="tooltip">Aplicar optimizaciones al sistema</div>
             </div>
         </div>
     </div>
@@ -556,7 +593,7 @@
     <!-- Floating Action Button -->
     <div class="fab-container">
         <button class="fab" id="fabButton" onclick="showGeneratedCode()" disabled>
-            <span class="fab-icon">📄</span>
+            <span class="fab-icon">⚙️</span>
             <span class="fab-count" id="fabCount">0</span>
         </button>
     </div>
@@ -575,18 +612,21 @@
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Ver Información del Hardware</span>
                     </div>
+                    <div class="tooltip">Muestra detalles de CPU, GPU, RAM, etc.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'info-software', 'info')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Ver Información del Software</span>
                     </div>
+                    <div class="tooltip">Lista el software instalado y versiones.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'info-network', 'info')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Información de Red</span>
                     </div>
+                    <div class="tooltip">Muestra la configuración de red actual.</div>
                 </div>
             </div>
         </div>
@@ -606,42 +646,49 @@
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">1. Crear Punto de Restauración</span>
                     </div>
+                     <div class="tooltip">Crea un punto de guardado para restaurar el sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'os-maintenance', 'repair')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">2. Mantenimiento del S.O.</span>
                     </div>
+                    <div class="tooltip">Ejecuta SFC y DISM para reparar archivos del sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'bsod-info', 'repair')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">3. Información de Pantallazos Azules</span>
                     </div>
+                     <div class="tooltip">Analiza y muestra detalles de errores BSOD anteriores.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'battery-status', 'repair')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">4. Ver Estado de la Batería</span>
                     </div>
+                    <div class="tooltip">Muestra información detallada sobre la batería.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'driver-info', 'repair')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">5. Información de Drivers</span>
                     </div>
+                     <div class="tooltip">Lista y gestiona todos los controladores instalados.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'repair-network', 'repair')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">6. Reparar Red</span>
                     </div>
+                    <div class="tooltip">Soluciona problemas comunes de conectividad de red.</div>
                 </div>
                 <div class="tool-item" onclick="openModal('cleanup-sub-modal')">
                     <div class="tool-item-content">
                         <span class="tool-item-text">7. Limpieza (Archivos Temporales y RAM)</span>
                     </div>
                     <span class="tool-item-arrow">→</span>
+                    <div class="tooltip">Abre opciones de limpieza avanzada.</div>
                 </div>
             </div>
         </div>
@@ -661,72 +708,84 @@
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Ejecutar WinUtil</span>
                     </div>
+                    <div class="tooltip">Abre la popular herramienta de Chris Titus.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'install-winget', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Instalar Winget</span>
                     </div>
+                    <div class="tooltip">Instala el gestor de paquetes oficial de Microsoft.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'activate-windows', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Activar Windows</span>
                     </div>
+                    <div class="tooltip">Activa Windows usando la clave digital almacenada.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'run-optimizer', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Ejecutar Optimizer</span>
                     </div>
+                    <div class="tooltip">Herramienta de optimización avanzada del sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'find-drivers', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Buscar Drivers</span>
                     </div>
+                    <div class="tooltip">Busca drivers específicos para tu modelo de PC.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'update-windows', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Actualizar Windows</span>
                     </div>
+                    <div class="tooltip">Fuerza la búsqueda de actualizaciones pendientes.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'optimize-os', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Analizar y Optimizar S.O.</span>
                     </div>
+                     <div class="tooltip">Realiza un análisis completo y optimiza el sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'system-properties', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Propiedades del Sistema</span>
                     </div>
+                    <div class="tooltip">Accede a la configuración avanzada del sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'disable-transparency', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Deshabilitar Transparencia</span>
                     </div>
+                    <div class="tooltip">Desactiva efectos de transparencia para mejor rendimiento.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'reboot-bios', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Apagar y Entrar a BIOS</span>
                     </div>
+                    <div class="tooltip">Reinicia el PC y accede directamente a la BIOS/UEFI.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'recovery-env', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Ingresar al Entorno de Recuperación</span>
                     </div>
+                    <div class="tooltip">Accede a las opciones avanzadas de Windows.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'update-apps', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Actualizar Apps</span>
                     </div>
+                    <div class="tooltip">Actualiza todas las aplicaciones instaladas con WinGet.</div>
                 </div>
             </div>
         </div>
@@ -746,12 +805,14 @@
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Limpiar Archivos Temporales</span>
                     </div>
+                    <div class="tooltip">Elimina archivos temporales de Windows y del usuario.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'cleanup-optimize-ram', 'repairCleanup')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Optimizar RAM</span>
                     </div>
+                    <div class="tooltip">Libera memoria RAM usando la herramienta RAMMap.</div>
                 </div>
             </div>
         </div>
@@ -793,42 +854,49 @@
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Panel de Control</span>
                     </div>
+                    <div class="tooltip">Abre el Panel de Control clásico.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'home-quick-diagnostic', 'home')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Diagnóstico Rápido</span>
                     </div>
+                    <div class="tooltip">Realiza una verificación rápida del sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'home-windows-settings', 'home')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Ajustes de Windows</span>
                     </div>
+                    <div class="tooltip">Abre la configuración moderna de Windows.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'home-file-explorer', 'home')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Explorador de Archivos</span>
                     </div>
+                    <div class="tooltip">Abre el explorador de archivos.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'home-powershell-console', 'home')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">PowerShell</span>
                     </div>
+                    <div class="tooltip">Abre una terminal de PowerShell.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'home-system-info-app', 'home')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Información del Sistema</span>
                     </div>
+                    <div class="tooltip">Muestra información detallada del sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'home-install-powershell7', 'home')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Instalar PowerShell 7</span>
                     </div>
+                    <div class="tooltip">Descarga e instala la última versión de PowerShell.</div>
                 </div>
             </div>
         </div>
@@ -848,84 +916,98 @@
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Ejecutar ToolboxBS</span>
                     </div>
+                     <div class="tooltip">Lanza la versión completa de ToolboxBS en PowerShell.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-download-windows', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Descargar Windows</span>
                     </div>
+                    <div class="tooltip">Herramienta para descargar imágenes oficiales de Windows.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-run-winscript', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Ejecutar WinScript</span>
                     </div>
+                    <div class="tooltip">Interfaz de línea de comandos para scripts de Windows.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-install-sentinel', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Instalar Sentinel</span>
                     </div>
+                    <div class="tooltip">Instala Hard Disk Sentinel para monitoreo del disco duro.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-optimize-system', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Optimizar y mejorar el sistema</span>
                     </div>
+                    <div class="tooltip">Ejecuta rutinas de optimización automática del sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-install-intel-drivers', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Instalar Intel Driver Support</span>
                     </div>
+                    <div class="tooltip">Descarga e instala la herramienta de actualización de drivers Intel.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-windows-repair', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Reparación de Windows</span>
                     </div>
+                    <div class="tooltip">Ejecuta SFC y DISM para reparar archivos corruptos.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-task-manager', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Administrador de Tareas</span>
                     </div>
+                    <div class="tooltip">Abre el administrador de tareas para gestionar procesos.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-device-manager', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Administrador de Dispositivos</span>
                     </div>
+                    <div class="tooltip">Gestiona drivers y hardware del sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-windows-services', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Servicios</span>
                     </div>
+                    <div class="tooltip">Administra y configura servicios de Windows.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-disk-cleanup', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Limpieza de Disco</span>
                     </div>
+                    <div class="tooltip">Elimina archivos innecesarios para liberar espacio.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-registry-editor', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Editor del Registro</span>
                     </div>
+                    <div class="tooltip">Edita el registro de Windows (para usuarios avanzados).</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-winget-cli', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">WinGet (CLI)</span>
                     </div>
+                    <div class="tooltip">Abre el gestor de paquetes WinGet en PowerShell.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-check-updates', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Verificar Actualizaciones</span>
                     </div>
+                    <div class="tooltip">Abre Windows Update para buscar actualizaciones.</div>
                 </div>
             </div>
         </div>
@@ -1417,7 +1499,25 @@
             }
 
             // 2. Construir el contenido del script .ps1 y .bat.
-            let ps1Content = `# Script de ToolboxBS generado el ${new Date().toLocaleString()}\n\n`;
+            let ps1Header = `<#
+    .SYNOPSIS
+        Script de automatización generado por ToolboxBS.
+
+    .DESCRIPTION
+        Este script ejecuta una serie de tareas de mantenimiento y optimización seleccionadas
+        a través de la interfaz web de ToolboxBS.
+
+    .WARNING
+        Este script realiza cambios en el sistema. Ha sido generado basado en tus selecciones.
+        Ejecútalo únicamente si confías en la fuente (ToolboxBS) y entiendes las tareas que se realizarán.
+        Los programas antivirus pueden marcar este archivo como potencialmente peligroso debido a las
+        acciones administrativas que realiza. Esto es, en la mayoría de los casos, un falso positivo.
+#>\n\n`;
+            
+            let ps1Content = ps1Header + `# =================================================================\n`;
+            ps1Content += `# INICIO DEL SCRIPT GENERADO POR TOOLBOXBS\n`;
+            ps1Content += `# =================================================================\n\n`;
+
             allCommands.forEach((cmd, index) => {
                 ps1Content += `Write-Host ""\n`;
                 ps1Content += `Write-Host "=================================================================" -ForegroundColor Green\n`;
@@ -1426,13 +1526,44 @@
                 ps1Content += `${cmd.script.trim()}\n\n`;
             });
             ps1Content += `Write-Host "Todas las tareas han finalizado." -ForegroundColor Green\n`;
-            ps1Content += `Read-Host "Presiona ENTER para salir"\n`;
+            ps1Content += `Read-Host "Presiona ENTER para continuar con la limpieza de archivos."\n`;
 
-            let batContent = `@echo off\n`;
-            batContent += `chcp 65001 > nul\n`;
-            batContent += `echo Ejecutando el script de PowerShell...\n`;
-            batContent += `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0ToolboxBS_Script.ps1"\n`;
-            batContent += `pause\n`;
+            let batContent = `@echo off
+REM =================================================================
+REM LANZADOR PARA EL SCRIPT DE TOOLBOXBS (CON AUTODESTRUCCIÓN)
+REM =================================================================
+REM Este archivo .bat está diseñado para ejecutar el script 'ToolboxBS_Script.ps1'
+REM con la política de ejecución correcta y luego se limpiará a sí mismo.
+REM
+REM ADVERTENCIA DE SEGURIDAD:
+REM Su navegador o antivirus puede marcar este archivo como peligroso.
+REM Esto es normal para scripts que realizan tareas administrativas.
+REM Ejecútelo solo si confía en la fuente.
+REM
+REM Para ejecutar, haga clic derecho sobre este archivo y seleccione
+REM "Ejecutar como administrador".
+REM =================================================================
+
+chcp 65001 > nul
+echo Ejecutando el script de PowerShell...
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0ToolboxBS_Script.ps1"
+
+echo.
+echo Creando script de limpieza temporal...
+
+REM Crea un script de limpieza en la carpeta temporal del sistema.
+>"%TEMP%\\cleanup_toolbox.bat" echo @echo off
+>>"%TEMP%\\cleanup_toolbox.bat" echo echo.
+>>"%TEMP%\\cleanup_toolbox.bat" echo echo Limpiando archivos de ToolboxBS...
+>>"%TEMP%\\cleanup_toolbox.bat" echo timeout /t 4 /nobreak > nul
+>>"%TEMP%\\cleanup_toolbox.bat" echo rmdir /s /q "%~dp0"
+>>"%TEMP%\\cleanup_toolbox.bat" echo echo Limpieza completada. La ventana se cerrara en 2 segundos.
+>>"%TEMP%\\cleanup_toolbox.bat" echo timeout /t 2 /nobreak > nul
+>>"%TEMP%\\cleanup_toolbox.bat" echo del "%%~f0"
+
+echo Lanzando limpieza en segundo plano y saliendo...
+start "" /b cmd /c "%TEMP%\\cleanup_toolbox.bat"
+`;
 
             // Guardar contenido para la descarga
             currentPs1Content = ps1Content;
@@ -1472,7 +1603,7 @@
                 
                 closeModal('codeDisplayBox');
 
-                showMessageBox("<h3>¡ZIP generado!</h3><p>1. Extrae el archivo descargado.<br>2. Haz clic derecho en 'EJECUTAR_ESTE_ARCHIVO.bat' y selecciona 'Ejecutar como administrador'.</p>");
+                showMessageBox("<h3>¡ZIP generado!</h3><p style='text-align: left; margin-bottom: 15px;'><strong>ADVERTENCIA DE SEGURIDAD:</strong><br>Tu navegador o antivirus podría marcar el archivo descargado como peligroso. Esto es normal para herramientas de sistema.</p><p style='text-align: left;'><strong>Pasos para ejecutar:</strong><br>1. Extrae el contenido del archivo <strong>ToolboxBS_Script.zip</strong>.<br>2. Dentro de la carpeta, haz clic derecho en <strong>EJECUTAR_ESTE_ARCHIVO.bat</strong>.<br>3. Selecciona '<strong>Ejecutar como administrador</strong>'.</p>");
 
             } catch (error) {
                 console.error("Error al generar el ZIP:", error);
