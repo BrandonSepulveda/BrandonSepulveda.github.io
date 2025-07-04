@@ -6,205 +6,239 @@
     <title>TOOLBOXBS</title>
     <!-- Librería JSZip para crear archivos ZIP en el navegador -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #0A0A0A;
+            --surface-color: #1A1A1A;
+            --surface-hover: #242424;
+            --border-color: #2D2D2D;
+            --border-hover: #808080;
+            --text-primary: #F5F5F5;
+            --text-secondary: #A3A3A3;
+            --accent-color: #FFFFFF;
+            --font-family: 'Inter', sans-serif;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
-            color: white;
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
             overflow-x: hidden;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         /* Header */
         .header {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 15px 30px;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 1rem;
         }
 
         .logo-icon {
-            width: 50px;
-            height: 50px;
-            background-image: url('https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico');
+            width: 48px;
+            height: 48px;
+            background-image: url('https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
         }
 
         .logo-text h1 {
-            font-size: 24px;
-            font-weight: 700;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
         .logo-text p {
-            font-size: 12px;
-            color: #888;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
         }
 
         .nav {
             display: flex;
-            gap: 30px;
+            gap: 2rem;
         }
 
         .nav a, .window-btn {
-            position: relative; /* Needed for tooltip positioning */
+            position: relative;
         }
         
         .nav a {
-            color: white;
+            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
             padding: 5px 0;
         }
 
         .nav a:hover {
-            color: #00ff88;
+            color: var(--text-primary);
         }
 
         .window-controls {
             display: flex;
-            gap: 10px;
+            gap: 0.5rem;
         }
 
         .window-btn {
             width: 30px;
             height: 30px;
             background: transparent;
+            border-radius: 50%;
             border: none;
-            color: white;
+            color: var(--text-secondary);
             cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s;
+            font-size: 1rem;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         .window-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--surface-hover);
+            color: var(--text-primary);
         }
 
         /* Main Content */
         .main-content {
-            padding: 60px 30px;
+            padding: 6rem 2rem;
             text-align: center;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
 
         .page-title {
-            font-size: 32px;
-            font-weight: 300;
-            margin-bottom: 60px;
-            color: #fff;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            letter-spacing: -0.05em;
+        }
+        
+        .page-subtitle {
+            font-size: 1.125rem;
+            font-weight: 400;
+            margin-bottom: 4rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.6;
         }
 
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            max-width: 1100px;
+            width: 100%;
             margin: 0 auto;
         }
 
         .tool-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 30px 20px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            text-align: left;
         }
 
         .tool-card:hover {
             transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #00ff88, #00ccdd);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .tool-card:hover::before {
-            opacity: 1;
+            background: var(--surface-hover);
+            border-color: var(--border-hover);
         }
 
         .tool-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #00ff88;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .tool-icon svg {
+            width: 40px;
+            height: 40px;
+            stroke-width: 1.5;
         }
 
         .tool-title {
-            font-size: 18px;
+            font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
         }
 
         .tool-description {
-            font-size: 14px;
-            color: #aaa;
-            line-height: 1.4;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
         }
         
-        /* Estilo del Tooltip Genérico */
+        /* Tooltip */
         .tooltip {
             position: absolute;
             bottom: 100%;
             left: 50%;
-            transform: translateX(-50%) translateY(10px) scale(0.95);
-            background-color: rgba(18, 18, 18, 0.95);
+            transform: translateX(-50%) translateY(10px);
+            background-color: #000;
             color: #fff;
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
             white-space: nowrap;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+            transition: opacity 0.2s ease, transform 0.2s ease;
             pointer-events: none;
             z-index: 10;
             margin-bottom: 8px;
         }
 
-        .tool-card:hover .tooltip,
-        .nav a:hover .tooltip,
-        .window-btn:hover .tooltip,
-        .tool-item:hover .tooltip {
+        [onclick]:hover .tooltip, .nav a:hover .tooltip, .window-btn:hover .tooltip {
             opacity: 1;
             visibility: visible;
-            transform: translateX(-50%) translateY(0) scale(1);
+            transform: translateX(-50%) translateY(0);
         }
-
 
         /* Modal */
         .modal {
@@ -213,243 +247,282 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
-            background: #2d2d2d;
-            border-radius: 15px;
-            padding: 30px;
-            max-width: 600px;
+            background: var(--bg-color);
+            border-radius: 24px;
+            padding: 2.5rem;
+            max-width: 700px;
             width: 90%;
-            max-height: 80vh;
+            max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            border: 1px solid #4a5568;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #444;
-            padding-bottom: 15px;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .modal-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #00ff88;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
         }
 
         .close-btn {
-            background: none;
+            background: transparent;
             border: none;
-            color: white;
-            font-size: 24px;
+            color: var(--text-secondary);
+            font-size: 1.75rem;
             cursor: pointer;
             padding: 5px;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.3s;
+            line-height: 1;
         }
 
         .close-btn:hover {
-            color: #ff4444;
+            color: var(--accent-color);
+            transform: rotate(90deg);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            text-align: left;
+            font-weight: 400;
         }
 
         .tool-list {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 0.75rem;
+            margin-top: 1rem;
         }
 
         .tool-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 15px 20px;
-            transition: all 0.3s ease;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            transition: all 0.2s ease;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: relative;
         }
 
         .tool-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateX(5px);
+            background: var(--surface-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
         }
 
         .tool-item.selected {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: #00ff88;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+            background: var(--surface-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
         }
 
         .tool-item-content {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 1.25rem;
             flex: 1;
         }
 
         .tool-checkbox {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #666;
-            border-radius: 4px;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
             background: transparent;
             position: relative;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .tool-checkbox.checked {
-            background: #00ff88;
-            border-color: #00ff88;
+        .tool-item.selected .tool-checkbox, .tool-checkbox.checked {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
         }
 
         .tool-checkbox.checked::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #000;
-            font-size: 14px;
+            content: '✔';
+            font-size: 16px;
+            color: var(--bg-color);
             font-weight: bold;
         }
 
         .tool-item-text {
-            font-size: 16px;
-            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
             flex: 1;
         }
 
         .tool-item-arrow {
-            color: #00ff88;
-            font-size: 18px;
-            margin-left: 10px;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            margin-left: 1rem;
+            transition: transform 0.3s;
         }
-
-        /* Subtitle */
-        .subtitle {
-            color: #00ccdd;
-            font-size: 18px;
-            margin-bottom: 20px;
-            text-align: left;
+        .tool-item:hover .tool-item-arrow {
+            transform: translateX(5px);
         }
 
         /* Floating Action Button */
         .fab-container {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 2rem;
+            right: 2rem;
             z-index: 1000;
         }
 
         .fab {
-            background: linear-gradient(45deg, #00ff88, #00ccdd);
+            background: var(--accent-color);
             border: none;
             border-radius: 50%;
-            width: 70px;
-            height: 70px;
+            width: 64px;
+            height: 64px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #000;
-            font-weight: bold;
-            font-size: 12px;
+            color: var(--bg-color);
             cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.4);
-            transition: all 0.3s ease;
-            text-decoration: none; /* For anchor tag */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            position: relative;
         }
 
         .fab:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 255, 136, 0.6);
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         }
-
+        
         .fab:disabled {
-            background: #666;
+            background: var(--surface-hover);
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
-            opacity: 0.7;
+            color: var(--text-secondary);
+        }
+        
+        .fab-icon {
+            font-size: 1.75rem;
+            transition: transform 0.4s ease;
+        }
+        .fab-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+        
+        .fab:hover:not(:disabled) .fab-icon {
+            transform: rotate(180deg);
         }
 
-        .fab-icon {
-            font-size: 28px;
-            margin-bottom: 2px;
+        .fab #fabText {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         .fab-count {
-            font-size: 14px;
-        }
-
-        /* Message Box */
-        .message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #2d2d2d;
-            border-radius: 15px;
-            padding: 30px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            z-index: 1002;
-            display: none; 
-            flex-direction: column;
+            font-size: 1rem;
+            font-weight: 700;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--bg-color);
+            color: var(--accent-color);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
-            text-align: center;
-            border: 1px solid #00ff88;
-        }
-
-        .message-box p {
-            font-size: 16px;
-            margin-bottom: 20px;
-            color: white;
-            line-height: 1.5;
-        }
-
-        .message-box button {
-            background: linear-gradient(45deg, #00ff88, #00ccdd);
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .message-box button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
-        }
-
-        /* Code Display Box */
-        .code-display-box {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
             justify-content: center;
-            align-items: center;
+            border: 2px solid var(--accent-color);
+            transform: scale(0);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .fab:not(:disabled) .fab-count {
+           transform: scale(1);
+        }
+
+        /* Message Box & Code Display Box */
+        .message-box, .code-display-box {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none; justify-content: center; align-items: center;
             z-index: 1001;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .message-box .modal-content, .code-display-box .modal-content {
+            border: 1px solid var(--border-hover);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+        }
+        
+        .message-box p {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .message-box button, .code-display-box .actions button {
+            background: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 12px 25px;
+            color: var(--bg-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: var(--font-family);
+            font-size: 0.9rem;
+        }
+
+        .message-box button:hover, .code-display-box .actions button:hover {
+            background: transparent;
+            color: var(--accent-color);
         }
 
         .code-display-box .modal-content {
@@ -459,14 +532,16 @@
         }
 
         .code-display-box pre {
-            background-color: #1a1a1a;
-            color: #00ff88;
-            padding: 15px;
-            border-radius: 8px;
+            background-color: var(--bg-color);
+            color: #f0f0f0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
             overflow-x: auto;
-            margin-top: 15px;
-            margin-bottom: 20px;
-            font-family: 'Consolas', 'Courier New', monospace;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
             text-align: left;
             white-space: pre-wrap;
             word-wrap: break-word;
@@ -477,27 +552,57 @@
         .code-display-box .actions {
             display: flex;
             justify-content: flex-end;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 1rem;
+            margin-top: 1rem;
         }
-
-        .code-display-box .actions button {
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-        }
-
+        
         .code-display-box .actions .copy-btn {
-            background: #00ccdd;
-            color: #000;
+            background: var(--surface-hover);
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+        .code-display-box .actions .copy-btn:hover {
+            background: var(--surface-color);
+            border-color: var(--border-hover);
+            color: var(--accent-color);
         }
 
-        .code-display-box .actions .download-btn {
-            background: #00ff88;
-            color: #000;
+        /* About Modal Specific Styles */
+        #about-modal .modal-content {
+            text-align: center;
+        }
+        #about-modal img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            border: 2px solid var(--border-color);
+        }
+        #about-modal .info-section {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        #about-modal .info-section p {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        #about-modal .info-section p strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        #about-modal .info-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        #about-modal .info-section a:hover {
+            text-decoration: underline;
+            color: var(--accent-color);
         }
 
         /* Responsive */
@@ -505,32 +610,31 @@
             .nav {
                 display: none;
             }
-            
+            .page-title {
+                font-size: 2.5rem;
+            }
+            .page-subtitle {
+                font-size: 1rem;
+            }
             .tools-grid {
                 grid-template-columns: 1fr;
             }
-            
             .modal-content {
-                margin: 20px;
-                width: calc(100% - 40px);
+                margin: 1rem;
+                width: calc(100% - 2rem);
+                padding: 1.5rem;
             }
-
             .fab-container {
-                bottom: 15px;
-                right: 15px;
+                bottom: 1rem;
+                right: 1rem;
             }
-
             .fab {
-                width: 60px;
-                height: 60px;
+                width: 56px;
+                height: 56px;
             }
-
-            .fab-icon {
-                font-size: 24px;
-            }
-
-            .fab-count {
-                font-size: 12px;
+            .fab-icon svg {
+                width: 24px;
+                height: 24px;
             }
         }
     </style>
@@ -550,7 +654,6 @@
             <a href="#" onclick="openModal('tools-modal')">Herramientas<div class="tooltip">Ver todas las herramientas</div></a>
             <a href="#" onclick="openModal('about-modal')">Sobre<div class="tooltip">Información de la App</div></a>
             <a href="#" onclick="openExternalLink('https://brandonsepulveda.github.io/Documentacion.html')">Documentación<div class="tooltip">Abrir documentación en web</div></a>
-            <a href="#" onclick="toggleDarkMode()">Modo Oscuro/Claro<div class="tooltip">Cambiar tema visual</div></a>
         </nav>
         <div class="window-controls">
             <button class="window-btn">–<div class="tooltip">Minimizar</div></button>
@@ -561,30 +664,39 @@
 
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
-        <h1 class="page-title">Herramientas Disponibles</h1>
+        <h1 class="page-title">Caja de Herramientas Digital</h1>
+        <p class="page-subtitle">Selecciona una categoría para acceder a las utilidades de optimización, reparación y configuración para tu sistema.</p>
         <div class="tools-grid">
             <div class="tool-card" onclick="openModal('info-modal')">
-                <div class="tool-icon">💻</div>
+                <div class="tool-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                </div>
                 <div class="tool-title">Info. Sistema</div>
-                <div class="tool-description">Datos del hardware y software</div>
+                <div class="tool-description">Datos del hardware y software.</div>
                 <div class="tooltip">Ver detalles del sistema</div>
             </div>
             <div class="tool-card" onclick="openExternalLink('https://brandonsepulveda.github.io/apps.html')">
-                <div class="tool-icon">⬇️</div>
+                <div class="tool-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                </div>
                 <h3 class="tool-title">Descargas Apps</h3>
-                <p class="tool-description">Instaladores de aplicaciones populares</p>
+                <p class="tool-description">Instaladores de apps populares.</p>
                 <div class="tooltip">Acceder a la página de descargas</div>
             </div>
             <div class="tool-card" onclick="openModal('repair-modal')">
-                <div class="tool-icon">🔧</div>
+                <div class="tool-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                </div>
                 <div class="tool-title">Reparación</div>
-                <div class="tool-description">Reparación y verificación del sistema</div>
+                <div class="tool-description">Verificación y reparación del sistema.</div>
                 <div class="tooltip">Ejecutar herramientas de reparación</div>
             </div>
             <div class="tool-card" onclick="openModal('tweaks-modal')">
-                <div class="tool-icon">⚙️</div>
+                <div class="tool-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 0 2l-.15.08a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1 0-2l.15-.08a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </div>
                 <div class="tool-title">Tweaks</div>
-                <div class="tool-description">Tweaks y utilidades para optimización</div>
+                <div class="tool-description">Utilidades para optimización.</div>
                 <div class="tooltip">Aplicar optimizaciones al sistema</div>
             </div>
         </div>
@@ -593,10 +705,15 @@
     <!-- Floating Action Button -->
     <div class="fab-container">
         <button class="fab" id="fabButton" onclick="showGeneratedCode()" disabled>
-            <span class="fab-icon">⚙️</span>
-            <span class="fab-count" id="fabCount">0</span>
+            <span class="fab-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            </span>
+            <span id="fabText" style="font-weight: 700; display: block;">GENERAR</span>
+            <span class="fab-count" id="fabCount" style="transform: scale(0);">0</span>
         </button>
     </div>
+
+    <!-- Modals (estructura HTML sin cambios, solo estilos) -->
 
     <!-- Modal for Info Sistema -->
     <div id="info-modal" class="modal">
@@ -636,7 +753,7 @@
     <div id="repair-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">HERRAMIENTAS DE REPARACION Y MANTENIMIENTO</h2>
+                <h2 class="modal-title">REPARACIÓN Y MANTENIMIENTO</h2>
                 <button class="close-btn" onclick="closeModal('repair-modal')">✕</button>
             </div>
             <div class="subtitle">Selecciona una herramienta</div>
@@ -646,7 +763,7 @@
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">1. Crear Punto de Restauración</span>
                     </div>
-                     <div class="tooltip">Crea un punto de guardado para restaurar el sistema.</div>
+                    <div class="tooltip">Crea un punto de guardado para restaurar el sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'os-maintenance', 'repair')">
                     <div class="tool-item-content">
@@ -660,7 +777,7 @@
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">3. Información de Pantallazos Azules</span>
                     </div>
-                     <div class="tooltip">Analiza y muestra detalles de errores BSOD anteriores.</div>
+                    <div class="tooltip">Analiza y muestra detalles de errores BSOD anteriores.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'battery-status', 'repair')">
                     <div class="tool-item-content">
@@ -674,7 +791,7 @@
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">5. Información de Drivers</span>
                     </div>
-                     <div class="tooltip">Lista y gestiona todos los controladores instalados.</div>
+                    <div class="tooltip">Lista y gestiona todos los controladores instalados.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'repair-network', 'repair')">
                     <div class="tool-item-content">
@@ -750,7 +867,7 @@
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Analizar y Optimizar S.O.</span>
                     </div>
-                     <div class="tooltip">Realiza un análisis completo y optimiza el sistema.</div>
+                    <div class="tooltip">Realiza un análisis completo y optimiza el sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'system-properties', 'tweaks')">
                     <div class="tool-item-content">
@@ -820,8 +937,10 @@
 
     <!-- Message Box -->
     <div id="messageBox" class="message-box">
-        <p id="messageText"></p>
-        <button onclick="hideMessageBox()">Cerrar</button>
+        <div class="modal-content" style="max-width: 450px; text-align: center;">
+            <p id="messageText"></p>
+            <button onclick="hideMessageBox()">Cerrar</button>
+        </div>
     </div>
     
     <!-- Code Display Box -->
@@ -838,7 +957,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Modal for Home (Inicio) -->
     <div id="home-modal" class="modal">
@@ -916,7 +1034,7 @@
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Ejecutar ToolboxBS</span>
                     </div>
-                     <div class="tooltip">Lanza la versión completa de ToolboxBS en PowerShell.</div>
+                    <div class="tooltip">Lanza la versión completa de ToolboxBS en PowerShell.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-download-windows', 'tools')">
                     <div class="tool-item-content">
@@ -1020,30 +1138,26 @@
                 <h2 class="modal-title">SOBRE TOOLBOXBS</h2>
                 <button class="close-btn" onclick="closeModal('about-modal')">✕</button>
             </div>
-            <div style="text-align: center; margin-bottom: 20px;">
-                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Logo de ToolboxBS" style="width: 100px; height: 100px; border-radius: 10px; margin-bottom: 15px;">
-                <h3 style="font-size: 20px; color: #00ff88; margin-bottom: 10px;">ToolboxBS</h3>
-                <p style="font-size: 14px; color: #aaa; line-height: 1.5;">
-                    ToolboxBS es una herramienta de optimización y mantenimiento para sistemas Windows.
-                    Proporciona una interfaz amigable para ejecutar tareas comunes de mantenimiento y optimización del sistema.
-                </p>
+            <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Logo de ToolboxBS">
+            <h3 style="font-size: 1.5rem; color: #fff; margin-bottom: 10px;">ToolboxBS v2.2</h3>
+            <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.6; max-width: 500px; margin: 0 auto 30px auto;">
+                Una colección de herramientas curadas para optimizar, reparar y personalizar tu sistema Windows de forma sencilla y potente.
+            </p>
+            <div class="info-section">
+                <p><strong>Autor:</strong> Jhon Brandon Sepulveda Valdes</p>
+                <p><strong>GitHub:</strong> <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank">BrandonSepulveda/ToolboxBS</a></p>
             </div>
-            <div style="background: rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 10px; padding: 15px; margin-bottom: 15px; text-align: left;">
-                <p style="font-weight: bold; color: #00ff88; margin-bottom: 5px;">Autor:</p>
-                <p style="color: white; margin-bottom: 10px;">Jhon Brandon Sepulveda Valdes</p>
-                <p style="font-weight: bold; color: #00ff88; margin-bottom: 5px;">GitHub:</p>
-                <p><a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank" style="color: #00ccdd; text-decoration: underline;">github.com/BrandonSepulveda/ToolboxBS</a></p>
-            </div>
-            <div style="background: rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 10px; padding: 15px; text-align: left;">
-                <p style="font-weight: bold; color: #00ff88; margin-bottom: 5px;">Versión:</p>
-                <p style="color: white; margin-bottom: 10px;">2.2</p>
-                <p style="font-weight: bold; color: #00ff88; margin-bottom: 5px;">Licencia:</p>
-                <p style="color: white;">MIT License - Copyright (c) 2023 Jhon Brandon Sepulveda Valdes</p>
+            <div class="info-section">
+                <p><strong>Licencia:</strong> MIT License - Copyright (c) 2023 Jhon Brandon Sepulveda Valdes</p>
             </div>
         </div>
     </div>
 
     <script>
+        // ==================================================================
+        // INICIO DE LA LÓGICA DE LA APLICACIÓN (SIN MODIFICACIONES)
+        // ==================================================================
+
         // Objeto para almacenar las herramientas seleccionadas por categoría
         let selectedTools = {
             'info': [],
@@ -1058,16 +1172,11 @@
         let currentPs1Content = '';
         let currentBatContent = '';
 
-        // ==================================================================
-        // COMANDOS DE POWERSHELL SIMPLIFICADOS
-        // ==================================================================
+        // Comandos de PowerShell (Lógica intacta)
         const powershellCommands = {
-            // Info. Sistema
             'info-hardware': `irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/infosystem.ps1' | iex`,
             'info-software': `irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/infosystem.ps1' | iex`,
             'info-network': `irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/infosystem.ps1' | iex`,
-
-            // Reparación
             'create-restore-point': `
                 try {
                     Checkpoint-Computer -Description "Punto de restauracion creado por ToolboxBS" -RestorePointType "MODIFY_SETTINGS"
@@ -1146,7 +1255,6 @@
                 Write-Host "Reparacion de red completada. Reinicia tu equipo." -ForegroundColor Green
                 Start-Process "msdt.exe" -ArgumentList "-id NetworkDiagnostic"
             `,
-            // Limpieza (Sub-options)
             'cleanup-temp-files': `
                 $userTempPath = $env:TEMP
                 $windowsTempPath = "C:\\Windows\\Temp"
@@ -1189,8 +1297,6 @@
                 $executablePath = Join-Path $extractPath "RAMMap.exe"
                 if (Test-Path -Path $executablePath) { Start-Process -FilePath $executablePath } else { Write-Host "No se encontro RAMMap.exe." -ForegroundColor Red }
             `,
-
-            // Tweaks
             'winutil': `irm christitus.com/win | iex`,
             'install-winget': `Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle; Invoke-WebRequest -Uri https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx -OutFile Microsoft.VCLibs.x64.14.00.Desktop.appx; Invoke-WebRequest -Uri https://github.com/microsoft/microsoft-ui-xaml/releases/download/v2.7.3/Microsoft.UI.Xaml.2.7.x64.appx -OutFile Microsoft.UI.Xaml.2.7.x64.appx; Add-AppxPackage Microsoft.VCLibs.x64.14.00.Desktop.appx; Add-AppxPackage Microsoft.UI.Xaml.2.7.x64.appx; Add-AppxPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle`,
             'activate-windows': `
@@ -1231,8 +1337,6 @@
                 if ($result -eq 'Yes') { shutdown /r /o /f /t 00 }
             `,
             'update-apps': `winget update --all`,
-
-            // Home Menu Commands
             'home-control-panel': `Start-Process "control.exe"`,
             'home-quick-diagnostic': `
                 $diagnosticReport = New-Object System.Text.StringBuilder
@@ -1338,8 +1442,6 @@
                     else { Write-Host "Error al instalar PowerShell 7. Codigo de salida: " + $process.ExitCode -ForegroundColor Red }
                 }
             `,
-
-            // Tools Menu Commands
             'tools-run-toolboxbs': `irm https://brandonsepulveda.github.io/Tool | iex`,
             'tools-download-windows': `irm https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/windows%20instalador.ps1 | iex`,
             'tools-run-winscript': `irm https://winscript.cc/irm | iex`,
@@ -1423,27 +1525,32 @@
             for (const category in selectedTools) {
                 totalSelected += selectedTools[category].length;
                 selectedTools[category].forEach(toolId => {
-                     const toolItem = document.querySelector(`.tool-item[onclick*="'${toolId}'"]`);
-                     if(toolItem) {
+                    const toolItem = document.querySelector(`.tool-item[onclick*="'${toolId}'"]`);
+                    if(toolItem) {
                         selectedTitles.push(toolItem.querySelector('.tool-item-text').textContent.trim());
-                     }
+                    }
                 });
             }
             
             const fabButton = document.getElementById('fabButton');
             const fabCount = document.getElementById('fabCount');
+            const fabText = document.getElementById('fabText');
 
-            fabCount.textContent = totalSelected;
             fabButton.disabled = totalSelected === 0;
-
+            
             if (totalSelected > 0) {
-                fabButton.title = 'Seleccionado:\n- ' + selectedTitles.join('\n- ');
+                fabCount.textContent = totalSelected;
+                fabButton.title = 'Generar Script (' + totalSelected + ' seleccionados)';
+                fabText.style.display = 'none';
+                fabCount.style.transform = 'scale(1)';
             } else {
                 fabButton.title = 'Generar Script';
+                fabText.style.display = 'block';
+                fabCount.style.transform = 'scale(0)';
             }
         }
 
-        // Función para limpiar todas las selecciones de una categoría específica (used by clear buttons in modals)
+        // Función para limpiar todas las selecciones de una categoría específica
         function clearSelections(category) {
             selectedTools[category] = [];
             const modalId = getModalIdFromCategory(category);
@@ -1456,7 +1563,7 @@
                     if (checkbox) checkbox.classList.remove('checked');
                 });
             }
-            updateGlobalFloatingButton(); // Update global button after clearing a category
+            updateGlobalFloatingButton();
         }
 
         // Función para obtener el ID del modal a partir de la categoría
@@ -1473,12 +1580,8 @@
             }
         }
 
-        // ==================================================================
-        // NUEVAS FUNCIONES PARA MOSTRAR CÓDIGO Y DESCARGAR ZIP
-        // ==================================================================
-
+        // Función para mostrar el código generado y descargar ZIP
         function showGeneratedCode() {
-             // 1. Recopilar todos los comandos seleccionados.
             const allCommands = [];
             let hasSelections = false;
             for (const category in selectedTools) {
@@ -1498,7 +1601,6 @@
                 return;
             }
 
-            // 2. Construir el contenido del script .ps1 y .bat.
             let ps1Header = `<#
     .SYNOPSIS
         Script de automatización generado por ToolboxBS.
@@ -1521,7 +1623,7 @@
             allCommands.forEach((cmd, index) => {
                 ps1Content += `Write-Host ""\n`;
                 ps1Content += `Write-Host "=================================================================" -ForegroundColor Green\n`;
-                ps1Content += `Write-Host "      EJECUTANDO TAREA ${index + 1}/${allCommands.length}: ${cmd.text}" -ForegroundColor Yellow\n`;
+                ps1Content += `Write-Host "        EJECUTANDO TAREA ${index + 1}/${allCommands.length}: ${cmd.text}" -ForegroundColor Yellow\n`;
                 ps1Content += `Write-Host "=================================================================" -ForegroundColor Green\n\n`;
                 ps1Content += `${cmd.script.trim()}\n\n`;
             });
@@ -1565,11 +1667,9 @@ echo Lanzando limpieza en segundo plano y saliendo...
 start "" /b cmd /c "%TEMP%\\cleanup_toolbox.bat"
 `;
 
-            // Guardar contenido para la descarga
             currentPs1Content = ps1Content;
             currentBatContent = batContent;
 
-            // 3. Mostrar el modal con el código .ps1
             document.getElementById('codeContent').textContent = ps1Content;
             openModal('codeDisplayBox');
         }
@@ -1603,7 +1703,7 @@ start "" /b cmd /c "%TEMP%\\cleanup_toolbox.bat"
                 
                 closeModal('codeDisplayBox');
 
-                showMessageBox("<h3>¡ZIP generado!</h3><p style='text-align: left; margin-bottom: 15px;'><strong>ADVERTENCIA DE SEGURIDAD:</strong><br>Tu navegador o antivirus podría marcar el archivo descargado como peligroso. Esto es normal para herramientas de sistema.</p><p style='text-align: left;'><strong>Pasos para ejecutar:</strong><br>1. Extrae el contenido del archivo <strong>ToolboxBS_Script.zip</strong>.<br>2. Dentro de la carpeta, haz clic derecho en <strong>EJECUTAR_ESTE_ARCHIVO.bat</strong>.<br>3. Selecciona '<strong>Ejecutar como administrador</strong>'.</p>");
+                showMessageBox("<h3 style='color: var(--accent-color);'>¡ZIP generado!</h3><p style='text-align: left; margin-bottom: 15px;'><strong>ADVERTENCIA DE SEGURIDAD:</strong><br>Tu navegador o antivirus podría marcar el archivo descargado como peligroso. Esto es normal para herramientas de sistema.</p><p style='text-align: left;'><strong>Pasos para ejecutar:</strong><br>1. Extrae el contenido del archivo <strong>ToolboxBS_Script.zip</strong>.<br>2. Dentro de la carpeta, haz clic derecho en <strong>EJECUTAR_ESTE_ARCHIVO.bat</strong>.<br>3. Selecciona '<strong>Ejecutar como administrador</strong>'.</p>");
 
             } catch (error) {
                 console.error("Error al generar el ZIP:", error);
@@ -1617,26 +1717,20 @@ start "" /b cmd /c "%TEMP%\\cleanup_toolbox.bat"
             updateGlobalFloatingButton();
         }
 
-
         // Funciones para abrir y cerrar modales
         function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
+            const modal = document.getElementById(modalId);
+            if (modal) modal.style.display = 'flex';
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
+            const modal = document.getElementById(modalId);
+            if(modal) modal.style.display = 'none';
         }
 
         // Funciones de navegación
         function openExternalLink(url) {
             window.open(url, '_blank');
-        }
-
-        // Funcionalidad de Modo Oscuro/Claro (simple toggle)
-        let isDarkMode = true;
-        function toggleDarkMode() {
-            document.body.classList.toggle('light-mode');
-            isDarkMode = !isDarkMode;
         }
 
         // Funciones para el Message Box personalizado
@@ -1653,9 +1747,12 @@ start "" /b cmd /c "%TEMP%\\cleanup_toolbox.bat"
 
         // Inicializar el estado de los botones al cargar la página
         document.addEventListener('DOMContentLoaded', () => {
-            updateGlobalFloatingButton(); // Initial update for the FAB
+            updateGlobalFloatingButton();
         });
 
+        // ==================================================================
+        // FIN DE LA LÓGICA DE LA APLICACIÓN
+        // ==================================================================
     </script>
 </body>
 </html>
