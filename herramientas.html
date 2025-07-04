@@ -1,291 +1,384 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112"
-     crossorigin="anonymous"></script>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Brandon Sepulveda | Herramientas y Utilidades</title>
-    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap" rel="stylesheet" />
+    
     <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112" crossorigin="anonymous"></script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <style>
-        :root {
-            --primary-color: #000000;
-            --accent-color: #33ff00;
-            --text-light: #ffffff;
-            --text-dark: #212529;
-            --transition-default: all 0.3s ease;
-        }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-        html, body {
-            height: 100%;
-            margin: 0;
+    <style>
+        /* --- Paleta de Colores y Estilos Base (Unificados con el Portafolio) --- */
+        :root {
+            --bg-dark: #000000;
+            --bg-medium: #111111;
+            --bg-light: #1A1A1A;
+            --text-light: #FFFFFF;
+            --text-muted: #999999;
+            --text-muted-lighter: #b0b0b0;
+            --accent-primary: #FFFFFF;
+            --accent-secondary: #333333;
+            --kick-color: #53FC18; /* Kick Green */
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(255, 255, 255, 0.05);
+            --transition-speed: 0.4s;
         }
 
         body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-muted);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             display: flex;
             flex-direction: column;
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url('https://source.unsplash.com/random/1600x900/?tech,dark');
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: scroll;
-            background-size: cover;
-            color: var(--text-light);
             min-height: 100vh;
-            padding-top: 70px;
         }
 
-        .content-wrapper {
+        main {
             flex: 1 0 auto;
         }
 
-        .navbar {
-            transition: var(--transition-default);
-            padding: 1rem 1.5rem;
-            background-color: transparent;
-        }
-
-        .navbar.scrolled {
-            background: rgba(0, 0, 0, 0.95) !important;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            padding: 0.75rem 1.5rem;
-        }
-
-        .navbar-brand {
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 700;
-            letter-spacing: 0.1rem;
-        }
-
-        .nav-link {
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 600;
-            padding: 0.75rem 1rem;
-            position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-        
-        .nav-link:hover::after {
-            width: 70%;
-        }
-
-        .tools-container {
-            background: rgba(20, 20, 20, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            border: 1px solid rgba(51, 255, 0, 0.2);
-            max-width: 1000px;
-            margin: 2rem auto;
-        }
-
-        .tool-card {
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: var(--transition-default);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .tool-card:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-        }
-
-        .tool-card-icon {
-            font-size: 2.5rem;
-            color: var(--accent-color);
-            margin-right: 1rem;
-        }
-
-        .tool-card-content {
-            flex-grow: 1;
-        }
-
-        .tool-card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 800;
             color: var(--text-light);
         }
 
-        .tool-card-description {
-            color: rgba(255,255,255,0.7);
+        .section {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 900;
             margin-bottom: 1rem;
         }
 
-        .btn-tool {
-            background-color: var(--primary-color);
-            border-color: var(--accent-color);
+        .section-subtitle {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 4rem;
+            color: var(--text-muted-lighter);
+        }
+
+        /* --- Navigation Bar (Estilo unificado) --- */
+        #mainNav {
+            background-color: transparent;
+            padding: 1.25rem 0;
+            transition: all var(--transition-speed) ease;
+        }
+        #mainNav.navbar-scrolled {
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(15px);
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        #mainNav .navbar-brand {
+            color: var(--text-light);
+            font-weight: 800;
+            font-size: 1.25rem;
+        }
+        #mainNav .navbar-brand img {
+            transition: transform var(--transition-speed) ease;
+        }
+        #mainNav .navbar-brand:hover img {
+            transform: rotate(-15deg);
+        }
+        #mainNav .nav-link {
+            color: var(--text-muted);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            transition: color var(--transition-speed) ease;
+        }
+        #mainNav .nav-link:hover, #mainNav .nav-link.active {
             color: var(--text-light);
         }
-
-        .btn-tool:hover {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
+        #mainNav .navbar-toggler {
+            border: 1px solid var(--border-color);
+        }
+        #mainNav .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
 
-        .footer {
-            flex-shrink: 0;
-            background-color: rgba(0,0,0,0.8) !important;
-            border-top: 1px solid rgba(51, 255, 0, 0.2);
-            padding: 2rem 0;
+        /* --- MEJORA: Campo de Búsqueda --- */
+        .search-form {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto 3rem auto;
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1.5rem;
+            padding-left: 3rem;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all var(--transition-speed) ease;
+        }
+        .search-input:focus {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            border-color: var(--kick-color);
+            box-shadow: 0 0 15px rgba(83, 252, 24, 0.2);
+            outline: none;
+        }
+        .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
         }
 
-        @media (max-width: 768px) {
-            .tool-card {
-                flex-direction: column;
-                text-align: center;
-            }
+        /* --- MEJORA: Tarjetas de Herramientas Rediseñadas --- */
+        .tool-card {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all var(--transition-speed) ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-primary);
+        }
+        .tool-card-body {
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .tool-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .tool-card-icon {
+            font-size: 2rem;
+            color: var(--kick-color);
+            background-color: var(--accent-secondary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        .tool-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        .tool-card-description {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        /* --- Botones (Estilo unificado) --- */
+        .btn {
+            padding: 0.7rem 1.8rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all var(--transition-speed) ease;
+            border: 2px solid transparent;
+        }
+        .btn-light {
+            background-color: var(--accent-primary);
+            color: var(--bg-dark);
+        }
+        .btn-light:hover {
+            background-color: transparent;
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+            transform: translateY(-3px);
+        }
+        .btn.disabled, .btn:disabled {
+            background-color: var(--accent-secondary);
+            border-color: var(--accent-secondary);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
 
-            .tool-card-icon {
-                margin-right: 0;
-                margin-bottom: 1rem;
-            }
+        /* --- MEJORA: Mensaje para cuando no hay resultados --- */
+        #no-results {
+            display: none; /* Oculto por defecto */
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+        }
+
+        /* --- Footer (Estilo unificado) --- */
+        footer {
+            background-color: var(--bg-medium);
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-color);
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="index.html" data-aos="fade-right">
-                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Brandon Sepulveda Logo" style="max-height: 30px; width: auto;">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Logo" style="height: 30px; width: auto; margin-right: 10px;">
                 Brandon Sepulveda
             </a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars"></i>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html" data-aos="fade-left" data-aos-delay="100">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html#proyectos" data-aos="fade-left" data-aos-delay="100">Proyectos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html#signup" data-aos="fade-left" data-aos-delay="200">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#" data-aos="fade-left" data-aos-delay="300">Herramientas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#projects">Proyectos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#contact">Contacto</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Herramientas</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Content Wrapper -->
-    <div class="content-wrapper">
-        <div class="container tools-container" data-aos="fade-up">
-            <h2 class="text-center mb-4">Herramientas y Utilidades</h2>
-            
-            <!-- Windows ISO Downloader Tool -->
-            <div class="tool-card">
-                <div class="tool-card-icon">
-                    <i class="fab fa-windows"></i>
-                </div>
-                <div class="tool-card-content">
-                    <h3 class="tool-card-title">Descarga de Windows ISO</h3>
-                    <p class="tool-card-description">Descarga fácil de imágenes ISO oficiales de Windows 10 y Windows 11.</p>
-                </div>
-                <div>
-                    <a href="descargawindows.html" class="btn btn-tool">
-                        Ir a Descarga <i class="fas fa-arrow-right ms-2"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Drivers Tool (Placeholder) -->
-            <div class="tool-card">
-                <div class="tool-card-icon">
-                    <i class="fas fa-microchip"></i>
-                </div>
-                <div class="tool-card-content">
-                    <h3 class="tool-card-title">Utilidades</h3>
-                    <p class="tool-card-description">Uitlidad para remover fondos de imagenes.</p>
-                </div>
-                <div>
-                    <a href="quitarfondo.html" class="btn btn-tool">
-                        quitar fondo <i class="fas fa-arrow-right ms-2"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Apps Tool (Placeholder) -->
-            <div class="tool-card">
-                <div class="tool-card-icon">
-                    <i class="fas fa-laptop-code"></i>
-                </div>
-                <div class="tool-card-content">
-                    <h3 class="tool-card-title">Repositorio de Apps</h3>
-                    <p class="tool-card-description">Próximamente: Colección de aplicaciones útiles y herramientas.</p>
-                </div>
-                <div>
-                    <button class="btn btn-tool" disabled>
-                        Próximamente <i class="fas fa-clock ms-2"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer mt-auto py-3">
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-12">
-                    <p class="mb-2">
-                        Herramientas desarrolladas por 
-                        <a href="https://github.com/BrandonSepulveda" 
-                           target="_blank" 
-                           style="color: #33ff00; text-decoration: none; font-weight: bold;">
-                            Brandon Sepulveda
-                        </a>
+    <main>
+        <section class="section">
+            <div class="container">
+                <div class="text-center" data-aos="fade-up">
+                    <h2 class="section-title">Mi Toolbox Digital</h2>
+                    <p class="section-subtitle">
+                        Una colección de utilidades y herramientas online para simplificar tareas. Busca lo que necesitas o explora las opciones.
                     </p>
-                    <div class="mt-3">
-                        <a href="https://github.com/BrandonSepulveda" 
-                           target="_blank" 
-                           class="btn btn-outline-light btn-sm me-2">
-                            <i class="fab fa-github me-1"></i>Mi GitHub
-                        </a>
+                </div>
+
+                <form class="search-form" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Buscar herramientas...">
+                </form>
+                
+                <div class="row g-4" id="tools-grid">
+                    <div class="col-lg-4 col-md-6 tool-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="tool-card">
+                            <div class="tool-card-body">
+                                <div class="tool-card-header">
+                                    <div class="tool-card-icon"><i class="fab fa-windows"></i></div>
+                                    <h4 class="tool-card-title">Windows ISO Downloader</h4>
+                                </div>
+                                <p class="tool-card-description">Acceso rápido y fácil para descargar imágenes ISO oficiales de Windows 10 y Windows 11.</p>
+                                <a href="descargawindows.html" class="btn btn-light mt-auto align-self-start">Ir a Descargas <i class="fas fa-arrow-right ms-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 tool-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="tool-card">
+                            <div class="tool-card-body">
+                                <div class="tool-card-header">
+                                    <div class="tool-card-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+                                    <h4 class="tool-card-title">Remover Fondos</h4>
+                                </div>
+                                <p class="tool-card-description">Utilidad para eliminar el fondo de cualquier imagen de forma automática y precisa.</p>
+                                <a href="quitarfondo.html" class="btn btn-light mt-auto align-self-start">Probar Herramienta <i class="fas fa-arrow-right ms-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 tool-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="tool-card">
+                            <div class="tool-card-body">
+                                <div class="tool-card-header">
+                                    <div class="tool-card-icon"><i class="fas fa-laptop-code"></i></div>
+                                    <h4 class="tool-card-title">Repositorio de Apps</h4>
+                                </div>
+                                <p class="tool-card-description">Una colección curada de software y aplicaciones esenciales para desarrolladores y usuarios avanzados.</p>
+                                <button class="btn btn-light mt-auto align-self-start" disabled>Próximamente <i class="fas fa-clock ms-2"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                
+                <div id="no-results">
+                    <i class="fas fa-folder-open fa-3x mb-3"></i>
+                    <h4>No se encontraron herramientas</h4>
+                    <p>Intenta con otro término de búsqueda.</p>
+                </div>
             </div>
+        </section>
+    </main>
+    
+    <footer class="footer text-center">
+        <div class="container">
+            <p class="text-muted mb-0">Copyright &copy; Jhon Brandon Sepulveda Valdes 2025</p>
         </div>
     </footer>
 
-    <!-- Bootstrap and AOS JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        // Initialize AOS
-        AOS.init();
+        document.addEventListener('DOMContentLoaded', function () {
+            // Inicializar AOS (Animate on Scroll)
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 50,
+            });
 
-        // Navbar scrolling effect
-        const mainNav = document.getElementById('mainNav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                mainNav.classList.add('scrolled');
-            } else {
-                mainNav.classList.remove('scrolled');
+            // Efecto de scroll para la barra de navegación
+            const mainNav = document.getElementById('mainNav');
+            if (mainNav) {
+                window.addEventListener('scroll', event => {
+                    if (window.scrollY > 50) {
+                        mainNav.classList.add('navbar-scrolled');
+                    } else {
+                        mainNav.classList.remove('navbar-scrolled');
+                    }
+                });
             }
+            
+            // --- MEJORA: Funcionalidad de Búsqueda ---
+            const searchInput = document.getElementById('searchInput');
+            const toolsGrid = document.getElementById('tools-grid');
+            const toolItems = toolsGrid.querySelectorAll('.tool-item');
+            const noResultsMessage = document.getElementById('no-results');
+
+            searchInput.addEventListener('keyup', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                let visibleCount = 0;
+
+                toolItems.forEach(item => {
+                    const title = item.querySelector('.tool-card-title').textContent.toLowerCase();
+                    const description = item.querySelector('.tool-card-description').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        item.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    noResultsMessage.style.display = 'block';
+                } else {
+                    noResultsMessage.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>
