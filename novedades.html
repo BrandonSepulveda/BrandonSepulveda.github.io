@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Paleta de Colores y Estilos Base --- */
+        /* --- Paleta de Colores y Estilos Base (Restaurada) --- */
         :root {
             --primary-color: #FFFFFF;
             --primary-light: #F5F5F5;
@@ -175,10 +175,9 @@
             padding: 40px;
             margin-bottom: 80px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            border: 2px solid transparent; /* Borde transparente para mantener el layout */
+            border: 2px solid transparent;
         }
 
-        /* Borde animado con gradiente */
         .latest-release-section::before {
             content: '';
             position: absolute;
@@ -303,7 +302,7 @@
             margin-bottom: 40px;
         }
         .section-title span {
-            color: var(--primary-color);
+            color: var(--accent-purple);
         }
 
         /* --- Roadmap Section --- */
@@ -351,31 +350,70 @@
             color: var(--accent-purple);
         }
 
-        /* --- Tip Section --- */
-        .tip-section {
+        /* --- Tip Carousel Section --- */
+        .tip-carousel-section {
             margin-bottom: 80px;
         }
-        .tip-card {
+        .tip-carousel {
+            position: relative;
             background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
             color: var(--text-light);
             border-radius: 16px;
-            padding: 30px;
+            padding: 40px;
+            overflow: hidden;
+        }
+        .carousel-inner {
+            position: relative;
+            width: 100%;
+            height: 120px; /* Altura fija para evitar saltos de layout */
+        }
+        .carousel-item {
             display: flex;
             align-items: center;
             gap: 25px;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
         }
-        .tip-card .icon {
+        .carousel-item.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .carousel-item .icon {
             font-size: 3rem;
             flex-shrink: 0;
         }
-        .tip-card h3 {
+        .carousel-item h3 {
             font-size: 1.3rem;
             margin: 0 0 5px 0;
         }
-        .tip-card p {
+        .carousel-item p {
             margin: 0;
             color: var(--primary-dark);
             font-size: 1rem;
+        }
+        .carousel-controls {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .carousel-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .carousel-btn:hover {
+            background-color: rgba(255, 255, 255, 0.4);
         }
 
         /* --- Versiones Anteriores --- */
@@ -535,7 +573,6 @@
         </section>
 
         <!-- START: Editable Roadmap Section -->
-        <!-- Para actualizar el roadmap, simplemente cambia el texto dentro de las etiquetas <li>. -->
         <section id="roadmap-section" class="roadmap-section animated-section" style="display: none;">
             <h2 class="section-title">En el <span>Horizonte</span></h2>
             <div class="roadmap-grid">
@@ -570,16 +607,19 @@
         </section>
         <!-- END: Editable Roadmap Section -->
 
-        <!-- Tip Section -->
-        <section id="tip-section" class="tip-section animated-section" style="display: none;">
-             <div class="tip-card">
-                <div class="icon"><i class="fas fa-lightbulb"></i></div>
-                <div class="tip-content">
-                    <h3>Consejo del Experto</h3>
-                    <p>¿Sabías que puedes limpiar la caché de DNS desde la sección de 'Redes'? ¡Pruébalo para una navegación más rápida y solucionar problemas de conexión!</p>
+        <!-- START: Editable Tip Carousel Section -->
+        <section id="tip-carousel-section" class="tip-carousel-section animated-section" style="display: none;">
+             <div class="tip-carousel">
+                <div id="carousel-inner" class="carousel-inner">
+                    <!-- Los consejos se insertarán aquí por JS -->
+                </div>
+                <div class="carousel-controls">
+                    <button id="prev-tip-btn" class="carousel-btn"><i class="fas fa-chevron-left"></i></button>
+                    <button id="next-tip-btn" class="carousel-btn"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
         </section>
+        <!-- END: Editable Tip Carousel Section -->
 
         <!-- Sección para versiones anteriores (se rellena con JS) -->
         <section id="previous-releases-section" class="previous-releases-section animated-section" style="display: none;">
@@ -618,7 +658,7 @@
         const prevSection = document.getElementById('previous-releases-section');
         const prevGrid = document.getElementById('previous-releases-grid');
         const historyLink = document.getElementById('full-history-link');
-        const staticSections = document.querySelectorAll('#roadmap-section, #tip-section, #cta-section');
+        const staticSections = document.querySelectorAll('#roadmap-section, #tip-carousel-section, #cta-section');
         
         const repo = 'BrandonSepulveda/ToolboxBS';
         const apiUrl = `https://api.github.com/repos/${repo}/releases`;
@@ -633,17 +673,16 @@
 
             const lines = body.split('\n').filter(line => {
                 const trimmed = line.trim();
-                if (trimmed.startsWith('Full Changelog:')) return false;
+                if (trimmed.startsWith('**Full Changelog**:')) return false;
+                if (trimmed.includes('img.shields.io')) return false;
+                if (trimmed.startsWith('#')) return false;
+                if (trimmed.toLowerCase().startsWith('ejecutar [powershell]')) return false;
+                if (trimmed.toLowerCase() === 'mejoras en uso') return false;
                 if (trimmed.match(/^[a-f0-9]{7,40}$/)) return false;
-                if (trimmed.toLowerCase() === 'latest') return false;
                 if (trimmed.startsWith('Source code')) return false;
                 if (trimmed === 'BrandonSepulveda') return false;
                 if (trimmed.match(/^v?[0-9]+\.[0-9]+(\.[0-9]+)?$/)) return false;
-                if (trimmed.includes('img.shields.io')) return false;
-                if (trimmed.toLowerCase() === 'mejoras en uso') return false;
-                if (trimmed.startsWith('#')) return false;
-                if (trimmed.toLowerCase().startsWith('ejecutar [powershell]')) return false;
-                return true;
+                return trimmed.length > 0;
             });
 
             let html = '<div class="changelog-details">';
@@ -653,26 +692,20 @@
                 '🚀 Nuevas características': { icon: 'fas fa-rocket', color: 'var(--accent-green)' },
                 '💡 Mejoras': { icon: 'fas fa-lightbulb', color: 'var(--accent-blue)' },
                 '🐛 Correcciones': { icon: 'fas fa-bug', color: 'var(--accent-red)' },
-                'Características': { icon: 'fas fa-list-ul', color: 'var(--text-secondary)' },
-                'Funcionalidades': { icon: 'fas fa-cogs', color: 'var(--text-secondary)' },
-                'Requisitos': { icon: 'fas fa-check-circle', color: 'var(--text-secondary)' },
-                'Uso': { icon: 'fas fa-mouse-pointer', color: 'var(--text-secondary)' },
-                'Nota': { icon: 'fas fa-info-circle', color: 'var(--text-secondary)' }
+                'Características': { icon: 'fas fa-list-ul', color: 'var(--primary-light)' },
+                'Funcionalidades': { icon: 'fas fa-cogs', color: 'var(--primary-light)' },
+                'Requisitos': { icon: 'fas fa-check-circle', color: 'var(--primary-light)' },
+                'Uso': { icon: 'fas fa-mouse-pointer', color: 'var(--primary-light)' },
+                'Nota': { icon: 'fas fa-info-circle', color: 'var(--primary-light)' }
             };
 
             lines.forEach(line => {
-                const trimmedLine = line.trim();
-                if (trimmedLine === '') {
-                    if (inList) {
-                        html += '</ul>';
-                        inList = false;
-                    }
-                    return;
-                }
+                let processedLine = line.trim();
+                processedLine = processedLine.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
                 let isHeading = false;
                 for (const title in categoryMap) {
-                    if (trimmedLine.includes(title)) {
+                    if (processedLine.includes(title)) {
                         if (inList) html += '</ul>';
                         const category = categoryMap[title];
                         html += `<h4><i class="${category.icon}" style="color: ${category.color};"></i> ${title}</h4><ul>`;
@@ -684,13 +717,23 @@
 
                 if (isHeading) return;
 
-                if (inList) {
-                    html += `<li>${trimmedLine.replace(/^[\*\-]\s*/, '')}</li>`;
+                if (processedLine.startsWith('- ') || processedLine.startsWith('* ')) {
+                    if (!inList) {
+                        html += '<ul>';
+                        inList = true;
+                    }
+                    html += `<li>${processedLine.substring(2)}</li>`;
                 } else {
-                    if (trimmedLine.includes('irm "') && trimmedLine.includes('|iex')) {
-                        html += `<h5>Como ejecutar:</h5><pre><code>${trimmedLine}</code></pre>`;
-                    } else if (trimmedLine.length > 0) {
-                        html += `<p>${trimmedLine}</p>`;
+                    if (inList) {
+                        html += '</ul>';
+                        inList = false;
+                    }
+                    if (processedLine.length > 0) {
+                        if (processedLine.includes('irm "') && processedLine.includes('|iex')) {
+                            html += `<h5>Como ejecutar:</h5><pre><code>${processedLine}</code></pre>`;
+                        } else {
+                            html += `<p>${processedLine}</p>`;
+                        }
                     }
                 }
             });
@@ -700,7 +743,7 @@
             }
 
             html += '</div>';
-            return html.replace(/<p><\/p>/g, '');
+            return html;
         }
 
         try {
@@ -742,7 +785,7 @@
                 previousReleases.forEach((release, index) => {
                     const prevDate = new Date(release.published_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'long' });
                     const card = document.createElement('div');
-                    card.className = 'release-card';
+                    card.className = 'release-card animated-section';
                     card.innerHTML = `
                         <h3 class="version-tag">${release.name || release.tag_name}</h3>
                         <p class="release-date">${prevDate}</p>
@@ -757,7 +800,7 @@
                  historyLink.style.display = 'block';
             }
             
-            const allAnimatedElements = document.querySelectorAll('.animated-section, .release-card');
+            const allAnimatedElements = document.querySelectorAll('.animated-section');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -769,9 +812,104 @@
             
             allAnimatedElements.forEach(el => observer.observe(el));
 
+            // --- Lógica del Carrusel de Consejos ---
+            setupTipCarousel();
+
         } catch (error) {
             console.error('Error al cargar los releases de GitHub:', error);
             latestContainer.innerHTML = '<div class="error-message">No se pudieron cargar las novedades. Por favor, intenta de nuevo más tarde.</div>';
+        }
+
+        function setupTipCarousel() {
+            // START: Editable tips array
+            // Para editar, simplemente cambia el texto en 'title' y 'text'.
+            const tips = [
+                {
+                    icon: 'fas fa-shield-alt',
+                    title: 'Mantenimiento Preventivo',
+                    text: 'Antes de aplicar Tweaks o reparaciones mayores, usa la función "Crear Punto de Restauración". ¡Es tu mejor red de seguridad!'
+                },
+                {
+                    icon: 'fas fa-rocket',
+                    title: 'Combo de Rendimiento',
+                    text: 'Para un boost de velocidad, ejecuta "Limpiar Archivos Temporales" desde el menú de Reparación y luego "Optimizar RAM".'
+                },
+                {
+                    icon: 'fas fa-tachometer-alt',
+                    title: 'Exprime tu RAM',
+                    text: 'Usa "Apagar y Entrar a BIOS" desde el menú de Tweaks para activar perfiles XMP/EXPO y desbloquear la velocidad máxima de tu RAM.'
+                },
+                {
+                    icon: 'fas fa-wifi',
+                    title: 'Soluciona Problemas de Red',
+                    text: '¿Una web no carga? La herramienta "Reparar Red" limpia la caché DNS y reinicia adaptadores, solucionando problemas de conexión al instante.'
+                },
+                {
+                    icon: 'fas fa-puzzle-piece',
+                    title: 'Gestión de Drivers',
+                    text: 'Después de usar "Buscar Drivers", puedes ir a "Administrador de Dispositivos" en el menú de Herramientas para instalarlos manualmente si es necesario.'
+                }
+            ];
+            // END: Editable tips array
+
+            const carouselInner = document.getElementById('carousel-inner');
+            const prevBtn = document.getElementById('prev-tip-btn');
+            const nextBtn = document.getElementById('next-tip-btn');
+            let currentTipIndex = 0;
+            let tipInterval;
+
+            tips.forEach((tip, index) => {
+                const item = document.createElement('div');
+                item.className = 'carousel-item';
+                if (index === 0) item.classList.add('active');
+                item.innerHTML = `
+                    <div class="icon"><i class="${tip.icon}"></i></div>
+                    <div class="tip-content">
+                        <h3>${tip.title}</h3>
+                        <p>${tip.text}</p>
+                    </div>
+                `;
+                carouselInner.appendChild(item);
+            });
+
+            const tipItems = document.querySelectorAll('.carousel-item');
+
+            function showTip(index) {
+                tipItems.forEach((item, i) => {
+                    item.classList.toggle('active', i === index);
+                });
+            }
+
+            function nextTip() {
+                currentTipIndex = (currentTipIndex + 1) % tips.length;
+                showTip(currentTipIndex);
+            }
+
+            function prevTip() {
+                currentTipIndex = (currentTipIndex - 1 + tips.length) % tips.length;
+                showTip(currentTipIndex);
+            }
+            
+            function startInterval() {
+                tipInterval = setInterval(nextTip, 10000); // Cambia cada 10 segundos
+            }
+            
+            function resetInterval() {
+                clearInterval(tipInterval);
+                startInterval();
+            }
+
+            nextBtn.addEventListener('click', () => {
+                nextTip();
+                resetInterval();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                prevTip();
+                resetInterval();
+            });
+            
+            startInterval();
         }
     });
     </script>
