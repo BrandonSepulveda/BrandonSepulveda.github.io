@@ -432,7 +432,7 @@
             border: 1px solid var(--border-color);
             position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
-        .code-block::before { content: ''; margin-right: 10px; color: var(--text-secondary); }
+        .code-block::before { content: 'PS >'; margin-right: 10px; color: var(--text-secondary); }
         .code-text { font-size: 1.2rem; color: var(--primary-light); }
         .copy-btn {
             position: absolute; top: 15px; right: 15px;
@@ -1144,6 +1144,7 @@
                     answer.style.maxHeight = answer.scrollHeight + "px";
                 }
             });
+        });
         
         // --- Modal logic ---
         const executionModal = document.getElementById('executionModal');
