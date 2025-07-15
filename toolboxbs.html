@@ -432,7 +432,7 @@
             border: 1px solid var(--border-color);
             position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
-        .code-block::before { content: 'PS >'; margin-right: 10px; color: var(--text-secondary); }
+        .code-block::before { content: ''; margin-right: 10px; color: var(--text-secondary); }
         .code-text { font-size: 1.2rem; color: var(--primary-light); }
         .copy-btn {
             position: absolute; top: 15px; right: 15px;
@@ -811,8 +811,12 @@
                                 <i class="fas fa-chevron-down"></i>
                             </button>
                             <div class="faq-answer">
-                                <p>Sí, ToolboxBS es y siempre será un proyecto gratuito y de código abierto, licenciado bajo la licencia MIT. Si te gusta el proyecto, puedes considerar apoyarlo en GitHub.</p>
-                            </div>
+    <p>
+        <strong>Sí, para la comunidad.</strong> ToolboxBS es y siempre será <strong>gratuito para uso personal, estudiantes y proyectos de código abierto</strong> bajo la licencia comunitaria (AGPL v3.0).
+        <br><br>
+        Para uso en empresas o con fines comerciales, se requiere una licencia comercial para ayudar a sostener el proyecto.
+    </p>
+</div>
                         </div>
                     </div>
                 </div>
@@ -835,8 +839,12 @@
                         <img src="https://img.shields.io/github/stars/BrandonSepulveda/ToolboxBS?color=%23FFFFFF&style=for-the-badge" alt="Estrellas en GitHub">
                     </a>
                 </p>
-                <p class="copyright">&copy; 2023-2025 Jhon Brandon Sepulveda Valdes. <br>Derechos Reservados</p>
-                <p class="copyright">Ver <a href="https://github.com/BrandonSepulveda/ToolboxBS/blob/main/LICENSE" target="_blank">Licencia MIT</a>.</p>
+                <p class="copyright">&copy; 2024-2025 Jhon Brandon Sepulveda Valdes. <br>Todos los Derechos Reservados.</p>
+    <p class="copyright">
+        Distribuido bajo un modelo de licencia dual. Ver <a href="https://github.com/BrandonSepulveda/ToolboxBS/blob/main/LICENSE" target="_blank">Licencia Comunitaria AGPL v3.0</a>.
+        <br>
+        Contactar para adquirir una Licencia Comercial.
+    </p>
             </div>
         </footer>
     </div>
@@ -988,17 +996,17 @@
 
         // --- Initialize Interactive Country Slider ---
      
-const countryData = [
-    { name: 'Colombia', code: 'co', clicks: 7870 },
-    { name: 'México', code: 'mx', clicks: 552 },
-    { name: 'España', code: 'es', clicks: 431 },
-    { name: 'Perú', code: 'pe', clicks: 295 },
+        const countryData = [
+    { name: 'Colombia', code: 'co', clicks: 8033 },
+    { name: 'México', code: 'mx', clicks: 562 },
+    { name: 'España', code: 'es', clicks: 436 },
+    { name: 'Perú', code: 'pe', clicks: 300 },
     { name: 'Argentina', code: 'ar', clicks: 252 },
     { name: 'Chile', code: 'cl', clicks: 139 },
-    { name: 'Venezuela', code: 've', clicks: 119 },
-    { name: 'Estados Unidos', code: 'us', clicks: 113 },
-    { name: 'Rep. Dominicana', code: 'do', clicks: 101 },
-    { name: 'Bolivia', code: 'bo', clicks: 74 },
+    { name: 'Venezuela', code: 've', clicks: 126 },
+    { name: 'Estados Unidos', code: 'us', clicks: 114 },
+    { name: 'Rep. Dominicana', code: 'do', clicks: 102 },
+    { name: 'Bolivia', code: 'bo', clicks: 76 },
     { name: 'Reino Unido', code: 'gb', clicks: 44 },
     { name: 'Ecuador', code: 'ec', clicks: 39 },
     { name: 'Paraguay', code: 'py', clicks: 36 },
@@ -1136,7 +1144,6 @@ const countryData = [
                     answer.style.maxHeight = answer.scrollHeight + "px";
                 }
             });
-        });
         
         // --- Modal logic ---
         const executionModal = document.getElementById('executionModal');
