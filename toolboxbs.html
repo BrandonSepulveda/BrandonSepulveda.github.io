@@ -23,9 +23,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Black and White Theme Color Palette --- */
+        /* --- Modern Tech Theme Color Palette --- */
         :root {
-            --primary-color: #FFFFFF;      /* White */
+            /* NEW: Added a vibrant accent color */
+            --accent-color: #3b82f6;      /* Electric Blue */
+            --accent-dark: #2563eb;      /* Darker Blue for Hover */
+
+            --primary-color: #FFFFFF;     /* White */
             --primary-light: #F5F5F5;     /* Off-white */
             --primary-dark: #E0E0E0;      /* Light Gray */
             --bg-dark: #000000;           /* Pure Black */
@@ -34,7 +38,7 @@
             --text-light: #FFFFFF;        /* White Text */
             --text-secondary: #BDBDBD;    /* Light Gray Text */
             --border-color: rgba(255, 255, 255, 0.15);
-            --shadow-color: rgba(255, 255, 255, 0.05);
+            --shadow-color: rgba(59, 130, 246, 0.1); /* Shadow based on accent color */
             --transition-speed: 0.4s;
         }
 
@@ -60,7 +64,7 @@
             width: 100%; height: 100%;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, var(--bg-dark) 70%);
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.08) 0%, var(--bg-dark) 70%);
             z-index: 9999;
             transition: opacity 1s ease-out;
             opacity: 1;
@@ -76,11 +80,12 @@
         body.intro-active { overflow: hidden; height: 100vh; }
         body.main-active { overflow-y: auto; height: auto; }
 
-        /* --- Intro Specific Styles --- */
+        /* --- Intro Specific Styles (Updated with Accent Color) --- */
         .particles { position: absolute; width: 100%; height: 100%; overflow: hidden; }
         .particle {
             position: absolute; width: 2px; height: 2px;
-            background: var(--primary-color); border-radius: 50%;
+            background: var(--accent-color); /* UPDATED */
+            border-radius: 50%;
             animation: float 6s infinite ease-in-out; opacity: 0;
         }
         @keyframes float {
@@ -89,12 +94,12 @@
         }
         .energy-rings {
             position: absolute; width: 400px; height: 400px;
-            border-radius: 50%; border: 2px solid var(--primary-color);
+            border-radius: 50%; border: 2px solid var(--accent-color); /* UPDATED */
             animation: pulse 2s infinite ease-in-out; opacity: 0;
         }
-        .energy-rings:nth-child(1) { animation-delay: 0s; }
-        .energy-rings:nth-child(2) { animation-delay: 0.5s; border-color: var(--primary-light); }
-        .energy-rings:nth-child(3) { animation-delay: 1s; border-color: var(--primary-dark); }
+        .energy-rings:nth-child(2) { animation-delay: 0.5s; border-color: var(--accent-dark); } /* UPDATED */
+        .energy-rings:nth-child(3) { animation-delay: 1s; border-color: var(--accent-color); opacity: 0.5; } /* UPDATED */
+        
         @keyframes pulse {
             0% { transform: scale(0.5); opacity: 0; }
             50% { transform: scale(1.2); opacity: 0.6; }
@@ -106,7 +111,7 @@
             pointer-events: none; opacity: 0.15;
         }
         .code-column {
-            position: absolute; top: -100%; color: var(--primary-color);
+            position: absolute; top: -100%; color: var(--accent-color); /* UPDATED */
             font-family: 'Courier New', monospace; font-size: 14px;
             line-height: 1.2; animation: codefall 8s linear infinite;
             white-space: pre;
@@ -120,26 +125,23 @@
             opacity: 0; transform: scale(0.5);
         }
         .logo {
-    width: 120px; height: 120px;
-    /* Se cambió el fondo a uno más oscuro para mejorar el contraste del logo blanco */
-    background: var(--bg-medium);
-    border-radius: 20px; display: flex;
-    align-items: center; justify-content: center;
-    /* Se ajustó la sombra para que funcione mejor con un fondo oscuro */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    position: relative; overflow: hidden;
-}
+            width: 120px; height: 120px;
+            background: var(--bg-medium);
+            border-radius: 20px; display: flex;
+            align-items: center; justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--shadow-color); /* Added accent shadow */
+            position: relative; overflow: hidden;
+        }
         .logo img {
-    /* Se aumentó el tamaño para que el logo ocupe más espacio en su contenedor */
-    max-width: 95%;
-    max-height: 95%;
-    object-fit: contain;
-    filter: invert(1);
-}
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            filter: invert(1);
+        }
         .logo::before {
             content: ''; position: absolute; top: -50%; left: -50%;
             width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.3), transparent); /* UPDATED */
             animation: shine 2s infinite;
         }
         @keyframes shine { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -151,7 +153,7 @@
         .main-text { margin-top: 40px; text-align: center; z-index: 10; position: relative; }
         .title {
             font-size: 4rem; font-weight: 800;
-            background: linear-gradient(90deg, var(--primary-light), var(--text-light), var(--primary-color));
+            background: linear-gradient(90deg, var(--accent-color), var(--text-light), var(--primary-light)); /* UPDATED */
             -webkit-background-clip: text; background-clip: text; color: transparent;
             animation: titleReveal 1.5s ease-out 0.5s forwards;
             opacity: 0; transform: translateY(50px);
@@ -177,22 +179,22 @@
         .continue-btn {
             position: absolute; bottom: 50px; left: 50%;
             padding: 15px 30px;
-            background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
-            border: none; border-radius: 50px; color: #000000; font-size: 1.1rem;
+            background: linear-gradient(45deg, var(--accent-dark), var(--accent-color)); /* UPDATED */
+            border: none; border-radius: 50px; color: var(--text-light); font-size: 1.1rem; /* UPDATED */
             font-weight: 600; cursor: pointer;
             animation: btnAppear 1s ease-out 2.5s forwards, btnPulse 2s infinite 3.5s;
             opacity: 0; transform: translateX(-50%) translateY(20px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2); /* UPDATED */
             transition: all 0.3s ease;
         }
         .continue-btn:hover {
             transform: translateX(-50%) translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.3); /* UPDATED */
         }
         @keyframes btnAppear { 0% { opacity: 0; transform: translateX(-50%) translateY(20px); } 100% { opacity: 1; transform: translateX(-50%) translateY(0); } }
         @keyframes btnPulse {
-            0%, 100% { box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1); }
-            50% { box-shadow: 0 15px 40px rgba(255, 255, 255, 0.15); }
+            0%, 100% { box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2); } /* UPDATED */
+            50% { box-shadow: 0 15px 40px rgba(59, 130, 246, 0.25); } /* UPDATED */
         }
         .skip-intro-btn {
             position: absolute; top: 20px; right: 20px;
@@ -203,15 +205,15 @@
             animation: btnAppear 0.5s ease-out 2s forwards;
             transition: all 0.3s ease;
         }
-        .skip-intro-btn:hover { background: var(--primary-color); color: #000000; }
+        .skip-intro-btn:hover { background: var(--accent-color); color: var(--text-light); } /* UPDATED */
 
         /* --- Main Page Specific Styles --- */
         body::before {
             content: ''; position: fixed; top: -20%; left: -20%;
             width: 140%; height: 140%;
-            background: radial-gradient(circle at 10% 20%, var(--primary-color), transparent 30%),
-                        radial-gradient(circle at 80% 90%, var(--primary-dark), transparent 30%);
-            opacity: 0.03; filter: blur(100px); z-index: -1;
+            background: radial-gradient(circle at 10% 20%, var(--accent-color), transparent 30%), /* UPDATED */
+                        radial-gradient(circle at 80% 90%, var(--accent-dark), transparent 30%); /* UPDATED */
+            opacity: 0.05; filter: blur(100px); z-index: -1;
             animation: moveAurora 20s infinite alternate;
         }
         @keyframes moveAurora {
@@ -225,7 +227,7 @@
             font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800;
             color: var(--text-light);
         }
-        .section-title span { color: var(--primary-color); }
+        .section-title span { color: var(--accent-color); } /* UPDATED */
         .section-intro {
             text-align: center; max-width: 700px;
             margin: 0 auto 60px; font-size: 1.1rem;
@@ -238,17 +240,17 @@
             border: 2px solid transparent; cursor: pointer;
         }
         .btn-primary {
-            background-color: var(--primary-color); color: #000000;
+            background-color: var(--accent-color); color: var(--text-light); /* UPDATED */
             box-shadow: 0 4px 20px var(--shadow-color);
         }
         .btn-primary:hover {
-            background-color: var(--primary-light); transform: translateY(-3px);
+            background-color: var(--accent-dark); transform: translateY(-3px); /* UPDATED */
             box-shadow: 0 8px 25px var(--shadow-color);
         }
         .btn-secondary { background-color: var(--bg-light); color: var(--text-light); }
         .btn-secondary:hover {
             background-color: #2a2f36; transform: translateY(-3px);
-            border-color: var(--primary-color);
+            border-color: var(--accent-color); /* UPDATED */
         }
         
         .animated-element {
@@ -276,7 +278,7 @@
             margin-left: 10px;
         }
         .navbar-links a:hover, .navbar-links a.active {
-            background-color: rgba(255, 255, 255, 0.1); color: var(--primary-light);
+            background-color: rgba(59, 130, 246, 0.15); color: var(--accent-color); /* UPDATED */
         }
         .hamburger { display: none; }
 
@@ -287,7 +289,7 @@
         .hero-content { max-width: 850px; margin: auto; }
         .hero-title {
             font-size: clamp(3rem, 7vw, 5rem); font-weight: 800; margin-bottom: 20px;
-            background: linear-gradient(90deg, var(--primary-light), var(--text-light));
+            background: linear-gradient(90deg, var(--primary-light), var(--accent-color)); /* UPDATED */
             -webkit-background-clip: text; background-clip: text; color: transparent;
         }
         .hero-subtitle {
@@ -307,9 +309,9 @@
         }
         .benefit-card:hover {
             transform: translateY(-8px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border-color: var(--primary-color);
+            border-color: var(--accent-color); /* UPDATED */
         }
-        .benefit-icon { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 20px; }
+        .benefit-icon { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 20px; } /* UPDATED */
         .benefit-title {
             font-size: 1.5rem; font-weight: 700; color: var(--text-light);
             margin-bottom: 15px;
@@ -331,7 +333,7 @@
             width: 100%;
             max-width: 350px;
         }
-        .stat-icon { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px; }
+        .stat-icon { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 15px; } /* UPDATED */
         .stat-number {
             font-size: 3rem; font-weight: 800; color: var(--text-light);
             line-height: 1.2;
@@ -355,8 +357,8 @@
             text-align: center; /* Centered title */
         }
         .country-slider-header .benefit-title {
-             margin-bottom: 0;
-             font-size: 1.3rem;
+              margin-bottom: 0;
+              font-size: 1.3rem;
         }
         .slider-container {
             overflow: hidden;
@@ -429,7 +431,7 @@
         .feature-text li { position: relative; padding-left: 30px; margin-bottom: 15px; font-size: 1.1rem; }
         .feature-text li::before {
             content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
-            color: var(--primary-color); position: absolute; left: 0; top: 2px;
+            color: var(--accent-color); position: absolute; left: 0; top: 2px; /* UPDATED */
         }
         
         .installation-section { background-color: var(--bg-dark); }
@@ -437,7 +439,7 @@
             background-color: var(--bg-medium); padding: 20px 30px; border-radius: 12px;
             margin: 0 auto; max-width: fit-content;
             font-family: 'Courier New', Courier, monospace;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--accent-color); /* UPDATED */
             position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
         .code-block::before { content: 'PS >'; margin-right: 10px; color: var(--text-secondary); }
@@ -449,11 +451,11 @@
             padding: 6px 10px; cursor: pointer;
             transition: all 0.2s ease;
         }
-        .copy-btn:hover { background: #2a2f36; color: var(--text-light); }
+        .copy-btn:hover { background: #2a2f36; color: var(--accent-color); } /* UPDATED */
         #copy-notification {
             position: absolute; bottom: -40px; left: 50%;
-            transform: translateX(-50%); background: var(--primary-color);
-            color: #000000; padding: 6px 12px; border-radius: 6px;
+            transform: translateX(-50%); background: var(--accent-color); /* UPDATED */
+            color: var(--text-light); padding: 6px 12px; border-radius: 6px; /* UPDATED */
             font-size: 0.9rem; opacity: 0;
             transition: all 0.3s ease; pointer-events: none;
         }
@@ -484,9 +486,11 @@
             display: flex; justify-content: space-between; align-items: center;
         }
         .faq-question i { transition: transform var(--transition-speed) ease; }
-        .faq-question.active i { transform: rotate(180deg); }
+        .faq-question.active i { transform: rotate(180deg); color: var(--accent-color); } /* UPDATED */
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.5s ease, padding 0.5s ease; }
         .faq-answer p { padding: 0 20px 20px; margin: 0; border-top: 1px solid var(--border-color); padding-top: 20px;}
+        .faq-answer a { color: var(--accent-color); text-decoration: none; } /* UPDATED */
+        .faq-answer a:hover { text-decoration: underline; }
         
         footer {
             background-color: var(--bg-dark); padding: 60px 20px; text-align: center;
@@ -494,7 +498,7 @@
         }
         .social-links { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; }
         .social-link { color: var(--text-secondary); font-size: 1.5rem; transition: all var(--transition-speed) ease; }
-        .social-link:hover { color: var(--primary-color); transform: translateY(-3px); }
+        .social-link:hover { color: var(--accent-color); transform: translateY(-3px); } /* UPDATED */
         .copyright { font-size: 0.9rem; margin-top: 20px; }
         .copyright a { color: var(--primary-light); text-decoration: none; }
         .copyright a:hover { text-decoration: underline; }
@@ -519,7 +523,7 @@
             transition: color 0.3s, transform 0.3s;
         }
         .modal-close:hover { color: var(--text-light); transform: rotate(90deg); }
-        .modal-content h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; }
+        .modal-content h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 10px; color: var(--accent-color); } /* UPDATED */
         .modal-content p {
             font-size: 1rem; color: var(--text-secondary);
             margin-bottom: 25px; line-height: 1.6;
@@ -535,11 +539,11 @@
             transition: all 0.3s ease; text-align: center; text-decoration: none;
         }
         .modal-button-primary {
-            background-color: var(--primary-color); color: #000000;
+            background-color: var(--accent-color); color: var(--text-light); /* UPDATED */
             box-shadow: 0 4px 20px var(--shadow-color);
         }
         .modal-button-primary:hover {
-            background-color: var(--primary-light); transform: translateY(-2px);
+            background-color: var(--accent-dark); transform: translateY(-2px); /* UPDATED */
             box-shadow: 0 8px 25px var(--shadow-color);
         }
         .modal-button-secondary { background-color: var(--bg-light); color: var(--text-light); }
@@ -547,9 +551,9 @@
 
         /* Responsive */
         @media (max-width: 992px) {
-             .stats-grid {
-                 grid-template-columns: 1fr;
-             }
+              .stats-grid {
+                  grid-template-columns: 1fr;
+              }
         }
         @media (max-width: 768px) {
             .intro-page .title { font-size: 2.5rem; }
@@ -601,7 +605,7 @@
         <nav class="navbar" id="navbar">
             <div class="container navbar-content">
                 <a href="index.html" class="navbar-logo">
-                    <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true"Logo ToolboxBS">
+                    <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" alt="Logo ToolboxBS">
                     ToolboxBS
                 </a>
                 <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
@@ -668,9 +672,9 @@
                                 <h3 class="benefit-title">Top Países</h3>
                             </div>
                              <div class="slider-container" id="slider-container">
-                                 <div class="country-track" id="country-track">
-                                     <!-- Country cards will be injected by JS -->
-                                 </div>
+                                  <div class="country-track" id="country-track">
+                                      <!-- Country cards will be injected by JS -->
+                                  </div>
                              </div>
                         </div>
                     </div>
@@ -691,12 +695,12 @@
                                 </ul>
                             </div>
                             <div class="feature-image">
-                                <img src="https://github.com/user-attachments/assets/d3706118-15b7-4665-9783-edba2228b003" alt="Información del Sistema">
+                                <img src="https://github.com/user-attachments/assets/d3706118-15b7-4665-9783-edba2228b003" alt="Información del Sistema" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1E1E1E/FFFFFF?text=ToolboxBS+UI';">
                             </div>
                         </div>
                         <div class="feature-item animated-element">
                             <div class="feature-image">
-                                <img src="https://github.com/user-attachments/assets/294126ed-5dbd-479a-be68-9b607232e8f2" alt="Limpieza y Optimización">
+                                <img src="https://github.com/user-attachments/assets/294126ed-5dbd-479a-be68-9b607232e8f2" alt="Limpieza y Optimización" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1E1E1E/FFFFFF?text=ToolboxBS+UI';">
                             </div>
                             <div class="feature-text">
                                 <h3 class="feature-title">Optimización Profesional</h3>
@@ -717,7 +721,7 @@
                                 </ul>
                             </div>
                             <div class="feature-image">
-                                 <img src="https://github.com/user-attachments/assets/d6084aa9-2d34-4a88-b54f-d69efbc5f330" alt="Gestor de Aplicaciones">
+                                 <img src="https://github.com/user-attachments/assets/d6084aa9-2d34-4a88-b54f-d69efbc5f330" alt="Gestor de Aplicaciones" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1E1E1E/FFFFFF?text=ToolboxBS+UI';">
                             </div>
                         </div>
                     </div>
@@ -773,12 +777,12 @@
             
             <section id="download" class="section download-section">
                  <div class="container text-center">
-                     <h2 class="section-title animated-element">¿Listo para <span>Transformar</span> tu PC?</h2>
-                     <p class="section-intro animated-element">Descarga la última versión ejecutable para un acceso fácil o explora el código fuente completo en GitHub. Tú eliges el camino.</p>
-                     <div class="hero-buttons animated-element">
-                         <a href="https://github.com/BrandonSepulveda/ToolboxBS/releases/latest/download/ToolboxBS.exe" class="btn btn-primary"><i class="fas fa-download"></i> Descargar Última Versión (.exe)</a>
-                         <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank" class="btn btn-secondary"><i class="fab fa-github"></i> Ver en GitHub</a>
-                     </div>
+                      <h2 class="section-title animated-element">¿Listo para <span>Transformar</span> tu PC?</h2>
+                      <p class="section-intro animated-element">Descarga la última versión ejecutable para un acceso fácil o explora el código fuente completo en GitHub. Tú eliges el camino.</p>
+                      <div class="hero-buttons animated-element">
+                           <a href="https://github.com/BrandonSepulveda/ToolboxBS/releases/latest/download/ToolboxBS.exe" class="btn btn-primary"><i class="fas fa-download"></i> Descargar Última Versión (.exe)</a>
+                           <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank" class="btn btn-secondary"><i class="fab fa-github"></i> Ver en GitHub</a>
+                      </div>
                  </div>
             </section>
 
@@ -841,10 +845,10 @@
                 </div>
                 <p class="copyright">
                     <a href="https://github.com/BrandonSepulveda/ToolboxBS/releases/latest" target="_blank">
-                        <img src="https://img.shields.io/github/v/release/BrandonSepulveda/ToolboxBS?color=%23FFFFFF&label=Ultima%20Version&style=for-the-badge" alt="Última Versión">
+                        <img src="https://img.shields.io/github/v/release/BrandonSepulveda/ToolboxBS?color=%233b82f6&label=Ultima%20Version&style=for-the-badge" alt="Última Versión">
                     </a>
                     <a href="https://github.com/BrandonSepulveda/ToolboxBS/stargazers" target="_blank">
-                        <img src="https://img.shields.io/github/stars/BrandonSepulveda/ToolboxBS?color=%23FFFFFF&style=for-the-badge" alt="Estrellas en GitHub">
+                        <img src="https://img.shields.io/github/stars/BrandonSepulveda/ToolboxBS?color=%233b82f6&style=for-the-badge" alt="Estrellas en GitHub">
                     </a>
                 </p>
                 <p class="copyright">&copy; 2024-2025 Jhon Brandon Sepulveda Valdes. <br>Todos los Derechos Reservados.</p>
@@ -1003,29 +1007,29 @@
         }
 
         // --- Initialize Interactive Country Slider ---
-     
+    
         const countryData = [
-    { name: 'Colombia', code: 'co', clicks: 8033 },
-    { name: 'México', code: 'mx', clicks: 562 },
-    { name: 'España', code: 'es', clicks: 436 },
-    { name: 'Perú', code: 'pe', clicks: 300 },
-    { name: 'Argentina', code: 'ar', clicks: 252 },
-    { name: 'Chile', code: 'cl', clicks: 139 },
-    { name: 'Venezuela', code: 've', clicks: 126 },
-    { name: 'Estados Unidos', code: 'us', clicks: 114 },
-    { name: 'Rep. Dominicana', code: 'do', clicks: 102 },
-    { name: 'Bolivia', code: 'bo', clicks: 76 },
-    { name: 'Reino Unido', code: 'gb', clicks: 44 },
-    { name: 'Ecuador', code: 'ec', clicks: 39 },
-    { name: 'Paraguay', code: 'py', clicks: 36 },
-    { name: 'Nicaragua', code: 'ni', clicks: 28 },
-    { name: 'Guatemala', code: 'gt', clicks: 26 },
-    { name: 'Rusia', code: 'ru', clicks: 20 },
-    { name: 'Honduras', code: 'hn', clicks: 18 },
-    { name: 'Polonia', code: 'pl', clicks: 18 },
-    { name: 'Costa Rica', code: 'cr', clicks: 18 },
-    { name: 'Alemania', code: 'de', clicks: 16 }
-];
+            { name: 'Colombia', code: 'co', clicks: 8033 },
+            { name: 'México', code: 'mx', clicks: 562 },
+            { name: 'España', code: 'es', clicks: 436 },
+            { name: 'Perú', code: 'pe', clicks: 300 },
+            { name: 'Argentina', code: 'ar', clicks: 252 },
+            { name: 'Chile', code: 'cl', clicks: 139 },
+            { name: 'Venezuela', code: 've', clicks: 126 },
+            { name: 'Estados Unidos', code: 'us', clicks: 114 },
+            { name: 'Rep. Dominicana', code: 'do', clicks: 102 },
+            { name: 'Bolivia', code: 'bo', clicks: 76 },
+            { name: 'Reino Unido', code: 'gb', clicks: 44 },
+            { name: 'Ecuador', code: 'ec', clicks: 39 },
+            { name: 'Paraguay', code: 'py', clicks: 36 },
+            { name: 'Nicaragua', code: 'ni', clicks: 28 },
+            { name: 'Guatemala', code: 'gt', clicks: 26 },
+            { name: 'Rusia', code: 'ru', clicks: 20 },
+            { name: 'Honduras', code: 'hn', clicks: 18 },
+            { name: 'Polonia', code: 'pl', clicks: 18 },
+            { name: 'Costa Rica', code: 'cr', clicks: 18 },
+            { name: 'Alemania', code: 'de', clicks: 16 }
+        ];
 
         const track = document.getElementById('country-track');
         if (track) {
@@ -1127,11 +1131,21 @@
         if (copyBtn) {
             copyBtn.addEventListener('click', function() {
                 const codeText = this.previousElementSibling.querySelector('.code-text').textContent;
-                navigator.clipboard.writeText(codeText).then(() => {
+                // Use the 'text' property of a temporary textarea to handle potential clipboard API issues in iframes
+                const textArea = document.createElement("textarea");
+                textArea.value = codeText;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
                     const notification = document.getElementById('copy-notification');
                     notification.classList.add('active');
                     setTimeout(() => notification.classList.remove('active'), 2000);
-                });
+                } catch (err) {
+                    console.error('Fallback: Oops, unable to copy', err);
+                }
+                document.body.removeChild(textArea);
             });
         }
         
@@ -1156,6 +1170,22 @@
         
         // --- Modal logic ---
         const executionModal = document.getElementById('executionModal');
+        const customAlert = (message) => {
+            // A simple, non-blocking way to show a message.
+            // In a real app, you might build a more robust custom modal for this.
+            const notification = document.getElementById('copy-notification');
+            if (notification) {
+                notification.textContent = message;
+                notification.classList.add('active');
+                setTimeout(() => {
+                    notification.classList.remove('active');
+                    notification.textContent = '¡Copiado!'; // Reset text
+                }, 3000);
+            } else {
+                console.log(message); // Fallback for console
+            }
+        }
+
         window.openExecutionModal = function() {
             if (executionModal) executionModal.classList.add('active');
         }
@@ -1164,13 +1194,19 @@
         }
         window.executeLocalScript = function() {
             const command = 'irm "https://cutt.ly/ToolboxBS" | iex';
-            navigator.clipboard.writeText(command).then(() => {
-                alert('Comando copiado al portapapeles.\n\nPégalo en una ventana de PowerShell (ejecutada como Administrador) para iniciar.');
-                closeExecutionModal();
-            }).catch(() => {
-                prompt('No se pudo copiar automáticamente. Por favor, copia este comando:', command);
-                closeExecutionModal();
-            });
+            const textArea = document.createElement("textarea");
+            textArea.value = command;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                customAlert('Comando copiado. Pégalo en PowerShell (Admin).');
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+            document.body.removeChild(textArea);
+            closeExecutionModal();
         }
         window.addEventListener('click', (event) => {
             if (event.target == executionModal) closeExecutionModal();
