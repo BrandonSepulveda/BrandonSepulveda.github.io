@@ -1371,13 +1371,195 @@
                 try { Invoke-WebRequest -Uri $url -OutFile $outputPath } catch { Write-Host "Error al descargar Optimizer: $_" -ForegroundColor Red; exit }
                 try { Start-Process -FilePath $outputPath } catch { Write-Host "Error al ejecutar Optimizer: $_" -ForegroundColor Red }
             `,
-            'find-drivers': `
-                $modelo = (Get-WmiObject -Class:Win32_ComputerSystem).Model
-                $serial = (Get-WmiObject -Class:Win32_BIOS).SerialNumber
-                Write-Host "Tu equipo es: $modelo, Numero de serie: $serial"
-                $url = "https://www.google.com/search?q=$modelo+$serial+drivers"
-                Start-Process $url
-            `,
+           'find-drivers': `
+# =========================================================================
+# SCRIPT DE BÚSQUEDA AUTOMÁTICA DE DRIVERS POR FABRICANTE
+# =========================================================================
+
+# --- FUNCIONES AUXILIARES ---
+
+function Ensure-Winget {
+    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+        Write-Host "Winget no encontrado. Intentando instalarlo..." -ForegroundColor Cyan
+        try {
+            $wingetUrl = "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
+            $wingetInstaller = Join-Path $env:TEMP "winget.msixbundle"
+            Invoke-WebRequest -Uri $wingetUrl -OutFile $wingetInstaller -UseBasicParsing
+            Add-AppxPackage -Path $wingetInstaller
+            Write-Host "Winget instalado correctamente." -ForegroundColor Green
+        } catch {
+            Write-Error "Falló la instalación de Winget: $($_.Exception.Message)"
+            return $false
+        }
+    }
+    return $true
+}
+
+function Ensure-Chocolatey {
+    if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
+        Write-Host "Chocolatey no encontrado. Intentando instalarlo..." -ForegroundColor Cyan
+        try {
+            Set-ExecutionPolicy Bypass -Scope Process -Force;
+            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
+            iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+            Write-Host "Chocolatey instalado correctamente." -ForegroundColor Green
+        } catch {
+            Write-Error "Falló la instalación de Chocolatey: $($_.Exception.Message)"
+            return $false
+        }
+    }
+    return $true
+}
+
+function Start-Application {
+    param($path, $name)
+    Write-Host "Iniciando '$name'..." -ForegroundColor Yellow
+    Start-Process -FilePath $path
+    Write-Host "¡Proceso completado!" -ForegroundColor Green
+    Write-Host "Script finalizado."
+    Start-Sleep -Seconds 10
+    Exit
+}
+
+
+# --- LÓGICA PRINCIPAL ---
+
+# 1. DETECTAR EL FABRICANTE DEL EQUIPO
+try {
+    $fabricante = (Get-CimInstance -ClassName Win32_ComputerSystem).Manufacturer
+    Write-Host "Fabricante detectado: $fabricante" -ForegroundColor Cyan
+}
+catch {
+    Write-Error "No se pudo detectar el fabricante del equipo."
+    Start-Sleep -Seconds 10
+    Exit
+}
+
+# 2. DEFINIR VARIABLES POR FABRICANTE
+$appExePath = ""
+switch ($fabricante.Trim().ToLower()) {
+    { $_ -like "*dell*" } {
+        $appName = "Dell Command | Update"
+        $appExePath = "C:\\Program Files\\Dell\\CommandUpdate\\DCU.Client.Gui.exe"
+        $wingetId = "Dell.CommandUpdate"
+        $chocoId = "dell-command-update"
+    }
+    { $_ -like "*hp*" -or $_ -like "*hewlett-packard*" } {
+        $appName = "HP Image Assistant"
+        $appExePath = "C:\\Program Files (x86)\\HP\\Image Assistant\\HPImageAssistant.exe"
+        $wingetId = "HP.ImageAssistant"
+    }
+    { $_ -like "*lenovo*" } {
+        $appName = "Lenovo System Update"
+        $appExePath = "C:\\Program Files (x86)\\Lenovo\\System Update\\tvsu.exe"
+        $wingetId = "Lenovo.SystemUpdate"
+        $chocoId = "lenovo-system-update"
+    }
+    default {
+        Write-Warning "El fabricante '$fabricante' no tiene una herramienta de actualización automática soportada por este script."
+        Write-Host "Se abrirá una búsqueda en Google para encontrar los drivers manualmente."
+        $modelo = (Get-WmiObject -Class:Win32_ComputerSystem).Model
+        $serial = (Get-WmiObject -Class:Win32_BIOS).SerialNumber
+        Write-Host "Tu equipo es: $modelo, Numero de serie: $serial"
+        $url = "https://www.google.com/search?q=$($modelo.replace(' ','+'))+$($serial)+drivers"
+        Start-Process $url
+        Start-Sleep -Seconds 10
+        Exit
+    }
+}
+
+# 3. PROCESO DE INSTALACIÓN Y EJECUCIÓN
+try {
+    # Si ya está instalado, ejecutar y salir.
+    if (Test-Path $appExePath) {
+        Write-Host "'$appName' ya se encuentra instalado." -ForegroundColor Green
+        Start-Application -path $appExePath -name $appName
+    }
+
+    Write-Host "'$appName' no está instalado. Iniciando proceso de instalación..." -ForegroundColor Yellow
+
+    # --- Intento 1: Winget (Preferido) ---
+    if (Ensure-Winget) {
+        Write-Host "Intentando instalar con Winget..." -ForegroundColor Cyan
+        winget source update | Out-Null
+        winget install --id $wingetId -e --accept-package-agreements --accept-source-agreements
+        Write-Host "Esperando 15 segundos para que finalice la instalación..."
+        Start-Sleep -Seconds 15
+        if (Test-Path $appExePath) {
+            Write-Host "Instalación con Winget exitosa." -ForegroundColor Green
+            Start-Application -path $appExePath -name $appName
+        }
+    }
+
+    # --- Intento 2: Chocolatey (Respaldo, excepto para HP) ---
+    if ($fabricante.Trim().ToLower() -notlike "*hp*") {
+        if (Ensure-Chocolatey) {
+            Write-Host "Intentando instalar con Chocolatey..." -ForegroundColor Cyan
+            choco install $chocoId -y
+            Write-Host "Esperando 15 segundos para que finalice la instalación..."
+            Start-Sleep -Seconds 15
+            if (Test-Path $appExePath) {
+                Write-Host "Instalación con Chocolatey exitosa." -ForegroundColor Green
+                Start-Application -path $appExePath -name $appName
+            }
+        }
+    }
+
+    # --- Intento 3: Descarga Manual (Último recurso para HP y Lenovo) ---
+    Write-Host "Los métodos automáticos fallaron. Intentando descarga manual..." -ForegroundColor Cyan
+    $downloadUrl = ""
+    $installerName = ""
+    $installArgs = ""
+    
+    if ($fabricante.Trim().ToLower() -like "*hp*") {
+        $downloadUrl = "https://hpia.hpcloud.hp.com/downloads/hpia/hp-hpia-5.3.2.exe"
+        $installerName = "HPIA_Extractor.exe"
+        $installArgs = "/s" # Argumento para extracción silenciosa
+    } elseif ($fabricante.Trim().ToLower() -like "*lenovo*") {
+        $downloadUrl = "https://download.lenovo.com/pccbbs/thinkvantage_en/system_update_5.08.02.25.exe"
+        $installerName = "LenovoSystemUpdate.exe"
+        $installArgs = "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART"
+    }
+
+    if ($downloadUrl) {
+        $installerPath = Join-Path $env:TEMP $installerName
+        Invoke-WebRequest -Uri $downloadUrl -OutFile $installerPath
+        Write-Host "Instalando con argumentos: $installArgs" -ForegroundColor Gray
+        Start-Process -FilePath $installerPath -ArgumentList $installArgs -Wait
+        Write-Host "Esperando 15 segundos para que finalice la instalación..."
+        Start-Sleep -Seconds 15
+
+        # Lógica especial para HP: Buscar el ejecutable en C:\\SWSetup
+        if ($fabricante.Trim().ToLower() -like "*hp*") {
+            Write-Host "Buscando el ejecutable de HP Image Assistant en C:\\SWSetup..."
+            $searchPath = "C:\\SWSetup"
+            if (Test-Path $searchPath) {
+                $hpiaExecutable = Get-ChildItem -Path $searchPath -Recurse -Filter "HPImageAssistant.exe" | Select-Object -First 1
+                if ($hpiaExecutable) {
+                    $appExePath = $hpiaExecutable.FullName # Ruta encontrada dinámicamente
+                    Write-Host "Ejecutable encontrado en: $appExePath" -ForegroundColor Green
+                }
+            }
+        }
+
+        if (Test-Path $appExePath) {
+            Write-Host "Instalación manual exitosa." -ForegroundColor Green
+            Start-Application -path $appExePath -name $appName
+        }
+    }
+    
+    # Si el script llega hasta aquí, significa que todo falló.
+    Write-Error "Todos los métodos de instalación fallaron para '$appName'."
+    Start-Sleep 10
+    Exit
+}
+catch {
+    Write-Error "Ocurrió un error inesperado: $($_.Exception.Message)"
+}
+
+Write-Host "Script finalizado."
+Start-Sleep -Seconds 10
+`,
             'update-windows': `Start-Process "C:\\Windows\\System32\\UsoClient.exe" -ArgumentList "StartInteractiveScan"`,
             'optimize-os': `irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/Analizador.ps1' | iex`,
             'system-properties': `control.exe sysdm.cpl`,
