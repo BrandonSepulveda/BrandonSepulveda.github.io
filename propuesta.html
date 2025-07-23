@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Propuesta Estratégica: ToolboxBS para Milenio PC</title>
+    <meta name="description" content="Propuesta para integrar ToolboxBS como una solución de valor añadido en el alquiler de equipos de cómputo, optimizando activos y reduciendo costos operativos." />
+    <meta name="author" content="Brandon Sepulveda" />
+    
+    <!-- Iconos y Fuentes -->
+    <link rel="icon" type="image/x-icon" href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" />
+    <script src="https://use.fontawesome.com/releases/v6.5.2/js/all.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --accent-color: #3b82f6;
+            --accent-dark: #2563eb;
+            --primary-color: #FFFFFF;
+            --bg-dark: #07090D; /* Un negro ligeramente más suave */
+            --bg-medium: #121212;
+            --bg-light: #1A1C23; /* Un gris azulado oscuro */
+            --text-light: #F0F2F5;
+            --text-secondary: #a1a9b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(59, 130, 246, 0.1);
+            --transition-speed: 0.4s;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        html { font-size: 16px; }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.1), transparent 40%),
+                        radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.08), transparent 40%);
+            z-index: -1;
+            animation: moveAurora 20s infinite alternate;
+        }
+        @keyframes moveAurora {
+            from { transform: translate(0, 0) rotate(0deg); }
+            to { transform: translate(40px, -40px) rotate(15deg); }
+        }
+        .proposal-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .section { padding: 6rem 0; border-bottom: 1px solid var(--border-color); }
+        .section:last-child { border-bottom: none; }
+        .section-title {
+            text-align: center; margin-bottom: 1.5rem;
+            font-size: clamp(2.2rem, 5vw, 3rem); font-weight: 800;
+            color: var(--text-light);
+            line-height: 1.2;
+        }
+        .section-title span { color: var(--accent-color); }
+        .section-intro {
+            text-align: center; max-width: 800px;
+            margin: 0 auto 4rem; font-size: 1.2rem;
+        }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 1rem 2.5rem; border-radius: 8px; text-decoration: none;
+            font-weight: 700; font-size: 1.1rem;
+            transition: all var(--transition-speed) ease;
+            background-color: var(--accent-color); color: var(--text-light);
+            box-shadow: 0 4px 20px var(--shadow-color);
+            border: 2px solid transparent; cursor: pointer;
+        }
+        .btn-primary:hover {
+            background-color: var(--accent-dark); transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+        .animated-element {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animated-element.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- Estilos específicos de la propuesta V2 --- */
+        .proposal-header {
+            text-align: center;
+            padding: 3rem 0;
+        }
+        .proposal-logos {
+            display: flex; justify-content: center; align-items: center;
+            gap: 2.5rem; margin-bottom: 2rem;
+        }
+        .proposal-logos img { max-height: 55px; filter: brightness(1.5); object-fit: contain; }
+        .proposal-logos .plus-icon { font-size: 2rem; color: var(--text-secondary); }
+        .proposal-header h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800;
+            color: var(--text-light); margin-bottom: 1rem;
+        }
+        .proposal-header p { font-size: 1.3rem; color: var(--text-secondary); max-width: 900px; margin: 0 auto; }
+
+        .card-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        .solution-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color); padding: 2.5rem; border-radius: 16px;
+            transition: all var(--transition-speed) ease;
+        }
+        .solution-card:hover {
+            transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border-color: var(--accent-color);
+        }
+        .solution-icon { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 1.5rem; }
+        .solution-title {
+            font-size: 1.6rem; font-weight: 700; color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        /* --- Propuesta de Valor 360 --- */
+        .value-prop-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+        }
+        .value-prop-column {
+            background: linear-gradient(145deg, var(--bg-light), var(--bg-dark));
+            padding: 2.5rem; border-radius: 16px; border: 1px solid var(--border-color);
+        }
+        .value-prop-column h3 {
+            font-size: 1.8rem; color: var(--accent-color);
+            margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;
+        }
+        .value-prop-column ul { list-style: none; padding-left: 0; }
+        .value-prop-column li { position: relative; padding-left: 30px; margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .value-prop-column li::before {
+            content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            color: var(--accent-color); position: absolute; left: 0; top: 4px;
+        }
+
+        /* --- NUEVA SECCIÓN: Implementación --- */
+        .feature-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .feature-point:last-child {
+            margin-bottom: 0;
+        }
+        .feature-point .icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-top: 5px;
+        }
+        .feature-point h3 {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- Prueba de Mercado --- */
+        .stats-section { background-color: rgba(18, 18, 18, 0.5); border-radius: 16px; padding: 4rem 2rem; }
+        .stats-container {
+            display: grid; grid-template-columns: 1fr 2fr; align-items: center; gap: 2rem;
+        }
+        .stat-card { text-align: center; }
+        .stat-icon { font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem; }
+        .stat-number { font-size: 3.5rem; font-weight: 800; color: var(--text-light); line-height: 1.2; }
+        .stat-label { font-size: 1.2rem; font-weight: 500; color: var(--text-secondary); }
+        .country-slider-wrapper { overflow: hidden; }
+        .country-track { display: flex; gap: 1rem; user-select: none; }
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .country-track.animated { animation: marquee 60s linear infinite; }
+        .country-track:hover { animation-play-state: paused; }
+        .country-card {
+            flex: 0 0 150px; background: var(--bg-light); border-radius: 12px;
+            padding: 1rem; text-align: center; border: 1px solid var(--border-color);
+            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+        }
+        .country-flag { width: 40px; height: auto; border-radius: 4px; }
+        .country-name { font-size: 1rem; font-weight: 600; color: var(--text-light); white-space: nowrap; }
+        .country-clicks { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); }
+
+        /* --- CTA Final --- */
+        .cta-section { text-align: center; }
+        .cta-section .btn-primary {
+            transform: scale(1.1);
+            animation: btnPulse 2s infinite 1s;
+        }
+        @keyframes btnPulse {
+            0%, 100% { box-shadow: 0 10px 30px var(--shadow-color); transform: scale(1.1); }
+            50% { box-shadow: 0 15px 40px rgba(59, 130, 246, 0.3); transform: scale(1.15); }
+        }
+
+        /* --- Responsividad --- */
+        @media (max-width: 992px) {
+            .value-prop-grid { grid-template-columns: 1fr; }
+            .stats-container { grid-template-columns: 1fr; text-align: center; }
+        }
+        @media (max-width: 768px) {
+            .section { padding: 4rem 0; }
+            .section-intro { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="proposal-container">
+
+        <header class="proposal-header animated-element">
+            <div class="proposal-logos">
+                <!-- LOGO ACTUALIZADO -->
+                <img src="https://www.simpa.com.co/wp-content/uploads/2022/02/Clientes_Mesa-de-trabajo-1-copia-26-400x284.png" alt="Logo de Milenio PC">
+                <i class="fas fa-plus plus-icon"></i>
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" alt="Logo de ToolboxBS">
+            </div>
+            <!-- TÍTULO Y NOMBRE ACTUALIZADOS -->
+            <h1>Transformando la Gestión de Equipos Corporativos</h1>
+            <p>Una propuesta para integrar <span>ToolboxBS</span> como la herramienta de valor añadido que empodera a sus equipos de TI y maximiza el rendimiento de cada activo.</p>
+        </header>
+
+        <main>
+            <!-- SECCIÓN 1: EL DESAFÍO Y LA SOLUCIÓN - ACTUALIZADA CON 6 TARJETAS -->
+            <section id="solution" class="section">
+                <h2 class="section-title animated-element">Más Allá del Hardware: <span>Una Solución Integral</span></h2>
+                <p class="section-intro animated-element">
+                    El alquiler de equipos va más allá de la entrega de hardware. El verdadero desafío es mantener ese hardware funcionando a su máximo potencial. ToolboxBS es la solución que lo hace posible, de forma simple y segura.
+                </p>
+                <div class="card-grid">
+                    <div class="solution-card animated-element" style="transition-delay: 100ms;">
+                        <i class="fas fa-rocket solution-icon"></i>
+                        <h3 class="solution-title">Máximo Rendimiento</h3>
+                        <p>Libera recursos, limpia archivos basura y optimiza la memoria RAM para una experiencia más rápida y fluida en todas las aplicaciones críticas del negocio.</p>
+                    </div>
+                    <div class="solution-card animated-element" style="transition-delay: 200ms;">
+                        <i class="fas fa-magic solution-icon"></i>
+                        <h3 class="solution-title">Simplicidad Poderosa</h3>
+                        <p>Convierte procesos técnicos complejos en tareas de minutos. Una interfaz intuitiva que agrupa decenas de comandos y scripts avanzados en simples clics.</p>
+                    </div>
+                    <div class="solution-card animated-element" style="transition-delay: 300ms;">
+                        <i class="fas fa-shield-alt solution-icon"></i>
+                        <h3 class="solution-title">Control Total y Cero Instalación</h3>
+                        <p>Acceda a herramientas de diagnóstico y reparación avanzadas con total seguridad. Al no requerir instalación, se integra de forma segura en cualquier entorno corporativo.</p>
+                    </div>
+                    <div class="solution-card animated-element" style="transition-delay: 400ms;">
+                        <i class="fas fa-stethoscope solution-icon"></i>
+                        <h3 class="solution-title">Diagnóstico Preciso</h3>
+                        <p>Identifica problemas de hardware y software rápidamente con herramientas de análisis integradas. Reduce el tiempo de diagnóstico y acelera la resolución de problemas.</p>
+                    </div>
+                    <div class="solution-card animated-element" style="transition-delay: 500ms;">
+                        <i class="fas fa-file-code solution-icon"></i>
+                        <h3 class="solution-title">Seguridad y Transparencia</h3>
+                        <p>Construido sobre PowerShell y de código abierto. Otorga a los equipos de TI total visibilidad y control sobre las acciones realizadas, cumpliendo con los estándares de seguridad.</p>
+                    </div>
+                    <div class="solution-card animated-element" style="transition-delay: 600ms;">
+                        <i class="fas fa-layer-group solution-icon"></i>
+                        <h3 class="solution-title">Estandarización de Flotas</h3>
+                        <p>Aplica las mismas optimizaciones y reparaciones en toda la flota de equipos alquilados. Garantiza un rendimiento consistente y simplifica la gestión a gran escala.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 2: PROPUESTA DE VALOR 360° - BENEFICIOS AMPLIADOS -->
+            <section id="value-prop" class="section">
+                <h2 class="section-title animated-element">Propuesta de Valor <span>360°</span></h2>
+                <p class="section-intro animated-element">La implementación de ToolboxBS crea un ciclo de beneficios mutuos, fortaleciendo nuestra operación interna y entregando un valor sin precedentes a nuestros clientes.</p>
+                <div class="value-prop-grid">
+                    <div class="value-prop-column animated-element" style="transition-delay: 100ms;">
+                        <!-- NOMBRE ACTUALIZADO Y MÁS BENEFICIOS -->
+                        <h3><i class="fas fa-building"></i>Para Milenio PC</h3>
+                        <ul>
+                            <li><strong>Reducción de Costos de Soporte:</strong> Menos llamadas por "PCs lentos". Los problemas comunes se resuelven con una herramienta estandarizada.</li>
+                            <li><strong>Rotación Rápida de Inventario:</strong> Acelera la preparación de equipos devueltos, dejándolos 100% optimizados para el siguiente cliente en una fracción del tiempo.</li>
+                            <li><strong>Diferenciación Competitiva:</strong> Ofrecemos una capacidad de gestión única, no solo hardware. Un argumento de venta poderoso.</li>
+                            <li><strong>Aumento del Valor Percibido:</strong> Eleva nuestro servicio de un simple alquiler a una solución tecnológica integral, justificando planes de servicio premium.</li>
+                        </ul>
+                    </div>
+                    <div class="value-prop-column animated-element" style="transition-delay: 200ms;">
+                        <!-- MÁS BENEFICIOS PARA EL CLIENTE -->
+                        <h3><i class="fas fa-users"></i>Para Sus Clientes (y su Equipo de TI)</h3>
+                        <ul>
+                            <li><strong>Máximo ROI del Alquiler:</strong> Garantiza que están obteniendo el 100% del rendimiento por el que pagan durante todo el contrato.</li>
+                            <li><strong>Reducción del Downtime:</strong> Menos tiempo de inactividad de los empleados por problemas técnicos, lo que se traduce en mayor productividad para el cliente.</li>
+                            <li><strong>Empoderamiento y Autonomía:</strong> El equipo de TI del cliente tiene control total para mantener y optimizar la flota de equipos alquilados con herramientas seguras y bajo demanda.</li>
+                            <li><strong>Reducción de Complejidad:</strong> Simplifica tareas de mantenimiento y diagnóstico que antes requerían conocimientos avanzados o múltiples herramientas.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 3: IMPLEMENTACIÓN - ACTUALIZADA -->
+            <section id="implementation" class="section">
+                <h2 class="section-title animated-element">Un Estándar de Excelencia: <span>Herramienta Integrada</span></h2>
+                <p class="section-intro animated-element">
+                    No ofrecemos ToolboxBS como un extra; es parte integral de nuestro servicio. Cada equipo alquilado viene con esta capacidad, empoderando a los equipos de TI de nuestros clientes para convertir procesos complejos y demandantes en tareas de minutos.
+                </p>
+                <div class="animated-element">
+                    <div class="feature-point">
+                        <div class="icon"><i class="fas fa-tasks"></i></div>
+                        <div>
+                            <h3>Optimización Masiva y Bajo Demanda</h3>
+                            <p>Permite al departamento de TI del cliente ejecutar scripts de limpieza, liberación de RAM y optimización en toda su flota de equipos alquilados, garantizando un rendimiento homogéneo y superior.</p>
+                        </div>
+                    </div>
+                    <div class="feature-point">
+                        <div class="icon"><i class="fas fa-check-double"></i></div>
+                        <div>
+                            <h3>Estandarización del Soporte Técnico</h3>
+                            <p>Proporciona un conjunto de herramientas unificado para el diagnóstico y la resolución de problemas. Esto acelera la capacitación, reduce el tiempo por ticket y asegura que todos los problemas se aborden con la misma metodología eficiente.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 4: PRUEBA DE MERCADO - ACTUALIZADA -->
+            <section id="market-proof" class="section">
+                 <h2 class="section-title animated-element">Validación de Mercado: <span>Confianza Global</span></h2>
+                 <p class="section-intro animated-element">ToolboxBS ya es una herramienta probada y validada por una comunidad técnica global, lo que minimiza el riesgo de adopción y garantiza su fiabilidad.</p>
+                 <div class="stats-section animated-element">
+                     <div class="stats-container">
+                         <div class="stat-card">
+                             <div class="stat-icon"><i class="fas fa-cloud-download-alt"></i></div>
+                             <div id="github-downloads-counter" class="stat-number">0</div>
+                             <div class="stat-label">Ejecuciones Globales</div>
+                         </div>
+                         <div class="country-slider-wrapper">
+                              <div class="country-track animated" id="country-track">
+                                  <!-- Las tarjetas de países se inyectarán aquí con JS -->
+                              </div>
+                         </div>
+                     </div>
+                 </div>
+            </section>
+
+            <!-- SECCIÓN 5: LLAMADA A LA ACCIÓN -->
+            <section id="next-steps" class="section cta-section">
+                <h2 class="section-title animated-element">Siguientes Pasos: <span>Hacia una Alianza Estratégica</span></h2>
+                <p class="section-intro animated-element">
+                    El siguiente paso lógico es demostrar este valor de forma tangible. Propongo la implementación de un <strong>programa piloto con uno de nuestros clientes clave</strong>. Esto nos permitirá recopilar datos concretos sobre la reducción de tickets de soporte y la mejora en la satisfacción del cliente, construyendo un caso de negocio irrefutable.
+                </p>
+                <!-- NOMBRE ACTUALIZADO -->
+                <a href="mailto:tu.email@empresa.com?subject=Propuesta%20Piloto%20ToolboxBS%20para%20Milenio%20PC" class="btn-primary animated-element">
+                    <i class="fas fa-handshake"></i> Discutir Programa Piloto
+                </a>
+            </section>
+        </main>
+
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const animatedElements = document.querySelectorAll('.animated-element');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        animatedElements.forEach(el => observer.observe(el));
+
+        const counterElement = document.getElementById('github-downloads-counter');
+        async function fetchGitHubStats() {
+            try {
+                const response = await fetch('https://api.github.com/repos/BrandonSepulveda/ToolboxBS/releases');
+                if (!response.ok) throw new Error('API Error');
+                const releases = await response.json();
+                let totalDownloads = 0;
+                releases.forEach(r => r.assets.forEach(a => totalDownloads += a.download_count));
+                animateCounter(counterElement, totalDownloads);
+            } catch (error) {
+                console.error("Failed to fetch GitHub stats, using fallback.", error);
+                animateCounter(counterElement, 11404); // Valor de respaldo
+            }
+        }
+        function animateCounter(element, target) {
+            if (!element) return;
+            let start = 0;
+            const duration = 2500;
+            let startTime = null;
+            function animationStep(currentTime) {
+                if (!startTime) startTime = currentTime;
+                const progress = Math.min((currentTime - startTime) / duration, 1);
+                const currentCount = Math.floor(progress * target);
+                element.innerText = currentCount.toLocaleString('es-CO');
+                if (progress < 1) requestAnimationFrame(animationStep);
+            }
+            requestAnimationFrame(animationStep);
+        }
+
+        const countryData = [
+            { name: 'Colombia', code: 'co', clicks: 8033 },
+            { name: 'México', code: 'mx', clicks: 562 },
+            { name: 'España', code: 'es', clicks: 436 },
+            { name: 'Perú', code: 'pe', clicks: 300 },
+            { name: 'Argentina', code: 'ar', clicks: 252 },
+            { name: 'Chile', code: 'cl', clicks: 139 },
+            { name: 'EE.UU.', code: 'us', clicks: 114 },
+            { name: 'Venezuela', code: 've', clicks: 126 },
+            { name: 'Rep. Dominicana', code: 'do', clicks: 102 },
+            { name: 'Bolivia', code: 'bo', clicks: 76 }
+        ];
+        const track = document.getElementById('country-track');
+        if (track) {
+            const allCards = [...countryData, ...countryData, ...countryData];
+            allCards.forEach(country => {
+                const card = document.createElement('div');
+                card.className = 'country-card';
+                card.innerHTML = `
+                    <img class="country-flag" src="https://flagcdn.com/w40/${country.code}.png" alt="[Bandera de ${country.name}]">
+                    <span class="country-name">${country.name}</span>
+                    <span class="country-clicks">${country.clicks.toLocaleString('es-CO')}</span>`;
+                track.appendChild(card);
+            });
+        }
+
+        fetchGitHubStats();
+    });
+    </script>
+</body>
+</html>
