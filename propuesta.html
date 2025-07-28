@@ -8,7 +8,7 @@
     <meta name="author" content="Brandon Sepulveda" />
     
     <!-- Iconos y Fuentes -->
-    <link rel="icon" type="image/x-icon" href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" />
+    <link rel="icon" type="image/x-xicon" href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" />
     <script src="https://use.fontawesome.com/releases/v6.5.2/js/all.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,12 +19,12 @@
             --accent-color: #3b82f6;
             --accent-dark: #2563eb;
             --primary-color: #FFFFFF;
-            --bg-dark: #07090D; /* Un negro ligeramente más suave */
-            --bg-medium: #121212;
-            --bg-light: #1A1C23; /* Un gris azulado oscuro */
+            --bg-dark: #07090D; /* Fondo del body, muy oscuro */
+            --bg-section-background: #0D1117; /* Fondo de las secciones, un poco más claro que el body pero aún oscuro */
+            --bg-card-background: #161B22; /* Fondo de los cuadros de precio (no primarios), claro para destacar sobre --bg-section-background */
             --text-light: #F0F2F5;
             --text-secondary: #a1a9b8;
-            --border-color: rgba(255, 255, 255, 0.1);
+            --border-color: rgba(255, 255, 255, 0.3); /* Borde más visible y fuerte */
             --shadow-color: rgba(59, 130, 246, 0.1);
             --transition-speed: 0.4s;
         }
@@ -50,7 +50,11 @@
             to { transform: translate(40px, -40px) rotate(15deg); }
         }
         .proposal-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-        .section { padding: 6rem 0; border-bottom: 1px solid var(--border-color); }
+        .section { 
+            padding: 6rem 0; 
+            border-bottom: 1px solid var(--border-color); 
+            background-color: var(--bg-section-background); /* Fondo para todas las secciones */
+        }
         .section:last-child { border-bottom: none; }
         .section-title {
             text-align: center; margin-bottom: 1.5rem;
@@ -86,6 +90,7 @@
         .proposal-header {
             text-align: center;
             padding: 3rem 0;
+            background-color: var(--bg-section-background); /* Asegurar que el header también use el fondo de sección */
         }
         .proposal-logos {
             display: flex; justify-content: center; align-items: center;
@@ -104,7 +109,7 @@
             gap: 2rem;
         }
         .solution-card {
-            background: var(--bg-light);
+            background: var(--bg-card-background); /* Fondo de tarjeta, más claro */
             border: 1px solid var(--border-color); padding: 2.5rem; border-radius: 16px;
             transition: all var(--transition-speed) ease;
         }
@@ -123,7 +128,7 @@
             display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
         }
         .value-prop-column {
-            background: linear-gradient(145deg, var(--bg-light), var(--bg-dark));
+            background: var(--bg-card-background); /* Fondo de tarjeta, más claro */
             padding: 2.5rem; border-radius: 16px; border: 1px solid var(--border-color);
         }
         .value-prop-column h3 {
@@ -138,12 +143,14 @@
         }
 
         /* --- NUEVAS SECCIONES --- */
-        .origin-section {
-            background: var(--bg-medium);
+        .origin-section, .licensing-section, .pricing-section, .future-vision-section, .version-history-section {
+            background: var(--bg-section-background); /* Fondo de las secciones, más oscuro */
             padding: 3rem;
             border-radius: 16px;
             border: 1px solid var(--border-color);
             margin-bottom: 4rem;
+        }
+        .origin-section {
             text-align: center;
         }
         .origin-section h3 {
@@ -167,95 +174,105 @@
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--accent-color);
-            background-color: var(--bg-light);
+            background-color: var(--bg-card-background); /* Usar color de tarjeta para las tecnologías */
             padding: 0.7rem 1.5rem;
             border-radius: 8px;
             border: 1px solid var(--accent-color);
         }
 
-        .licensing-section, .pricing-section, .future-vision-section, .version-history-section { /* ip-section removed */
-            background: var(--bg-medium);
-            padding: 3rem;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 4rem;
-        }
-        .licensing-section ul, .future-vision-section ul, .version-history-section ul { /* ip-section ul removed */
+        .licensing-section ul, .future-vision-section ul, .version-history-section ul {
             list-style: none;
             padding-left: 0;
             margin-top: 2rem;
         }
-        .licensing-section li, .future-vision-section li, .version-history-section li { /* ip-section li removed */
+        .licensing-section li, .future-vision-section li, .version-history-section li {
             position: relative;
             padding-left: 40px;
             margin-bottom: 1.5rem;
             font-size: 1.1rem;
             color: var(--text-light);
         }
-        .licensing-section li strong, .future-vision-section li strong, .version-history-section li strong { /* ip-section li strong removed */
+        .licensing-section li strong, .future-vision-section li strong, .version-history-section li strong {
             color: var(--accent-color);
         }
-        .licensing-section li i, .future-vision-section li i, .version-history-section li i { /* ip-section li i removed */
+        .licensing-section li i, .future-vision-section li i, .version-history-section li i {
             position: absolute;
             left: 0;
             top: 5px;
             font-size: 1.5rem;
             color: var(--accent-color);
         }
-        .licensing-section h3, .pricing-section h3, .future-vision-section h3, .version-history-section h3 { /* ip-section h3 removed */
+        .licensing-section h3, .pricing-section h3, .future-vision-section h3, .version-history-section h3 {
             font-size: 2rem;
             color: var(--accent-color);
             margin-bottom: 1.5rem;
             text-align: center;
         }
+        .pricing-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            align-items: stretch; /* Ensures cards are same height */
+        }
         .pricing-section .price-box {
-            background: linear-gradient(145deg, var(--accent-color), var(--accent-dark));
+            background: var(--bg-card-background); /* Fondo de los cuadros, más claro que la sección */
             padding: 2.5rem;
             border-radius: 16px;
             text-align: center;
-            color: var(--text-light);
-            margin: 3rem auto;
-            max-width: 500px;
-            box-shadow: 0 10px 30px var(--shadow-color);
+            color: var(--text-light); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3); 
+            border: 1px solid var(--border-color); 
+            display: flex; 
+            flex-direction: column;
+            justify-content: space-between; 
+            height: 100%; 
+            transition: all var(--transition-speed) ease; 
         }
-        .pricing-section .price-box .tagline {
-            font-size: 1.3rem;
+        .pricing-section .price-box:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4); 
+            border-color: var(--accent-color); 
+            background-color: var(--bg-medium); /* Darken slightly on hover */
+        }
+        /* Style for the featured/highlighted price box (blue gradient) */
+        .pricing-section .price-box.primary-price-box {
+            background: linear-gradient(145deg, var(--accent-color), var(--accent-dark)); /* Blue gradient */
+            color: var(--text-light); /* Light text on blue */
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4); /* Stronger blue shadow */
+            border-color: var(--accent-color); /* Blue border */
+        }
+        /* Ensure specific text elements within the primary-price-box also use light text color */
+        .pricing-section .price-box.primary-price-box .option-title,
+        .pricing-section .price-box.primary-price-box .price-value,
+        .pricing-section .price-box.primary-price-box .period,
+        .pricing-section .price-box.primary-price-box .small-text,
+        .pricing-section .price-box.primary-price-box ul li {
+            color: var(--text-light); 
+        }
+        /* Specific override for checkmark in non-primary boxes to ensure visibility */
+        .pricing-section .price-box ul li::before {
+             color: var(--accent-color); /* Primary blue for checkmarks in dark boxes */
+        }
+        .pricing-section .price-box.primary-price-box ul li::before {
+            color: #D4EDDA; /* Light green check, visible on blue */
+        }
+
+        .pricing-section .btn-select {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--primary-color); /* White button on any box */
+            color: var(--accent-dark); /* Dark text on white button */
+            border-radius: 8px;
+            text-decoration: none;
             font-weight: 600;
-            margin-bottom: 1rem;
+            transition: background-color 0.3s ease;
+            margin-top: 1.5rem;
         }
-        .pricing-section .price-box .price {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 0.5rem;
+        .pricing-section .btn-select:hover {
+            background-color: #E0E0E0; /* Slightly darker white on hover */
         }
-        .pricing-section .price-box .period {
-            font-size: 1.2rem;
-            font-weight: 500;
-            opacity: 0.8;
-            margin-bottom: 2rem;
-        }
-        .pricing-section .price-box ul {
-            list-style: none;
-            padding: 0;
-            text-align: left;
-            margin-top: 2rem;
-            font-size: 1.1rem;
-        }
-        .pricing-section .price-box li {
-            margin-bottom: 0.8rem;
-            position: relative;
-            padding-left: 25px;
-        }
-        .pricing-section .price-box li::before {
-            content: '\f00c'; /* Check mark icon */
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: #D4EDDA; /* Light green check */
-            position: absolute;
-            left: 0;
-            top: 4px;
-        }
+
 
         /* Version History Table Styles */
         .version-table {
@@ -263,7 +280,7 @@
             border-collapse: separate;
             border-spacing: 0;
             margin-top: 2rem;
-            background-color: var(--bg-light);
+            background-color: var(--bg-card-background); /* Usar fondo de tarjeta */
             border-radius: 12px;
             overflow: hidden; /* Ensures border-radius applies to corners */
             border: 1px solid var(--border-color);
@@ -284,8 +301,7 @@
             transition: background-color 0.3s ease;
         }
         .version-table tbody tr:hover {
-            background-color: var(--surface-hover-color); /* You might need to define this if not already */
-            background-color: #21262D; /* Example hover for table rows */
+            background-color: var(--bg-medium); /* Example hover for table rows */
         }
         .version-table tbody tr:last-child td {
             border-bottom: none;
@@ -333,14 +349,14 @@
             margin-top: 2rem;
             justify-items: center; /* Center items within their grid cells */
             align-items: start; /* Align items to the top of their grid cells */
-            background-color: rgba(18, 18, 18, 0.5); 
+            background-color: var(--bg-section-background); /* Fondo de sección */
             border-radius: 16px; 
             padding: 4rem 2rem;
         }
         .stat-card-large {
             text-align: center;
             padding: 1.5rem;
-            background: var(--bg-light);
+            background: var(--bg-card-background); /* Fondo de tarjeta, más claro */
             border-radius: 12px;
             border: 1px solid var(--border-color);
             width: 100%; /* Ensure it takes full width of its grid cell */
@@ -369,7 +385,8 @@
         .country-track.animated { animation: marquee 60s linear infinite; }
         .country-track:hover { animation-play-state: paused; }
         .country-card {
-            flex: 0 0 150px; background: var(--bg-light); border-radius: 12px;
+            flex: 0 0 150px; background: var(--bg-card-background); /* Fondo de tarjeta, más claro */
+            border-radius: 12px;
             padding: 1rem; text-align: center; border: 1px solid var(--border-color);
             display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
         }
@@ -392,7 +409,7 @@
         @media (max-width: 992px) {
             .value-prop-grid { grid-template-columns: 1fr; }
             .stats-section-content { grid-template-columns: 1fr; } /* Stack stat cards on small screens */
-            .pricing-section .price-box { max-width: 100%; }
+            .pricing-options-grid { grid-template-columns: 1fr; } /* Stack price options on smaller screens */
         }
         @media (max-width: 768px) {
             .section { padding: 4rem 0; }
@@ -411,7 +428,7 @@
                 border: 1px solid var(--border-color);
                 border-radius: 8px;
                 padding: 1rem;
-                background-color: var(--bg-light);
+                background-color: var(--bg-card-background); /* Usar fondo de tarjeta */
             }
             .version-table td {
                 text-align: right;
@@ -543,7 +560,7 @@
                     <ul>
                         <li>
                             <i class="fas fa-globe-americas"></i>
-                            <strong>Licencia Comunitaria (GNU AGPL v3.0):</strong> Este software es de código abierto y uso libre bajo la licencia AGPL v3.0, lo que permite su adopción comunitaria y mejora. Su amplia adopción global valida su fiabilidad, demostrando la solidez de la herramienta en diversos entornos.
+                            <strong>Licencia Comunitaria (GNU AGPL v3.0):</strong> Este software es de código abierto y uso libre bajo la licencia AGPL v3.0. Su amplia adopción global valida su fiabilidad, demostrando la solidez de la herramienta en diversos entornos.
                         </li>
                         <li>
                             <i class="fas fa-handshake"></i>
@@ -552,20 +569,20 @@
                     </ul>
                 </div>
             </section>
-
+            
             <!-- SECCIÓN NUEVA: LA PROPUESTA COMERCIAL DE LICENCIAMIENTO -->
             <section id="pricing-proposal" class="section">
                 <h2 class="section-title animated-element">La Propuesta Comercial de <span>Licenciamiento</span></h2>
-                <p class="section-intro animated-element">Considerando el valor innegable que ToolboxBS aporta a la eficiencia operativa, la reducción de costos y la diferenciación de nuestro servicio, propongo una **Licencia Anual Empresarial**.</p>
+                <p class="section-intro animated-element">Considerando el valor innegable que ToolboxBS aporta a la eficiencia operativa, la reducción de costos y la diferenciación de nuestro servicio, propongo diferentes modelos de licenciamiento adaptados a sus necesidades.</p>
 
-                <div class="pricing-section animated-element" style="transition-delay: 100ms;">
-                    <h3>Licencia Anual Empresarial de ToolboxBS</h3>
-                    <p class="section-intro">Esta licencia garantiza el uso legal, continuo y optimizado de ToolboxBS en todas las operaciones de Milenio PC, incluyendo personalización y soporte directo.</p>
-                    <div class="price-box">
-                        <div class="tagline">Inversión Estratégica para la Excelencia Operacional</div>
-                        <div class="price">$18.000 USD</div>
-                        <div class="period">Valor Anual</div>
-                        <p class="small-text">Este valor anual, además de ser altamente competitivo, se traduce en un costo por ejecución de aproximadamente **$1.46 USD**, asumiendo las 50 ejecuciones diarias promedio en su operación. Es una inversión mínima comparada con los beneficios en tiempo y eficiencia. La inversión estimada para desarrollar una aplicación de la complejidad y funcionalidad actual de ToolboxBS desde cero, por un equipo profesional, oscila entre **$55,000 y $150,000 USD**.</p>
+                <div class="pricing-options-grid animated-element" style="transition-delay: 100ms;">
+                    
+                    <!-- Opción 1: Licencia Anual - Destacada -->
+                    <div class="price-box primary-price-box">
+                        <h3 class="option-title">Licencia Anual</h3>
+                        <div class="price-value">$18.000 USD</div>
+                        <div class="period">Por Año</div>
+                        <p class="small-text">Este valor anual es altamente competitivo y se traduce en un costo por ejecución de aproximadamente **$1.46 USD** (asumiendo 50 ejecuciones diarias promedio). Una inversión mínima con grandes beneficios en tiempo y eficiencia.</p>
                         <ul>
                             <li>Uso ilimitado de ToolboxBS (Script & Web) en toda la empresa.</li>
                             <li>Autorización para integrar el branding y logos de Milenio PC.</li>
@@ -573,7 +590,41 @@
                             <li>Acceso garantizado a todas las actualizaciones y nuevas funcionalidades.</li>
                             <li>Compromiso con la evolución continua de la herramienta.</li>
                         </ul>
+                        <a href="mailto:jhonvaldessepulveda@gmail.com?subject=Interes%20en%20Licencia%20Anual%20ToolboxBS" class="btn-select">Consultar Licencia Anual</a>
                     </div>
+
+                    <!-- Opción 2: Licencia Mensual - Estilo oscuro -->
+                    <div class="price-box">
+                        <h3 class="option-title">Licencia Mensual</h3>
+                        <div class="price-value">$1.500 USD</div>
+                        <div class="period">Por Mes</div>
+                        <p class="small-text">Una opción flexible para iniciar, permitiendo evaluar el impacto directo de ToolboxBS en su operación sin un compromiso anual inicial.</p>
+                        <ul>
+                            <li>Uso ilimitado de ToolboxBS (Script & Web) en toda la empresa.</li>
+                            <li>Autorización para integrar el branding y logos de Milenio PC.</li>
+                            <li>Soporte técnico directo del autor (Jhon Sepulveda).</li>
+                            <li>Acceso a todas las actualizaciones y nuevas funcionalidades durante el mes.</li>
+                            <li>Flexibilidad de pago.</li>
+                        </ul>
+                        <a href="mailto:jhonvaldessepulveda@gmail.com?subject=Interes%20en%20Licencia%20Mensual%20ToolboxBS" class="btn-select">Consultar Licencia Mensual</a>
+                    </div>
+
+                    <!-- Opción 3: Adquisición Completa (Propiedad Plena) - Estilo oscuro -->
+                    <div class="price-box">
+                        <h3 class="option-title">Adquisición Completa</h3>
+                        <div class="price-value">A Discutir</div>
+                        <div class="period">Pago Único</div>
+                        <p class="small-text">Esta opción le otorga a Milenio PC la **propiedad total del software y su código fuente**, permitiendo una autonomía absoluta para futuras modificaciones, integraciones y control del desarrollo interno. La inversión para desarrollar una aplicación de la complejidad actual de ToolboxBS desde cero, por un equipo profesional, oscila entre **$55,000 y $150,000 USD**.</p>
+                        <ul>
+                            <li>Propiedad intelectual completa de ToolboxBS.</li>
+                            <li>Acceso total al código fuente.</li>
+                            <li>Control absoluto sobre el desarrollo y evolución de la herramienta.</li>
+                            <li>Integración ilimitada en todos los procesos de la empresa.</li>
+                            <li>Beneficio de una solución probada y validada globalmente.</li>
+                        </ul>
+                        <a href="mailto:jhonvaldessepulveda@gmail.com?subject=Interes%20en%20Adquisicion%20Completa%20ToolboxBS" class="btn-select">Consultar Adquisición</a>
+                    </div>
+
                 </div>
             </section>
 
@@ -823,4 +874,3 @@
     </script>
 </body>
 </html>
-5
