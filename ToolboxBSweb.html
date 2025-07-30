@@ -899,11 +899,6 @@
                     </div>
                     <div class="tooltip">Activa Windows usando la clave digital almacenada.</div>
                 </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'run-optimizer', 'tweaks')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Ejecutar Optimizer</span>
-                    </div>
                     <div class="tooltip">Herramienta de optimización avanzada del sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'find-drivers', 'tweaks')">
@@ -1362,14 +1357,6 @@
                 Write-Host "La clave digital es: $clave"
                 slmgr.vbs /ipk $clave
                 Write-Host "Clave establecida como predefinida correctamente." -ForegroundColor Green
-            `,
-            'run-optimizer': `
-                $url = "https://github.com/hellzerg/optimizer/releases/download/16.7/Optimizer-16.7.exe"
-                $outputFolder = "C:\\ToolboxBS"
-                $outputPath = Join-Path $outputFolder "Optimizer-16.7.exe"
-                if (-not (Test-Path -Path $outputFolder -PathType Container)) { New-Item -ItemType Directory -Force -Path $outputFolder | Out-Null }
-                try { Invoke-WebRequest -Uri $url -OutFile $outputPath } catch { Write-Host "Error al descargar Optimizer: $_" -ForegroundColor Red; exit }
-                try { Start-Process -FilePath $outputPath } catch { Write-Host "Error al ejecutar Optimizer: $_" -ForegroundColor Red }
             `,
            'find-drivers': `
 # =========================================================================
