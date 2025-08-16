@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WinDeployBS - La Revolución en la Instalación de Windows</title>
-    <meta name="description" content="Olvida los USBs y los métodos antiguos. Con WinDeploy, instala Windows de forma limpia y automatizada usando solo tu archivo ISO y un simple comando.">
+    <title>WinDeployBS - Instalación Autogestionada de Windows</title>
+    <meta name="description" content="La solución definitiva para técnicos y empresas. Despliega Windows 10 y 11 desde una imagen ISO, sin USB y con un solo comando. Ideal para migraciones masivas.">
     <meta name="author" content="Brandon Sepulveda">
-    <meta name="keywords" content="Windows, instalar, formatear, ISO, PowerShell, automatización, WinDeploy, instalación limpia, sin USB, boot manager, alternativa a Rufus">
+    <meta name="keywords" content="Windows, instalar, formatear, ISO, PowerShell, automatización, WinDeploy, instalación limpia, sin USB, despliegue masivo, migración Windows 11, fin de soporte Windows 10">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,13 +20,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0d1117; /* GitHub Dark Dimmed */
-            color: #c9d1d9;
+        /* --- Custom Properties for easy theme changes --- */
+        :root {
+            --color-primary: #3b82f6; /* blue-500 */
+            --color-primary-glow: rgba(59, 130, 246, 0.3);
+            --color-bg-dark: #0d1117;
+            --color-bg-light: #161b22;
+            --color-text-primary: #c9d1d9;
+            --color-text-secondary: #8b949e;
+            --color-border: #30363d;
         }
 
-        /* Animated Background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-primary);
+        }
+
+        /* --- Animated Background --- */
         #animated-bg {
             position: fixed;
             top: 0;
@@ -36,39 +47,78 @@
             z-index: -1;
         }
 
-        /* Custom gradient for titles */
+        /* --- NEW: Unified Gradient Text --- */
         .gradient-text {
-            background: linear-gradient(90deg, #58a6ff, #a371f7);
+            background: linear-gradient(90deg, #60a5fa, #bfdbfe); /* blue-400 to blue-200 */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-fill-color: transparent;
         }
 
-        /* Animation for elements on scroll */
+        /* --- NEW: Enhanced Reveal Animation on Scroll --- */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transform: translateY(30px) scale(0.98);
+            filter: blur(4px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out, filter 0.6s ease-out;
         }
 
         .reveal.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
+            filter: blur(0);
         }
         
-        /* Custom styles for the code block */
+        /* --- Custom styles for the code block with glow effect --- */
         .code-block {
-            background-color: #161b22; /* GitHub Dark Default */
-            border: 1px solid #30363d;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 40px rgba(88, 166, 255, 0.1);
+            background-color: var(--color-bg-light);
+            border: 1px solid var(--color-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 25px var(--color-primary-glow);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .code-block:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 40px var(--color-primary-glow);
         }
 
-        /* Custom focus ring color */
+        /* --- Custom focus ring color --- */
         .focus-ring-brand:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.4);
+            box-shadow: 0 0 0 3px var(--color-primary-glow);
         }
+
+        /* --- NEW: Card hover effects --- */
+        .animated-card {
+            background-color: var(--color-bg-dark);
+            border: 1px solid var(--color-border);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+        .animated-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--color-primary);
+            box-shadow: 0 0 20px var(--color-primary-glow);
+        }
+        .animated-card:hover i {
+            transform: scale(1.1);
+            color: var(--color-primary);
+        }
+        .animated-card i {
+            transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        /* --- NEW: Pulsing animation for the main button --- */
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 15px var(--color-primary-glow);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+            }
+        }
+        .pulse-button {
+            animation: pulse 2.5s infinite;
+        }
+
     </style>
 </head>
 <body class="antialiased">
@@ -77,10 +127,10 @@
     <canvas id="animated-bg"></canvas>
 
     <!-- Header -->
-    <header class="bg-opacity-80 bg-[#0d1117] backdrop-blur-lg sticky top-0 z-50 border-b border-gray-800">
+    <header class="bg-opacity-80 bg-[#0d1117] backdrop-blur-lg sticky top-0 z-50 border-b border-gray-800 transition-shadow duration-300 hover:shadow-lg hover:shadow-blue-500/10">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-white">
-                <i class="fas fa-rocket text-[#58a6ff]"></i>
+                <i class="fas fa-rocket text-blue-400"></i>
                 Win<span class="gradient-text">Deploy</span>
             </div>
             <a href="https://github.com/BrandonSepulveda/ToolboxBS/blob/refs/heads/main/procesos/WinDeployBS.ps1" target="_blank" class="hidden md:inline-block px-5 py-2 text-sm font-semibold text-white bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors duration-300">
@@ -96,13 +146,13 @@
             <div class="container mx-auto px-6 relative">
                 <div class="max-w-4xl mx-auto">
                     <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-4 reveal">
-                        La Revolución del Formateo ha Llegado.
+                        La Instalación Autogestionada de Windows ha Llegado.
                     </h1>
                     <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-8 reveal" style="transition-delay: 100ms;">
-                        Olvida los USBs y los procesos complejos. Con WinDeploy, tu archivo ISO es todo lo que necesitas para una instalación de Windows limpia, rápida y totalmente automatizada.
+                        Hemos desarrollado un script que se encarga de todo por ti. Tu imagen ISO es lo único que necesitas para una instalación de Windows limpia, rápida y 100% automatizada.
                     </p>
                     <div class="reveal" style="transition-delay: 200ms;">
-                        <a href="#install" class="inline-block px-8 py-4 font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-blue-600/30">
+                        <a href="#install" class="pulse-button inline-block px-8 py-4 font-bold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
                             <i class="fas fa-bolt mr-2"></i> Iniciar Ahora
                         </a>
                     </div>
@@ -111,30 +161,60 @@
         </section>
 
         <!-- Benefits Section -->
-        <section id="benefits" class="py-20 bg-[#161b22]/80 backdrop-blur-sm">
+        <section id="benefits" class="py-20 bg-opacity-50 bg-black">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold text-white reveal">Dile Adiós al Método <span class="gradient-text">Antiguo</span></h2>
-                    <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto reveal">Estos son los superpoderes que WinDeployBS le da a tu instalación.</p>
+                    <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto reveal">Estos son los superpoderes que WinDeploy le da a tu instalación.</p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
                     <!-- Card 1 -->
-                    <div class="bg-[#0d1117] p-8 rounded-xl border border-gray-800 reveal transform transition-transform duration-300 hover:-translate-y-2 hover:border-blue-500">
-                        <div class="text-4xl text-blue-500 mb-4"><i class="fas fa-usb"></i><i class="fas fa-ban ml-2"></i></div>
+                    <div class="animated-card p-8 rounded-xl reveal">
+                        <div class="text-4xl text-blue-400 mb-4"><i class="fas fa-usb"></i><i class="fas fa-ban ml-2"></i></div>
                         <h3 class="text-2xl font-bold text-white mb-3">Sin Necesidad de USB</h3>
-                        <p class="text-gray-400">Tu disco duro es tu nueva unidad de instalación. WinDeployBS crea una partición de arranque temporal, liberándote para siempre de buscar y preparar USBs.</p>
+                        <p class="text-gray-400">Tu disco duro es tu nueva unidad de instalación. WinDeploy crea una partición de arranque temporal, liberándote para siempre de buscar y preparar USBs.</p>
                     </div>
                     <!-- Card 2 -->
-                    <div class="bg-[#0d1117] p-8 rounded-xl border border-gray-800 reveal transform transition-transform duration-300 hover:-translate-y-2 hover:border-purple-500" style="transition-delay: 150ms;">
-                        <div class="text-4xl text-purple-500 mb-4"><i class="fas fa-cogs"></i></div>
+                    <div class="animated-card p-8 rounded-xl reveal" style="transition-delay: 150ms;">
+                        <div class="text-4xl text-blue-400 mb-4"><i class="fas fa-cogs"></i></div>
                         <h3 class="text-2xl font-bold text-white mb-3">Automatización Total</h3>
-                        <p class="text-gray-400">El script se encarga de todo: reducir tu disco, crear la partición, copiar los archivos y configurar el arranque (BCD). Tú solo haces un par de clics.</p>
+                        <p class="text-gray-400"><strong>El script hace todo por ti:</strong> reduce tu disco, crea la partición, copia los archivos de la imagen ISO y configura el arranque (BCD).</p>
                     </div>
                     <!-- Card 3 -->
-                    <div class="bg-[#0d1117] p-8 rounded-xl border border-gray-800 reveal transform transition-transform duration-300 hover:-translate-y-2 hover:border-green-500" style="transition-delay: 300ms;">
-                        <div class="text-4xl text-green-500 mb-4"><i class="fas fa-broom"></i></div>
+                    <div class="animated-card p-8 rounded-xl reveal" style="transition-delay: 300ms;">
+                        <div class="text-4xl text-blue-400 mb-4"><i class="fas fa-broom"></i></div>
                         <h3 class="text-2xl font-bold text-white mb-3">Instalación 100% Limpia</h3>
-                        <p class="text-gray-400">Al arrancar desde una partición separada, tienes la libertad de formatear tu disco principal (C:\) por completo, asegurando una instalación verdaderamente limpia y sin residuos.</p>
+                        <p class="text-gray-400">Al arrancar desde una partición separada, tienes la libertad de formatear tu disco principal (C:\) por completo, asegurando una instalación limpia.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business & Tech Section -->
+        <section class="py-20 bg-[#161b22]/80 backdrop-blur-sm">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white reveal">Ideal para <span class="gradient-text">Empresas y Técnicos</span></h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto reveal">Acelera tus despliegues y migraciones masivas con una herramienta pensada para la eficiencia.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Feature 1 -->
+                    <div class="animated-card text-center p-8 rounded-xl reveal">
+                        <div class="text-4xl text-blue-400 mb-4"><i class="fas fa-user-check"></i></div>
+                        <h3 class="text-xl font-bold text-white mb-3">Sin Conocimiento Técnico</h3>
+                        <p class="text-gray-400">Diseñado para ser tan simple que cualquier usuario puede realizar una instalación limpia sin necesidad de ser un experto en sistemas.</p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="animated-card text-center p-8 rounded-xl reveal" style="transition-delay: 150ms;">
+                        <div class="text-4xl text-blue-400 mb-4"><i class="fas fa-building"></i></div>
+                        <h3 class="text-xl font-bold text-white mb-3">Despliegues Corporativos</h3>
+                        <p class="text-gray-400">La herramienta perfecta para compañías que enfrentan la migración de Windows 10 a 11. Automatiza el proceso en cientos de equipos sin preparar un solo USB.</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="animated-card text-center p-8 rounded-xl border-red-500/50 reveal" style="transition-delay: 300ms;">
+                        <div class="text-4xl text-red-400 mb-4"><i class="fas fa-calendar-times"></i></div>
+                        <h3 class="text-xl font-bold text-white mb-3">Migración Estratégica a Win 11</h3>
+                        <p class="text-gray-400">El soporte de Windows 10 termina este octubre. WinDeploy es la alternativa ideal para ejecutar un upgrade, ahorrando presupuesto en hardware externo como discos y memorias USBs.</p>
                     </div>
                 </div>
             </div>
@@ -144,32 +224,30 @@
         <section class="py-20">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white reveal">El Abismo entre lo <span class="gradient-text">Manual</span> y lo <span class="gradient-text">Mágico</span></h2>
-                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto reveal">Otras herramientas de arranque son potentes, pero te dejan hacer todo el trabajo pesado. WinDeploy es tu técnico personal automatizado.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white reveal">El Abismo entre lo <span class="gradient-text">Manual</span> y lo <span class="gradient-text">Automatizado</span></h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto reveal">Otras herramientas son potentes, pero te dejan hacer todo el trabajo pesado. WinDeploy es tu técnico personal automatizado.</p>
                 </div>
                 <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                     <!-- Manual Process Card -->
                     <div class="bg-[#161b22] p-8 rounded-xl border border-gray-800 reveal">
-                        <h3 class="text-2xl font-bold text-gray-400 mb-6 text-center">El Proceso Manual (Otras Herramientas)</h3>
+                        <h3 class="text-2xl font-bold text-gray-400 mb-6 text-center">El Proceso Manual</h3>
                         <ul class="space-y-4">
-                            <li class="flex items-start"><i class="fas fa-minus-circle text-red-500 mt-1 mr-3"></i><span>Abrir `diskpart` para crear una partición manualmente.</span></li>
-                            <li class="flex items-start"><i class="fas fa-minus-circle text-red-500 mt-1 mr-3"></i><span>Calcular tamaños, formatear y asignar letras de unidad.</span></li>
-                            <li class="flex items-start"><i class="fas fa-minus-circle text-red-500 mt-1 mr-3"></i><span>Montar el ISO y copiar los archivos a mano.</span></li>
-                            <li class="flex items-start"><i class="fas fa-minus-circle text-red-500 mt-1 mr-3"></i><span>Usar `bcdedit` con comandos complejos para crear la entrada de arranque.</span></li>
-                            <li class="flex items-start"><i class="fas fa-minus-circle text-red-500 mt-1 mr-3"></i><span>Arriesgarse a errores en cada paso del proceso.</span></li>
-                            <li class="flex items-start"><i class="fas fa-minus-circle text-red-500 mt-1 mr-3"></i><span>Pagar licencias costosas por una ayuda parcial.</span></li>
+                            <li class="flex items-start"><i class="fas fa-minus-circle text-red-500 mt-1 mr-3"></i><span>Abrir `diskpart` para crear particiones.</span></li>
+                            <li class="flex items-start"><i class="fas fa-minus-circle text-red-500 mt-1 mr-3"></i><span>Calcular tamaños, formatear y asignar letras.</span></li>
+                            <li class="flex items-start"><i class="fas fa-minus-circle text-red-500 mt-1 mr-3"></i><span>Montar la imagen ISO y copiar archivos.</span></li>
+                            <li class="flex items-start"><i class="fas fa-minus-circle text-red-500 mt-1 mr-3"></i><span>Usar `bcdedit` con comandos complejos.</span></li>
+                            <li class="flex items-start"><i class="fas fa-minus-circle text-red-500 mt-1 mr-3"></i><span>Arriesgarse a errores en cada paso.</span></li>
+                            <li class="flex items-start"><i class="fas fa-minus-circle text-red-500 mt-1 mr-3"></i><span>Pagar licencias por una ayuda parcial.</span></li>
                         </ul>
                     </div>
                     <!-- WinDeploy Process Card -->
-                    <div class="bg-gradient-to-br from-blue-600/20 to-purple-600/20 p-8 rounded-xl border border-blue-500 reveal" style="transition-delay: 150ms;">
-                         <h3 class="text-2xl font-bold text-white mb-6 text-center">El Proceso WinDeploy <span class="gradient-text">100% Automatizado</span></h3>
-                         <ul class="space-y-4">
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i><span>Ejecutar un solo comando en PowerShell.</span></li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i><span>Seleccionar tu disco y tu archivo ISO en una interfaz simple.</span></li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i><span>Hacer clic en "Crear Arranque".</span></li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i><span>Reiniciar el equipo.</span></li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i><span>El script se encarga de todo lo demás, sin errores.</span></li>
-                             <li class="flex items-start"><i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i><span>Revertir los cambios con un solo clic cuando termines.</span></li>
+                    <div class="bg-blue-500/10 p-8 rounded-xl border border-blue-500/50 reveal" style="transition-delay: 150ms;">
+                         <h3 class="text-2xl font-bold text-white mb-6 text-center">El Proceso WinDeploy <span class="gradient-text">Simplificado</span></h3>
+                         <ul class="space-y-6">
+                             <li class="flex items-start"><i class="fas fa-check-circle text-blue-400 mt-1 mr-3"></i><span><strong>Paso 1:</strong> Ejecuta el comando y selecciona tu imagen ISO.</span></li>
+                             <li class="flex items-start"><i class="fas fa-check-circle text-blue-400 mt-1 mr-3"></i><span><strong>Paso 2:</strong> Haz clic en "Crear Arranque".</span></li>
+                             <li class="flex items-start"><i class="fas fa-check-circle text-blue-400 mt-1 mr-3"></i><span><strong>Paso 3:</strong> Reinicia el equipo. ¡Listo!</span></li>
+                             <li class="flex items-start text-sm text-gray-400 pt-4"><i class="fas fa-info-circle text-blue-400 mt-1 mr-3"></i><span>El script se encarga del resto y puedes revertir los cambios fácilmente cuando termines.</span></li>
                          </ul>
                     </div>
                 </div>
@@ -187,52 +265,52 @@
                     <div class="grid md:grid-cols-2 gap-x-8 gap-y-12">
                         <!-- Step 1 -->
                         <div class="flex items-start space-x-6 reveal">
-                            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-600/20 text-blue-400 border border-blue-500">
+                            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-600/10 text-blue-400 border border-blue-500/30">
                                 <i class="fas fa-compress-arrows-alt"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold text-white">1. Reducción Inteligente</h3>
-                                <p class="mt-2 text-gray-400">WinDeploy analiza el espacio libre de tu disco y reduce la partición principal de forma segura para crear el espacio exacto que necesita la instalación.</p>
+                                <h3 class="text-xl font-bold text-white">1. Ingeniería de Particiones</h3>
+                                <p class="mt-2 text-gray-400">WinDeploy analiza el espacio libre y reduce la partición principal de forma segura para crear el espacio exacto que necesita la instalación.</p>
                             </div>
                         </div>
                         <!-- Step 2 -->
                         <div class="flex items-start space-x-6 reveal" style="transition-delay: 100ms;">
-                            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-purple-600/20 text-purple-400 border border-purple-500">
+                            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-600/10 text-blue-400 border border-blue-500/30">
                                 <i class="fas fa-plus-square"></i>
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-white">2. Creación y Formato</h3>
-                                <p class="mt-2 text-gray-400">Crea una nueva partición primaria, la formatea en NTFS y le asigna una letra de unidad temporal, todo en segundo plano y sin tu intervención.</p>
+                                <p class="mt-2 text-gray-400">Crea una nueva partición primaria, la formatea en NTFS y le asigna una letra temporal, todo en segundo plano y sin intervención.</p>
                             </div>
                         </div>
                         <!-- Step 3 -->
                         <div class="flex items-start space-x-6 reveal" style="transition-delay: 200ms;">
-                            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-600/20 text-green-400 border border-green-500">
+                            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-600/10 text-blue-400 border border-blue-500/30">
                                 <i class="fas fa-copy"></i>
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-white">3. Copia de Archivos</h3>
-                                <p class="mt-2 text-gray-400">Monta tu archivo ISO en una unidad virtual y copia eficientemente todos los archivos de instalación a la nueva partición que acaba de crear.</p>
+                                <p class="mt-2 text-gray-400">Monta tu imagen ISO en una unidad virtual y copia eficientemente todos los archivos de instalación a la nueva partición que acaba de crear.</p>
                             </div>
                         </div>
                         <!-- Step 4 -->
                         <div class="flex items-start space-x-6 reveal" style="transition-delay: 300ms;">
-                            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-yellow-600/20 text-yellow-400 border border-yellow-500">
+                            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-600/10 text-blue-400 border border-blue-500/30">
                                 <i class="fas fa-cogs"></i>
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-white">4. Magia con el BCD</h3>
-                                <p class="mt-2 text-gray-400">Aquí ocurre lo increíble: WinDeploy crea una nueva entrada de arranque (BCD), la configura para que apunte a los archivos de instalación y la establece como la opción por defecto para el próximo reinicio.</p>
+                                <p class="mt-2 text-gray-400">Aquí ocurre lo increíble: WinDeploy crea una nueva entrada de arranque (BCD) y la establece como la opción por defecto para el próximo reinicio.</p>
                             </div>
                         </div>
                         <!-- Step 5 -->
                         <div class="flex items-start space-x-6 reveal" style="transition-delay: 400ms;">
-                            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-600/20 text-red-400 border border-red-500">
+                            <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-600/10 text-red-400 border border-red-500/30">
                                 <i class="fas fa-undo"></i>
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-white">5. Limpieza Automática</h3>
-                                <p class="mt-2 text-gray-400">Una vez terminas, la función "Deshacer" revierte todo: elimina la entrada BCD, borra la partición temporal y expande tu partición principal para recuperar el 100% del espacio.</p>
+                                <p class="mt-2 text-gray-400">Una vez terminas, la función "Deshacer" revierte todo: elimina la entrada BCD, borra la partición temporal y expande tu partición principal para recuperar el espacio.</p>
                             </div>
                         </div>
                     </div>
@@ -243,7 +321,7 @@
         <!-- Installation Section -->
         <section id="install" class="py-20">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-white reveal">Un Comando para <span class="gradient-text">Gobernarlos a Todos</span></h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-white reveal">Un Comando para <span class="gradient-text">Una Gran Automatiz</span></h2>
                 <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto mb-12 reveal">No se instala nada. Abre PowerShell como Administrador, copia este comando, pégalo y presiona Enter. Así de simple.</p>
                 
                 <div class="max-w-3xl mx-auto code-block rounded-xl p-4 relative reveal">
@@ -256,7 +334,7 @@
         </section>
 
         <!-- FAQ Section -->
-        <section id="faq" class="py-20 bg-[#161b22]/80 backdrop-blur-sm">
+        <section id="faq" class="py-20 bg-opacity-50 bg-black">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold text-white reveal">Preguntas <span class="gradient-text">Frecuentes</span></h2>
@@ -270,7 +348,7 @@
                         </button>
                         <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
                             <p class="p-6 pt-0 text-gray-400">
-                                **Sí.** El script es de código abierto y puedes revisarlo completamente en GitHub. Utiliza herramientas estándar de Windows como `diskpart` y `bcdedit` para realizar las operaciones. Sin embargo, como cualquier herramienta que modifica particiones, siempre existe un riesgo. **Se recomienda encarecidamente hacer una copia de seguridad de tus datos importantes antes de usarlo.**
+                                <strong>Sí.</strong> El script es de código abierto y puedes revisarlo en GitHub. Utiliza herramientas estándar de Windows como `diskpart` y `bcdedit`. Sin embargo, como cualquier herramienta que modifica particiones, <strong>se recomienda encarecidamente hacer una copia de seguridad de tus datos importantes antes de usarlo.</strong>
                             </p>
                         </div>
                     </div>
@@ -283,8 +361,8 @@
                         <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
                             <p class="p-6 pt-0 text-gray-400">
                                 Solo necesitas dos cosas:
-                                <br>1. Un archivo **ISO de instalación de Windows** (Windows 10, 11, etc.) guardado en tu computadora.
-                                <br>2. **Espacio libre suficiente** en tu disco duro para crear la partición temporal (el tamaño del ISO + 2 GB).
+                                <br>1. Una <strong>imagen ISO de instalación de Windows</strong> (Windows 10, 11, etc.) guardada en tu computadora.
+                                <br>2. <strong>Espacio libre suficiente</strong> en tu disco duro para crear la partición temporal (el tamaño de la ISO + 2 GB).
                             </p>
                         </div>
                     </div>
@@ -296,7 +374,7 @@
                         </button>
                         <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
                             <p class="p-6 pt-0 text-gray-400">
-                                Una vez que hayas terminado de instalar Windows en tu partición principal, puedes volver a ejecutar el script. La interfaz te mostrará la opción **"Eliminar Arranque y Partición"**. Al usarla, el script limpiará la entrada de arranque y eliminará la partición temporal, devolviendo el espacio a tu disco principal.
+                                Una vez que hayas instalado Windows, puedes volver a ejecutar el script. La interfaz te mostrará la opción <strong>"Eliminar Arranque y Partición"</strong>. Al usarla, el script limpiará la entrada de arranque y eliminará la partición temporal, devolviendo el espacio a tu disco principal.
                             </p>
                         </div>
                     </div>
@@ -327,16 +405,9 @@
 
             let particlesArray;
 
-            const mouse = {
-                x: null,
-                y: null,
-                radius: (canvas.height / 120) * (canvas.width / 120)
-            }
-
-            window.addEventListener('mousemove', function(event) {
-                mouse.x = event.x;
-                mouse.y = event.y;
-            });
+            // Updated particle colors to match the blue theme
+            const particleColor = 'rgba(59, 130, 246, 0.5)'; // blue-500
+            const lineColor = 'rgba(96, 165, 250,'; // blue-400
 
             class Particle {
                 constructor(x, y, directionX, directionY, size, color) {
@@ -350,7 +421,7 @@
                 draw() {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                    ctx.fillStyle = 'rgba(88, 166, 255, 0.5)';
+                    ctx.fillStyle = particleColor;
                     ctx.fill();
                 }
                 update() {
@@ -368,15 +439,14 @@
 
             function init() {
                 particlesArray = [];
-                let numberOfParticles = (canvas.height * canvas.width) / 15000;
+                let numberOfParticles = (canvas.height * canvas.width) / 18000; // Reduced particle count slightly for a cleaner look
                 for (let i = 0; i < numberOfParticles; i++) {
                     let size = (Math.random() * 2) + 1;
                     let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
                     let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-                    let directionX = (Math.random() * .4) - .2;
-                    let directionY = (Math.random() * .4) - .2;
-                    let color = '#58a6ff';
-                    particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+                    let directionX = (Math.random() * .3) - .15;
+                    let directionY = (Math.random() * .3) - .15;
+                    particlesArray.push(new Particle(x, y, directionX, directionY, size, particleColor));
                 }
             }
 
@@ -386,9 +456,9 @@
                     for (let b = a; b < particlesArray.length; b++) {
                         let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
                             ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-                        if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-                            opacityValue = 1 - (distance / 20000);
-                            ctx.strokeStyle = 'rgba(163, 113, 247,' + opacityValue + ')';
+                        if (distance < (canvas.width / 8) * (canvas.height / 8)) {
+                            opacityValue = 1 - (distance / 25000);
+                            ctx.strokeStyle = lineColor + opacityValue + ')';
                             ctx.lineWidth = 1;
                             ctx.beginPath();
                             ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
@@ -411,7 +481,6 @@
             window.addEventListener('resize', function() {
                 canvas.width = innerWidth;
                 canvas.height = innerHeight;
-                mouse.radius = ((canvas.height / 120) * (canvas.height / 120));
                 init();
             });
             
@@ -447,6 +516,14 @@
                     const icon = question.querySelector('i');
                     const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
 
+                    // Close all other FAQ answers
+                    faqQuestions.forEach(q => {
+                        if (q !== question) {
+                            q.nextElementSibling.style.maxHeight = '0px';
+                            q.querySelector('i').style.transform = 'rotate(0deg)';
+                        }
+                    });
+
                     if (isOpen) {
                         answer.style.maxHeight = '0px';
                         icon.style.transform = 'rotate(0deg)';
@@ -464,7 +541,7 @@
                         entry.target.classList.add('visible');
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.2 }); // Increased threshold for earlier trigger
 
             document.querySelectorAll('.reveal').forEach(el => {
                 observer.observe(el);
@@ -474,5 +551,3 @@
 
 </body>
 </html>
-
-
