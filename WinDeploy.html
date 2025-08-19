@@ -244,10 +244,10 @@
                     <div class="bg-blue-500/10 p-8 rounded-xl border border-blue-500/50 reveal" style="transition-delay: 150ms;">
                          <h3 class="text-2xl font-bold text-white mb-6 text-center">El Proceso WinDeploy <span class="gradient-text">Simplificado</span></h3>
                          <ul class="space-y-6">
-                             <li class="flex items-start"><i class="fas fa-check-circle text-blue-400 mt-1 mr-3"></i><span><strong>Paso 1:</strong> Ejecuta el comando y selecciona tu imagen ISO.</span></li>
-                             <li class="flex items-start"><i class="fas fa-check-circle text-blue-400 mt-1 mr-3"></i><span><strong>Paso 2:</strong> Haz clic en "Crear Arranque".</span></li>
-                             <li class="flex items-start"><i class="fas fa-check-circle text-blue-400 mt-1 mr-3"></i><span><strong>Paso 3:</strong> Reinicia el equipo. ¡Listo!</span></li>
-                             <li class="flex items-start text-sm text-gray-400 pt-4"><i class="fas fa-info-circle text-blue-400 mt-1 mr-3"></i><span>El script se encarga del resto y puedes revertir los cambios fácilmente cuando termines.</span></li>
+                              <li class="flex items-start"><i class="fas fa-check-circle text-blue-400 mt-1 mr-3"></i><span><strong>Paso 1:</strong> Ejecuta el comando y selecciona tu imagen ISO.</span></li>
+                              <li class="flex items-start"><i class="fas fa-check-circle text-blue-400 mt-1 mr-3"></i><span><strong>Paso 2:</strong> Haz clic en "Crear Arranque".</span></li>
+                              <li class="flex items-start"><i class="fas fa-check-circle text-blue-400 mt-1 mr-3"></i><span><strong>Paso 3:</strong> Reinicia el equipo. ¡Listo!</span></li>
+                              <li class="flex items-start text-sm text-gray-400 pt-4"><i class="fas fa-info-circle text-blue-400 mt-1 mr-3"></i><span>El script se encarga del resto y puedes revertir los cambios fácilmente cuando termines.</span></li>
                          </ul>
                     </div>
                 </div>
@@ -318,10 +318,44 @@
             </div>
         </section>
 
+        <!-- NEW: Future Features Section -->
+        <section class="py-20 bg-opacity-50 bg-black">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white reveal">Mejoras en el <span class="gradient-text">Horizonte</span></h2>
+                    <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto reveal">WinDeploy está en constante evolución. Esto es lo que viene.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Card 1: Keep Files -->
+                    <div class="animated-card p-8 rounded-xl reveal flex flex-col">
+                        <div class="text-4xl text-blue-400 mb-4"><i class="fas fa-save"></i></div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Instalación Conservando Archivos</h3>
+                        <p class="text-gray-400 flex-grow">¿Necesitas actualizar sin perderlo todo? La próxima versión permitirá realizar una instalación de Windows conservando tus archivos.</p>
+                        <div class="flex items-start text-sm text-yellow-500/80 mt-4 pt-4 border-t border-yellow-500/20">
+                            <i class="fas fa-exclamation-triangle mt-1 mr-3 flex-shrink-0"></i>
+                            <span>Siempre se recomienda tener una copia de seguridad. No nos hacemos responsables por la pérdida de datos.</span>
+                        </div>
+                    </div>
+                    <!-- Card 2: ISO Downloader -->
+                    <div class="animated-card p-8 rounded-xl reveal" style="transition-delay: 150ms;">
+                        <div class="text-4xl text-blue-400 mb-4"><i class="fas fa-cloud-download-alt"></i></div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Descarga de ISO Integrada</h3>
+                        <p class="text-gray-400">¿No tienes una imagen ISO a mano? No hay problema. Podrás descargar la última versión oficial de Windows 10 u 11 directamente desde la interfaz del script.</p>
+                    </div>
+                    <!-- Card 3: WinRE Support -->
+                    <div class="animated-card p-8 rounded-xl reveal" style="transition-delay: 300ms;">
+                        <div class="text-4xl text-blue-400 mb-4"><i class="fas fa-terminal"></i></div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Instalación desde WinRE</h3>
+                        <p class="text-gray-400">Incluso si tu S.O. no arranca, podrás ejecutar WinDeploy desde el entorno de recuperación. Con PowerShell e internet, podrás lanzar una instalación limpia para revivir tu equipo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Installation Section -->
         <section id="install" class="py-20">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-white reveal">Un Comando para <span class="gradient-text">Una Gran Automatiz</span></h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-white reveal">Un Comando para <span class="gradient-text">Gobernarlos a Todos</span></h2>
                 <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto mb-12 reveal">No se instala nada. Abre PowerShell como Administrador, copia este comando, pégalo y presiona Enter. Así de simple.</p>
                 
                 <div class="max-w-3xl mx-auto code-block rounded-xl p-4 relative reveal">
@@ -493,7 +527,13 @@
             const copyTextSpan = document.getElementById('copy-text');
 
             copyButton.addEventListener('click', () => {
-                navigator.clipboard.writeText(commandText).then(() => {
+                // Use the older execCommand for broader compatibility in iFrames
+                const textarea = document.createElement('textarea');
+                textarea.value = commandText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
                     copyTextSpan.textContent = '¡Copiado!';
                     copyButton.querySelector('i').classList.remove('fa-copy');
                     copyButton.querySelector('i').classList.add('fa-check');
@@ -503,9 +543,10 @@
                         copyButton.querySelector('i').classList.remove('fa-check');
                         copyButton.querySelector('i').classList.add('fa-copy');
                     }, 2000);
-                }).catch(err => {
-                    console.error('Error al copiar: ', err);
-                });
+                } catch (err) {
+                    console.error('Fallback: Oops, unable to copy', err);
+                }
+                document.body.removeChild(textarea);
             });
 
             // --- FAQ Accordion ---
