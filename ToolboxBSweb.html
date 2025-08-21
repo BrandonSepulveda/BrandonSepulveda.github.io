@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="icon" type="image/png" href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToolboxBS - Web UI</title>
-    <!-- Librería JSZip para crear archivos ZIP en el navegador -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     
-    <!-- Analytics -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
     <script>
@@ -17,7 +16,6 @@
       gtag('config', 'G-2RY7LG5R21');
     </script>
     
-    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -691,7 +689,6 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <div class="header">
         <div class="logo">
             <div class="logo-icon"></div>
@@ -720,7 +717,6 @@
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content" id="mainContent">
         <h1 class="page-title">Tu Caja de Herramientas <span>Digital</span></h1>
         <p class="page-subtitle">Selecciona una categoría para acceder a las utilidades de optimización, reparación y configuración para tu sistema.</p>
@@ -738,8 +734,8 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 </div>
                 <h3 class="tool-title">Descargas Apps</h3>
-                <p class="tool-description">Instaladores de apps populares.</p>
-                <div class="tooltip">Acceder a la página de descargas</div>
+                <p class="tool-description">Abre nuestro centro de aplicaciones.</p>
+                <div class="tooltip">Acceder al centro de aplicaciones</div>
             </div>
             <div class="tool-card" onclick="openModal('repair-modal')">
                 <div class="tool-icon">
@@ -760,7 +756,6 @@
         </div>
     </div>
 
-    <!-- Floating Action Button -->
     <div class="fab-container">
         <button class="fab" id="fabButton" onclick="showGeneratedCode()" disabled>
             <span class="fab-icon">
@@ -771,9 +766,6 @@
         </button>
     </div>
 
-    <!-- Modals (estructura HTML sin cambios, solo estilos) -->
-
-    <!-- Modal for Info Sistema -->
     <div id="info-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -785,29 +777,14 @@
                 <div class="tool-item" onclick="toggleSelection(this, 'info-hardware', 'info')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Ver Información del Hardware</span>
+                        <span class="tool-item-text">Generar Informe Completo del Sistema</span>
                     </div>
-                    <div class="tooltip">Muestra detalles de CPU, GPU, RAM, etc.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'info-software', 'info')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Ver Información del Software</span>
-                    </div>
-                    <div class="tooltip">Lista el software instalado y versiones.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'info-network', 'info')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Información de Red</span>
-                    </div>
-                    <div class="tooltip">Muestra la configuración de red actual.</div>
+                    <div class="tooltip">Muestra un diagnóstico detallado de CPU, GPU, RAM, red y más.</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal for Reparación -->
     <div id="repair-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -819,57 +796,56 @@
                 <div class="tool-item" onclick="toggleSelection(this, 'create-restore-point', 'repair')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">1. Crear Punto de Restauración</span>
+                        <span class="tool-item-text">Crear Punto de Restauración del Sistema</span>
                     </div>
-                    <div class="tooltip">Crea un punto de guardado para restaurar el sistema.</div>
+                    <div class="tooltip">Crea un punto de guardado para revertir cambios si es necesario. (Recomendado)</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'os-maintenance', 'repair')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">2. Mantenimiento del S.O.</span>
+                        <span class="tool-item-text">Mantenimiento de Archivos del Sistema (SFC & DISM)</span>
                     </div>
-                    <div class="tooltip">Ejecuta SFC y DISM para reparar archivos del sistema.</div>
+                    <div class="tooltip">Ejecuta SFC y DISM para buscar y reparar archivos corruptos de Windows.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'bsod-info', 'repair')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">3. Información de Pantallazos Azules</span>
+                        <span class="tool-item-text">Analizar Errores de Pantalla Azul (BSOD)</span>
                     </div>
-                    <div class="tooltip">Analiza y muestra detalles de errores BSOD anteriores.</div>
+                    <div class="tooltip">Utiliza BlueScreenView para analizar los archivos de volcado de memoria.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'battery-status', 'repair')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">4. Ver Estado de la Batería</span>
+                        <span class="tool-item-text">Generar Informe de Estado de la Batería</span>
                     </div>
-                    <div class="tooltip">Muestra información detallada sobre la batería.</div>
+                    <div class="tooltip">Crea un informe detallado sobre la salud y ciclos de la batería.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'driver-info', 'repair')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">5. Información de Drivers</span>
+                        <span class="tool-item-text">Consultar Controladores del Sistema</span>
                     </div>
-                    <div class="tooltip">Lista y gestiona todos los controladores instalados.</div>
+                    <div class="tooltip">Abre el Administrador de Dispositivos y genera un listado de drivers.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'repair-network', 'repair')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">6. Reparar Red</span>
+                        <span class="tool-item-text">Restablecer Configuración de Red</span>
                     </div>
-                    <div class="tooltip">Soluciona problemas comunes de conectividad de red.</div>
+                    <div class="tooltip">Ejecuta una serie de comandos para solucionar problemas de conexión a internet.</div>
                 </div>
                 <div class="tool-item" onclick="openModal('cleanup-sub-modal')">
                     <div class="tool-item-content">
-                        <span class="tool-item-text">7. Limpieza (Archivos Temporales y RAM)</span>
+                        <span class="tool-item-text">Herramientas de Limpieza del Sistema</span>
                     </div>
                     <span class="tool-item-arrow">→</span>
-                    <div class="tooltip">Abre opciones de limpieza avanzada.</div>
+                    <div class="tooltip">Accede a opciones para liberar espacio en disco y optimizar la memoria RAM.</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal for Tweaks -->
     <div id="tweaks-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -881,87 +857,77 @@
                 <div class="tool-item" onclick="toggleSelection(this, 'winutil', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Ejecutar WinUtil</span>
+                        <span class="tool-item-text">Ejecutar Chris Titus Tech Windows Utility</span>
                     </div>
-                    <div class="tooltip">Abre la popular herramienta de Chris Titus.</div>
+                    <div class="tooltip">Abre la popular herramienta de optimización y configuración de Chris Titus.</div>
                 </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'install-winget', 'tweaks')">
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-optimize-system', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Instalar Winget</span>
+                        <span class="tool-item-text">Aplicar Optimizaciones de Rendimiento</span>
                     </div>
-                    <div class="tooltip">Instala el gestor de paquetes oficial de Microsoft.</div>
+                    <div class="tooltip">Ejecuta un script .bat con ajustes para mejorar la respuesta del sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'activate-windows', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Activar Windows</span>
+                        <span class="tool-item-text">Activar Windows con Clave de Firmware</span>
                     </div>
-                    <div class="tooltip">Activa Windows usando la clave digital almacenada.</div>
-                </div>
-                    <div class="tooltip">Herramienta de optimización avanzada del sistema.</div>
+                    <div class="tooltip">Intenta activar Windows utilizando la clave de producto digital almacenada en la BIOS/UEFI.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'find-drivers', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Buscar Drivers</span>
+                        <span class="tool-item-text">Buscar Controladores del Fabricante</span>
                     </div>
-                    <div class="tooltip">Busca drivers específicos para tu modelo de PC.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'update-windows', 'tweaks')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Actualizar Windows</span>
-                    </div>
-                    <div class="tooltip">Fuerza la búsqueda de actualizaciones pendientes.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'optimize-os', 'tweaks')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Analizar y Optimizar S.O.</span>
-                    </div>
-                    <div class="tooltip">Realiza un análisis completo y optimiza el sistema.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'system-properties', 'tweaks')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Propiedades del Sistema</span>
-                    </div>
-                    <div class="tooltip">Accede a la configuración avanzada del sistema.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'disable-transparency', 'tweaks')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Deshabilitar Transparencia</span>
-                    </div>
-                    <div class="tooltip">Desactiva efectos de transparencia para mejor rendimiento.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'reboot-bios', 'tweaks')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Apagar y Entrar a BIOS</span>
-                    </div>
-                    <div class="tooltip">Reinicia el PC y accede directamente a la BIOS/UEFI.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'recovery-env', 'tweaks')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Ingresar al Entorno de Recuperación</span>
-                    </div>
-                    <div class="tooltip">Accede a las opciones avanzadas de Windows.</div>
+                    <div class="tooltip">Detecta el fabricante (Dell, HP, Lenovo) e instala su asistente de actualizaciones.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'update-apps', 'tweaks')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Actualizar Apps</span>
+                        <span class="tool-item-text">Actualizar Todas las Aplicaciones (Winget)</span>
                     </div>
-                    <div class="tooltip">Actualiza todas las aplicaciones instaladas con WinGet.</div>
+                    <div class="tooltip">Busca y actualiza todas las aplicaciones instaladas a través de Winget.</div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'system-properties', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Abrir Propiedades Avanzadas del Sistema</span>
+                    </div>
+                    <div class="tooltip">Accede a la configuración de rendimiento, perfiles de usuario y variables de entorno.</div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'disable-transparency', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Deshabilitar Efectos de Transparencia</span>
+                    </div>
+                    <div class="tooltip">Desactiva la transparencia de la interfaz para mejorar el rendimiento gráfico.</div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'reboot-bios', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Reiniciar el Equipo en la BIOS/UEFI</span>
+                    </div>
+                    <div class="tooltip">Reinicia el PC y accede directamente a la configuración del firmware.</div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'recovery-env', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Acceder al Entorno de Recuperación</span>
+                    </div>
+                    <div class="tooltip">Reinicia en el modo de recuperación de Windows para opciones avanzadas.</div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'install-winget', 'tweaks')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Instalar Gestor de Paquetes Winget</span>
+                    </div>
+                    <div class="tooltip">Abre la Microsoft Store para instalar el gestor de paquetes oficial de Microsoft.</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Sub-modal for Limpieza (within Reparación) -->
     <div id="cleanup-sub-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -975,20 +941,19 @@
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Limpiar Archivos Temporales</span>
                     </div>
-                    <div class="tooltip">Elimina archivos temporales de Windows y del usuario.</div>
+                    <div class="tooltip">Elimina de forma segura los archivos temporales de Windows y del perfil de usuario.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'cleanup-optimize-ram', 'repairCleanup')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Optimizar RAM</span>
+                        <span class="tool-item-text">Liberar y Optimizar Memoria RAM</span>
                     </div>
-                    <div class="tooltip">Libera memoria RAM usando la herramienta RAMMap.</div>
+                    <div class="tooltip">Utiliza RAMMap de Sysinternals para limpiar áreas de la memoria RAM.</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Message Box -->
     <div id="messageBox" class="message-box">
         <div class="modal-content" style="max-width: 450px; text-align: center;">
             <p id="messageText"></p>
@@ -996,7 +961,6 @@
         </div>
     </div>
     
-    <!-- Code Display Box -->
     <div id="codeDisplayBox" class="code-display-box">
         <div class="modal-content">
             <div class="modal-header">
@@ -1011,7 +975,6 @@
         </div>
     </div>
 
-    <!-- Modal for Home (Inicio) -->
     <div id="home-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1025,55 +988,47 @@
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Panel de Control</span>
                     </div>
-                    <div class="tooltip">Abre el Panel de Control clásico.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'home-quick-diagnostic', 'home')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Diagnóstico Rápido</span>
-                    </div>
-                    <div class="tooltip">Realiza una verificación rápida del sistema.</div>
+                    <div class="tooltip">Abre el Panel de Control clásico de Windows.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'home-windows-settings', 'home')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Ajustes de Windows</span>
+                        <span class="tool-item-text">Configuración de Windows</span>
                     </div>
-                    <div class="tooltip">Abre la configuración moderna de Windows.</div>
+                    <div class="tooltip">Abre la aplicación moderna de Configuración de Windows.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'home-file-explorer', 'home')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Explorador de Archivos</span>
                     </div>
-                    <div class="tooltip">Abre el explorador de archivos.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'home-powershell-console', 'home')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">PowerShell</span>
-                    </div>
-                    <div class="tooltip">Abre una terminal de PowerShell.</div>
+                    <div class="tooltip">Abre una nueva ventana del Explorador de Archivos.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'home-system-info-app', 'home')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Información del Sistema</span>
+                        <span class="tool-item-text">Información del Sistema (msinfo32)</span>
                     </div>
-                    <div class="tooltip">Muestra información detallada del sistema.</div>
+                    <div class="tooltip">Abre la utilidad de Información del Sistema para ver detalles de hardware.</div>
                 </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'home-install-powershell7', 'home')">
+                <div class="tool-item" onclick="toggleSelection(this, 'home-powershell-console', 'home')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Instalar PowerShell 7</span>
+                        <span class="tool-item-text">Nueva Consola de PowerShell</span>
                     </div>
-                    <div class="tooltip">Descarga e instala la última versión de PowerShell.</div>
+                    <div class="tooltip">Inicia una nueva instancia de la terminal de PowerShell.</div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'home-quick-diagnostic', 'home')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Realizar Diagnóstico Rápido</span>
+                    </div>
+                    <div class="tooltip">Muestra información básica del sistema directamente en la consola.</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal for Herramientas (Tools) -->
     <div id="tools-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1082,109 +1037,80 @@
             </div>
             <div class="subtitle">Todas las herramientas de optimización y reparación</div>
             <div class="tool-list">
-                <div class="tool-item" onclick="toggleSelection(this, 'tools-run-toolboxbs', 'tools')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Ejecutar ToolboxBS</span>
-                    </div>
-                    <div class="tooltip">Lanza la versión completa de ToolboxBS en PowerShell.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'tools-download-windows', 'tools')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Descargar Windows</span>
-                    </div>
-                    <div class="tooltip">Herramienta para descargar imágenes oficiales de Windows.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'tools-run-winscript', 'tools')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Ejecutar WinScript</span>
-                    </div>
-                    <div class="tooltip">Interfaz de línea de comandos para scripts de Windows.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'tools-install-sentinel', 'tools')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Instalar Sentinel</span>
-                    </div>
-                    <div class="tooltip">Instala Hard Disk Sentinel para monitoreo del disco duro.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'tools-optimize-system', 'tools')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Optimizar y mejorar el sistema</span>
-                    </div>
-                    <div class="tooltip">Ejecuta rutinas de optimización automática del sistema.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'tools-install-intel-drivers', 'tools')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Instalar Intel Driver Support</span>
-                    </div>
-                    <div class="tooltip">Descarga e instala la herramienta de actualización de drivers Intel.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'tools-windows-repair', 'tools')">
-                    <div class="tool-item-content">
-                        <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Reparación de Windows</span>
-                    </div>
-                    <div class="tooltip">Ejecuta SFC y DISM para reparar archivos corruptos.</div>
-                </div>
-                <div class="tool-item" onclick="toggleSelection(this, 'tools-task-manager', 'tools')">
+                 <div class="tool-item" onclick="toggleSelection(this, 'tools-task-manager', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Administrador de Tareas</span>
                     </div>
-                    <div class="tooltip">Abre el administrador de tareas para gestionar procesos.</div>
+                    <div class="tooltip">Abre el Administrador de Tareas para gestionar procesos y rendimiento.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-device-manager', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Administrador de Dispositivos</span>
                     </div>
-                    <div class="tooltip">Gestiona drivers y hardware del sistema.</div>
+                    <div class="tooltip">Gestiona los controladores y el hardware del sistema.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-windows-services', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Servicios</span>
+                        <span class="tool-item-text">Servicios de Windows</span>
                     </div>
-                    <div class="tooltip">Administra y configura servicios de Windows.</div>
+                    <div class="tooltip">Administra los servicios que se ejecutan en segundo plano.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-disk-cleanup', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Limpieza de Disco</span>
+                        <span class="tool-item-text">Liberador de Espacio en Disco</span>
                     </div>
-                    <div class="tooltip">Elimina archivos innecesarios para liberar espacio.</div>
+                    <div class="tooltip">Abre la herramienta nativa para eliminar archivos innecesarios.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-registry-editor', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
                         <span class="tool-item-text">Editor del Registro</span>
                     </div>
-                    <div class="tooltip">Edita el registro de Windows (para usuarios avanzados).</div>
+                    <div class="tooltip">Abre regedit.exe (úselo con precaución).</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-winget-cli', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">WinGet (CLI)</span>
+                        <span class="tool-item-text">Consola de Winget</span>
                     </div>
-                    <div class="tooltip">Abre el gestor de paquetes WinGet en PowerShell.</div>
+                    <div class="tooltip">Abre PowerShell listo para usar comandos de Winget.</div>
                 </div>
                 <div class="tool-item" onclick="toggleSelection(this, 'tools-check-updates', 'tools')">
                     <div class="tool-item-content">
                         <div class="tool-checkbox"></div>
-                        <span class="tool-item-text">Verificar Actualizaciones</span>
+                        <span class="tool-item-text">Buscar Actualizaciones de Windows</span>
                     </div>
-                    <div class="tooltip">Abre Windows Update para buscar actualizaciones.</div>
+                    <div class="tooltip">Abre la sección de Windows Update en la Configuración.</div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-windows-repair', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Reparación Básica de Windows</span>
+                    </div>
+                    <div class="tooltip">Ejecuta los comandos SFC y DISM para reparar archivos del sistema.</div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-download-windows', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Asistente para Descargar ISO de Windows</span>
+                    </div>
+                    <div class="tooltip">Abre una herramienta para descargar imágenes oficiales de Windows.</div>
+                </div>
+                <div class="tool-item" onclick="toggleSelection(this, 'tools-install-windows', 'tools')">
+                    <div class="tool-item-content">
+                        <div class="tool-checkbox"></div>
+                        <span class="tool-item-text">Asistente para Instalación de Windows (Windeploy)</span>
+                    </div>
+                    <div class="tooltip">Abre una herramienta para formatear e instalar el sistema operativo.</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal for About -->
     <div id="about-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1192,7 +1118,7 @@
                 <button class="close-btn" onclick="closeModal('about-modal')">✕</button>
             </div>
             <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" alt="Logo de ToolboxBS">
-            <h3 style="font-size: 1.5rem; color: #fff; margin-bottom: 10px;">ToolboxBS v2.2</h3>
+            <h3 style="font-size: 1.5rem; color: #fff; margin-bottom: 10px;">ToolboxBS v2.7</h3>
             <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.6; max-width: 500px; margin: 0 auto 30px auto;">
                 Una colección de herramientas curadas para optimizar, reparar y personalizar tu sistema Windows de forma sencilla y potente.
             </p>
@@ -1201,7 +1127,7 @@
                 <p><strong>GitHub:</strong> <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank">BrandonSepulveda/ToolboxBS</a></p>
             </div>
             <div class="info-section">
-                <p><strong>Licencia:</strong> Licencia: GNU AGPL v3.0 - Copyright (c) 2023-2025 Jhon Brandon Sepulveda Valdes </p>
+                <p><strong>Licencia:</strong> GNU AGPL v3.0 - Copyright (c) 2024-2025 Jhon Brandon Sepulveda Valdes</p>
             </div>
         </div>
     </div>
@@ -1217,154 +1143,521 @@
             'repair': [],
             'repairCleanup': [], // Sub-category for cleanup options
             'tweaks': [],
-            'home': [], // New category for Home menu selections
-            'tools': [] // New category for Tools menu selections
+            'home': [],
+            'tools': []
         };
         
         // Variables globales para almacenar el contenido de los archivos generados
         let currentPs1Content = '';
         let currentBatContent = '';
 
-        // Comandos de PowerShell (Lógica intacta)
+        // Comandos de PowerShell (Sincronizados con ToolboxBS v2.7)
         const powershellCommands = {
-            'info-hardware': `irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/infosystem.ps1' | iex`,
-            'info-software': `irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/infosystem.ps1' | iex`,
-            'info-network': `irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/infosystem.ps1' | iex`,
-            'create-restore-point': `
-                try {
-                    Checkpoint-Computer -Description "Punto de restauracion creado por ToolboxBS" -RestorePointType "MODIFY_SETTINGS"
-                    Write-Host "Se ha creado un punto de restauracion." -ForegroundColor Green
-                } catch {
-                    Write-Host "Error al crear punto de restauracion: $_" -ForegroundColor Red
+            'info-hardware': `
+#======================================================================
+# SystemInfoPlus.ps1
+# Script avanzado para recopilación detallada de información del sistema
+# Compatible con PowerShell 5.1 y superior
+#======================================================================
+
+Clear-Host
+$ErrorActionPreference = 'SilentlyContinue'
+$WarningPreference = 'SilentlyContinue'
+
+# Función para crear encabezados con estilo
+function Write-ColorHeader {
+    param (
+        [string]$Text,
+        [string]$ForegroundColor = 'Cyan'
+    )
+    $width = $host.UI.RawUI.WindowSize.Width - 4
+    $line = "=" * $width
+    Write-Host ""
+    Write-Host $line -ForegroundColor $ForegroundColor
+    Write-Host "  $Text" -ForegroundColor $ForegroundColor
+    Write-Host $line -ForegroundColor $ForegroundColor
+}
+
+# Función para mostrar información con formato
+function Write-InfoLine {
+    param (
+        [string]$Label,
+        $Value,
+        [string]$ValueColor = 'White'
+    )
+    $LabelWidth = 30
+    $formattedLabel = $Label.PadRight($LabelWidth, ".")
+    Write-Host " $formattedLabel" -NoNewline -ForegroundColor 'DarkGray'
+    Write-Host " $Value" -ForegroundColor $ValueColor
+}
+
+# Función para crear una barra de progreso visual
+function Write-ProgressBar {
+    param (
+        [int]$Percentage,
+        [int]$BarSize = 25,
+        [string]$BarColor = 'Green',
+        [string]$EmptyColor = 'DarkGray'
+    )
+    $completedSize = [math]::Floor(($Percentage / 100) * $BarSize)
+    $remainingSize = $BarSize - $completedSize
+    Write-Host " [" -NoNewline
+    Write-Host ("■" * $completedSize) -NoNewline -ForegroundColor $BarColor
+    Write-Host ("□" * $remainingSize) -NoNewline -ForegroundColor $EmptyColor
+    Write-Host "] $Percentage%" -ForegroundColor 'DarkGray'
+}
+
+# Función para convertir bytes a formato legible
+function Convert-Size {
+    param(
+        [double]$SizeInBytes
+    )
+    if ($SizeInBytes -lt 1KB) { return "$SizeInBytes B" }
+    elseif ($SizeInBytes -lt 1MB) { return "{0:N2} KB" -f ($SizeInBytes / 1KB) }
+    elseif ($SizeInBytes -lt 1GB) { return "{0:N2} MB" -f ($SizeInBytes / 1MB) }
+    elseif ($SizeInBytes -lt 1TB) { return "{0:N2} GB" -f ($SizeInBytes / 1GB) }
+    else { return "{0:N2} TB" -f ($SizeInBytes / 1TB) }
+}
+
+# Obtener información detallada de instalación
+function Get-WindowsInstallDetails {
+    try {
+        $installTime = (Get-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion").InstallTime
+        $installDate = [DateTime]::FromFileTime([Int64]::Parse($installTime))
+        $detailedInstallInfo = Get-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion" -ErrorAction SilentlyContinue
+        [PSCustomObject]@{
+            InstallDate = $installDate
+            InstallTime = $installDate.ToString("HH:mm:ss")
+            DaysSinceInstall = [math]::Round(((Get-Date) - $installDate).TotalDays, 0)
+            ReleaseId = $detailedInstallInfo.ReleaseId
+            ProductName = $detailedInstallInfo.ProductName
+            EditionID = $detailedInstallInfo.EditionID
+            BuildBranch = $detailedInstallInfo.BuildBranch
+            CurrentBuild = $detailedInstallInfo.CurrentBuild
+        }
+    }
+    catch {
+        try {
+            $OS = Get-CimInstance Win32_OperatingSystem
+            $installDate = [System.Management.ManagementDateTimeConverter]::ToDateTime($OS.InstallDate)
+            [PSCustomObject]@{
+                InstallDate = $installDate
+                InstallTime = $installDate.ToString("HH:mm:ss")
+                DaysSinceInstall = [math]::Round(((Get-Date) - $installDate).TotalDays, 0)
+                ReleaseId = "Desconocido"
+                ProductName = $OS.Caption
+                EditionID = "Desconocido"
+                BuildBranch = "Desconocido"
+                CurrentBuild = $OS.BuildNumber
+            }
+        }
+        catch {
+            $installDate = Get-Date
+            [PSCustomObject]@{
+                InstallDate = $installDate
+                InstallTime = $installDate.ToString("HH:mm:ss")
+                DaysSinceInstall = 0
+                ReleaseId = "Desconocido"
+                ProductName = "Desconocido"
+                EditionID = "Desconocido"
+                BuildBranch = "Desconocido"
+                CurrentBuild = "Desconocido"
+            }
+        }
+    }
+}
+$installInfo = Get-WindowsInstallDetails
+
+Write-Host "\`n\`n" -NoNewline
+$progressChars = @("/", "-", "\\", "|")
+foreach ($i in 1..15) {
+    $char = $progressChars[$i % 4]
+    Write-Host "\`r $char Cargando sistema de diagnóstico avanzado... $($i * 6)%" -NoNewline -ForegroundColor 'Yellow'
+    Start-Sleep -Milliseconds 100
+}
+Write-Host "\`r √ Sistema de diagnóstico cargado completamente.    " -ForegroundColor 'Green'
+Start-Sleep -Milliseconds 500
+Clear-Host
+$title = @"
+================================================================================
+ _____           _                _____         __      _____ _          
+/  ___|         | |              |_   _|       / _|    |  __ \\| |         
+\\ \`--.  _  _ __| |_ ___ _ __ ___  | | _ __   | |_ ___  | |  \\/| |  _ ___ 
+ \`--. \\| | | / _\` | / _ \\ '_ \` _ \\| || '_ \\  |  _/ _ \\ | | __| | | | / __|
+/\\__/ /| |_| \\__,_|  __/ | | | | | || | | || || (_) || |_\\ \\ | |_| \\__ \\
+\\____/  \\__, |\\__,_|\\___|_| |_| |_\\___|_| |_||_| \\___/  \\____/_|\\__,_|___/
+         __/ |                                                         
+        |___/        Diagnóstico Avanzado v2.0 Complemento ToolboxBS by: Brandon Sepulveda
+================================================================================
+"@
+Write-Host $title -ForegroundColor 'Cyan'
+Write-Host ' Ejecutando diagnóstico completo del sistema...' -ForegroundColor 'Yellow'
+Write-Host ' Fecha de ejecución: $(Get-Date -Format 'dd/MM/yyyy HH:mm:ss')\`n' -ForegroundColor 'Gray'
+#========================================
+# INFORMACIÓN DEL SISTEMA OPERATIVO
+#========================================
+Write-ColorHeader 'INFORMACIÓN DEL SISTEMA OPERATIVO'
+$OS = Get-CimInstance Win32_OperatingSystem
+$computerSystem = Get-CimInstance Win32_ComputerSystem
+$bios = Get-CimInstance Win32_BIOS
+Write-InfoLine 'Nombre del equipo' $env:COMPUTERNAME 'Yellow'
+Write-InfoLine 'Usuario actual' "$env:USERDOMAIN\\$env:USERNAME" 'Yellow'
+Write-InfoLine 'Sistema Operativo' $OS.Caption 'White'
+Write-InfoLine 'Versión' $OS.Version 'White'
+Write-InfoLine 'Build' $OS.BuildNumber 'White'
+Write-InfoLine 'Arquitectura' "$($OS.OSArchitecture)" 'White'
+Write-InfoLine 'Fecha de instalación' $installInfo.InstallDate.ToString("dd/MM/yyyy HH:mm:ss") 'Magenta'
+Write-InfoLine 'Días desde instalación' "$($installInfo.DaysSinceInstall) días" 'Magenta'
+try {
+    $detailedInstallInfo = Get-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion" -ErrorAction SilentlyContinue
+    if ($detailedInstallInfo.ReleaseId) {
+        Write-InfoLine 'ID de versión' $detailedInstallInfo.ReleaseId 'White'
+    }
+    if ($detailedInstallInfo.BuildBranch) {
+        Write-InfoLine 'Rama de compilación' $detailedInstallInfo.BuildBranch 'White'
+    }
+} catch {}
+Write-InfoLine 'Último arranque' $OS.LastBootUpTime.ToString("dd/MM/yyyy HH:mm:ss") 'White'
+$upTime = (Get-Date) - $OS.LastBootUpTime
+Write-InfoLine 'Tiempo activo' "$($upTime.Days) días, $($upTime.Hours) horas, $($upTime.Minutes) minutos" 'Green'
+Write-InfoLine 'Fabricante' $computerSystem.Manufacturer 'White'
+Write-InfoLine 'Modelo' $computerSystem.Model 'White'
+Write-InfoLine 'Número de serie BIOS' $bios.SerialNumber 'White'
+#========================================
+# INFORMACIÓN DEL PROCESADOR
+#========================================
+Write-ColorHeader 'INFORMACIÓN DEL PROCESADOR'
+$processor = Get-CimInstance Win32_Processor
+$cpuLoad = (Get-CimInstance Win32_Processor | Measure-Object -Property LoadPercentage -Average).Average
+Write-InfoLine 'Procesador' $processor.Name 'White'
+Write-InfoLine 'Fabricante' $processor.Manufacturer 'White'
+Write-InfoLine 'Núcleos físicos' $processor.NumberOfCores 'White'
+Write-InfoLine 'Núcleos lógicos' $processor.NumberOfLogicalProcessors 'White'
+Write-InfoLine 'Velocidad actual' "$($processor.CurrentClockSpeed) MHz" 'White'
+Write-InfoLine 'Velocidad máxima' "$($processor.MaxClockSpeed) MHz" 'White'
+Write-InfoLine 'Socket' $processor.SocketDesignation 'White'
+Write-InfoLine 'Arquitectura' $processor.Architecture 'White'
+Write-InfoLine 'Caché L2' "$($processor.L2CacheSize) KB" 'White'
+Write-InfoLine 'Caché L3' "$($processor.L3CacheSize) KB" 'White'
+Write-Host ' Uso actual del CPU' -NoNewline -ForegroundColor 'DarkGray'
+$cpuColor = if ($cpuLoad -lt 30) { 'Green' } elseif ($cpuLoad -lt 70) { 'Yellow' } else { 'Red' }
+Write-ProgressBar -Percentage $cpuLoad -BarColor $cpuColor
+#========================================
+# INFORMACIÓN DE MEMORIA
+#========================================
+Write-ColorHeader 'INFORMACIÓN DE MEMORIA RAM'
+$totalRAM = [math]::Round($computerSystem.TotalPhysicalMemory / 1GB, 2)
+$availableRAM = [math]::Round((Get-CimInstance -ClassName Win32_OperatingSystem).FreePhysicalMemory / 1MB, 2)
+$usedRAM = [math]::Round($totalRAM - $availableRAM, 2)
+$ramUsagePercentage = [math]::Round(($usedRAM / $totalRAM) * 100, 0)
+Write-InfoLine 'Memoria total instalada' "$totalRAM GB" 'White'
+Write-InfoLine 'Memoria disponible' "$availableRAM GB" 'White'
+Write-InfoLine 'Memoria en uso' "$usedRAM GB" 'White'
+Write-Host ' Uso actual de memoria' -NoNewline -ForegroundColor 'DarkGray'
+$ramColor = if ($ramUsagePercentage -lt 30) { 'Green' } elseif ($ramUsagePercentage -lt 70) { 'Yellow' } else { 'Red' }
+Write-ProgressBar -Percentage $ramUsagePercentage -BarColor $ramColor
+#========================================
+# INFORMACIÓN DE ALMACENAMIENTO
+#========================================
+Write-ColorHeader 'INFORMACIÓN DE ALMACENAMIENTO'
+$diskdrives = Get-CimInstance Win32_DiskDrive
+$diskCounter = 1
+foreach ($disk in $diskdrives) {
+    $partitions = $disk | Get-CimAssociatedInstance -ResultClassName Win32_DiskPartition
+    $diskSize = [math]::Round($disk.Size / 1GB, 2)
+    $diskModel = $disk.Model
+    $diskInterface = $disk.InterfaceType
+    Write-Host "\`n Disco físico #$diskCounter" -ForegroundColor 'DarkCyan'
+    Write-InfoLine "    Modelo" $diskModel "White"
+    Write-InfoLine "    Tamaño" "$diskSize GB" "White"
+    Write-InfoLine "    Interfaz" $diskInterface "White"
+    Write-InfoLine "    Número de serie" $disk.SerialNumber "White"
+    Write-InfoLine "    Particiones" $partitions.Count "White"
+    $partitionCounter = 1
+    foreach ($partition in $partitions) {
+        $logicaldisks = $partition | Get-CimAssociatedInstance -ResultClassName Win32_LogicalDisk
+        foreach ($logicaldisk in $logicaldisks) {
+            $freeSpace = [math]::Round($logicaldisk.FreeSpace / 1GB, 2)
+            $totalSize = [math]::Round($logicaldisk.Size / 1GB, 2)
+            $usedSpace = [math]::Round($totalSize - $freeSpace, 2)
+            $percentFree = [math]::Round(($freeSpace / $totalSize) * 100, 0)
+            $percentUsed = 100 - $percentFree
+            Write-Host "\`n     Volumen lógico" -ForegroundColor 'DarkYellow'
+            Write-InfoLine "       Letra de unidad" "$($logicaldisk.DeviceID)" "Yellow"
+            Write-InfoLine "       Etiqueta" "$($logicaldisk.VolumeName)" "White"
+            Write-InfoLine "       Sistema de archivos" "$($logicaldisk.FileSystem)" "White"
+            Write-InfoLine "       Tamaño total" "$totalSize GB" "White"
+            Write-InfoLine "       Espacio usado" "$usedSpace GB" "White"
+            Write-InfoLine "       Espacio libre" "$freeSpace GB" "White"
+            Write-Host "       Uso del disco" -NoNewline -ForegroundColor 'DarkGray'
+            $diskColor = if ($percentUsed -lt 70) { "Green" } elseif ($percentUsed -lt 90) { "Yellow" } else { "Red" }
+            Write-ProgressBar -Percentage $percentUsed -BarColor $diskColor
+            $partitionCounter++
+        }
+    }
+    $diskCounter++
+}
+#========================================
+# INFORMACIÓN DE TARJETA GRÁFICA
+#========================================
+Write-ColorHeader 'INFORMACIÓN DE TARJETA GRÁFICA'
+$videoControllers = Get-CimInstance Win32_VideoController
+$gpuCounter = 1
+foreach ($gpu in $videoControllers) {
+    Write-Host "\`n Tarjeta gráfica #$gpuCounter" -ForegroundColor 'DarkCyan'
+    Write-InfoLine "    Nombre" $gpu.Name "White"
+    Write-InfoLine "    Fabricante" $gpu.VideoProcessor "White"
+    Write-InfoLine "    Versión de controlador" $gpu.DriverVersion "White"
+    Write-InfoLine "    Fecha del controlador" ([System.Management.ManagementDateTimeConverter]::ToDateTime($gpu.DriverDate).ToString("dd/MM/yyyy")) "White"
+    Write-InfoLine "    Resolución actual" "$($gpu.CurrentHorizontalResolution) x $($gpu.CurrentVerticalResolution)" "White"
+    Write-InfoLine "    Frecuencia de refresco" "$($gpu.CurrentRefreshRate) Hz" "White"
+    Write-InfoLine "    Memoria dedicada" "$(Convert-Size $gpu.AdapterRAM)" "White"
+    $gpuCounter++
+}
+#========================================
+# INFORMACIÓN DE RED
+#========================================
+Write-ColorHeader 'INFORMACIÓN DE RED'
+$networkAdapters = Get-CimInstance Win32_NetworkAdapter | Where-Object { $_.PhysicalAdapter -eq $true -and $_.MACAddress -ne $null }
+$adapterCounter = 1
+foreach ($adapter in $networkAdapters) {
+    $config = $adapter | Get-CimAssociatedInstance -ResultClassName Win32_NetworkAdapterConfiguration
+    if ($config -ne $null) {
+        Write-Host "\`n Adaptador de red #$adapterCounter" -ForegroundColor 'DarkCyan'
+        Write-InfoLine "    Nombre" $adapter.Name "White"
+        Write-InfoLine "    Fabricante" $adapter.Manufacturer "White"
+        Write-InfoLine "    Tipo de adaptador" $adapter.AdapterType "White"
+        Write-InfoLine "    Dirección MAC" $adapter.MACAddress "White"
+        Write-InfoLine "    Velocidad" "$([math]::Round($adapter.Speed / 1000000, 0)) Mbps" "White"
+        if ($config.IPAddress -ne $null) {
+            Write-InfoLine "    Dirección IPv4" ($config.IPAddress | Where-Object { $_ -like "*.*" })[0] "White"
+            Write-InfoLine "    Máscara de subred" $config.IPSubnet[0] "White"
+            if ($config.DefaultIPGateway -ne $null) {
+                Write-InfoLine "    Puerta de enlace" $config.DefaultIPGateway[0] "White"
+            }
+            if ($config.DNSServerSearchOrder -ne $null) {
+                Write-InfoLine "    Servidor DNS primario" $config.DNSServerSearchOrder[0] "White"
+                if ($config.DNSServerSearchOrder.Count -gt 1) {
+                    Write-InfoLine "    Servidor DNS secundario" $config.DNSServerSearchOrder[1] "White"
                 }
-            `,
-            'os-maintenance': `
-                if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-                    Write-Host "Debes ejecutar el script como administrador para verificar y reparar archivos del sistema." -ForegroundColor Red
-                    exit
-                }
-                Write-Host "Iniciando mantenimiento de Windows..." -ForegroundColor Green
-                $totalRAM = (Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property capacity -Sum).Sum / 1GB
-                if ($totalRAM -ge 16) {
-                    fsutil behavior set memoryusage 2
-                } else {
-                    fsutil behavior set memoryusage 1
-                }
-                bcdedit /set useplatformtick yes
-                bcdedit /set disabledynamictick yes
-                sfc /scannow
-                DISM.exe /Online /Cleanup-image /CheckHealth
-                DISM.exe /Online /Cleanup-image /Restorehealth
-                sfc /scannow
-                Dism.exe /Online /Cleanup-Image /startComponentCleanup
-                Write-Host "Mantenimiento completado. ¡Reinicia tu PC para aplicar los cambios!" -ForegroundColor Green
-            `,
+            }
+        }
+        Write-InfoLine "    Estado" $(if ($adapter.NetEnabled) { "Conectado" } else { "Desconectado" }) $(if ($adapter.NetEnabled) { "Green" } else { "Red" })
+        $adapterCounter++
+    }
+}
+$networkStats = Get-NetAdapterStatistics | Where-Object Status -eq "Up"
+foreach ($stat in $networkStats) {
+    $adapter = Get-NetAdapter | Where-Object InterfaceIndex -eq $stat.InterfaceIndex
+    Write-Host "\`n Estadísticas de red: $($adapter.Name)" -ForegroundColor 'DarkCyan'
+    Write-InfoLine "    Recibidos" "$(Convert-Size $stat.ReceivedBytes)" "White"
+    Write-InfoLine "    Enviados" "$(Convert-Size $stat.SentBytes)" "White"
+    Write-InfoLine "    Paquetes recibidos" $stat.ReceivedPackets "White"
+    Write-InfoLine "    Paquetes enviados" $stat.SentPackets "White"
+    Write-InfoLine "    Errores recibidos" $stat.ReceivedErrors "White"
+    Write-InfoLine "    Errores enviados" $stat.SentErrors "White"
+}
+#========================================
+# DISPOSITIVOS DE AUDIO
+#========================================
+Write-ColorHeader 'DISPOSITIVOS DE AUDIO'
+$audioDevices = Get-CimInstance Win32_SoundDevice
+$audioCounter = 1
+foreach ($audio in $audioDevices) {
+    Write-Host "\`n Dispositivo de audio #$audioCounter" -ForegroundColor 'DarkCyan'
+    Write-InfoLine "    Nombre" $audio.Name "White"
+    Write-InfoLine "    Fabricante" $audio.Manufacturer "White"
+    Write-InfoLine "    Estado" $(if ($audio.Status -eq "OK") { "Funcionando correctamente" } else { $audio.Status }) $(if ($audio.Status -eq "OK") { "Green" } else { "Red" })
+    $audioCounter++
+}
+#========================================
+# SERVICIOS CRÍTICOS
+#========================================
+Write-ColorHeader 'SERVICIOS CRÍTICOS DEL SISTEMA'
+$criticalServices = @(
+    "wuauserv", "windefend", "WSearch", "Audiosrv", "bits", "EventLog", "LanmanServer", "LanmanWorkstation", "Dnscache", "Dhcp", "TabletInputService", "ShellHWDetection"
+)
+foreach ($service in $criticalServices) {
+    $svc = Get-Service -Name $service -ErrorAction SilentlyContinue
+    if ($svc -ne $null) {
+        $status = $svc.Status
+        $statusColor = if ($status -eq "Running") { "Green" } else { "Red" }
+        Write-InfoLine "$($svc.DisplayName)" "$status" $statusColor
+    }
+}
+#========================================
+# ACTUALIZACIONES INSTALADAS
+#========================================
+Write-ColorHeader 'ÚLTIMAS ACTUALIZACIONES INSTALADAS'
+$updates = Get-HotFix | Sort-Object -Property InstalledOn -Descending | Select-Object -First 10
+foreach ($update in $updates) {
+    Write-InfoLine "$($update.HotFixID)" "$($update.Description) - $($update.InstalledOn.ToString('dd/MM/yyyy'))" "White"
+}
+#========================================
+# RESUMEN Y SALUD DEL SISTEMA
+#========================================
+Write-ColorHeader 'RESUMEN DE SALUD DEL SISTEMA'
+try {
+    $cpuLoad = (Get-CimInstance Win32_Processor | Measure-Object -Property LoadPercentage -Average).Average
+    if ($cpuLoad -eq $null) { $cpuLoad = 50 }
+    $cpuHealth = if ($cpuLoad -lt 50) { 100 } elseif ($cpuLoad -lt 80) { 70 } else { 40 }
+    $totalRAM = [math]::Round((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB, 2)
+    $availableRAM = [math]::Round((Get-CimInstance -ClassName Win32_OperatingSystem).FreePhysicalMemory / 1MB, 2)
+    $usedRAM = [math]::Round($totalRAM - $availableRAM, 2)
+    $ramUsagePercentage = [math]::Round(($usedRAM / $totalRAM) * 100, 0)
+    $ramHealth = if ($ramUsagePercentage -lt 70) { 100 } elseif ($ramUsagePercentage -lt 90) { 60 } else { 30 }
+    $systemDrive = Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='$env:SystemDrive'"
+    $diskFreePercent = [math]::Round(($systemDrive.FreeSpace / $systemDrive.Size) * 100, 0)
+    $diskHealth = if ($diskFreePercent -gt 25) { 100 } elseif ($diskFreePercent -gt 10) { 60 } else { 20 }
+    try {
+        $updateSession = New-Object -ComObject Microsoft.Update.Session
+        $updateSearcher = $updateSession.CreateUpdateSearcher()
+        $searchResult = $updateSearcher.Search("IsInstalled=0 and Type='Software'")
+        $pendingUpdates = $searchResult.Updates.Count
+        $updateHealth = if ($pendingUpdates -eq 0) { 100 } elseif ($pendingUpdates -lt 5) { 80 } else { 60 }
+    } catch {
+        $updateHealth = 70
+    }
+    $overallHealth = [math]::Round(($cpuHealth + $ramHealth + $diskHealth + $updateHealth) / 4)
+    $cpuColor = if ($cpuHealth -gt 75) { "Green" } elseif ($cpuHealth -gt 50) { "Yellow" } else { "Red" }
+    $ramColor = if ($ramHealth -gt 75) { "Green" } elseif ($ramHealth -gt 50) { "Yellow" } else { "Red" }
+    $diskColor = if ($diskHealth -gt 75) { "Green" } elseif ($diskHealth -gt 50) { "Yellow" } else { "Red" }
+    $updateColor = if ($updateHealth -gt 75) { "Green" } elseif ($updateHealth -gt 50) { "Yellow" } else { "Red" }
+    $healthColor = if ($overallHealth -gt 75) { "Green" } elseif ($overallHealth -gt 50) { "Yellow" } else { "Red" }
+    Write-InfoLine "Salud del procesador" "$cpuHealth%" $cpuColor
+    Write-InfoLine "Uso actual de CPU" "$cpuLoad%" $cpuColor
+    Write-InfoLine "Salud de la memoria" "$ramHealth%" $ramColor
+    Write-InfoLine "Uso actual de RAM" "$ramUsagePercentage%" $ramColor
+    Write-InfoLine "Salud del almacenamiento" "$diskHealth%" $diskColor
+    Write-InfoLine "Espacio libre en disco C:" "$diskFreePercent%" $diskColor
+    Write-InfoLine "Estado de actualizaciones" "$updateHealth%" $updateColor
+    Write-InfoLine "Actualizaciones pendientes" "$pendingUpdates" $updateColor
+} catch {
+    Write-Host " Error al calcular la salud del sistema: $_" -ForegroundColor "Red"
+    Write-Host " Se mostrarán valores estimados" -ForegroundColor "Yellow"
+    $cpuHealth = 70
+    $ramHealth = 70
+    $diskHealth = 70
+    $updateHealth = 70
+    $overallHealth = 70
+    $healthColor = "Yellow"
+    Write-InfoLine "Salud del procesador" "$cpuHealth% (estimado)" "Yellow"
+    Write-InfoLine "Salud de la memoria" "$ramHealth% (estimado)" "Yellow"
+    Write-InfoLine "Salud del almacenamiento" "$diskHealth% (estimado)" "Yellow"
+    Write-InfoLine "Estado de actualizaciones" "$updateHealth% (estimado)" "Yellow"
+}
+Write-Host "\`n SALUD GENERAL DEL SISTEMA" -ForegroundColor "White"
+Write-ProgressBar -Percentage $overallHealth -BarColor $healthColor -BarSize 50
+Write-Host "\`n INDICADORES DE RENDIMIENTO" -ForegroundColor "Cyan"
+Write-InfoLine "Rendimiento del procesador" "$(100 - $cpuLoad)%" $(if ((100 - $cpuLoad) -gt 75) { "Green" } elseif ((100 - $cpuLoad) -gt 50) { "Yellow" } else { "Red" })
+Write-InfoLine "Eficiencia de memoria" "$(100 - $ramUsagePercentage)%" $(if ((100 - $ramUsagePercentage) -gt 75) { "Green" } elseif ((100 - $ramUsagePercentage) -gt 50) { "Yellow" } else { "Red" })
+Write-InfoLine "Estado general" "$overallHealth%" $healthColor
+Write-Host "\`n RECOMENDACIONES" -ForegroundColor "Cyan"
+if ($cpuHealth -lt 75) { Write-Host " • Verifica los procesos que consumen más CPU con el Administrador de tareas" -ForegroundColor "Yellow" }
+if ($ramHealth -lt 75) { Write-Host " • Considera cerrar aplicaciones para liberar memoria RAM" -ForegroundColor "Yellow" }
+if ($diskHealth -lt 75) { Write-Host " • Ejecuta la herramienta de limpieza de disco para liberar espacio" -ForegroundColor "Yellow" }
+if ($updateHealth -lt 90) { Write-Host " • Instala las actualizaciones pendientes del sistema" -ForegroundColor "Yellow" }
+if ($overallHealth -lt 50) { Write-Host " • Se recomienda una revisión más detallada del sistema" -ForegroundColor "Red" }
+Write-Host "\`n Gracias por utilizar SystemInfoPlus!" -ForegroundColor "Cyan"
+Write-Host " Presiona cualquier tecla para salir..." -ForegroundColor "DarkGray"
+$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+`,
+            'create-restore-point': `try { Checkpoint-Computer -Description "Punto de restauracion por ToolboxBS" } catch { Write-Host "Error al crear punto de restauracion: $_" -ForegroundColor Red }`,
+            'os-maintenance': `sfc /scannow; DISM /Online /Cleanup-image /Restorehealth; Dism /Online /Cleanup-Image /startComponentCleanup`,
             'bsod-info': `
-                Write-Host "Abriendo BlueScreenView para analizar pantallazos azules..." -ForegroundColor Yellow
-                $Url = "https://www.nirsoft.net/utils/bluescreenview.zip"
-                $ZipPath = Join-Path $env:TEMP "bluescreenview.zip"
-                $ExtractPath = Join-Path $env:TEMP "BlueScreenView"
-                try { Invoke-WebRequest -Uri $Url -OutFile $ZipPath } catch { Write-Host "Error al descargar BlueScreenView: $_" -ForegroundColor Red; exit }
-                try { Expand-Archive -Path $ZipPath -DestinationPath $ExtractPath -Force } catch { Write-Host "Error al extraer BlueScreenView: $_" -ForegroundColor Red; exit }
-                $ExePath = Join-Path $ExtractPath "BlueScreenView.exe"
-                if (Test-Path -Path $ExePath) { Start-Process -FilePath $ExePath } else { Write-Host "No se encontro BlueScreenView.exe." -ForegroundColor Red }
-                Write-Host "Ejecutando script remoto para mas informacion de pantallazos azules..." -ForegroundColor Yellow
-                irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/pantalla%20azul.ps1' | iex
-            `,
+Write-Host "Abriendo BlueScreenView para analizar pantallazos azules..." -ForegroundColor Yellow
+$Url = "https://www.nirsoft.net/utils/bluescreenview.zip"
+$ZipPath = Join-Path $env:TEMP "bluescreenview.zip"
+$ExtractPath = Join-Path $env:TEMP "BlueScreenView"
+try { Invoke-WebRequest -Uri $Url -OutFile $ZipPath } catch { Write-Host "Error al descargar BlueScreenView: $_" -ForegroundColor Red; return }
+try { Expand-Archive -Path $ZipPath -DestinationPath $ExtractPath -Force } catch { Write-Host "Error al extraer BlueScreenView: $_" -ForegroundColor Red; return }
+$ExePath = Join-Path $ExtractPath "BlueScreenView.exe"
+if (Test-Path -Path $ExePath) { Start-Process -FilePath $ExePath } else { Write-Host "No se encontro BlueScreenView.exe." -ForegroundColor Red }
+`,
             'battery-status': `
-                Write-Host "Generando informe de bateria..." -ForegroundColor Yellow
-                $batteryReportPath = "C:\\battery_report.html"
-                powercfg /batteryreport /output "$batteryReportPath"
-                if (Test-Path $batteryReportPath) {
-                    Start-Process $batteryReportPath
-                    Write-Host "Informe de bateria generado en $batteryReportPath" -ForegroundColor Green
-                } else {
-                    Write-Host "No se pudo generar el informe de bateria." -ForegroundColor Red
-                }
-                Write-Host "Abriendo BatteryInfoView..." -ForegroundColor Yellow
-                $url = "https://www.nirsoft.net/utils/batteryinfoview.zip"
-                $outputPath = Join-Path $env:TEMP "BatteryInfoView.zip"
-                $extractPath = Join-Path $env:TEMP "BatteryInfoView"
-                try { (New-Object System.Net.WebClient).DownloadFile($url, $outputPath) } catch { Write-Host "Error al descargar BatteryInfoView: $_" -ForegroundColor Red; exit }
-                try { Expand-Archive -Path $outputPath -DestinationPath $extractPath -Force } catch { Write-Host "Error al extraer BatteryInfoView: $_" -ForegroundColor Red; exit }
-                $exePath = Join-Path $extractPath "BatteryInfoView.exe"
-                if (Test-Path -Path $exePath) { Start-Process -FilePath $exePath } else { Write-Host "No se encontro BatteryInfoView.exe." -ForegroundColor Red }
-            `,
-            'driver-info': `
-                Write-Host "Exportando informacion de drivers..." -ForegroundColor Yellow
-                $outputPath = "C:\\informacion_controladores.txt"
-                Get-WmiObject -Query 'SELECT * FROM Win32_SystemDriver' | Select-Object DisplayName, Description, PathName, StartMode, State, Status | Format-List | Out-File -FilePath $outputPath -Encoding UTF8
-                Invoke-Item -Path $outputPath
-                Write-Host "Informacion de controladores exportada a $outputPath" -ForegroundColor Green
-                Start-Process "devmgmt.msc"
-            `,
-            'repair-network': `
-                Write-Host "Reparando red..." -ForegroundColor Yellow
-                netsh winsock reset
-                netsh int ip reset
-                ipconfig /release
-                ipconfig /renew
-                ipconfig /flushdns
-                Write-Host "Reparacion de red completada. Reinicia tu equipo." -ForegroundColor Green
-                Start-Process "msdt.exe" -ArgumentList "-id NetworkDiagnostic"
-            `,
+Write-Host "Generando informe de bateria..." -ForegroundColor Yellow
+$batteryReportPath = "$env:USERPROFILE\\Desktop\\battery_report.html"
+powercfg /batteryreport /output "$batteryReportPath"
+if (Test-Path $batteryReportPath) {
+    Start-Process $batteryReportPath
+    Write-Host "Informe de bateria generado en $batteryReportPath" -ForegroundColor Green
+} else {
+    Write-Host "No se pudo generar el informe de bateria." -ForegroundColor Red
+}
+
+Write-Host "Abriendo BatteryInfoView..." -ForegroundColor Yellow
+$url = "https://www.nirsoft.net/utils/batteryinfoview.zip"
+$outputPath = Join-Path $env:TEMP "BatteryInfoView.zip"
+$extractPath = Join-Path $env:TEMP "BatteryInfoView"
+try {
+    Invoke-WebRequest -Uri $url -OutFile $outputPath
+} catch {
+    Write-Host "Error al descargar BatteryInfoView: $_" -ForegroundColor Red
+    return
+}
+try {
+    Expand-Archive -Path $outputPath -DestinationPath $extractPath -Force
+} catch {
+    Write-Host "Error al extraer BatteryInfoView: $_" -ForegroundColor Red
+    return
+}
+$exePath = Join-Path $extractPath "BatteryInfoView.exe"
+if (Test-Path -Path $exePath) {
+    Start-Process -FilePath $exePath
+} else {
+    Write-Host "No se encontro BatteryInfoView.exe." -ForegroundColor Red
+}
+`,
+            'driver-info': `Get-WmiObject -Query "SELECT * FROM Win32_SystemDriver" | Out-File -FilePath "$env:USERPROFILE\\Desktop\\drivers.txt"; Start-Process "devmgmt.msc"`,
+            'repair-network': `netsh winsock reset; netsh int ip reset; ipconfig /release; ipconfig /renew; ipconfig /flushdns`,
             'cleanup-temp-files': `
-                $userTempPath = $env:TEMP
-                $windowsTempPath = "C:\\Windows\\Temp"
-                $downloadsTempPath = "C:\\Users\\$env:USERNAME\\Downloads\\Temp"
-                $deletedFiles = 0
-                $deletedBytes = 0
-                function Remove-TempFiles {
-                    param([string]$Path, [bool]$SkipInUse = $true)
-                    $files = Get-ChildItem -Path $Path -File -ErrorAction SilentlyContinue
-                    foreach ($file in $files) {
-                        try {
-                            if ($SkipInUse -and ($file.IsReadOnly -or $file.InUse)) { continue }
-                            Remove-Item $file.FullName -Force -ErrorAction Stop
-                            $script:deletedFiles++
-                            $script:deletedBytes += $file.Length
-                        } catch {}
-                    }
-                    $folders = Get-ChildItem -Path $Path -Directory -ErrorAction SilentlyContinue
-                    foreach ($folder in $folders) {
-                        try {
-                            if (($folder.GetFiles().Count -eq 0) -and ($folder.GetDirectories().Count -eq 0)) {
-                                Remove-Item $folder.FullName -Force -ErrorAction Stop
-                            }
-                        } catch {}
-                    }
-                }
-                Remove-TempFiles -Path $userTempPath
-                if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-                    Remove-TempFiles -Path $windowsTempPath -SkipInUse $false
-                    if (Test-Path $downloadsTempPath) { Remove-TempFiles -Path $downloadsTempPath }
-                }
-                Write-Host "Limpieza completada. Archivos eliminados: $deletedFiles, Espacio liberado: $([math]::Round($deletedBytes / 1MB, 2)) MB" -ForegroundColor Green
-            `,
+try {
+    Write-Host "Limpiando archivos temporales..." -ForegroundColor Cyan
+    $userTempPath = $env:TEMP
+    $windowsTempPath = "C:\\Windows\\Temp"
+    $totalDeleted = 0
+    
+    function Clean-Folder {
+        param($path)
+        $items = Get-ChildItem -Path $path -Recurse -Force -ErrorAction SilentlyContinue
+        foreach ($item in $items) {
+            try {
+                Remove-Item $item.FullName -Recurse -Force -ErrorAction Stop
+                $script:totalDeleted++
+            } catch {
+                Write-Warning "No se pudo eliminar: $($item.FullName)"
+            }
+        }
+    }
+    
+    Clean-Folder -path $userTempPath
+    Clean-Folder -path $windowsTempPath
+
+    Write-Host "Limpieza completada. Se eliminaron $script:totalDeleted archivos/carpetas." -ForegroundColor Green
+} catch {
+    Write-Error "Ocurrió un error durante la limpieza: $_"
+}
+`,
             'cleanup-optimize-ram': `
-                $zipUrl = "https://download.sysinternals.com/files/RAMMap.zip"
-                $downloadPath = "$env:TEMP\\RAMMap.zip"
-                $extractPath = "$env:TEMP\\RAMMap"
-                try { Invoke-WebRequest -Uri $zipUrl -OutFile $downloadPath } catch { Write-Host "Error al descargar RAMMap: $_" -ForegroundColor Red; exit }
-                try { Expand-Archive -Path $downloadPath -DestinationPath $extractPath -Force } catch { Write-Host "Error al descomprimir RAMMap: $_" -ForegroundColor Red; exit }
-                $executablePath = Join-Path $extractPath "RAMMap.exe"
-                if (Test-Path -Path $executablePath) { Start-Process -FilePath $executablePath } else { Write-Host "No se encontro RAMMap.exe." -ForegroundColor Red }
-            `,
-            'winutil': `irm christitus.com/win | iex`,
-            'install-winget': `Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle; Invoke-WebRequest -Uri https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx -OutFile Microsoft.VCLibs.x64.14.00.Desktop.appx; Invoke-WebRequest -Uri https://github.com/microsoft/microsoft-ui-xaml/releases/download/v2.7.3/Microsoft.UI.Xaml.2.7.x64.appx -OutFile Microsoft.UI.Xaml.2.7.x64.appx; Add-AppxPackage Microsoft.VCLibs.x64.14.00.Desktop.appx; Add-AppxPackage Microsoft.UI.Xaml.2.7.x64.appx; Add-AppxPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle`,
-            'activate-windows': `
-                $clave = (Get-WmiObject SoftwareLicensingService | Select-Object -ExpandProperty OA3xOriginalProductKey)
-                Write-Host "La clave digital es: $clave"
-                slmgr.vbs /ipk $clave
-                Write-Host "Clave establecida como predefinida correctamente." -ForegroundColor Green
-            `,
-           'find-drivers': `
-# =========================================================================
-# SCRIPT DE BÚSQUEDA AUTOMÁTICA DE DRIVERS POR FABRICANTE
-# =========================================================================
+$zipUrl = "https://download.sysinternals.com/files/RAMMap.zip"
+$downloadPath = "$env:TEMP\\RAMMap.zip"
+$extractPath = "$env:TEMP\\RAMMap"
+try { Invoke-WebRequest -Uri $zipUrl -OutFile $downloadPath } catch { Write-Host "Error al descargar RAMMap: $_" -ForegroundColor Red; return }
+try { Expand-Archive -Path $downloadPath -DestinationPath $extractPath -Force } catch { Write-Host "Error al descomprimir RAMMap: $_" -ForegroundColor Red; return }
+$executablePath = Join-Path $extractPath "RAMMap.exe"
+if (Test-Path -Path $executablePath) { Start-Process -FilePath $executablePath } else { Write-Host "No se encontro RAMMap.exe." -ForegroundColor Red }
+`,
+            'find-drivers': `
+# 1. VERIFICACIÓN DE PERMISOS
+Write-Host "Verificando permisos de administrador..." -ForegroundColor Yellow
+if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Warning "Este script necesita ser ejecutado con privilegios de Administrador."
+    Start-Sleep -Seconds 10
+    Exit
+}
+Write-Host "Permisos de administrador confirmados." -ForegroundColor Green
 
-# --- FUNCIONES AUXILIARES ---
-
+# 2. FUNCIONES DE INSTALACIÓN Y EJECUCIÓN
 function Ensure-Winget {
     if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
         Write-Host "Winget no encontrado. Intentando instalarlo..." -ForegroundColor Cyan
@@ -1400,7 +1693,7 @@ function Ensure-Chocolatey {
 
 function Start-Application {
     param($path, $name)
-    Write-Host "Iniciando '$name'..." -ForegroundColor Yellow
+    Write-Host "Iniciando ''$name''..." -ForegroundColor Yellow
     Start-Process -FilePath $path
     Write-Host "¡Proceso completado!" -ForegroundColor Green
     Write-Host "Script finalizado."
@@ -1408,10 +1701,7 @@ function Start-Application {
     Exit
 }
 
-
-# --- LÓGICA PRINCIPAL ---
-
-# 1. DETECTAR EL FABRICANTE DEL EQUIPO
+# 3. DETECTAR EL FABRICANTE DEL EQUIPO
 try {
     $fabricante = (Get-CimInstance -ClassName Win32_ComputerSystem).Manufacturer
     Write-Host "Fabricante detectado: $fabricante" -ForegroundColor Cyan
@@ -1422,7 +1712,7 @@ catch {
     Exit
 }
 
-# 2. DEFINIR VARIABLES POR FABRICANTE
+# 4. LÓGICA PRINCIPAL BASADA EN EL FABRICANTE
 $appExePath = ""
 switch ($fabricante.Trim().ToLower()) {
     { $_ -like "*dell*" } {
@@ -1435,6 +1725,7 @@ switch ($fabricante.Trim().ToLower()) {
         $appName = "HP Image Assistant"
         $appExePath = "C:\\Program Files (x86)\\HP\\Image Assistant\\HPImageAssistant.exe"
         $wingetId = "HP.ImageAssistant"
+        $chocoId = "hp-image-assistant-client" # Se mantiene por si acaso, pero no se usará.
     }
     { $_ -like "*lenovo*" } {
         $appName = "Lenovo System Update"
@@ -1443,27 +1734,21 @@ switch ($fabricante.Trim().ToLower()) {
         $chocoId = "lenovo-system-update"
     }
     default {
-        Write-Warning "El fabricante '$fabricante' no tiene una herramienta de actualización automática soportada por este script."
-        Write-Host "Se abrirá una búsqueda en Google para encontrar los drivers manualmente."
-        $modelo = (Get-WmiObject -Class:Win32_ComputerSystem).Model
-        $serial = (Get-WmiObject -Class:Win32_BIOS).SerialNumber
-        Write-Host "Tu equipo es: $modelo, Numero de serie: $serial"
-        $url = "https://www.google.com/search?q=$($modelo.replace(' ','+'))+$($serial)+drivers"
-        Start-Process $url
+        Write-Warning "Fabricante ''$fabricante'' no soportado."
         Start-Sleep -Seconds 10
         Exit
     }
 }
 
-# 3. PROCESO DE INSTALACIÓN Y EJECUCIÓN
+# 5. PROCESO DE INSTALACIÓN Y EJECUCIÓN
 try {
     # Si ya está instalado, ejecutar y salir.
     if (Test-Path $appExePath) {
-        Write-Host "'$appName' ya se encuentra instalado." -ForegroundColor Green
+        Write-Host "''$appName'' ya se encuentra instalado." -ForegroundColor Green
         Start-Application -path $appExePath -name $appName
     }
 
-    Write-Host "'$appName' no está instalado. Iniciando proceso de instalación..." -ForegroundColor Yellow
+    Write-Host "''$appName'' no está instalado. Iniciando proceso de instalación..." -ForegroundColor Yellow
 
     # --- Intento 1: Winget (Preferido) ---
     if (Ensure-Winget) {
@@ -1492,7 +1777,7 @@ try {
         }
     }
 
-    # --- Intento 3: Descarga Manual (Último recurso para HP y Lenovo) ---
+    # --- Intento 3: Descarga Manual (Último recurso) ---
     Write-Host "Los métodos automáticos fallaron. Intentando descarga manual..." -ForegroundColor Cyan
     $downloadUrl = ""
     $installerName = ""
@@ -1501,7 +1786,7 @@ try {
     if ($fabricante.Trim().ToLower() -like "*hp*") {
         $downloadUrl = "https://hpia.hpcloud.hp.com/downloads/hpia/hp-hpia-5.3.2.exe"
         $installerName = "HPIA_Extractor.exe"
-        $installArgs = "/s" # Argumento para extracción silenciosa
+        $installArgs = "/s"
     } elseif ($fabricante.Trim().ToLower() -like "*lenovo*") {
         $downloadUrl = "https://download.lenovo.com/pccbbs/thinkvantage_en/system_update_5.08.02.25.exe"
         $installerName = "LenovoSystemUpdate.exe"
@@ -1536,7 +1821,7 @@ try {
     }
     
     # Si el script llega hasta aquí, significa que todo falló.
-    Write-Error "Todos los métodos de instalación fallaron para '$appName'."
+    Write-Error "Todos los métodos de instalación fallaron para ''$appName''."
     Start-Sleep 10
     Exit
 }
@@ -1547,183 +1832,35 @@ catch {
 Write-Host "Script finalizado."
 Start-Sleep -Seconds 10
 `,
-            'update-windows': `Start-Process "C:\\Windows\\System32\\UsoClient.exe" -ArgumentList "StartInteractiveScan"`,
-            'optimize-os': `irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/Analizador.ps1' | iex`,
+            'winutil': `iex ((New-Object System.Net.WebClient).DownloadString("https://christitus.com/win"))`,
+            'install-winget': `Write-Warning "La instalación automática de Winget ha sido desactivada. Por favor, instálelo desde la Microsoft Store." ; Start-Process "ms-windows-store://pdp/?productid=9NBLGGH4NNS1"`,
+            'activate-windows': `$key = (Get-WmiObject SoftwareLicensingService).OA3xOriginalProductKey; if ($key) { slmgr.vbs /ipk $key; slmgr.vbs /ato } else { Write-Error "No se encontró una clave de producto en el firmware." }`,
+            'update-windows': `Start-Process "ms-settings:windowsupdate"`,
             'system-properties': `control.exe sysdm.cpl`,
-            'disable-transparency': `
-                $registryPath = "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"
-                Set-ItemProperty -Path $registryPath -Name "EnableTransparency" -Value 0
-                Write-Host "Transparencia deshabilitada correctamente." -ForegroundColor Green
-            `,
-            'reboot-bios': `
-                $result = [System.Windows.MessageBox]::Show("Se apagara el sistema y entrara a la BIOS. Desea continuar?", "Confirmar", [System.Windows.MessageBoxButton]::YesNo, [System.Windows.MessageBoxImage]::Question)
-                if ($result -eq 'Yes') { shutdown /r /fw /t 1 }
-            `,
-            'recovery-env': `
-                $result = [System.Windows.MessageBox]::Show("Se reiniciara el sistema y entrara al entorno de recuperacion. Desea continuar?", "Confirmar", [System.Windows.MessageBoxButton]::YesNo, [System.Windows.MessageBoxImage]::Question)
-                if ($result -eq 'Yes') { shutdown /r /o /f /t 00 }
-            `,
-            'update-apps': `winget update --all`,
+            'disable-transparency': `Set-ItemProperty -Path "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize" -Name "EnableTransparency" -Value 0`,
+            'reboot-bios': `shutdown /r /fw /t 1`,
+            'recovery-env': `shutdown /r /o /f /t 00`,
+            'update-apps': `winget upgrade --all --include-unknown --accept-package-agreements --accept-source-agreements`,
             'home-control-panel': `Start-Process "control.exe"`,
-            'home-quick-diagnostic': `
-                $diagnosticReport = New-Object System.Text.StringBuilder
-                $diagnosticReport.AppendLine("DIAGNÓSTICO RÁPIDO DEL SISTEMA") | Out-Null
-                $diagnosticReport.AppendLine("=============================") | Out-Null
-                $diagnosticReport.AppendLine("") | Out-Null
-                $criticalDrives = Get-WmiObject -Class Win32_LogicalDisk -Filter "DriveType=3" | Where-Object { ($_.FreeSpace / $_.Size) -lt 0.1 }
-                if ($criticalDrives) {
-                    $diagnosticReport.AppendLine("⚠️ ALERTA: Poco espacio en disco") | Out-Null
-                    foreach ($drive in $criticalDrives) {
-                        $freeGB = [Math]::Round($drive.FreeSpace / 1GB, 2)
-                        $totalGB = [Math]::Round($drive.Size / 1GB, 2)
-                        $percentFree = [Math]::Round(($drive.FreeSpace / $drive.Size) * 100, 1)
-                        $diagnosticReport.AppendLine("   Unidad $($drive.DeviceID): $freeGB GB libres de $totalGB GB ($percentFree% libre)") | Out-Null
-                    }
-                    $diagnosticReport.AppendLine("") | Out-Null
-                }
-                $os = Get-WmiObject -Class Win32_OperatingSystem
-                $memoryUsage = [Math]::Round((($os.TotalVisibleMemorySize - $os.FreePhysicalMemory) / $os.TotalVisibleMemorySize) * 100, 1)
-                if ($memoryUsage -gt 80) {
-                    $diagnosticReport.AppendLine("⚠️ ALERTA: Alto uso de memoria") | Out-Null
-                    $diagnosticReport.AppendLine("   Uso actual: $memoryUsage%") | Out-Null
-                    $diagnosticReport.AppendLine("") | Out-Null
-                }
-                $criticalServices = @("wuauserv", "WinDefend", "MpsSvc")
-                $serviceStatus = @()
-                foreach ($service in $criticalServices) {
-                    $svc = Get-Service -Name $service -ErrorAction SilentlyContinue
-                    if ($svc -and $svc.Status -ne "Running") {
-                        $serviceStatus += "$($svc.DisplayName) ($($svc.Status))"
-                    }
-                }
-                if ($serviceStatus.Count -gt 0) {
-                    $diagnosticReport.AppendLine("⚠️ ALERTA: Servicios criticos detenidos") | Out-Null
-                    foreach ($status in $serviceStatus) {
-                        $diagnosticReport.AppendLine("   $status") | Out-Null
-                    }
-                    $diagnosticReport.AppendLine("") | Out-Null
-                }
-                try {
-                    $updateSession = New-Object -ComObject Microsoft.Update.Session
-                    $updateSearcher = $updateSession.CreateUpdateSearcher()
-                    $pendingUpdates = $updateSearcher.Search("IsInstalled=0").Updates.Count
-                    if ($pendingUpdates -gt 0) {
-                        $diagnosticReport.AppendLine("⚠️ AVISO: Actualizaciones pendientes") | Out-Null
-                        $diagnosticReport.AppendLine("   Hay $pendingUpdates actualizaciones pendientes") | Out-Null
-                        $diagnosticReport.AppendLine("") | Out-Null
-                    }
-                } catch {}
-                try {
-                    $criticalEvents = Get-WinEvent -LogName System -MaxEvents 50 | Where-Object { $_.Level -eq 1 -or $_.Level -eq 2 } | Select-Object -First 5
-                    if ($criticalEvents.Count -gt 0) {
-                        $diagnosticReport.AppendLine("⚠️ ALERTA: Eventos criticos recientes") | Out-Null
-                        foreach ($event in $criticalEvents) {
-                            $eventTime = $event.TimeCreated.ToString("dd/MM/yyyy HH:mm")
-                            $diagnosticReport.AppendLine("   $eventTime - ID: $($event.Id) - $($event.ProviderName)") | Out-Null
-                        }
-                        $diagnosticReport.AppendLine("") | Out-Null
-                    }
-                } catch {}
-                if ($diagnosticReport.Length -eq 81) {
-                    $diagnosticReport.AppendLine("✓ No se encontraron problemas criticos") | Out-Null
-                    $diagnosticReport.AppendLine("  El sistema parece estar funcionando correctamente") | Out-Null
-                }
-                $diagnosticReport.AppendLine("") | Out-Null
-                $diagnosticReport.AppendLine("RECOMENDACIONES:") | Out-Null
-                $diagnosticReport.AppendLine("- Para un analisis completo, use la funcion Info. Sistema") | Out-Null
-                $diagnosticReport.AppendLine("- Ejecute regularmente la funcion Mantenimiento del S.O.") | Out-Null
-                Write-Host $diagnosticReport.ToString()
-            `,
+            'home-quick-diagnostic': `Get-CimInstance Win32_ComputerSystem; Get-CimInstance Win32_Processor | Select-Object Name, NumberOfCores; Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum; Get-PSDrive C`,
             'home-windows-settings': `Start-Process "ms-settings:"`,
             'home-file-explorer': `Start-Process "explorer.exe"`,
-            'home-powershell-console': `
-                $pwsh7Path = (Get-Command "pwsh" -ErrorAction SilentlyContinue).Source
-                if ($pwsh7Path) { Start-Process $pwsh7Path } else { Start-Process "powershell.exe" }
-            `,
+            'home-powershell-console': `Start-Process powershell.exe`,
             'home-system-info-app': `Start-Process "msinfo32.exe"`,
-            'home-install-powershell7': `
-                $pwsh7Path = (Get-Command "pwsh" -ErrorAction SilentlyContinue).Source
-                if ($pwsh7Path) {
-                    Write-Host "PowerShell 7 ya esta instalado en: $pwsh7Path\`n\`nVersion: $((Get-Command pwsh).Version)" -ForegroundColor Green
-                    exit
-                }
-                $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-                $isAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-                if (-not $isAdmin) {
-                    Write-Host "Se requieren permisos de administrador para instalar PowerShell 7." -ForegroundColor Red
-                    exit
-                }
-                $wingetInstalled = $null -ne (Get-Command winget -ErrorAction SilentlyContinue)
-                if ($wingetInstalled) {
-                    Write-Host "Intentando instalar PowerShell 7 con Winget..." -ForegroundColor Cyan
-                    $process = Start-Process winget -ArgumentList "install", "Microsoft.PowerShell", "--accept-source-agreements", "--accept-package-agreements", "-h" -PassThru -Wait
-                    if ($process.ExitCode -eq 0) { Write-Host "PowerShell 7 instalado correctamente." -ForegroundColor Green }
-                    else { Write-Host "Error al instalar PowerShell 7 con Winget. Codigo de salida: " + $process.ExitCode -ForegroundColor Red }
-                } else {
-                    Write-Host "Winget no disponible. Descargando instalador MSI..." -ForegroundColor Yellow
-                    $msiUrl = "https://github.com/PowerShell/PowerShell/releases/download/v7.3.9/PowerShell-7.3.9-win-x64.msi"
-                    $msiPath = "$env:TEMP\\PowerShell-7-win-x64.msi"
-                    try { Invoke-WebRequest -Uri $msiUrl -OutFile $msiPath } catch { Write-Host "Error al descargar o instalar PowerShell 7: $_" -ForegroundColor Red; exit }
-                    $process = Start-Process msiexec -ArgumentList "/i \`"$msiPath\`" /qn /norestart" -PassThru -Wait
-                    if ($process.ExitCode -eq 0 -or $process.ExitCode -eq 3010) { Write-Host "PowerShell 7 instalado correctamente." -ForegroundColor Green }
-                    else { Write-Host "Error al instalar PowerShell 7. Codigo de salida: " + $process.ExitCode -ForegroundColor Red }
-                }
-            `,
-            'tools-run-toolboxbs': `irm https://brandonsepulveda.github.io/Tool | iex`,
-            'tools-download-windows': `irm https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/windows%20instalador.ps1 | iex`,
-            'tools-run-winscript': `irm https://winscript.cc/irm | iex`,
-            'tools-install-sentinel': `
-                $downloadURL = "https://www.harddisksentinel.com/hdsentinel_pro_portable.zip"
-                $downloadPath = [System.IO.Path]::Combine($env:TEMP, "HDSentinel.zip")
-                $extractPath = [System.IO.Path]::Combine($env:TEMP, "HDSentinel")
-                if (-not (Test-Path -Path $extractPath)) { New-Item -Path $extractPath -ItemType Directory -Force | Out-Null }
-                Write-Host "Descargando Hard Disk Sentinel..." -ForegroundColor Yellow
-                try {
-                    $ProgressPreference = 'Continue'
-                    Invoke-WebRequest -Uri $downloadURL -OutFile $downloadPath -UseBasicParsing
-                } catch { Write-Host "Error al descargar Hard Disk Sentinel: $_" -ForegroundColor Red; exit }
-                Write-Host "Extrayendo archivos..." -ForegroundColor Yellow
-                try {
-                    Add-Type -AssemblyName System.IO.Compression.FileSystem
-                    [System.IO.Compression.ZipFile]::ExtractToDirectory($downloadPath, $extractPath)
-                } catch { Write-Host "Error al extraer los archivos: $_" -ForegroundColor Red; exit }
-                $hdSentinelExe = Get-ChildItem -Path $extractPath -Recurse -Filter "HDSentinel.exe" | Select-Object -First 1
-                if ($hdSentinelExe) {
-                    Write-Host "Ejecutando Hard Disk Sentinel..." -ForegroundColor Yellow
-                    try { Start-Process -FilePath $hdSentinelExe.FullName -Wait } catch { Write-Host "Error al ejecutar Hard Disk Sentinel: $_" -ForegroundColor Red; exit }
-                } else { Write-Host "No se encontro el ejecutable HDSentinel.exe." -ForegroundColor Red }
-                Write-Host "Limpiando archivos temporales..." -ForegroundColor Yellow
-                try {
-                    Remove-Item -Path $downloadPath -Force -ErrorAction SilentlyContinue
-                    Remove-Item -Path $extractPath -Recurse -Force -ErrorAction SilentlyContinue
-                } catch { Write-Host "Error al eliminar archivos temporales: $_" -ForegroundColor Red }
-            `,
+            'tools-download-windows': `Start-Process "https://brandonsepulveda.github.io/descargawindows.html"`,
+            'tools-install-windows': `iex ((New-Object System.Net.WebClient).DownloadString("https://cutt.ly/WinDeploy"))`,
             'tools-optimize-system': `
-                if (-not (Test-Path "$env:TEMP\\ToolboxBS")) { New-Item -Path "$env:TEMP\\ToolboxBS" -ItemType Directory -Force -ErrorAction SilentlyContinue | Out-Null }
-                Invoke-WebRequest -Uri "https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/performance.bat" -OutFile "$env:TEMP\\ToolboxBS\\performance.bat"
-                Start-Process -FilePath "cmd.exe" -ArgumentList "/c", "$env:TEMP\\ToolboxBS\\performance.bat"
-            `,
-            'tools-install-intel-drivers': `
-                Write-Host "Descargando Intel Driver Support Assistant..." -ForegroundColor Yellow
-                $downloadPath = Join-Path $env:TEMP "IntelDriverSupport.exe"
-                try {
-                    Invoke-WebRequest -Uri "https://dsadata.intel.com/installer" -OutFile $downloadPath
-                    if (Test-Path $downloadPath) {
-                        Write-Host "Iniciando instalacion..." -ForegroundColor Green
-                        Start-Process -FilePath $downloadPath -Wait
-                        Write-Host "Eliminando archivos temporales..." -ForegroundColor Yellow
-                        Remove-Item -Path $downloadPath -Force
-                        Write-Host "Instalacion completada y archivos temporales eliminados." -ForegroundColor Green
-                    } else { Write-Host "Error: No se pudo descargar el instalador" -ForegroundColor Red }
-                } catch { Write-Host "Error: $_" -ForegroundColor Red }
-            `,
-            'tools-windows-repair': `sfc /scannow; DISM.exe /Online /Cleanup-image /Restorehealth`,
+if (-not (Test-Path "$env:TEMP\\ToolboxBS")) { New-Item -Path "$env:TEMP\\ToolboxBS" -ItemType Directory -Force | Out-Null }
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/performance.bat" -OutFile "$env:TEMP\\ToolboxBS\\performance.bat"
+Start-Process -FilePath "cmd.exe" -ArgumentList "/c", "$env:TEMP\\ToolboxBS\\performance.bat"
+`,
+            'tools-windows-repair': `sfc /scannow; DISM /Online /Cleanup-image /Restorehealth`,
             'tools-task-manager': `Start-Process "taskmgr.exe"`,
             'tools-device-manager': `Start-Process "devmgmt.msc"`,
             'tools-windows-services': `Start-Process "services.msc"`,
             'tools-disk-cleanup': `Start-Process "cleanmgr.exe"`,
             'tools-registry-editor': `Start-Process "regedit.exe"`,
-            'tools-winget-cli': `Start-Process powershell -ArgumentList "-NoExit", "-Command", "winget"`,
+            'tools-winget-cli': `Start-Process powershell.exe -ArgumentList "-NoExit", "-Command", "winget"`,
             'tools-check-updates': `Start-Process "ms-settings:windowsupdate"`
         };
 
@@ -1748,15 +1885,8 @@ Start-Sleep -Seconds 10
         // Función para actualizar el estado del botón de ejecución y el contador
         function updateGlobalFloatingButton() {
             let totalSelected = 0;
-            let selectedTitles = [];
             for (const category in selectedTools) {
                 totalSelected += selectedTools[category].length;
-                selectedTools[category].forEach(toolId => {
-                    const toolItem = document.querySelector(`.tool-item[onclick*="'${toolId}'"]`);
-                    if(toolItem) {
-                        selectedTitles.push(toolItem.querySelector('.tool-item-text').textContent.trim());
-                    }
-                });
             }
             
             const fabButton = document.getElementById('fabButton');
@@ -1811,17 +1941,23 @@ Start-Sleep -Seconds 10
         function showGeneratedCode() {
             const allCommands = [];
             let hasSelections = false;
-            for (const category in selectedTools) {
-                for (const toolId of selectedTools[category]) {
-                    const command = powershellCommands[toolId];
-                    if (command) {
-                        const toolItem = document.querySelector(`.tool-item[onclick*="'${toolId}'"]`);
-                        const toolText = toolItem ? toolItem.querySelector('.tool-item-text').textContent.trim() : `Tarea`;
-                        allCommands.push({ text: toolText, script: command });
-                        hasSelections = true;
+            
+            // Define the order of execution
+            const categoryOrder = ['home', 'repair', 'repairCleanup', 'tweaks', 'tools', 'info'];
+
+            categoryOrder.forEach(category => {
+                if (selectedTools[category]) {
+                    for (const toolId of selectedTools[category]) {
+                        const command = powershellCommands[toolId];
+                        if (command) {
+                            const toolItem = document.querySelector(`.tool-item[onclick*="'${toolId}'"]`);
+                            const toolText = toolItem ? toolItem.querySelector('.tool-item-text').textContent.trim() : `Tarea`;
+                            allCommands.push({ text: toolText, script: command });
+                            hasSelections = true;
+                        }
                     }
                 }
-            }
+            });
 
             if (!hasSelections) {
                 showMessageBox("Por favor, selecciona al menos una función para generar el script.");
@@ -1855,7 +1991,7 @@ Start-Sleep -Seconds 10
                 ps1Content += `${cmd.script.trim()}\n\n`;
             });
             ps1Content += `Write-Host "Todas las tareas han finalizado." -ForegroundColor Green\n`;
-            ps1Content += `Read-Host "Presiona ENTER para continuar con la limpieza de archivos."\n`;
+            ps1Content += `Read-Host "Presiona ENTER para cerrar la ventana."\n`;
 
             let batContent = `@echo off
 REM =================================================================
