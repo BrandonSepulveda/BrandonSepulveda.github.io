@@ -1,48 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Propuesta Estratégica: ToolboxBS para Milenio PC</title>
-    <meta name="description" content="Propuesta para integrar ToolboxBS como una solución de valor añadido, optimizando activos y reduciendo costos operativos." />
-    <meta name="author" content="Brandon Sepulveda" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolboxBS: La Revolución en Gestión y Optimización de TI</title>
     
-    <!-- Iconos y Fuentes -->
-    <link rel="icon" type="image/x-icon" href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" />
-    <script src="https://use.fontawesome.com/releases/v6.5.2/js/all.js" crossorigin="anonymous"></script>
+    <!-- Favicon y Fuentes -->
+    <link rel="icon" type="image/png" href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v6.5.2/js/all.js" crossorigin="anonymous"></script>
 
     <style>
         :root {
+            --primary-color: #0d1117;
+            --secondary-color: #161b22;
             --accent-color: #3b82f6;
-            --accent-dark: #2563eb;
-            --primary-color: #FFFFFF;
-            --bg-dark: #07090D;
-            --bg-section: #0D1117;
-            --bg-card: rgba(22, 27, 34, 0.6); /* Glassmorphism effect */
-            --text-light: #F0F2F5;
-            --text-secondary: #a1a9b8;
-            --border-color: rgba(255, 255, 255, 0.15);
-            --shadow-color: rgba(59, 130, 246, 0.1);
+            --accent-hover: #2563eb;
+            --text-light: #f0f6fc;
+            --text-medium: #c9d1d9;
+            --text-dark: #8b949e;
+            --border-color: rgba(240, 246, 252, 0.1);
             --glow-color: rgba(59, 130, 246, 0.3);
-            --transition-speed: 0.4s;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --transition-speed: 0.3s;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-
-        html { font-size: 16px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
 
         body {
             font-family: 'Manrope', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-secondary);
-            line-height: 1.7;
+            background-color: var(--primary-color);
+            color: var(--text-medium);
+            line-height: 1.6;
             overflow-x: hidden;
         }
-
-        /* Animated Aurora Background */
+        
         body::before {
             content: '';
             position: fixed;
@@ -50,540 +49,575 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.12), transparent 40%),
-                        radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.1), transparent 40%);
+            background: 
+                radial-gradient(circle at 15% 25%, var(--glow-color), transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(59, 130, 246, 0.15), transparent 50%);
             z-index: -1;
-            animation: moveAurora 25s infinite alternate ease-in-out;
+            animation: moveAurora 20s infinite alternate ease-in-out;
         }
 
         @keyframes moveAurora {
             from { transform: translate(0, 0) rotate(0deg); }
-            to { transform: translate(50px, -50px) rotate(20deg); }
+            to { transform: translate(20px, -30px) rotate(15deg); }
         }
 
-        .proposal-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
 
         .section {
             padding: 6rem 0;
             border-bottom: 1px solid var(--border-color);
-            position: relative;
         }
-        .section:last-child { border-bottom: none; }
+        .section:last-child {
+            border-bottom: none;
+        }
 
         .section-title {
             text-align: center;
-            margin-bottom: 1.5rem;
-            font-size: clamp(2.5rem, 5vw, 3.2rem);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
             font-weight: 800;
             color: var(--text-light);
+            margin-bottom: 1.5rem;
             line-height: 1.2;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
         .section-title span {
-            color: var(--accent-color);
             background: linear-gradient(90deg, var(--accent-color), #60a5fa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
         .section-intro {
             text-align: center;
             max-width: 800px;
-            margin: 0 auto 4rem;
-            font-size: 1.2rem;
+            margin: 0 auto 4rem auto;
+            font-size: 1.25rem;
+            color: var(--text-dark);
         }
 
-        .btn-primary {
-            display: inline-flex;
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            padding: 2rem;
+        }
+        .hero-logo {
+            max-width: 120px;
+            margin-bottom: 2rem;
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        .hero h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 800;
+            color: var(--text-light);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-medium);
+            max-width: 900px;
+            margin-bottom: 2.5rem;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-hover));
+            color: var(--text-light);
             padding: 1rem 2.5rem;
             border-radius: 12px;
             text-decoration: none;
             font-weight: 700;
             font-size: 1.1rem;
             transition: all var(--transition-speed) ease;
-            background: linear-gradient(90deg, var(--accent-color), var(--accent-dark));
-            color: var(--text-light);
-            box-shadow: 0 4px 20px var(--shadow-color);
-            border: 2px solid transparent;
-            cursor: pointer;
+            box-shadow: 0 5px 25px var(--glow-color);
         }
-        .btn-primary:hover {
+        .cta-button:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 30px var(--glow-color);
+            box-shadow: 0 10px 35px var(--glow-color);
         }
 
-        /* Scroll Animations */
-        .animated-element {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .animated-element.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Header */
-        .proposal-header {
-            text-align: center;
-            padding: 4rem 0;
-        }
-        .proposal-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2.5rem;
-            margin-bottom: 2.5rem;
-        }
-        .proposal-logos img {
-            max-height: 60px;
-            filter: brightness(1.5) contrast(1.1);
-            object-fit: contain;
-            transition: transform 0.3s ease;
-        }
-        .proposal-logos img:hover {
-            transform: scale(1.1);
-        }
-        .proposal-logos .plus-icon {
-            font-size: 2.2rem;
-            color: var(--text-secondary);
-            opacity: 0.7;
-        }
-        .proposal-header h1 {
-            font-size: clamp(2.8rem, 6vw, 4.5rem);
-            font-weight: 800;
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-        }
-        .proposal-header p {
-            font-size: 1.35rem;
-            color: var(--text-secondary);
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        /* Card Grid */
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
-        
-        /* Glassmorphism Cards */
-        .solution-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+        .feature-card {
+            background: rgba(22, 27, 34, 0.6);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
-            padding: 2.5rem;
-            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
             transition: all var(--transition-speed) ease;
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
-        .solution-card:before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, var(--glow-color) 0%, transparent 40%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            transform: translate(var(--mouse-x, -100px), var(--mouse-y, -100px));
-        }
-        .solution-card:hover:before {
-            opacity: 1;
-        }
-        .solution-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        .feature-card:hover {
+            transform: translateY(-10px);
             border-color: var(--accent-color);
+            box-shadow: 0 15px 40px var(--shadow-color);
         }
-        .solution-icon {
-            font-size: 3rem;
+        .feature-icon {
+            font-size: 2.5rem;
             color: var(--accent-color);
             margin-bottom: 1.5rem;
-            display: block;
-            transition: transform 0.4s ease;
         }
-        .solution-card:hover .solution-icon {
-            transform: scale(1.15) rotate(-10deg);
-        }
-        .solution-title {
-            font-size: 1.7rem;
-            font-weight: 700;
+        .feature-card h3 {
+            font-size: 1.5rem;
             color: var(--text-light);
             margin-bottom: 1rem;
         }
-
-        /* Value Proposition Section */
-        .value-prop-grid {
+        
+        .origin-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-        .value-prop-column {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-        }
-        .value-prop-column h3 {
-            font-size: 1.9rem;
-            color: var(--accent-color);
-            margin-bottom: 2rem;
-            display: flex;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
             align-items: center;
-            gap: 1rem;
         }
-        .value-prop-column ul { list-style: none; padding-left: 0; }
-        .value-prop-column li {
-            position: relative;
-            padding-left: 35px;
+        .origin-image {
+            width: 100%;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 50px var(--shadow-color);
+        }
+        .origin-text h3 {
+            font-size: 2rem;
+            color: var(--text-light);
             margin-bottom: 1.5rem;
-            font-size: 1.1rem;
         }
-        .value-prop-column li::before {
-            content: '\f058';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
+         .origin-text p strong {
             color: var(--accent-color);
-            position: absolute;
-            left: 0;
-            top: 4px;
-            font-size: 1.2rem;
+            font-weight: 700;
         }
 
-        /* Origin & Tech Stack Section */
-        .origin-section {
-            background: var(--bg-section);
-            padding: 3rem;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 4rem;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
             text-align: center;
         }
-        .origin-section h3 {
-            font-size: 2.2rem;
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-        }
-        .origin-section p {
-            font-size: 1.15rem;
-            max-width: 900px;
-            margin: 0 auto 1.5rem;
-        }
-        .tech-stack {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2.5rem;
-            flex-wrap: wrap;
-        }
-        .tech-stack span {
-            font-size: 1.1rem;
-            font-weight: 600;
+        .stat-item .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
             color: var(--accent-color);
-            background-color: var(--bg-card);
-            padding: 0.8rem 1.6rem;
-            border-radius: 10px;
-            border: 1px solid var(--accent-color);
-            transition: all 0.3s ease;
         }
-        .tech-stack span:hover {
-            background-color: var(--accent-color);
-            color: var(--text-light);
-            transform: scale(1.05);
+        .stat-item .stat-label {
+            font-size: 1.2rem;
+            color: var(--text-dark);
         }
 
-        /* Implementation Section */
-        .feature-point {
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        .competitor-card {
+            background: var(--secondary-color);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .competitor-card h3 {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+        .competitor-card ul {
+            list-style: none;
+            text-align: left;
+        }
+        .competitor-card li {
+            margin-bottom: 1rem;
             display: flex;
             align-items: flex-start;
-            gap: 2rem;
-            margin-bottom: 3rem;
         }
-        .feature-point:last-child { margin-bottom: 0; }
-        .feature-point .icon {
-            font-size: 2.5rem;
+        .competitor-card .icon {
+            margin-right: 0.8rem;
+            margin-top: 4px;
+        }
+        .competitor-card .fa-times-circle { color: #f87171; }
+        .competitor-card .fa-check-circle { color: #4ade80; }
+        
+        .toolbox-card {
+            background: linear-gradient(145deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.1));
+            border: 1px solid var(--accent-color);
+            transform: scale(1.05);
+            box-shadow: 0 0 40px var(--glow-color);
+        }
+        .toolbox-card h3 {
+             color: var(--text-light);
+        }
+        .toolbox-card .tagline {
+            font-size: 0.9rem;
+            font-weight: 700;
             color: var(--accent-color);
-            margin-top: 5px;
-            min-width: 40px;
-            text-align: center;
-        }
-        .feature-point h3 {
-            font-size: 1.6rem;
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            display: block;
         }
 
-        /* Market Proof / Stats Section */
-        .stats-section-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            margin-top: 2rem;
-            justify-items: center;
-            align-items: start;
-            background-color: var(--bg-section);
-            border-radius: 20px;
-            padding: 4rem 2rem;
-        }
-        .stat-card-large {
-            text-align: center;
+        /* --- New Detailed Features Styles --- */
+        .features-container {
+            display: flex;
+            gap: 2rem;
+            background-color: var(--secondary-color);
+            border-radius: 16px;
             padding: 2rem;
-            background: var(--bg-card);
-            border-radius: 16px;
             border: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 350px;
         }
-        .stat-icon { font-size: 3.5rem; color: var(--accent-color); margin-bottom: 1rem; }
-        .stat-number { font-size: 4rem; font-weight: 800; color: var(--text-light); line-height: 1.1; }
-        .stat-label { font-size: 1.25rem; font-weight: 500; color: var(--text-secondary); }
-        .subsection-title {
-            grid-column: 1 / -1;
-            text-align: center;
-            margin-top: 2rem;
-            font-size: clamp(2rem, 4vw, 2.8rem);
-            font-weight: 700;
-            color: var(--text-light);
-            width: 100%;
-        }
-        .country-slider-wrapper {
-            grid-column: 1 / -1;
-            overflow: hidden;
-            width: 100%;
-            margin-top: 2rem;
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-        }
-        .country-track { display: flex; gap: 1.5rem; user-select: none; }
-        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        .country-track.animated { animation: marquee 60s linear infinite; }
-        .country-track:hover { animation-play-state: paused; }
-        .country-card {
-            flex: 0 0 160px;
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 1.5rem 1rem;
-            text-align: center;
-            border: 1px solid var(--border-color);
+        .features-nav {
+            flex: 1;
             display: flex;
             flex-direction: column;
+            gap: 0.5rem;
+        }
+        .nav-item {
+            background-color: transparent;
+            border: 1px solid transparent;
+            color: var(--text-medium);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all var(--transition-speed) ease;
+            display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 1rem;
         }
-        .country-flag { width: 48px; height: auto; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-        .country-name { font-size: 1.1rem; font-weight: 600; color: var(--text-light); white-space: nowrap; }
-        .country-clicks { font-size: 0.95rem; font-weight: 500; color: var(--text-secondary); }
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+        }
+        .nav-item.active {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+            border-color: var(--accent-hover);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+        .features-content {
+            flex: 2.5;
+            background-color: var(--primary-color);
+            border-radius: 12px;
+            padding: 2.5rem;
+        }
+        .feature-pane {
+            display: none;
+        }
+        .feature-pane.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .feature-pane h3 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+        .feature-pane ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .feature-pane li {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0 1rem;
+            align-items: start;
+            margin-bottom: 1.2rem;
+        }
+        .feature-pane li i {
+            margin-top: 5px;
+            color: var(--accent-color);
+        }
+        .feature-pane li strong {
+            display: block;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+        .feature-pane li span {
+             color: var(--text-medium);
+             font-size: 0.95rem;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .footer h2 {
+            font-size: 2.5rem;
+        }
+        .footer p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+        }
 
-        /* Final CTA */
-        .cta-section { text-align: center; }
-        .cta-section .btn-primary {
-            transform: scale(1.1);
-            animation: btnPulse 2.5s infinite 1s;
-        }
-        @keyframes btnPulse {
-            0%, 100% { box-shadow: 0 10px 30px var(--shadow-color); transform: scale(1.1); }
-            50% { box-shadow: 0 15px 45px var(--glow-color); transform: scale(1.15); }
-        }
-
-        /* Responsiveness */
         @media (max-width: 992px) {
-            .value-prop-grid { grid-template-columns: 1fr; }
-            .stats-section-content { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 768px) {
-            .section { padding: 4rem 0; }
-            .section-intro { font-size: 1.1rem; }
+            .origin-content, .features-container {
+                grid-template-columns: 1fr;
+                flex-direction: column;
+            }
+            .origin-image {
+                max-width: 500px;
+                margin: 0 auto 2rem auto;
+            }
+            .comparison-table {
+                grid-template-columns: 1fr;
+            }
+            .toolbox-card {
+                order: -1;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="proposal-container">
+    <header class="hero">
+        <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" alt="ToolboxBS Logo" class="hero-logo">
+        <h1>El <span>Control Total</span> de TI, Simplificado.</h1>
+        <p class="fade-in-up">
+            ToolboxBS no es solo una herramienta. Es el aliado estratégico que transforma la gestión de equipos, maximiza el rendimiento y convierte problemas complejos en soluciones de un solo clic.
+        </p>
+        <a href="#origin" class="cta-button">Descubre su Potencial</a>
+    </header>
 
-        <header class="proposal-header animated-element">
-            <div class="proposal-logos">
-                <img src="https://www.simpa.com.co/wp-content/uploads/2022/02/Clientes_Mesa-de-trabajo-1-copia-26-400x284.png" alt="Logo de Milenio PC">
-                <i class="fas fa-plus plus-icon"></i>
-                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" alt="Logo de ToolboxBS">
+    <main>
+        <section id="origin" class="section">
+            <div class="container">
+                <h2 class="section-title fade-in-up">Nació de la Necesidad, <span>Forjado en la Práctica</span></h2>
+                <p class="section-intro fade-in-up">Toda gran solución nace de un problema real. La nuestra nació en el campo de batalla diario del soporte técnico.</p>
+                <div class="origin-content">
+                    <div class="origin-text fade-in-up" style="transition-delay: 200ms;">
+                        <h3>La Evolución de una Idea</h3>
+                        <p>Inicialmente, existía un script beta enfocado puramente en la <strong>optimización del sistema operativo</strong>. Era una herramienta útil, pero su verdadero potencial aún no se había revelado.</p>
+                        <p>El punto de inflexión llegó con una incidencia de seguridad que expuso la necesidad de un control más robusto y centralizado. Fue entonces cuando ese script beta fue modificado, robustecido y puesto al servicio de una misión mayor: no solo optimizar, sino también <strong>diagnosticar, reparar y gestionar</strong>.</p>
+                        <p>Lo que empezó como una solución de rendimiento, se transformó en una suite integral de control y automatización de procesos.</p>
+                    </div>
+                    <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Screenshot%202025-08-25%20121205.png?raw=true" alt="Interfaz de ToolboxBS" class="origin-image fade-in-up" style="transition-delay: 400ms;">
+                </div>
             </div>
-            <h1>Transformando la <span>Gestión</span> de Equipos Corporativos</h1>
-            <p>Una propuesta para integrar ToolboxBS como la herramienta de valor añadido que empodera a sus equipos de TI y maximiza el rendimiento de cada activo.</p>
-        </header>
+        </section>
 
-        <main>
-            <!-- SECCIÓN: MI INICIATIVA, NUESTRO ACTIVO -->
-            <section id="my-initiative" class="section">
-                <h2 class="section-title animated-element">Una Iniciativa, <span>Nuestro Activo Valioso</span></h2>
-                <div class="origin-section animated-element" style="transition-delay: 100ms;">
-                    <h3>El Origen de un Proyecto con Impacto</h3>
-                    <p>Hace más de <strong>dos años</strong>, el desarrollo de ToolboxBS surgió como una respuesta proactiva a las necesidades recurrentes en el día a día de nuestro soporte técnico.</p>
-                    <p>Lo que comenzó como un conjunto de scripts en <strong>PowerShell</strong> para automatizar tareas rutinarias, evolucionó a través de un esfuerzo dedicado y continuo hasta convertirse en una suite integral de optimización y mantenimiento.</p>
-                    <p>Recientemente, sus capacidades se ampliaron con una <strong>versión web</strong>, lo que no solo multiplica su accesibilidad, sino que también demuestra su adaptabilidad y la visión a futuro que he creado para esta herramienta. Esta evolución representa una inversión significativa de recursos y conocimiento, enfocada en el avance de la herramienta.</p>
-                    <div class="tech-stack">
-                        <span>PowerShell (Script)</span>
-                        <span>WPF (UI Local)</span>
-                        <span>Desarrollo Web (UI Remota)</span>
-                        <span>Automatización de Procesos</span>
-                        <span>Análisis de Sistema</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECCIÓN: LA SOLUCIÓN INTEGRAL -->
-            <section id="solution" class="section">
-                <h2 class="section-title animated-element">La Solución Integral: <span>Impacto en Milenio PC</span></h2>
-                <p class="section-intro animated-element">
-                    El alquiler de equipos va más allá de la entrega de hardware. El verdadero desafío es mantener ese hardware funcionando a su máximo potencial. ToolboxBS es la solución que lo hace posible, de forma simple y segura, impactando directamente en la <strong>eficiencia operativa y el ahorro de costos.</strong>
-                </p>
+        <section id="power" class="section">
+            <div class="container">
+                <h2 class="section-title fade-in-up">Un Ecosistema de <span>Poder y Control</span></h2>
+                <p class="section-intro fade-in-up">Hemos concentrado décadas de conocimiento técnico en una interfaz intuitiva, reduciendo tiempos y maximizando la eficiencia operativa.</p>
                 <div class="card-grid">
-                    <div class="solution-card animated-element" style="transition-delay: 100ms;">
-                        <i class="fas fa-rocket solution-icon"></i>
-                        <h3 class="solution-title">Máximo Rendimiento</h3>
-                        <p>Libera recursos, limpia archivos basura y optimiza la memoria RAM para una experiencia más rápida y fluida. <strong>Menos quejas por lentitud.</strong></p>
+                    <div class="feature-card fade-in-up" style="transition-delay: 100ms;">
+                        <i class="fas fa-rocket feature-icon"></i>
+                        <h3>Máximo Rendimiento</h3>
+                        <p>Libera recursos, limpia archivos basura y optimiza la memoria RAM para una experiencia más rápida y fluida. Menos quejas por lentitud.</p>
                     </div>
-                    <div class="solution-card animated-element" style="transition-delay: 200ms;">
-                        <i class="fas fa-magic solution-icon"></i>
-                        <h3 class="solution-title">Simplicidad Poderosa</h3>
-                        <p>Convierte procesos técnicos complejos en tareas de minutos. Una interfaz intuitiva que agrupa decenas de comandos y scripts avanzados en simples clics. <strong>Ahorro de tiempo en cada intervención.</strong></p>
+                    <div class="feature-card fade-in-up" style="transition-delay: 200ms;">
+                        <i class="fas fa-magic-wand-sparkles feature-icon"></i>
+                        <h3>Simplicidad Poderosa</h3>
+                        <p>Convierte procesos técnicos complejos en tareas de minutos. Una interfaz intuitiva que agrupa decenas de scripts avanzados en simples clics.</p>
                     </div>
-                    <div class="solution-card animated-element" style="transition-delay: 300ms;">
-                        <i class="fas fa-shield-alt solution-icon"></i>
-                        <h3 class="solution-title">Control Total y Cero Instalación</h3>
-                        <p>Acceda a herramientas de diagnóstico y reparación avanzadas con total seguridad. Al no requerir instalación, se integra de forma segura en cualquier entorno corporativo. <strong>Menos fricción, más seguridad.</strong></p>
+                    <div class="feature-card fade-in-up" style="transition-delay: 300ms;">
+                        <i class="fas fa-server feature-icon"></i>
+                        <h3>Control Total y Cero Instalación</h3>
+                        <p>Acceda a herramientas avanzadas con total seguridad. Al no requerir instalación, se integra de forma segura en cualquier entorno corporativo.</p>
                     </div>
-                    <div class="solution-card animated-element" style="transition-delay: 400ms;">
-                        <i class="fas fa-stethoscope solution-icon"></i>
-                        <h3 class="solution-title">Diagnóstico Preciso</h3>
-                        <p>Identifica problemas de hardware y software rápidamente con herramientas de análisis integradas. Reduce el tiempo de diagnóstico y acelera la resolución de problemas. <strong>Reparaciones más rápidas.</strong></p>
+                    <div class="feature-card fade-in-up" style="transition-delay: 400ms;">
+                        <i class="fas fa-stethoscope feature-icon"></i>
+                        <h3>Diagnóstico Preciso</h3>
+                        <p>Identifica problemas de hardware y software rápidamente. Reduce el tiempo de diagnóstico y acelera la resolución de problemas.</p>
                     </div>
-                    <div class="solution-card animated-element" style="transition-delay: 500ms;">
-                        <i class="fas fa-file-code solution-icon"></i>
-                        <h3 class="solution-title">Seguridad y Transparencia</h3>
-                        <p>Construido sobre PowerShell y de código abierto. Otorga a los equipos de TI total visibilidad y control sobre las acciones realizadas, cumpliendo con los estándares de seguridad. <strong>Confianza en la herramienta.</strong></p>
-                    </div>
-                    <div class="solution-card animated-element" style="transition-delay: 600ms;">
-                        <i class="fas fa-layer-group solution-icon"></i>
-                        <h3 class="solution-title">Estandarización de Flotas</h3>
-                        <p>Aplica las mismas optimizaciones y reparaciones en toda la flota de equipos alquilados. Garantiza un rendimiento consistente y simplifica la gestión a gran escala. <strong>Coherencia y calidad del servicio.</strong></p>
+                     <div class="feature-card fade-in-up" style="transition-delay: 500ms;">
+                        <i class="fas fa-file-code feature-icon"></i>
+                        <h3>Seguridad y Transparencia</h3>
+                        <p>Construido sobre PowerShell y de código abierto, otorga total visibilidad y control sobre las acciones realizadas, cumpliendo con los estándares de seguridad.</p>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- SECCIÓN: PROPUESTA DE VALOR 360° -->
-            <section id="value-prop" class="section">
-                <h2 class="section-title animated-element">Propuesta de Valor <span>360°</span></h2>
-                <p class="section-intro animated-element">La implementación de ToolboxBS crea un ciclo de beneficios mutuos, fortaleciendo nuestra operación interna y entregando un valor sin precedentes a nuestros clientes.</p>
-                <div class="value-prop-grid">
-                    <div class="value-prop-column animated-element" style="transition-delay: 100ms;">
-                        <h3><i class="fas fa-building"></i>Para Milenio PC</h3>
-                        <ul>
-                            <li><strong>Reducción de Tiempos de Soporte:</strong> La automatización reduce horas dedicadas a problemas de rendimiento, <strong>liberando al equipo técnico para tareas de mayor valor.</strong></li>
-                            <li><strong>Optimización de la Capacidad del Equipo:</strong> El equipo de soporte puede manejar <strong>más casos por día</strong> o dedicarse a proyectos estratégicos, potenciando su productividad.</li>
-                            <li><strong>Agilización del Ciclo de Equipos:</strong> Acelera la preparación de equipos devueltos, dejándolos 100% optimizados para el siguiente cliente en una fracción del tiempo.</li>
-                            <li><strong>Diferenciación Competitiva:</strong> Nos posiciona como <strong>líderes en soluciones tecnológicas integrales</strong>, no solo como proveedores de hardware.</li>
-                        </ul>
-                    </div>
-                    <div class="value-prop-column animated-element" style="transition-delay: 200ms;">
-                        <h3><i class="fas fa-users"></i>Para Sus Clientes</h3>
-                        <ul>
-                            <li><strong>Máximo Retorno de Inversión (ROI):</strong> Sus clientes obtienen equipos funcionando al 100% de su capacidad, <strong>maximizando la productividad de sus empleados.</strong></li>
-                            <li><strong>Menos Interrupciones:</strong> Los problemas de rendimiento se minimizan, lo que se traduce en <strong>menos tiempo de inactividad</strong> para los usuarios finales.</li>
-                            <li><strong>Empoderamiento del Equipo de TI:</strong> Les proporcionamos una herramienta segura y eficiente para que puedan realizar mantenimiento proactivo de su flota.</li>
-                            <li><strong>Satisfacción del Cliente Mejorada:</strong> Clientes con equipos que rinden al máximo son clientes más satisfechos, lo que se traduce en <strong>mayor retención y referencias.</strong></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECCIÓN: IMPLEMENTACIÓN -->
-            <section id="implementation" class="section">
-                <h2 class="section-title animated-element">Un Estándar de <span>Excelencia</span></h2>
-                <p class="section-intro animated-element">ToolboxBS no es solo una aplicación; es un habilitador estratégico que convierte procesos complejos en tareas de minutos, mejorando la eficiencia y el valor para nuestros clientes.</p>
-                <div class="animated-element">
-                    <div class="feature-point">
-                        <div class="icon"><i class="fas fa-tasks"></i></div>
-                        <div>
-                            <h3>Optimización Masiva y Bajo Demanda</h3>
-                            <p>Permite al departamento de TI del cliente ejecutar scripts de limpieza, liberación de RAM y optimización en toda su flota de equipos alquilados, garantizando un rendimiento homogéneo y superior. <strong>Menos tickets por rendimiento bajo.</strong></p>
-                        </div>
-                    </div>
-                    <div class="feature-point">
-                        <div class="icon"><i class="fas fa-check-double"></i></div>
-                        <div>
-                            <h3>Estandarización del Soporte Técnico</h3>
-                            <p>Proporciona un conjunto de herramientas unificado para el diagnóstico y la resolución de problemas. Esto acelera la capacitación, reduce el tiempo por ticket y asegura que todos los problemas se aborden con la misma metodología eficiente.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECCIÓN: VISIÓN A FUTURO -->
-            <section id="future-vision" class="section">
-                <h2 class="section-title animated-element">Visión a Futuro: <span>Evolución Constante</span></h2>
-                <p class="section-intro animated-element">El compromiso con la evolución de ToolboxBS es continuo. Ya se está trabajando en las próximas innovaciones que potenciarán aún más la eficiencia de Milenio PC.</p>
-                <div class="value-prop-column animated-element" style="transition-delay: 100ms;">
-                    <h3><i class="fas fa-cogs"></i>Próximas Mejoras en Desarrollo</h3>
-                     <ul>
-                        <li><strong>Automatización Avanzada de Formateo:</strong> Una funcionalidad clave para automatizar el formateo del SO usando imágenes ISO. Actualmente en un <strong>80% de avance.</strong></li>
-                        <li><strong>Integración de Nuevas Herramientas:</strong> Continua investigación e integración de nuevas utilidades y scripts para resolver desafíos emergentes.</li>
-                        <li><strong>Módulos de Reporte y Analítica:</strong> Implementación de paneles para visualizar el impacto de las optimizaciones y el rendimiento de la flota de equipos.</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- SECCIÓN: PRUEBA DE MERCADO -->
-            <section id="market-proof" class="section">
-                <h2 class="section-title animated-element">Validación de Mercado: <span>Confianza Global</span></h2>
-                <p class="section-intro animated-element">ToolboxBS ya es una herramienta probada y validada por una comunidad técnica global, lo que minimiza el riesgo de adopción y garantiza su fiabilidad.</p>
-                <div class="stats-section-content animated-element">
-                    <div class="stat-card-large animated-element" style="transition-delay: 100ms;">
-                        <div class="stat-icon"><i class="fas fa-download"></i></div>
-                        <div id="global-downloads-total-counter" class="stat-number">0</div>
+        <section id="stats" class="section">
+            <div class="container">
+                <h2 class="section-title fade-in-up">Validación Global: <span>Impacto Demostrado</span></h2>
+                <p class="section-intro fade-in-up">Los números no mienten. ToolboxBS es una solución probada, validada y adoptada por profesionales de TI en todo el mundo.</p>
+                <div class="stats-grid">
+                    <div class="stat-item fade-in-up" style="transition-delay: 100ms;">
+                        <div class="stat-number" id="downloads-counter">0</div>
                         <div class="stat-label">Descargas Globales</div>
                     </div>
-                    <div class="stat-card-large animated-element" style="transition-delay: 200ms;">
-                        <div class="stat-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        <div id="daily-executions-counter" class="stat-number">0</div>
-                        <div class="stat-label">Ejecuciones Diarias (Promedio Interno)</div>
+                     <div class="stat-item fade-in-up" style="transition-delay: 200ms;">
+                        <div class="stat-number" id="executions-counter">0</div>
+                        <div class="stat-label">Media de Ejecuciones diaria </div>
                     </div>
-                    <h3 class="subsection-title animated-element">Distribución Geográfica de Uso</h3>
-                    <div class="country-slider-wrapper animated-element" style="grid-column: 1 / -1; transition-delay: 300ms;">
-                        <div class="country-track animated" id="country-track">
-                            <!-- Las tarjetas de países se inyectarán aquí con JS -->
+                    <div class="stat-item fade-in-up" style="transition-delay: 300ms;">
+                        <div class="stat-number" id="versions-counter">0</div>
+                        <div class="stat-label">Versiones y Mejoras</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="advantage" class="section">
+            <div class="container">
+                <h2 class="section-title fade-in-up">La Ventaja Estratégica <span>ToolboxBS</span></h2>
+                <p class="section-intro fade-in-up">Las herramientas tradicionales se quedan cortas. Ofrecen piezas del rompecabezas. Nosotros te damos la imagen completa.</p>
+                <div class="comparison-table">
+                    <div class="competitor-card fade-in-up" style="transition-delay: 100ms;">
+                        <h3>Scripts Manuales</h3>
+                        <ul>
+                            <li><i class="fas fa-times-circle icon"></i> Lentos y propensos a errores</li>
+                            <li><i class="fas fa-times-circle icon"></i> No escalables</li>
+                            <li><i class="fas fa-times-circle icon"></i> Requieren alta pericia técnica</li>
+                            <li><i class="fas fa-times-circle icon"></i> Sin interfaz gráfica</li>
+                        </ul>
+                    </div>
+                    <div class="toolbox-card fade-in-up" style="transition-delay: 300ms;">
+                        <span class="tagline">La Solución Definitiva</span>
+                        <h3>ToolboxBS</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle icon"></i> Automatización con un clic</li>
+                            <li><i class="fas fa-check-circle icon"></i> Diseñado para flotas de equipos</li>
+                            <li><i class="fas fa-check-circle icon"></i> Intuitivo para todos los niveles</li>
+                            <li><i class="fas fa-check-circle icon"></i> Potente y visual</li>
+                            <li><i class="fas fa-check-circle icon"></i> Ecosistema en constante evolución</li>
+                        </ul>
+                    </div>
+                    <div class="competitor-card fade-in-up" style="transition-delay: 200ms;">
+                        <h3>Otras Herramientas</h3>
+                        <ul>
+                            <li><i class="fas fa-times-circle icon"></i> Resuelven solo un problema</li>
+                            <li><i class="fas fa-times-circle icon"></i> Múltiples programas a gestionar</li>
+                            <li><i class="fas fa-times-circle icon"></i> Curva de aprendizaje para cada una</li>
+                            <li><i class="fas fa-times-circle icon"></i> Falta de integración</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="detailed-features" class="section">
+            <div class="container">
+                <h2 class="section-title fade-in-up">Arsenal Completo: <span>Funciones Detalladas</span></h2>
+                <p class="section-intro fade-in-up">Cada módulo en ToolboxBS desbloquea un conjunto de capacidades diseñadas para el entorno corporativo.</p>
+                <div class="features-container fade-in-up">
+                    <div class="features-nav">
+                        <button class="nav-item active" data-target="info"><i class="fas fa-info-circle"></i> Info. Sistema</button>
+                        <button class="nav-item" data-target="apps"><i class="fas fa-download"></i> Descargas Apps</button>
+                        <button class="nav-item" data-target="repair"><i class="fas fa-tools"></i> Reparación</button>
+                        <button class="nav-item" data-target="tweaks"><i class="fas fa-sliders-h"></i> Mejoras</button>
+                        <button class="nav-item" data-target="shortcuts"><i class="fas fa-mouse-pointer"></i> Atajos</button>
+                    </div>
+                    <div class="features-content">
+                        <div id="info" class="feature-pane active">
+                            <h3>Diagnóstico y Reportes</h3>
+                            <ul>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <div>
+                                        <strong>Informe Completo del Sistema</strong>
+                                        <span>Genera un reporte exhaustivo de hardware (CPU, GPU, RAM, Discos), software, red, servicios críticos y actualizaciones. Ideal para auditorías e inventarios rápidos.</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="apps" class="feature-pane">
+                            <h3>Gestión de Software</h3>
+                            <ul>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <div>
+                                        <strong>Centro de Aplicaciones</strong>
+                                        <span>Instala y desinstala software esencial y herramientas de fabricante (Dell, HP, Lenovo) de forma centralizada, garantizando la estandarización.</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="repair" class="feature-pane">
+                            <h3>Reparación y Mantenimiento</h3>
+                            <ul>
+                                <li><i class="fas fa-check"></i><div><strong>Puntos de Restauración</strong><span>Crea sauvegardas del sistema antes de realizar cambios críticos.</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Mantenimiento del SO</strong><span>Ejecuta SFC y DISM para reparar la integridad de los archivos de Windows.</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Análisis BSOD</strong><span>Diagnostica errores de "pantalla azul" para identificar la causa raíz.</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Informe de Batería</strong><span>Evalúa la salud y ciclos de la batería en equipos portátiles.</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Reparación de Red</strong><span>Restablece la configuración de red para solucionar problemas de conectividad.</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Limpieza del Sistema</strong><span>Elimina archivos temporales y optimiza el uso de la memoria RAM.</span></div></li>
+                            </ul>
+                        </div>
+                        <div id="tweaks" class="feature-pane">
+                            <h3>Mejoras y Utilidades</h3>
+                            <ul>
+                                <li><i class="fas fa-check"></i><div><strong>Optimización Avanzada</strong><span>Realiza optmizaciones avanzadas para aplicar ajustes de rendimiento.</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Activación de Windows</strong><span>Utiliza la clave de producto digital embebida en el firmware (BIOS/UEFI).</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Gestión de Drivers de Fabricante</strong><span>Busca e instala automáticamente los asistentes de actualización de Dell, HP y Lenovo.</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Actualización Masiva de Apps</strong><span>Actualiza todo el software instalado vía Winget con un solo comando.</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Acceso a BIOS/UEFI</strong><span>Reinicia el equipo directamente en la configuración del firmware.</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Entorno de Recuperación</strong><span>Accede a las opciones avanzadas de arranque de Windows.</span></div></li>
+                            </ul>
+                        </div>
+                        <div id="shortcuts" class="feature-pane">
+                            <h3>Atajos y Herramientas Esenciales</h3>
+                            <ul>
+                                <li><i class="fas fa-check"></i><div><strong>Acceso Rápido a Herramientas de Windows</strong><span>Inicia Panel de Control, Administrador de Tareas, Servicios, Editor de Registro, y más.</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Despliegue de SO con WinDeploy</strong><span>Lanza la herramienta para instalaciones de Windows sin necesidad de medios externos.</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Asistente de Descarga de ISOs</strong><span>Facilita la obtención de imágenes oficiales de instalación de Windows.</span></div></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
+        
+        <section id="future" class="section">
+            <div class="container">
+                <h2 class="section-title fade-in-up">Innovación Continua: <span>Nuestra Visión de Futuro</span></h2>
+                <p class="section-intro fade-in-up">No nos detenemos. Ya estamos construyendo la próxima generación de herramientas inteligentes.</p>
+                <div class="card-grid">
+                    <div class="feature-card fade-in-up" style="transition-delay: 100ms;">
+                        <i class="fas fa-brain feature-icon"></i>
+                        <h3>Diagnóstico Predictivo con IA</h3>
+                        <p>Estamos desarrollando módulos de inteligencia artificial que analizarán patrones de uso y datos del sistema para <strong>predecir fallos de hardware</strong> y sugerir optimizaciones proactivas antes de que los problemas ocurran.</p>
+                    </div>
+                    <div class="feature-card fade-in-up" style="transition-delay: 200ms;">
+                        <i class="fas fa-file-alt feature-icon"></i>
+                        <h3>Reportes Avanzados por Script</h3>
+                        <p>Generación automática de <strong>reportes detallados</strong> sobre el estado de salud de la infraestructura, el impacto de las optimizaciones y el rendimiento de la flota, directamente desde el script para un análisis rápido y preciso.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <!-- SECCIÓN: LLAMADA A LA ACCIÓN -->
-            <section id="next-steps" class="section cta-section">
-                <h2 class="section-title animated-element">Siguientes Pasos: <span>Hacia una Alianza Estratégica</span></h2>
-                <p class="section-intro animated-element">
-                    El siguiente paso es formalizar esta colaboración. Propongo una reunión para discutir la integración de ToolboxBS como un estándar en nuestros servicios y explorar un <strong>programa piloto con un cliente clave</strong>. Esto nos permitirá recopilar datos concretos sobre la reducción de tickets y la mejora en la satisfacción del cliente, construyendo un caso de negocio irrefutable.
-                </p>
-                <a href="mailto:jhonvaldessepulveda@gmail.com?subject=Propuesta%20ToolboxBS%20para%20Milenio%20PC" class="btn-primary animated-element">
-                    <i class="fas fa-handshake"></i> Discutamos los Siguientes Pasos
-                </a>
-            </section>
-        </main>
+    </main>
 
-    </div>
+    <footer class="footer">
+        <div class="container fade-in-up">
+            <h2 class="section-title">Es Hora de <span>Elevar la Operación</span></h2>
+            <p>Dejar de reaccionar a los problemas y empezar a anticiparlos. ToolboxBS es más que un script; es el motor que impulsa la eficiencia de tu departamento de TI.</p>
+            <a href="mailto:jhonvaldessepulveda@gmail.com?subject=Interesado%20en%20ToolboxBS" class="cta-button">Contactar para una Demostración</a>
+        </div>
+    </footer>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Observer para animaciones al hacer scroll
-        const animatedElements = document.querySelectorAll('.animated-element');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -591,90 +625,84 @@
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15 });
-        animatedElements.forEach(el => observer.observe(el));
+        }, { threshold: 0.1 });
 
-        // Animación de "spotlight" en tarjetas
-        const cards = document.querySelectorAll('.solution-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-            });
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
         });
 
-        // Función para animar contadores
-        const dailyExecutionsCounterElement = document.getElementById('daily-executions-counter');
-        const globalDownloadsTotalCounterElement = document.getElementById('global-downloads-total-counter');
-
-        function animateCounter(element, target, duration = 2500) {
-            if (!element) return;
+        function animateCounter(element, target, duration = 2000, suffix = '') {
+            if (!element || target === 0) return;
             let start = 0;
-            let startTime = null;
-            function animationStep(currentTime) {
-                if (!startTime) startTime = currentTime;
-                const progress = Math.min((currentTime - startTime) / duration, 1);
-                const currentCount = Math.floor(progress * target);
-                element.innerText = currentCount.toLocaleString('es-CO');
-                if (progress < 1) requestAnimationFrame(animationStep);
-            }
-            requestAnimationFrame(animationStep);
+            const increment = Math.ceil(target / (duration / 16)); 
+
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    start = target;
+                    clearInterval(timer);
+                }
+                element.textContent = start.toLocaleString('es-CO') + suffix;
+            }, 16); 
         }
-        
-        // Obtener descargas totales de la API de GitHub
-        async function fetchTotalGitHubDownloads() {
+
+        async function initializeCounters() {
+            const downloadsEl = document.getElementById('downloads-counter');
+            const versionsEl = document.getElementById('versions-counter');
+            const executionsEl = document.getElementById('executions-counter');
+
+            animateCounter(versionsEl, 26);
+            animateCounter(executionsEl, 65);
+
             try {
                 const response = await fetch('https://api.github.com/repos/BrandonSepulveda/ToolboxBS/releases');
-                if (!response.ok) throw new Error(`GitHub API error: ${response.status}`);
+                if (!response.ok) throw new Error('API request failed');
                 const releases = await response.json();
-                let totalDownloads = 0;
-                releases.forEach(release => {
-                    release.assets.forEach(asset => {
-                        totalDownloads += asset.download_count;
-                    });
-                });
-                animateCounter(globalDownloadsTotalCounterElement, totalDownloads);
+                let totalDownloads = releases.reduce((sum, release) => 
+                    sum + release.assets.reduce((assetSum, asset) => assetSum + asset.download_count, 0), 0);
+                
+                animateCounter(downloadsEl, totalDownloads);
+
             } catch (error) {
-                console.error("Failed to fetch GitHub downloads, using fallback.", error);
-                animateCounter(globalDownloadsTotalCounterElement, 25000); // Valor de respaldo
+                console.error("Failed to fetch GitHub downloads:", error);
+                animateCounter(downloadsEl, 13857); 
             }
         }
 
-        // Datos de países para el carrusel
-        const countryData = [
-            { name: 'Colombia', code: 'co', clicks: 8033 },
-            { name: 'México', code: 'mx', clicks: 562 },
-            { name: 'España', code: 'es', clicks: 436 },
-            { name: 'Perú', code: 'pe', clicks: 300 },
-            { name: 'Argentina', code: 'ar', clicks: 252 },
-            { name: 'Chile', code: 'cl', clicks: 139 },
-            { name: 'EE.UU.', code: 'us', clicks: 114 },
-            { name: 'Venezuela', code: 've', clicks: 126 },
-            { name: 'Rep. Dominicana', code: 'do', clicks: 102 },
-            { name: 'Bolivia', code: 'bo', clicks: 76 },
-            { name: 'Ecuador', code: 'ec', clicks: 50 },
-            { name: 'Uruguay', code: 'uy', clicks: 30 }
-        ];
-        const track = document.getElementById('country-track');
-        if (track) {
-            const allCards = [...countryData, ...countryData, ...countryData]; // Duplicar para efecto continuo
-            allCards.forEach(country => {
-                const card = document.createElement('div');
-                card.className = 'country-card';
-                card.innerHTML = `
-                    <img class="country-flag" src="https://flagcdn.com/w40/${country.code}.png" alt="Bandera de ${country.name}">
-                    <span class="country-name">${country.name}</span>
-                    <span class="country-clicks">${country.clicks.toLocaleString('es-CO')} clics</span>`;
-                track.appendChild(card);
+        const statsSection = document.getElementById('stats');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    initializeCounters();
+                    statsObserver.unobserve(entry.target);
+                }
             });
+        }, { threshold: 0.5 });
+        
+        if (statsSection) {
+            statsObserver.observe(statsSection);
         }
+        
+        // --- New Detailed Features Tab Logic ---
+        const navItems = document.querySelectorAll('.nav-item');
+        const featurePanes = document.querySelectorAll('.feature-pane');
 
-        // Iniciar animaciones de contadores
-        animateCounter(dailyExecutionsCounterElement, 65);
-        fetchTotalGitHubDownloads();
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetId = item.getAttribute('data-target');
+
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+
+                featurePanes.forEach(pane => {
+                    if (pane.id === targetId) {
+                        pane.classList.add('active');
+                    } else {
+                        pane.classList.remove('active');
+                    }
+                });
+            });
+        });
     });
     </script>
 </body>
