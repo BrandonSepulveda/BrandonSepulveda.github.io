@@ -4,11 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Propuesta Estratégica: ToolboxBS para Milenio PC</title>
-    <meta name="description" content="Propuesta para integrar ToolboxBS como una solución de valor añadido en el alquiler de equipos de cómputo, optimizando activos y reduciendo costos operativos." />
+    <meta name="description" content="Propuesta para integrar ToolboxBS como una solución de valor añadido, optimizando activos y reduciendo costos operativos." />
     <meta name="author" content="Brandon Sepulveda" />
     
     <!-- Iconos y Fuentes -->
-    <link rel="icon" type="image/x-xicon" href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" />
+    <link rel="icon" type="image/x-icon" href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" />
     <script src="https://use.fontawesome.com/releases/v6.5.2/js/all.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,17 +19,21 @@
             --accent-color: #3b82f6;
             --accent-dark: #2563eb;
             --primary-color: #FFFFFF;
-            --bg-dark: #07090D; /* Fondo del body, muy oscuro */
-            --bg-section-background: #0D1117; /* Fondo de las secciones, un poco más claro que el body pero aún oscuro */
-            --bg-card-background: #161B22; /* Fondo de los cuadros de precio (no primarios), claro para destacar sobre --bg-section-background */
+            --bg-dark: #07090D;
+            --bg-section: #0D1117;
+            --bg-card: rgba(22, 27, 34, 0.6); /* Glassmorphism effect */
             --text-light: #F0F2F5;
             --text-secondary: #a1a9b8;
-            --border-color: rgba(255, 255, 255, 0.3); /* Borde más visible y fuerte */
+            --border-color: rgba(255, 255, 255, 0.15);
             --shadow-color: rgba(59, 130, 246, 0.1);
+            --glow-color: rgba(59, 130, 246, 0.3);
             --transition-speed: 0.4s;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
         html { font-size: 16px; }
+
         body {
             font-family: 'Manrope', sans-serif;
             background-color: var(--bg-dark);
@@ -37,261 +41,286 @@
             line-height: 1.7;
             overflow-x: hidden;
         }
+
+        /* Animated Aurora Background */
         body::before {
-            content: ''; position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.1), transparent 40%),
-                        radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.08), transparent 40%);
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.12), transparent 40%),
+                        radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.1), transparent 40%);
             z-index: -1;
-            animation: moveAurora 20s infinite alternate;
+            animation: moveAurora 25s infinite alternate ease-in-out;
         }
+
         @keyframes moveAurora {
             from { transform: translate(0, 0) rotate(0deg); }
-            to { transform: translate(40px, -40px) rotate(15deg); }
+            to { transform: translate(50px, -50px) rotate(20deg); }
         }
+
         .proposal-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-        .section { 
-            padding: 6rem 0; 
-            border-bottom: 1px solid var(--border-color); 
-            background-color: var(--bg-section-background); /* Fondo para todas las secciones */
+
+        .section {
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
         }
         .section:last-child { border-bottom: none; }
+
         .section-title {
-            text-align: center; margin-bottom: 1.5rem;
-            font-size: clamp(2.2rem, 5vw, 3rem); font-weight: 800;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: clamp(2.5rem, 5vw, 3.2rem);
+            font-weight: 800;
             color: var(--text-light);
             line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
-        .section-title span { color: var(--accent-color); }
+        .section-title span {
+            color: var(--accent-color);
+            background: linear-gradient(90deg, var(--accent-color), #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .section-intro {
-            text-align: center; max-width: 800px;
-            margin: 0 auto 4rem; font-size: 1.2rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            font-size: 1.2rem;
         }
+
         .btn-primary {
-            display: inline-flex; align-items: center; gap: 10px;
-            padding: 1rem 2.5rem; border-radius: 8px; text-decoration: none;
-            font-weight: 700; font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
             transition: all var(--transition-speed) ease;
-            background-color: var(--accent-color); color: var(--text-light);
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-dark));
+            color: var(--text-light);
             box-shadow: 0 4px 20px var(--shadow-color);
-            border: 2px solid transparent; cursor: pointer;
+            border: 2px solid transparent;
+            cursor: pointer;
         }
         .btn-primary:hover {
-            background-color: var(--accent-dark); transform: translateY(-3px);
-            box-shadow: 0 8px 25px var(--shadow-color);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px var(--glow-color);
         }
+
+        /* Scroll Animations */
         .animated-element {
-            opacity: 0; transform: translateY(40px);
+            opacity: 0;
+            transform: translateY(50px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-        .animated-element.visible { opacity: 1; transform: translateY(0); }
+        .animated-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-        /* --- Estilos específicos de la propuesta V2 --- */
+        /* Header */
         .proposal-header {
             text-align: center;
-            padding: 3rem 0;
-            background-color: var(--bg-section-background); /* Asegurar que el header también use el fondo de sección */
+            padding: 4rem 0;
         }
         .proposal-logos {
-            display: flex; justify-content: center; align-items: center;
-            gap: 2.5rem; margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
         }
-        .proposal-logos img { max-height: 55px; filter: brightness(1.5); object-fit: contain; }
-        .proposal-logos .plus-icon { font-size: 2rem; color: var(--text-secondary); }
+        .proposal-logos img {
+            max-height: 60px;
+            filter: brightness(1.5) contrast(1.1);
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        .proposal-logos img:hover {
+            transform: scale(1.1);
+        }
+        .proposal-logos .plus-icon {
+            font-size: 2.2rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
         .proposal-header h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 800;
-            color: var(--text-light); margin-bottom: 1rem;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 800;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
         }
-        .proposal-header p { font-size: 1.3rem; color: var(--text-secondary); max-width: 900px; margin: 0 auto; }
+        .proposal-header p {
+            font-size: 1.35rem;
+            color: var(--text-secondary);
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
+        /* Card Grid */
         .card-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
         }
+        
+        /* Glassmorphism Cards */
         .solution-card {
-            background: var(--bg-card-background); /* Fondo de tarjeta, más claro */
-            border: 1px solid var(--border-color); padding: 2.5rem; border-radius: 16px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            border-radius: 20px;
             transition: all var(--transition-speed) ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .solution-card:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--glow-color) 0%, transparent 40%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            transform: translate(var(--mouse-x, -100px), var(--mouse-y, -100px));
+        }
+        .solution-card:hover:before {
+            opacity: 1;
         }
         .solution-card:hover {
-            transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transform: translateY(-12px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             border-color: var(--accent-color);
         }
-        .solution-icon { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 1.5rem; }
+        .solution-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .solution-card:hover .solution-icon {
+            transform: scale(1.15) rotate(-10deg);
+        }
         .solution-title {
-            font-size: 1.6rem; font-weight: 700; color: var(--text-light);
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--text-light);
             margin-bottom: 1rem;
         }
 
-        /* --- Propuesta de Valor 360 --- */
+        /* Value Proposition Section */
         .value-prop-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
         }
         .value-prop-column {
-            background: var(--bg-card-background); /* Fondo de tarjeta, más claro */
-            padding: 2.5rem; border-radius: 16px; border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
         }
         .value-prop-column h3 {
-            font-size: 1.8rem; color: var(--accent-color);
-            margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;
+            font-size: 1.9rem;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
         .value-prop-column ul { list-style: none; padding-left: 0; }
-        .value-prop-column li { position: relative; padding-left: 30px; margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .value-prop-column li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
         .value-prop-column li::before {
-            content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
-            color: var(--accent-color); position: absolute; left: 0; top: 4px;
+            content: '\f058';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            top: 4px;
+            font-size: 1.2rem;
         }
 
-        /* --- NUEVAS SECCIONES --- */
-        .origin-section, .licensing-section, .pricing-section, .future-vision-section, .version-history-section {
-            background: var(--bg-section-background); /* Fondo de las secciones, más oscuro */
+        /* Origin & Tech Stack Section */
+        .origin-section {
+            background: var(--bg-section);
             padding: 3rem;
-            border-radius: 16px;
+            border-radius: 20px;
             border: 1px solid var(--border-color);
             margin-bottom: 4rem;
-        }
-        .origin-section {
             text-align: center;
         }
         .origin-section h3 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--text-light);
             margin-bottom: 1.5rem;
         }
         .origin-section p {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             max-width: 900px;
             margin: 0 auto 1.5rem;
         }
-        .origin-section .tech-stack {
+        .tech-stack {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
+            gap: 1rem;
+            margin-top: 2.5rem;
             flex-wrap: wrap;
         }
-        .origin-section .tech-stack span {
+        .tech-stack span {
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--accent-color);
-            background-color: var(--bg-card-background); /* Usar color de tarjeta para las tecnologías */
-            padding: 0.7rem 1.5rem;
-            border-radius: 8px;
+            background-color: var(--bg-card);
+            padding: 0.8rem 1.6rem;
+            border-radius: 10px;
             border: 1px solid var(--accent-color);
+            transition: all 0.3s ease;
         }
-
-        .licensing-section ul, .future-vision-section ul, .version-history-section ul {
-            list-style: none;
-            padding-left: 0;
-            margin-top: 2rem;
-        }
-        .licensing-section li, .future-vision-section li, .version-history-section li {
-            position: relative;
-            padding-left: 40px;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
+        .tech-stack span:hover {
+            background-color: var(--accent-color);
             color: var(--text-light);
-        }
-        .licensing-section li strong, .future-vision-section li strong, .version-history-section li strong {
-            color: var(--accent-color);
-        }
-        .licensing-section li i, .future-vision-section li i, .version-history-section li i {
-            position: absolute;
-            left: 0;
-            top: 5px;
-            font-size: 1.5rem;
-            color: var(--accent-color);
-        }
-        .licensing-section h3, .pricing-section h3, .future-vision-section h3, .version-history-section h3 {
-            font-size: 2rem;
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .pricing-options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-            align-items: stretch; /* Ensures cards are same height */
-        }
-        .pricing-section .price-box {
-            background: var(--bg-card-background); /* Fondo de los cuadros, más claro que la sección */
-            padding: 2.5rem;
-            border-radius: 16px;
-            text-align: center;
-            color: var(--text-light); 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3); 
-            border: 1px solid var(--border-color); 
-            display: flex; 
-            flex-direction: column;
-            justify-content: space-between; 
-            height: 100%; 
-            transition: all var(--transition-speed) ease; 
-        }
-        .pricing-section .price-box:hover {
-            transform: translateY(-5px); 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4); 
-            border-color: var(--accent-color); 
-            background-color: var(--bg-medium); /* Darken slightly on hover */
-        }
-        /* Style for the featured/highlighted price box (blue gradient) */
-        .pricing-section .price-box.primary-price-box {
-            background: linear-gradient(145deg, var(--accent-color), var(--accent-dark)); /* Blue gradient */
-            color: var(--text-light); /* Light text on blue */
-            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4); /* Stronger blue shadow */
-            border-color: var(--accent-color); /* Blue border */
-        }
-        /* Ensure specific text elements within the primary-price-box also use light text color */
-        .pricing-section .price-box.primary-price-box .option-title,
-        .pricing-section .price-box.primary-price-box .price-value,
-        .pricing-section .price-box.primary-price-box .period,
-        .pricing-section .price-box.primary-price-box .small-text,
-        .pricing-section .price-box.primary-price-box ul li {
-            color: var(--text-light); 
-        }
-        /* Specific override for checkmark in non-primary boxes to ensure visibility */
-        .pricing-section .price-box ul li::before {
-             color: var(--accent-color); /* Primary blue for checkmarks in dark boxes */
-        }
-        .pricing-section .price-box.primary-price-box ul li::before {
-            color: #D4EDDA; /* Light green check, visible on blue */
+            transform: scale(1.05);
         }
 
-        .pricing-section .btn-select {
-            display: inline-block;
-            padding: 0.8rem 2rem;
-            background-color: var(--primary-color); /* White button on any box */
-            color: var(--accent-dark); /* Dark text on white button */
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-            margin-top: 1.5rem;
-        }
-        .pricing-section .btn-select:hover {
-            background-color: #E0E0E0; /* Slightly darker white on hover */
-        }
-
-
-        /* Version History Table Styles */
+        /* Version History Table */
         .version-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
             margin-top: 2rem;
-            background-color: var(--bg-card-background); /* Usar fondo de tarjeta */
-            border-radius: 12px;
-            overflow: hidden; /* Ensures border-radius applies to corners */
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
             border: 1px solid var(--border-color);
         }
         .version-table th, .version-table td {
-            padding: 1rem 1.2rem;
+            padding: 1.2rem 1.5rem;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
         }
         .version-table th {
-            background-color: var(--accent-dark);
+            background-color: rgba(37, 99, 235, 0.5);
             color: var(--text-light);
             font-weight: 700;
             font-size: 1rem;
@@ -301,141 +330,132 @@
             transition: background-color 0.3s ease;
         }
         .version-table tbody tr:hover {
-            background-color: var(--bg-medium); /* Example hover for table rows */
+            background-color: rgba(255, 255, 255, 0.05);
         }
-        .version-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-        .version-table td {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-        .version-table .total-downloads {
-            color: var(--text-light);
-            font-weight: 600;
-        }
-        .version-table .assets-check {
-            color: #28a745; /* Green for checkmark */
-            font-weight: 900;
-            font-family: 'Font Awesome 6 Free';
-        }
+        .version-table tbody tr:last-child td { border-bottom: none; }
+        .version-table td { color: var(--text-secondary); font-size: 0.95rem; }
+        .version-table .total-downloads { color: var(--text-light); font-weight: 600; }
+        .version-table .assets-check { color: #28a745; font-weight: 900; font-family: 'Font Awesome 6 Free'; }
 
-        /* --- NUEVA SECCIÓN: Implementación --- */
+        /* Implementation Section */
         .feature-point {
             display: flex;
             align-items: flex-start;
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
-        .feature-point:last-child {
-            margin-bottom: 0;
-        }
+        .feature-point:last-child { margin-bottom: 0; }
         .feature-point .icon {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--accent-color);
             margin-top: 5px;
+            min-width: 40px;
+            text-align: center;
         }
         .feature-point h3 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: var(--text-light);
             margin-bottom: 0.5rem;
         }
 
-        /* --- Prueba de Mercado --- */
+        /* Market Proof / Stats Section */
         .stats-section-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+            gap: 2.5rem;
             margin-top: 2rem;
-            justify-items: center; /* Center items within their grid cells */
-            align-items: start; /* Align items to the top of their grid cells */
-            background-color: var(--bg-section-background); /* Fondo de sección */
-            border-radius: 16px; 
+            justify-items: center;
+            align-items: start;
+            background-color: var(--bg-section);
+            border-radius: 20px;
             padding: 4rem 2rem;
         }
         .stat-card-large {
             text-align: center;
-            padding: 1.5rem;
-            background: var(--bg-card-background); /* Fondo de tarjeta, más claro */
-            border-radius: 12px;
+            padding: 2rem;
+            background: var(--bg-card);
+            border-radius: 16px;
             border: 1px solid var(--border-color);
-            width: 100%; /* Ensure it takes full width of its grid cell */
-            max-width: 350px; /* Limit max width for better appearance */
+            width: 100%;
+            max-width: 350px;
         }
-        .stat-icon { font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem; }
-        .stat-number { font-size: 3.5rem; font-weight: 800; color: var(--text-light); line-height: 1.2; }
-        .stat-label { font-size: 1.2rem; font-weight: 500; color: var(--text-secondary); }
+        .stat-icon { font-size: 3.5rem; color: var(--accent-color); margin-bottom: 1rem; }
+        .stat-number { font-size: 4rem; font-weight: 800; color: var(--text-light); line-height: 1.1; }
+        .stat-label { font-size: 1.25rem; font-weight: 500; color: var(--text-secondary); }
         .subsection-title {
-            grid-column: 1 / -1; /* Spans all columns */
+            grid-column: 1 / -1;
             text-align: center;
             margin-top: 2rem;
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-size: clamp(2rem, 4vw, 2.8rem);
             font-weight: 700;
             color: var(--text-light);
             width: 100%;
         }
-        .country-slider-wrapper { 
-            grid-column: 1 / -1; /* Spans all columns */
-            overflow: hidden; 
+        .country-slider-wrapper {
+            grid-column: 1 / -1;
+            overflow: hidden;
             width: 100%;
             margin-top: 2rem;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
-        .country-track { display: flex; gap: 1rem; user-select: none; }
+        .country-track { display: flex; gap: 1.5rem; user-select: none; }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .country-track.animated { animation: marquee 60s linear infinite; }
         .country-track:hover { animation-play-state: paused; }
         .country-card {
-            flex: 0 0 150px; background: var(--bg-card-background); /* Fondo de tarjeta, más claro */
-            border-radius: 12px;
-            padding: 1rem; text-align: center; border: 1px solid var(--border-color);
-            display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+            flex: 0 0 160px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
         }
-        .country-flag { width: 40px; height: auto; border-radius: 4px; }
-        .country-name { font-size: 1rem; font-weight: 600; color: var(--text-light); white-space: nowrap; }
-        .country-clicks { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); }
+        .country-flag { width: 48px; height: auto; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .country-name { font-size: 1.1rem; font-weight: 600; color: var(--text-light); white-space: nowrap; }
+        .country-clicks { font-size: 0.95rem; font-weight: 500; color: var(--text-secondary); }
 
-        /* --- CTA Final --- */
+        /* Final CTA */
         .cta-section { text-align: center; }
         .cta-section .btn-primary {
             transform: scale(1.1);
-            animation: btnPulse 2s infinite 1s;
+            animation: btnPulse 2.5s infinite 1s;
         }
         @keyframes btnPulse {
             0%, 100% { box-shadow: 0 10px 30px var(--shadow-color); transform: scale(1.1); }
-            50% { box-shadow: 0 15px 40px rgba(59, 130, 246, 0.3); transform: scale(1.15); }
+            50% { box-shadow: 0 15px 45px var(--glow-color); transform: scale(1.15); }
         }
 
-        /* --- Responsividad --- */
+        /* Responsiveness */
         @media (max-width: 992px) {
             .value-prop-grid { grid-template-columns: 1fr; }
-            .stats-section-content { grid-template-columns: 1fr; } /* Stack stat cards on small screens */
-            .pricing-options-grid { grid-template-columns: 1fr; } /* Stack price options on smaller screens */
+            .stats-section-content { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
             .section { padding: 4rem 0; }
             .section-intro { font-size: 1.1rem; }
-            .version-table th, .version-table td {
-                padding: 0.8rem;
-                font-size: 0.85rem;
-            }
-            .version-table thead { display: none; } /* Hide header on small screens */
+            .version-table thead { display: none; }
             .version-table, .version-table tbody, .version-table tr, .version-table td {
                 display: block;
                 width: 100%;
             }
             .version-table tr {
-                margin-bottom: 1rem;
+                margin-bottom: 1.5rem;
                 border: 1px solid var(--border-color);
-                border-radius: 8px;
+                border-radius: 12px;
                 padding: 1rem;
-                background-color: var(--bg-card-background); /* Usar fondo de tarjeta */
+                background-color: var(--bg-card);
             }
             .version-table td {
                 text-align: right;
                 padding-left: 50%;
                 position: relative;
                 border: none;
-                padding-bottom: 0.5rem;
+                padding-bottom: 0.7rem;
             }
             .version-table td::before {
                 content: attr(data-label);
@@ -461,19 +481,19 @@
                 <i class="fas fa-plus plus-icon"></i>
                 <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" alt="Logo de ToolboxBS">
             </div>
-            <h1>Transformando la Gestión de Equipos Corporativos</h1>
-            <p>Una propuesta para integrar <span>ToolboxBS</span> como la herramienta de valor añadido que empodera a sus equipos de TI y maximiza el rendimiento de cada activo.</p>
+            <h1>Transformando la <span>Gestión</span> de Equipos Corporativos</h1>
+            <p>Una propuesta para integrar ToolboxBS como la herramienta de valor añadido que empodera a sus equipos de TI y maximiza el rendimiento de cada activo.</p>
         </header>
 
         <main>
-            <!-- SECCIÓN NUEVA: MI INICIATIVA, NUESTRO ACTIVO -->
+            <!-- SECCIÓN: MI INICIATIVA, NUESTRO ACTIVO -->
             <section id="my-initiative" class="section">
                 <h2 class="section-title animated-element">Una Iniciativa, <span>Nuestro Activo Valioso</span></h2>
                 <div class="origin-section animated-element" style="transition-delay: 100ms;">
                     <h3>El Origen de un Proyecto con Impacto</h3>
-                    <p>Hace más de **dos años**, el desarrollo de ToolboxBS surgió como una respuesta proactiva a las necesidades recurrentes en el día a día de nuestro soporte técnico.</p>
-                    <p>Lo que comenzó como un conjunto de scripts en **PowerShell** para automatizar tareas rutinarias, evolucionó a través de un esfuerzo dedicado y continuo hasta convertirse en una suite integral de optimización y mantenimiento.</p>
-                    <p>Recientemente, sus capacidades se ampliaron con una **versión web**, lo que no solo multiplica su accesibilidad, sino que también demuestra su adaptabilidad y la visión a futuro que he creado para esta herramienta. Esta evolución representa una inversión significativa de recursos y conocimiento, enfocada en el avance de la herramienta.</p>
+                    <p>Hace más de <strong>dos años</strong>, el desarrollo de ToolboxBS surgió como una respuesta proactiva a las necesidades recurrentes en el día a día de nuestro soporte técnico.</p>
+                    <p>Lo que comenzó como un conjunto de scripts en <strong>PowerShell</strong> para automatizar tareas rutinarias, evolucionó a través de un esfuerzo dedicado y continuo hasta convertirse en una suite integral de optimización y mantenimiento.</p>
+                    <p>Recientemente, sus capacidades se ampliaron con una <strong>versión web</strong>, lo que no solo multiplica su accesibilidad, sino que también demuestra su adaptabilidad y la visión a futuro que he creado para esta herramienta. Esta evolución representa una inversión significativa de recursos y conocimiento, enfocada en el avance de la herramienta.</p>
                     <div class="tech-stack">
                         <span>PowerShell (Script)</span>
                         <span>WPF (UI Local)</span>
@@ -484,212 +504,121 @@
                 </div>
             </section>
 
-            <!-- SECCIÓN 1: EL DESAFÍO Y LA SOLUCIÓN - ACTUALIZADA CON 6 TARJETAS -->
+            <!-- SECCIÓN: LA SOLUCIÓN INTEGRAL -->
             <section id="solution" class="section">
                 <h2 class="section-title animated-element">La Solución Integral: <span>Impacto en Milenio PC</span></h2>
                 <p class="section-intro animated-element">
-                    El alquiler de equipos va más allá de la entrega de hardware. El verdadero desafío es mantener ese hardware funcionando a su máximo potencial. ToolboxBS es la solución que lo hace posible, de forma simple y segura, impactando directamente en la **eficiencia operativa y el ahorro de costos.**
+                    El alquiler de equipos va más allá de la entrega de hardware. El verdadero desafío es mantener ese hardware funcionando a su máximo potencial. ToolboxBS es la solución que lo hace posible, de forma simple y segura, impactando directamente en la <strong>eficiencia operativa y el ahorro de costos.</strong>
                 </p>
                 <div class="card-grid">
                     <div class="solution-card animated-element" style="transition-delay: 100ms;">
                         <i class="fas fa-rocket solution-icon"></i>
                         <h3 class="solution-title">Máximo Rendimiento</h3>
-                        <p>Libera recursos, limpia archivos basura y optimiza la memoria RAM para una experiencia más rápida y fluida en todas las aplicaciones críticas del negocio. **Menos quejas por lentitud.**</p>
+                        <p>Libera recursos, limpia archivos basura y optimiza la memoria RAM para una experiencia más rápida y fluida. <strong>Menos quejas por lentitud.</strong></p>
                     </div>
                     <div class="solution-card animated-element" style="transition-delay: 200ms;">
                         <i class="fas fa-magic solution-icon"></i>
                         <h3 class="solution-title">Simplicidad Poderosa</h3>
-                        <p>Convierte procesos técnicos complejos en tareas de minutos. Una interfaz intuitiva que agrupa decenas de comandos y scripts avanzados en simples clics. Esto se traduce en que, por ejemplo, los técnicos pueden realizar diagnósticos complejos en cada sesión remota o incidencia en cuestión de minutos, identificando anomalías que permiten escalar con precisión a nivel 2 o resolver directamente el problema. **Ahorro de tiempo en cada intervención.**</p>
+                        <p>Convierte procesos técnicos complejos en tareas de minutos. Una interfaz intuitiva que agrupa decenas de comandos y scripts avanzados en simples clics. <strong>Ahorro de tiempo en cada intervención.</strong></p>
                     </div>
                     <div class="solution-card animated-element" style="transition-delay: 300ms;">
                         <i class="fas fa-shield-alt solution-icon"></i>
                         <h3 class="solution-title">Control Total y Cero Instalación</h3>
-                        <p>Acceda a herramientas de diagnóstico y reparación avanzadas con total seguridad. Al no requerir instalación, se integra de forma segura en cualquier entorno corporativo. **Menos fricción, más seguridad.**</p>
+                        <p>Acceda a herramientas de diagnóstico y reparación avanzadas con total seguridad. Al no requerir instalación, se integra de forma segura en cualquier entorno corporativo. <strong>Menos fricción, más seguridad.</strong></p>
                     </div>
                     <div class="solution-card animated-element" style="transition-delay: 400ms;">
                         <i class="fas fa-stethoscope solution-icon"></i>
                         <h3 class="solution-title">Diagnóstico Preciso</h3>
-                        <p>Identifica problemas de hardware y software rápidamente con herramientas de análisis integradas. Reduce el tiempo de diagnóstico y acelera la resolución de problemas. **Reparaciones más rápidas.**</p>
+                        <p>Identifica problemas de hardware y software rápidamente con herramientas de análisis integradas. Reduce el tiempo de diagnóstico y acelera la resolución de problemas. <strong>Reparaciones más rápidas.</strong></p>
                     </div>
                     <div class="solution-card animated-element" style="transition-delay: 500ms;">
                         <i class="fas fa-file-code solution-icon"></i>
                         <h3 class="solution-title">Seguridad y Transparencia</h3>
-                        <p>Construido sobre PowerShell y de código abierto. Otorga a los equipos de TI total visibilidad y control sobre las acciones realizadas, cumpliendo con los estándares de seguridad. **Confianza en la herramienta.**</p>
+                        <p>Construido sobre PowerShell y de código abierto. Otorga a los equipos de TI total visibilidad y control sobre las acciones realizadas, cumpliendo con los estándares de seguridad. <strong>Confianza en la herramienta.</strong></p>
                     </div>
                     <div class="solution-card animated-element" style="transition-delay: 600ms;">
                         <i class="fas fa-layer-group solution-icon"></i>
                         <h3 class="solution-title">Estandarización de Flotas</h3>
-                        <p>Aplica las mismas optimizaciones y reparaciones en toda la flota de equipos alquilados. Garantiza un rendimiento consistente y simplifica la gestión a gran escala. **Coherencia y calidad del servicio.** Muchos de nuestros clientes, al experimentar la eficacia de ToolboxBS durante el soporte, expresan un gran interés en obtener la aplicación para su propio uso, lo que abre una nueva vía para estrechar la relación con ellos.</p>
+                        <p>Aplica las mismas optimizaciones y reparaciones en toda la flota de equipos alquilados. Garantiza un rendimiento consistente y simplifica la gestión a gran escala. <strong>Coherencia y calidad del servicio.</strong></p>
                     </div>
                 </div>
             </section>
 
-            <!-- SECCIÓN 2: PROPUESTA DE VALOR 360° - BENEFICIOS AMPLIADOS -->
+            <!-- SECCIÓN: PROPUESTA DE VALOR 360° -->
             <section id="value-prop" class="section">
                 <h2 class="section-title animated-element">Propuesta de Valor <span>360°</span></h2>
                 <p class="section-intro animated-element">La implementación de ToolboxBS crea un ciclo de beneficios mutuos, fortaleciendo nuestra operación interna y entregando un valor sin precedentes a nuestros clientes.</p>
                 <div class="value-prop-grid">
                     <div class="value-prop-column animated-element" style="transition-delay: 100ms;">
-                        <h3><i class="fas fa-building"></i>Para Milenio PC (Beneficios Económicos y Operacionales)</h3>
+                        <h3><i class="fas fa-building"></i>Para Milenio PC</h3>
                         <ul>
-                            <li><strong>Reducción Significativa de Tiempos de Soporte:</strong> La automatización y estandarización de tareas reduce las horas dedicadas a problemas de rendimiento, **liberando al equipo técnico para tareas de mayor valor.** Directamente, se observa una mejora en el tiempo de resolución. Con un promedio de **50 ejecuciones diarias** de ToolboxBS en nuestros equipos, la capacidad de diagnosticar y solucionar problemas es inmediata y precisa.</li>
-                            <li><strong>Optimización de la Capacidad del Equipo:</strong> Al requerir menos tiempo en problemas comunes, el equipo de soporte puede manejar **más casos por día** o dedicarse a proyectos estratégicos, potenciando su productividad y desarrollo profesional.</li>
-                            <li><strong>Agilización del Ciclo de Equipos:</strong> Acelera la preparación de equipos devueltos, dejándolos 100% optimizados para el siguiente cliente en una fracción del tiempo. **Maximiza la disponibilidad del inventario.**</li>
-                            <li><strong>Diferenciación Competitiva:</strong> Ofrecemos una capacidad de gestión única, no solo hardware. Nos posiciona como **líderes en soluciones tecnológicas integrales.**</li>
+                            <li><strong>Reducción de Tiempos de Soporte:</strong> La automatización reduce horas dedicadas a problemas de rendimiento, <strong>liberando al equipo técnico para tareas de mayor valor.</strong></li>
+                            <li><strong>Optimización de la Capacidad del Equipo:</strong> El equipo de soporte puede manejar <strong>más casos por día</strong> o dedicarse a proyectos estratégicos, potenciando su productividad.</li>
+                            <li><strong>Agilización del Ciclo de Equipos:</strong> Acelera la preparación de equipos devueltos, dejándolos 100% optimizados para el siguiente cliente en una fracción del tiempo.</li>
+                            <li><strong>Diferenciación Competitiva:</strong> Nos posiciona como <strong>líderes en soluciones tecnológicas integrales</strong>, no solo como proveedores de hardware.</li>
                         </ul>
                     </div>
                     <div class="value-prop-column animated-element" style="transition-delay: 200ms;">
-                        <h3><i class="fas fa-users"></i>Para Sus Clientes (y su Equipo de TI)</h3>
+                        <h3><i class="fas fa-users"></i>Para Sus Clientes</h3>
                         <ul>
-                            <li><strong>Máximo Retorno de Inversión (ROI) del Alquiler:</strong> Sus clientes obtienen equipos funcionando al 100% de su capacidad durante todo el contrato, **maximizando la productividad de sus empleados.**</li>
-                            <li><strong>Menos Interrupciones y Mayor Productividad:</strong> Los problemas de rendimiento se minimizan, lo que se traduce en **menos tiempo de inactividad** para los usuarios finales y mayor enfoque en sus labores.</li>
-                            <li><strong>Empoderamiento y Autonomía del Equipo de TI del Cliente:</strong> Les proporcionamos una herramienta segura y eficiente para que puedan realizar mantenimiento y diagnóstico proactivo de su flota sin depender exclusivamente de nuestro soporte.</li>
-                            <li><strong>Satisfacción del Cliente Mejorada:</strong> Clientes con equipos que rinden al máximo son clientes más satisfechos, lo que se traduce en **mayor retención y referencias.**</li>
-                            <li><strong>Reducción de Complejidad:</strong> Simplifica tareas de mantenimiento y diagnóstico que antes requerían conocimientos avanzados o múltiples herramientas, **facilitando la gestión de su propia infraestructura.**</li>
-                        </li>
-                    </ul>
+                            <li><strong>Máximo Retorno de Inversión (ROI):</strong> Sus clientes obtienen equipos funcionando al 100% de su capacidad, <strong>maximizando la productividad de sus empleados.</strong></li>
+                            <li><strong>Menos Interrupciones:</strong> Los problemas de rendimiento se minimizan, lo que se traduce en <strong>menos tiempo de inactividad</strong> para los usuarios finales.</li>
+                            <li><strong>Empoderamiento del Equipo de TI:</strong> Les proporcionamos una herramienta segura y eficiente para que puedan realizar mantenimiento proactivo de su flota.</li>
+                            <li><strong>Satisfacción del Cliente Mejorada:</strong> Clientes con equipos que rinden al máximo son clientes más satisfechos, lo que se traduce en <strong>mayor retención y referencias.</strong></li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
-            <!-- SECCIÓN NUEVA: MODELO DE LICENCIA DUAL -->
-            <section id="licensing-model" class="section">
-                <h2 class="section-title animated-element">Un Modelo de Licencia <span>Justo y Estratégico</span></h2>
-                <p class="section-intro animated-element">ToolboxBS opera bajo un modelo de licencia dual que permite flexibilidad y define claramente las condiciones de uso.</p>
-                <div class="licensing-section animated-element" style="transition-delay: 100ms;">
-                    <h3>Comprendiendo las Licencias de ToolboxBS</h3>
-                    <ul>
-                        <li>
-                            <i class="fas fa-globe-americas"></i>
-                            <strong>Licencia Comunitaria (GNU AGPL v3.0):</strong> Este software es de código abierto y uso libre bajo la licencia AGPL v3.0. Su amplia adopción global valida su fiabilidad, demostrando la solidez de la herramienta en diversos entornos.
-                        </li>
-                        <li>
-                            <i class="fas fa-handshake"></i>
-                            <strong>Licencia Comercial:</strong> Es necesaria para el uso de ToolboxBS en entornos comerciales, gubernamentales o corporativos, o con fines de lucro (como es el caso de Milenio PC). Esta licencia formaliza dicho uso y otorga acceso a beneficios empresariales exclusivos.
-                        </li>
-                    </ul>
-                </div>
-            </section>
-            
-            <!-- SECCIÓN NUEVA: LA PROPUESTA COMERCIAL DE LICENCIAMIENTO -->
-            <section id="pricing-proposal" class="section">
-                <h2 class="section-title animated-element">La Propuesta Comercial de <span>Licenciamiento</span></h2>
-                <p class="section-intro animated-element">Considerando el valor innegable que ToolboxBS aporta a la eficiencia operativa, la reducción de costos y la diferenciación de nuestro servicio, propongo diferentes modelos de licenciamiento adaptados a sus necesidades.</p>
-
-                <div class="pricing-options-grid animated-element" style="transition-delay: 100ms;">
-                    
-                    <!-- Opción 1: Licencia Anual - Destacada -->
-                    <div class="price-box primary-price-box">
-                        <h3 class="option-title">Licencia Anual</h3>
-                        <div class="price-value">$18.000 USD</div>
-                        <div class="period">Por Año</div>
-                        <p class="small-text">Este valor anual es altamente competitivo y se traduce en un costo por ejecución de aproximadamente **$1.46 USD** (asumiendo 50 ejecuciones diarias promedio). Una inversión mínima con grandes beneficios en tiempo y eficiencia.</p>
-                        <ul>
-                            <li>Uso ilimitado de ToolboxBS (Script & Web) en toda la empresa.</li>
-                            <li>Autorización para integrar el branding y logos de Milenio PC.</li>
-                            <li>Soporte técnico prioritario y directo del autor (Jhon Sepulveda).</li>
-                            <li>Acceso garantizado a todas las actualizaciones y nuevas funcionalidades.</li>
-                            <li>Compromiso con la evolución continua de la herramienta.</li>
-                        </ul>
-                        <a href="mailto:jhonvaldessepulveda@gmail.com?subject=Interes%20en%20Licencia%20Anual%20ToolboxBS" class="btn-select">Consultar Licencia Anual</a>
-                    </div>
-
-                    <!-- Opción 2: Licencia Mensual - Estilo oscuro -->
-                    <div class="price-box">
-                        <h3 class="option-title">Licencia Mensual</h3>
-                        <div class="price-value">$1.500 USD</div>
-                        <div class="period">Por Mes</div>
-                        <p class="small-text">Una opción flexible para iniciar, permitiendo evaluar el impacto directo de ToolboxBS en su operación sin un compromiso anual inicial.</p>
-                        <ul>
-                            <li>Uso ilimitado de ToolboxBS (Script & Web) en toda la empresa.</li>
-                            <li>Autorización para integrar el branding y logos de Milenio PC.</li>
-                            <li>Soporte técnico directo del autor (Jhon Sepulveda).</li>
-                            <li>Acceso a todas las actualizaciones y nuevas funcionalidades durante el mes.</li>
-                            <li>Flexibilidad de pago.</li>
-                        </ul>
-                        <a href="mailto:jhonvaldessepulveda@gmail.com?subject=Interes%20en%20Licencia%20Mensual%20ToolboxBS" class="btn-select">Consultar Licencia Mensual</a>
-                    </div>
-
-                    <!-- Opción 3: Adquisición Completa (Propiedad Plena) - Estilo oscuro -->
-                    <div class="price-box">
-                        <h3 class="option-title">Adquisición Completa</h3>
-                        <div class="price-value">A Discutir</div>
-                        <div class="period">Pago Único</div>
-                        <p class="small-text">Esta opción le otorga a Milenio PC la **propiedad total del software y su código fuente**, permitiendo una autonomía absoluta para futuras modificaciones, integraciones y control del desarrollo interno. La inversión para desarrollar una aplicación de la complejidad actual de ToolboxBS desde cero, por un equipo profesional, oscila entre **$55,000 y $150,000 USD**.</p>
-                        <ul>
-                            <li>Propiedad intelectual completa de ToolboxBS.</li>
-                            <li>Acceso total al código fuente.</li>
-                            <li>Control absoluto sobre el desarrollo y evolución de la herramienta.</li>
-                            <li>Integración ilimitada en todos los procesos de la empresa.</li>
-                            <li>Beneficio de una solución probada y validada globalmente.</li>
-                        </ul>
-                        <a href="mailto:jhonvaldessepulveda@gmail.com?subject=Interes%20en%20Adquisicion%20Completa%20ToolboxBS" class="btn-select">Consultar Adquisición</a>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- SECCIÓN 3: IMPLEMENTACIÓN - ACTUALIZADA -->
+            <!-- SECCIÓN: IMPLEMENTACIÓN -->
             <section id="implementation" class="section">
-                <h2 class="section-title animated-element">Un Estándar de Excelencia: <span>Herramienta Integrada</span></h2>
-                <p class="section-intro animated-element">
-                    ToolboxBS no es solo una aplicación; es un habilitador estratégico que convierte procesos complejos y demandantes en tareas de minutos, mejorando la eficiencia de nuestro soporte y el valor para nuestros clientes.
-                </p>
+                <h2 class="section-title animated-element">Un Estándar de <span>Excelencia</span></h2>
+                <p class="section-intro animated-element">ToolboxBS no es solo una aplicación; es un habilitador estratégico que convierte procesos complejos en tareas de minutos, mejorando la eficiencia y el valor para nuestros clientes.</p>
                 <div class="animated-element">
                     <div class="feature-point">
                         <div class="icon"><i class="fas fa-tasks"></i></div>
                         <div>
                             <h3>Optimización Masiva y Bajo Demanda</h3>
-                            <p>Permite al departamento de TI del cliente ejecutar scripts de limpieza, liberación de RAM y optimización en toda su flota de equipos alquilados, garantizando un rendimiento homogéneo y superior. **Menos tickets por rendimiento bajo.**</p>
+                            <p>Permite al departamento de TI del cliente ejecutar scripts de limpieza, liberación de RAM y optimización en toda su flota de equipos alquilados, garantizando un rendimiento homogéneo y superior. <strong>Menos tickets por rendimiento bajo.</strong></p>
                         </div>
                     </div>
                     <div class="feature-point">
                         <div class="icon"><i class="fas fa-check-double"></i></div>
                         <div>
                             <h3>Estandarización del Soporte Técnico</h3>
-                            <p>Proporciona un conjunto de herramientas unificado para el diagnóstico y la resolución de problemas. Esto acelera la capacitación, reduce el tiempo por ticket y asegura que todos los problemas se aborden con la misma metodología eficiente. **Ahorro promedio de X minutos por intervención.**</p>
+                            <p>Proporciona un conjunto de herramientas unificado para el diagnóstico y la resolución de problemas. Esto acelera la capacitación, reduce el tiempo por ticket y asegura que todos los problemas se aborden con la misma metodología eficiente.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- SECCIÓN NUEVA: VISIÓN A FUTURO -->
+            <!-- SECCIÓN: VISIÓN A FUTURO -->
             <section id="future-vision" class="section">
                 <h2 class="section-title animated-element">Visión a Futuro: <span>Evolución Constante</span></h2>
                 <p class="section-intro animated-element">El compromiso con la evolución de ToolboxBS es continuo. Ya se está trabajando en las próximas innovaciones que potenciarán aún más la eficiencia de Milenio PC.</p>
-                <div class="future-vision-section animated-element" style="transition-delay: 100ms;">
-                    <h3>Próximas Mejoras en Desarrollo</h3>
-                    <ul>
-                        <li>
-                            <i class="fas fa-robot"></i>
-                            <strong>Automatización Avanzada de Formateo:</strong> Se está desarrollando una funcionalidad clave para automatizar el proceso de formateo del sistema operativo utilizando imágenes ISO. Actualmente, esta característica se encuentra en un **80% de avance**, y permitirá un despliegue y preparación de equipos aún más rápidos y estandarizados.
-                        </li>
-                        <li>
-                            <i class="fas fa-wrench"></i>
-                            <strong>Integración de Nuevas Herramientas:</strong> Continuamente se investigan e integran nuevas utilidades y scripts que resuelvan desafíos emergentes en el soporte técnico.
-                        </li>
-                        <li>
-                            <i class="fas fa-chart-line"></i>
-                            <strong>Módulos de Reporte y Analítica:</strong> Implementación de paneles para visualizar el impacto de las optimizaciones y el rendimiento de la flota de equipos.
-                        </li>
+                <div class="value-prop-column animated-element" style="transition-delay: 100ms;">
+                    <h3><i class="fas fa-cogs"></i>Próximas Mejoras en Desarrollo</h3>
+                     <ul>
+                        <li><strong>Automatización Avanzada de Formateo:</strong> Una funcionalidad clave para automatizar el formateo del SO usando imágenes ISO. Actualmente en un <strong>80% de avance.</strong></li>
+                        <li><strong>Integración de Nuevas Herramientas:</strong> Continua investigación e integración de nuevas utilidades y scripts para resolver desafíos emergentes.</li>
+                        <li><strong>Módulos de Reporte y Analítica:</strong> Implementación de paneles para visualizar el impacto de las optimizaciones y el rendimiento de la flota de equipos.</li>
                     </ul>
                 </div>
             </section>
 
-            <!-- SECCIÓN NUEVA: HISTORIAL DE VERSIONES -->
+            <!-- SECCIÓN: HISTORIAL DE VERSIONES -->
             <section id="version-history" class="section">
                 <h2 class="section-title animated-element">Historial de Versiones: <span>Evolución Comprobada</span></h2>
                 <p class="section-intro animated-element">La trayectoria de ToolboxBS demuestra un compromiso constante con la mejora y la adaptabilidad, con actualizaciones frecuentes que añaden valor y estabilidad.</p>
-                <div class="version-history-section animated-element" style="transition-delay: 100ms;">
-                    <h3>Hitos de Lanzamiento</h3>
+                <div class="animated-element" style="transition-delay: 100ms;">
                     <table class="version-table">
                         <thead>
                             <tr>
                                 <th>Versión</th>
-                                <th>Fecha Publicación</th>
+                                <th>Fecha</th>
                                 <th>Descargas</th>
                                 <th>Assets</th>
                                 <th>Tipo</th>
-                                <th>Tamaño</th>
                             </tr>
                         </thead>
                         <tbody id="version-table-body">
@@ -699,8 +628,7 @@
                 </div>
             </section>
 
-
-            <!-- SECCIÓN 4: PRUEBA DE MERCADO - ACTUALIZADA -->
+            <!-- SECCIÓN: PRUEBA DE MERCADO -->
             <section id="market-proof" class="section">
                 <h2 class="section-title animated-element">Validación de Mercado: <span>Confianza Global</span></h2>
                 <p class="section-intro animated-element">ToolboxBS ya es una herramienta probada y validada por una comunidad técnica global, lo que minimiza el riesgo de adopción y garantiza su fiabilidad.</p>
@@ -708,16 +636,14 @@
                     <div class="stat-card-large animated-element" style="transition-delay: 100ms;">
                         <div class="stat-icon"><i class="fas fa-download"></i></div>
                         <div id="global-downloads-total-counter" class="stat-number">0</div>
-                        <div class="stat-label">Descargas Globales Acumuladas</div>
+                        <div class="stat-label">Descargas Globales</div>
                     </div>
-
                     <div class="stat-card-large animated-element" style="transition-delay: 200ms;">
                         <div class="stat-icon"><i class="fas fa-tachometer-alt"></i></div>
                         <div id="daily-executions-counter" class="stat-number">0</div>
-                        <div class="stat-label">Ejecuciones Diarias Promedio (Directas)</div>
+                        <div class="stat-label">Ejecuciones Diarias (Promedio Interno)</div>
                     </div>
-
-                    <h3 class="subsection-title animated-element" style="grid-column: 1 / -1;">Distribución Geográfica de Uso</h3>
+                    <h3 class="subsection-title animated-element">Distribución Geográfica de Uso</h3>
                     <div class="country-slider-wrapper animated-element" style="grid-column: 1 / -1; transition-delay: 300ms;">
                         <div class="country-track animated" id="country-track">
                             <!-- Las tarjetas de países se inyectarán aquí con JS -->
@@ -726,14 +652,14 @@
                 </div>
             </section>
 
-            <!-- SECCIÓN 5: LLAMADA A LA ACCIÓN -->
+            <!-- SECCIÓN: LLAMADA A LA ACCIÓN -->
             <section id="next-steps" class="section cta-section">
-                <h2 class="section-title animated-element">Siguientes Pasos: <span>Hacia una Alianza Formal</span></h2>
+                <h2 class="section-title animated-element">Siguientes Pasos: <span>Hacia una Alianza Estratégica</span></h2>
                 <p class="section-intro animated-element">
-                    Con esta propuesta sobre la mesa, el siguiente paso es formalizar el compromiso. Propongo una reunión para discutir los términos de la licencia, así como la posibilidad de un **programa piloto con uno de nuestros clientes clave** (como una fase inicial de validación para la empresa, si lo desean). Esto nos permitirá recopilar datos concretos sobre la reducción de tickets de soporte y la mejora en la satisfacción del cliente, construyendo un caso de negocio irrefutable que respalde esta inversión.
+                    El siguiente paso es formalizar esta colaboración. Propongo una reunión para discutir la integración de ToolboxBS como un estándar en nuestros servicios y explorar un <strong>programa piloto con un cliente clave</strong>. Esto nos permitirá recopilar datos concretos sobre la reducción de tickets y la mejora en la satisfacción del cliente, construyendo un caso de negocio irrefutable.
                 </p>
-                <a href="mailto:jhonvaldessepulveda@gmail.com?subject=Propuesta%20Licenciamiento%20ToolboxBS%20para%20Milenio%20PC" class="btn-primary animated-element">
-                    <i class="fas fa-handshake"></i> Hablemos sobre el Licenciamiento
+                <a href="mailto:jhonvaldessepulveda@gmail.com?subject=Propuesta%20ToolboxBS%20para%20Milenio%20PC" class="btn-primary animated-element">
+                    <i class="fas fa-handshake"></i> Discutamos los Siguientes Pasos
                 </a>
             </section>
         </main>
@@ -742,7 +668,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Observer para animaciones
+        // Observer para animaciones al hacer scroll
         const animatedElements = document.querySelectorAll('.animated-element');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -754,7 +680,19 @@
         }, { threshold: 0.15 });
         animatedElements.forEach(el => observer.observe(el));
 
-        // Contadores
+        // Animación de "spotlight" en tarjetas
+        const cards = document.querySelectorAll('.solution-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Función para animar contadores
         const dailyExecutionsCounterElement = document.getElementById('daily-executions-counter');
         const globalDownloadsTotalCounterElement = document.getElementById('global-downloads-total-counter');
 
@@ -772,13 +710,11 @@
             requestAnimationFrame(animationStep);
         }
         
-        // Fetch total downloads from GitHub API
+        // Obtener descargas totales de la API de GitHub
         async function fetchTotalGitHubDownloads() {
             try {
                 const response = await fetch('https://api.github.com/repos/BrandonSepulveda/ToolboxBS/releases');
-                if (!response.ok) {
-                    throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
-                }
+                if (!response.ok) throw new Error(`GitHub API error: ${response.status}`);
                 const releases = await response.json();
                 let totalDownloads = 0;
                 releases.forEach(release => {
@@ -788,35 +724,24 @@
                 });
                 animateCounter(globalDownloadsTotalCounterElement, totalDownloads);
             } catch (error) {
-                console.error("Failed to fetch total GitHub downloads, using fallback.", error);
-                // Fallback to a large, prominent number if API fails
-                animateCounter(globalDownloadsTotalCounterElement, 12500); // Using a known high number as fallback
+                console.error("Failed to fetch GitHub downloads, using fallback.", error);
+                animateCounter(globalDownloadsTotalCounterElement, 25000); // Valor de respaldo
             }
         }
 
-        // Datos de versiones para la tabla (siguen siendo hardcoded para la tabla de versiones)
+        // Datos de versiones para la tabla
         const versionData = [
-            { version: '2.4', name: '2.4', date: '15 jul 2025', downloads: 146, assets: 1, type: 'Release', size: '71.45 KB' },
-            { version: '2.3.3', name: '2.3.3', date: '18 jul 2025', downloads: 407, assets: 1, type: 'Release', size: '78.4 KB' },
-            { version: '2.3', name: '2.3', date: '14 jul 2025', downloads: 312, assets: 1, type: 'Release', size: '460.62 KB' },
-            { version: '2.2', name: '2.2', date: '10 may 2025', downloads: 2200, assets: 1, type: 'Release', size: '178.01 KB' }, 
-            { version: '2.1.1', name: '2.1.1', date: '28 abr 2025', downloads: 580, assets: 1, type: 'Release', size: '163.8 KB' },
-            { version: '2.1', name: '2.1', date: '21 abr 2025', downloads: 3412, assets: 2, type: 'Release', size: '797.45 KB' },
-            { version: '2.0.1', name: '2.0.1', date: '8 abr 2025', downloads: 379, assets: 1, type: 'Release', size: '211.04 KB' },
-            { version: '2.0.0.0', name: '2.0.0.0', date: '14 abr 2025', downloads: 320, assets: 1, type: 'Release', size: '214.65 KB' },
-            { version: '2.0.0', name: '2.0.0', date: '7 abr 2025', downloads: 1582, assets: 2, type: 'Release', size: '340.94 KB' },
-            { version: '2.0', name: '2.0', date: '5 abr 2025', downloads: 130, assets: 1, type: 'Release', size: '161.39 KB' },
-            { version: '1.7', name: '1.7', date: '10 mar 2025', downloads: 2700, assets: 1, type: 'Release', size: '111.26 KB' }, 
-            { version: '1.6', name: '1.6', date: '6 mar 2025', downloads: 584, assets: 1, type: 'Release', size: '104.76 KB' },
-            { version: '1.5', name: '1.5', date: '25 feb 2025', downloads: 1802, assets: 2, type: 'Release', size: '190.81 KB' },
-            { version: '1.4', name: '1.4', date: '21 ene 2025', downloads: 685, assets: 1, type: 'Release', size: '76.87 KB' },
-            { version: '1.3.0.2', name: '1.3.0.2', date: '19 nov 2024', downloads: 1000, assets: 2, type: 'Release', size: '174.48 KB' }, 
-            { version: '1.3.0.1', name: '1.3.0.1', date: '6 nov 2024', downloads: 221, assets: 1, type: 'Release', size: '75.68 KB' },
-            { version: '1.3.0', name: '1.3.0', date: '27 ago 2024', downloads: 1200, assets: 1, type: 'Release', size: '75.07 KB' }, 
-            { version: '1.3', name: '1.3', date: '20 ago 2024', downloads: 2352, assets: 2, type: 'Release', size: '168.45 KB' },
-            { version: '1.2.2', name: '1.2.2', date: '3 ago 2024', downloads: 320, assets: 1, type: 'Release', size: '68.8 KB' },
-            { version: '1.2.1', name: 'V1.2.1', date: '2 ago 2024', downloads: 291, assets: 1, type: 'Release', size: '65.62 KB' },
-            { version: '1.2', name: 'V1.2', date: '19 jul 2024', downloads: 3653, assets: 3, type: 'Release', size: '164.02 KB' }
+            { version: '2.4', date: '15 jul 2025', downloads: 146, assets: 1, type: 'Release' },
+            { version: '2.3.3', date: '18 jul 2025', downloads: 407, assets: 1, type: 'Release' },
+            { version: '2.3', date: '14 jul 2025', downloads: 312, assets: 1, type: 'Release' },
+            { version: '2.2', date: '10 may 2025', downloads: 2200, assets: 1, type: 'Release' },
+            { version: '2.1.1', date: '28 abr 2025', downloads: 580, assets: 1, type: 'Release' },
+            { version: '2.1', date: '21 abr 2025', downloads: 3412, assets: 2, type: 'Release' },
+            { version: '2.0.1', date: '8 abr 2025', downloads: 379, assets: 1, type: 'Release' },
+            { version: '1.7', date: '10 mar 2025', downloads: 2700, assets: 1, type: 'Release' },
+            { version: '1.5', date: '25 feb 2025', downloads: 1802, assets: 2, type: 'Release' },
+            { version: '1.3', date: '20 ago 2024', downloads: 2352, assets: 2, type: 'Release' },
+            { version: '1.2', date: '19 jul 2024', downloads: 3653, assets: 3, type: 'Release' }
         ];
 
         const versionTableBody = document.getElementById('version-table-body');
@@ -825,17 +750,16 @@
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td data-label="Versión">${data.version}</td>
-                    <td data-label="Fecha Publicación">${data.date}</td>
+                    <td data-label="Fecha">${data.date}</td>
                     <td data-label="Descargas" class="total-downloads">${data.downloads.toLocaleString('es-CO')}</td>
                     <td data-label="Assets"><span class="assets-check">${data.assets > 0 ? '&#xf00c;' : ''}</span> ${data.assets}</td>
                     <td data-label="Tipo">${data.type}</td>
-                    <td data-label="Tamaño">${data.size}</td>
                 `;
                 versionTableBody.appendChild(row);
             });
         }
 
-        // Datos de países para el slider
+        // Datos de países para el carrusel
         const countryData = [
             { name: 'Colombia', code: 'co', clicks: 8033 },
             { name: 'México', code: 'mx', clicks: 562 },
@@ -852,24 +776,21 @@
         ];
         const track = document.getElementById('country-track');
         if (track) {
-            // Duplicar los datos para un efecto de "marquee" continuo
-            const allCards = [...countryData, ...countryData, ...countryData];
+            const allCards = [...countryData, ...countryData, ...countryData]; // Duplicar para efecto continuo
             allCards.forEach(country => {
                 const card = document.createElement('div');
-                card.className = 'country-card animated-element';
+                card.className = 'country-card';
                 card.innerHTML = `
                     <img class="country-flag" src="https://flagcdn.com/w40/${country.code}.png" alt="Bandera de ${country.name}">
                     <span class="country-name">${country.name}</span>
                     <span class="country-clicks">${country.clicks.toLocaleString('es-CO')} clics</span>`;
                 track.appendChild(card);
             });
-            // Re-observar los elementos recién añadidos para animaciones
-            document.querySelectorAll('.country-card.animated-element').forEach(el => observer.observe(el));
         }
 
-        // Animaciones de contadores
-        animateCounter(dailyExecutionsCounterElement, 50); // Daily executions
-        fetchTotalGitHubDownloads(); // Fetch and animate global downloads
+        // Iniciar animaciones de contadores
+        animateCounter(dailyExecutionsCounterElement, 50);
+        fetchTotalGitHubDownloads();
     });
     </script>
 </body>
