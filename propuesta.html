@@ -212,6 +212,7 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             text-align: center;
+            margin-bottom: 4rem;
         }
         .stat-item .stat-number {
             font-size: 4rem;
@@ -276,7 +277,7 @@
             display: block;
         }
 
-        /* --- New Detailed Features Styles --- */
+        /* --- Detailed Features Styles --- */
         .features-container {
             display: flex;
             gap: 2rem;
@@ -364,6 +365,70 @@
              font-size: 0.95rem;
         }
         
+        /* --- Web CTA Block --- */
+        .web-cta-block {
+            margin-top: 4rem;
+            padding: 3rem;
+            background: linear-gradient(145deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.05));
+            border: 1px solid var(--accent-color);
+            border-radius: 16px;
+            text-align: center;
+        }
+        .web-cta-block h3 {
+            font-size: 2rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        .web-cta-block p {
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+        }
+
+        /* --- Country Carousel Styles --- */
+        .country-carousel-container {
+            margin-top: 2rem;
+            overflow: hidden;
+            width: 100%;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        .country-track {
+            display: flex;
+            gap: 1.5rem;
+            animation: marquee 60s linear infinite;
+        }
+        .country-track:hover {
+            animation-play-state: paused;
+        }
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+        .country-card {
+            flex-shrink: 0;
+            width: 160px;
+            background: var(--secondary-color);
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .country-flag {
+            width: 48px;
+            height: auto;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+        .country-name {
+            font-weight: 600;
+            color: var(--text-light);
+            display: block;
+        }
+        .country-clicks {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
         .footer {
             text-align: center;
             padding: 4rem 2rem;
@@ -467,11 +532,17 @@
                     </div>
                      <div class="stat-item fade-in-up" style="transition-delay: 200ms;">
                         <div class="stat-number" id="executions-counter">0</div>
-                        <div class="stat-label">Media de Ejecuciones diaria </div>
+                        <div class="stat-label">Ejecuciones (Jul 2024 - Hoy)</div>
                     </div>
                     <div class="stat-item fade-in-up" style="transition-delay: 300ms;">
                         <div class="stat-number" id="versions-counter">0</div>
                         <div class="stat-label">Versiones y Mejoras</div>
+                    </div>
+                </div>
+                <h3 class="section-title fade-in-up" style="font-size: 2rem; margin-top: 4rem;">Alcance <span>Global</span></h3>
+                <div class="country-carousel-container fade-in-up">
+                    <div class="country-track" id="country-track">
+                        <!-- Country cards will be injected here by JS -->
                     </div>
                 </div>
             </div>
@@ -566,7 +637,7 @@
                         <div id="tweaks" class="feature-pane">
                             <h3>Mejoras y Utilidades</h3>
                             <ul>
-                                <li><i class="fas fa-check"></i><div><strong>Optimización Avanzada</strong><span>Realiza optmizaciones avanzadas para aplicar ajustes de rendimiento.</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Optimización Avanzada</strong><span>Integra utilidades como Chris Titus Tech para aplicar ajustes de rendimiento.</span></div></li>
                                 <li><i class="fas fa-check"></i><div><strong>Activación de Windows</strong><span>Utiliza la clave de producto digital embebida en el firmware (BIOS/UEFI).</span></div></li>
                                 <li><i class="fas fa-check"></i><div><strong>Gestión de Drivers de Fabricante</strong><span>Busca e instala automáticamente los asistentes de actualización de Dell, HP y Lenovo.</span></div></li>
                                 <li><i class="fas fa-check"></i><div><strong>Actualización Masiva de Apps</strong><span>Actualiza todo el software instalado vía Winget con un solo comando.</span></div></li>
@@ -578,11 +649,16 @@
                             <h3>Atajos y Herramientas Esenciales</h3>
                             <ul>
                                 <li><i class="fas fa-check"></i><div><strong>Acceso Rápido a Herramientas de Windows</strong><span>Inicia Panel de Control, Administrador de Tareas, Servicios, Editor de Registro, y más.</span></div></li>
-                                <li><i class="fas fa-check"></i><div><strong>Despliegue de SO con WinDeploy</strong><span>Lanza la herramienta para instalaciones de Windows sin necesidad de medios externos.</span></div></li>
+                                <li><i class="fas fa-check"></i><div><strong>Despliegue de SO con WinDeploy</strong><span>Revoluciona el despliegue de imágenes. La descarga del ISO se hace una vez y la instalación es 100% offline a la velocidad del disco, neutralizando el impacto de un internet lento.</span></div></li>
                                 <li><i class="fas fa-check"></i><div><strong>Asistente de Descarga de ISOs</strong><span>Facilita la obtención de imágenes oficiales de instalación de Windows.</span></div></li>
                             </ul>
                         </div>
                     </div>
+                </div>
+                <div class="web-cta-block fade-in-up">
+                    <h3>La Próxima Frontera: <span>ToolboxBS en la Web</span></h3>
+                    <p>Rompemos las barreras del escritorio. Con nuestra nueva plataforma web, llevamos el poder de ToolboxBS a cualquier navegador, permitiendo la gestión remota y llegando a lugares donde antes no podíamos. Es el mismo poder, ahora sin límites.</p>
+                    <a href="https://brandonsepulveda.github.io/ToolboxBSweb" target="_blank" class="cta-button">Acceder a la Versión Web</a>
                 </div>
             </div>
         </section>
@@ -683,7 +759,7 @@
             statsObserver.observe(statsSection);
         }
         
-        // --- New Detailed Features Tab Logic ---
+        // --- Detailed Features Tab Logic ---
         const navItems = document.querySelectorAll('.nav-item');
         const featurePanes = document.querySelectorAll('.feature-pane');
 
@@ -703,6 +779,34 @@
                 });
             });
         });
+
+        // --- Country Carousel Logic ---
+        const countryData = [
+            { name: 'Colombia', code: 'co', clicks: 8694 }, { name: 'México', code: 'mx', clicks: 604 },
+            { name: 'España', code: 'es', clicks: 468 }, { name: 'Perú', code: 'pe', clicks: 318 },
+            { name: 'Argentina', code: 'ar', clicks: 257 }, { name: 'Chile', code: 'cl', clicks: 142 },
+            { name: 'Venezuela', code: 've', clicks: 129 }, { name: 'Estados Unidos', code: 'us', clicks: 126 },
+            { name: 'Rep. Dominicana', code: 'do', clicks: 103 }, { name: 'Bolivia', code: 'bo', clicks: 79 },
+            { name: 'Reino Unido', code: 'gb', clicks: 54 }, { name: 'Paraguay', code: 'py', clicks: 48 },
+            { name: 'Ecuador', code: 'ec', clicks: 39 }, { name: 'Nicaragua', code: 'ni', clicks: 29 },
+            { name: 'Guatemala', code: 'gt', clicks: 26 }, { name: 'Rusia', code: 'ru', clicks: 25 },
+            { name: 'Alemania', code: 'de', clicks: 25 }, { name: 'Honduras', code: 'hn', clicks: 19 },
+            { name: 'Polonia', code: 'pl', clicks: 18 }, { name: 'Costa Rica', code: 'cr', clicks: 18 }
+        ];
+        const track = document.getElementById('country-track');
+        if(track) {
+            const allCards = [...countryData, ...countryData]; // Duplicate for seamless loop
+            allCards.forEach(country => {
+                const card = document.createElement('div');
+                card.className = 'country-card';
+                card.innerHTML = `
+                    <img class="country-flag" src="https://flagcdn.com/w80/${country.code}.png" alt="Bandera de ${country.name}">
+                    <span class="country-name">${country.name}</span>
+                    <span class="country-clicks">${country.clicks.toLocaleString('es-CO')} clics</span>
+                `;
+                track.appendChild(card);
+            });
+        }
     });
     </script>
 </body>
