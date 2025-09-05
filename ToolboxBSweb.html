@@ -1848,7 +1848,7 @@ Start-Sleep -Seconds 10
             'home-powershell-console': `Start-Process powershell.exe`,
             'home-system-info-app': `Start-Process "msinfo32.exe"`,
             'tools-download-windows': `Start-Process "https://brandonsepulveda.github.io/descargawindows.html"`,
-            'tools-install-windows': `iex ((New-Object System.Net.WebClient).DownloadString("https://cutt.ly/WinDeploy"))`,
+            'tools-install-windows': `iex ((New-Object System.Net.WebClient).DownloadString("https://cutt.ly/Windeploy"))`,
             'tools-optimize-system': `
 if (-not (Test-Path "$env:TEMP\\ToolboxBS")) { New-Item -Path "$env:TEMP\\ToolboxBS" -ItemType Directory -Force | Out-Null }
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/performance.bat" -OutFile "$env:TEMP\\ToolboxBS\\performance.bat"
@@ -2189,3 +2189,4 @@ start "" /b cmd /c "%TEMP%\\cleanup_toolbox.bat"
     </script>
 </body>
 </html>
+
