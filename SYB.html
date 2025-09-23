@@ -54,7 +54,7 @@
             <svg id="music-off-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="hidden" viewBox="0 0 16 16"><path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zm7.137 2.096a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0z"/></svg>
         </button>
     </div>
-    <audio id="wedding-song" loop preload="auto"><source src="https://brandonsepulveda.github.io/Can't%20Help%20Falling%20In%20Love.mp3" type="audio/mpeg"></audio>
+    <audio id="wedding-song" loop preload="auto"><source src="https://BrandonSepulveda.github.io/Can't%20Help%20Falling%20In%20Love.mp3" type="audio/mpeg"></audio>
 
     <div class="lg:flex lg:h-screen lg:items-center lg:justify-center lg:p-8">
         <div class="lg:flex lg:w-full lg:max-w-6xl lg:h-[90vh] lg:shadow-2xl lg:rounded-lg">
@@ -114,8 +114,13 @@
                         <div class="line"></div>
                     </div>
                     <p class="text-sm max-w-xs mx-auto leading-relaxed mt-6">Tu presencia es nuestro mejor regalo, pero si deseas hacernos un obsequio te dejamos estas opciones:</p>
-                    <h4 class="font-display text-2xl uppercase tracking-widest mt-8">Lluvia de Sobres</h4>
-                    <div class="mt-8 text-sm space-y-4">
+                    
+                    <!-- Elemento "Lluvia de Sobres" actualizado -->
+                    <p class="font-sans tracking-[0.2em] text-lg uppercase mt-8">Lluvia de Sobres</p>
+                    <!-- Nueva línea decorativa -->
+                    <div class="w-24 h-px bg-white/40 mx-auto mt-2 mb-8"></div>
+
+                    <div class="text-sm space-y-4">
                         <p class="text-sm tracking-widest">NUESTRAS CUENTAS</p>
                         <div class="max-w-xs mx-auto bg-white/5 p-4 rounded-lg">
                             <p class="font-bold">Brando Daniel Reyes Bargas</p>
@@ -147,7 +152,7 @@
                     <p class="font-medium tracking-widest mt-4">FORMAL</p>
                 </section>
                 
-               
+           
 
                 <section class="mb-12 animate-on-scroll relative overflow-hidden">
                     <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo%20Final%20%20Boda%20S&B_Mesa%20de%20trabajo%201%20copia%202.png?raw=true" alt="Logo Stefany y Brando" class="w-36 h-auto mx-auto">
@@ -228,7 +233,7 @@
         }, { once: true });
 
         function playMusic() {
-            audio.play().catch(e=>console.error(e));
+            audio.play().catch(e=>console.error("Audio playback failed:", e));
             document.getElementById('music-on-icon').classList.add('hidden');
             document.getElementById('music-off-icon').classList.remove('hidden');
             isPlaying = true;
