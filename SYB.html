@@ -75,7 +75,7 @@
                     <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo%20Final%20%20Boda%20S&B_Mesa%20de%20trabajo%201%20copia%202.png?raw=true" alt="Logo Stefany y Brando" class="w-48 h-auto mx-auto mb-6 lg:hidden">
                     <div class="w-24 h-[2px] bg-white/70 mx-auto"></div>
                     <h1 class="font-display uppercase tracking-wider text-5xl my-4 text-white">¡Nos casamos!</h1>
-                    <div id="countdown" class="text-xl font-light my-6 text-white/90"></div>
+                    <!-- CONTADOR MOVIDO AL FINAL -->
                     <p class="mt-6 text-sm italic max-w-xs mx-auto leading-relaxed">"Las muchas aguas no podrán apagar el amor, ni lo ahogarán los rios. Si diese el hombre todos los bienes de su casa por este amor, de cierto lo menospreciaria."</p>
                     <p class="mt-4 text-sm tracking-widest opacity-90">CANTARES 8:7</p>
                 </section>
@@ -86,9 +86,9 @@
                     
                     <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/stefany%20y%20brando.png?raw=true" alt="Stefany y Brando" class="h-36 w-auto mx-auto">
                 </section>
-                                
-                <section class="my-20 animate-on-scroll relative overflow-hidden">
-
+                                        
+                <section class="my-20 animate-on-scroll relative overflow-hidden py-10">
+                    
                     <div class="title-block">
                         <div class="line"></div>
                         <h3 class="font-display title-text" style="font-size: 2.2rem; line-height: 1.2;">CEREMONIA<br>Y RECEPCIÓN</h3>
@@ -100,21 +100,28 @@
                         <p class="font-light">Lugar: <span class="font-medium">LA CUMBRE, EL HATILLO, TEGUCIGALPA.</span></p>
                     </div>
                     <div class="mt-8 flex justify-center gap-4">
-                         <a href="https://maps.app.goo.gl/FMsLGXGPApFiNSxy6" target="_blank" rel="noopener noreferrer" class="border border-white/50 text-white px-6 py-2 rounded-md font-sans text-xs tracking-widest hover:bg-white/10 transition-colors">UBICACIÓN</a>
+                         <a href="https://maps.app.goo.gl/NZiffnNr2TpeDpg89" target="_blank" rel="noopener noreferrer" class="border border-white/50 text-white px-6 py-2 rounded-md font-sans text-xs tracking-widest hover:bg-white/10 transition-colors">UBICACIÓN</a>
                     </div>
                 </section>
                 
-                <section class="my-20 animate-on-scroll relative overflow-hidden">
-
+                <section class="my-20 animate-on-scroll relative overflow-hidden py-10">
+                    
                     <div class="title-block">
                         <div class="line"></div>
                         <h3 class="font-display title-text">REGALO</h3>
                         <div class="line"></div>
                     </div>
-                    <p class="text-sm max-w-xs mx-auto leading-relaxed mt-6">Tu presencia es nuestro mejor regalo, pero si deseas hacernos un obsequio te dejamos estas opciones:</p>
-                    <div class="mt-8">
+                    
+                    <!-- TEXTO "LLUVIA DE SOBRES" -->
+                    <h4 class="font-display text-2xl uppercase tracking-widest mt-8">Lluvia de Sobres</h4>
+                    
+                    <!-- ICONO DE REGALO RESTAURADO -->
+                    <div class="mt-6">
                         <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/regalo.png?raw=true" alt="Lluvia de sobres" class="h-16 w-auto mx-auto">
                     </div>
+
+                    <p class="text-sm max-w-xs mx-auto leading-relaxed mt-6">Tu presencia es nuestro mejor regalo, pero si deseas hacernos un obsequio te dejamos estas opciones:</p>
+                    
                     <div class="mt-8 text-sm space-y-4">
                         <p class="text-sm tracking-widest">NUESTRAS CUENTAS</p>
                         <div class="max-w-xs mx-auto bg-white/5 p-4 rounded-lg">
@@ -136,7 +143,7 @@
                     </div>
                 </section>
                 
-                <section class="my-20 animate-on-scroll relative overflow-hidden">
+                <section class="my-20 animate-on-scroll relative overflow-hidden py-10">
                     
                     <div class="title-block">
                         <div class="line"></div>
@@ -164,6 +171,8 @@
                 </section>
 
                 <footer class="mt-16 animate-on-scroll">
+                    <!-- CONTADOR AÑADIDO AQUÍ -->
+                    <div id="countdown" class="text-2xl font-light my-8 text-white/90"></div>
                     <h2 class="font-display text-4xl uppercase">¡Te esperamos!</h2>
                 </footer>
             </main>
@@ -259,8 +268,10 @@
         function openModal() {
             modal.classList.remove('hidden');
             setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            setTimeout(() => modal.querySelector('.modal-content').classList.remove('scale-95'), 10);
         }
         function closeModal() {
+            modal.querySelector('.modal-content').classList.add('scale-95');
             modal.classList.add('opacity-0');
             setTimeout(() => modal.classList.add('hidden'), 300);
         }
@@ -296,3 +307,4 @@
     </script>
 </body>
 </html>
+
