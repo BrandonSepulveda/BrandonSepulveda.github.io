@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixels Studios - Diseño, Creatividad y Publicidad</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Swiper.js for Carousel -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=Dancing+Script:wght@700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --pixels-yellow: #facc15;
+            --pixels-black: #111827;
+            --pixels-white: #ffffff;
+            --pixels-light-gray: #f9fafb; /* Lighter gray, like whitesmoke */
+            --pixels-dark-gray: #6b7280;
+        }
+
+        /* --- Fuentes --- */
+        .font-display { font-family: 'Playfair Display', serif; }
+        .font-body { font-family: 'Montserrat', sans-serif; }
+        .font-script { font-family: 'Dancing Script', cursive; }
+        .font-pixel { font-family: 'Press Start 2P', cursive; }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--pixels-white);
+            color: var(--pixels-black);
+            overflow-x: hidden;
+        }
+        
+        /* --- Dynamic Background --- */
+        .dynamic-bg {
+            background: linear-gradient(-45deg, #ffffff, #f9fafb, #fefce8, #ffffff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+
+        /* --- Header --- */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover { color: var(--pixels-yellow); }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--pixels-yellow);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .hero h1 {
+            color: var(--pixels-black);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(0,0,0,0.1); }
+            to { text-shadow: 0 0 20px rgba(0,0,0,0.2); }
+        }
+        .pixel {
+            position: absolute;
+            background: var(--pixels-black);
+            border-radius: 2px;
+            animation: float 10s ease-in-out infinite;
+            opacity: 0;
+        }
+        .pixel:nth-child(2n) {
+             background: var(--pixels-yellow);
+        }
+        @keyframes float {
+            0% { transform: translateY(10vh) rotate(0deg); opacity: 0; }
+            10%, 90% { opacity: 0.7; }
+            100% { transform: translateY(-110vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* --- Carousel Section --- */
+        #demos {
+            position: relative;
+        }
+        .swiper-button-next, .swiper-button-prev {
+            color: var(--pixels-black);
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            transition: all 0.3s ease;
+        }
+        .swiper-button-next:hover, .swiper-button-prev:hover {
+            background-color: var(--pixels-yellow);
+        }
+        .swiper-button-next::after, .swiper-button-prev::after {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        /* --- Demo Showcase Cards --- */
+        .demo-card {
+            background-size: cover;
+            background-position: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .demo-card .overlay {
+            transition: background-color 0.4s ease;
+            color: white;
+        }
+        .demo-card:hover .overlay {
+            background-color: rgba(0,0,0,0.4);
+        }
+        .demo-card h3, .demo-card .icon {
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        .demo-card .icon {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .demo-card:hover h3 {
+             transform: translateY(-10px);
+        }
+        .demo-card:hover .icon {
+             transform: translateY(0px);
+             opacity: 1;
+        }
+        
+        /* --- Modal for Demos --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            width: 95%;
+            height: 95%;
+            max-width: 1200px;
+            background-color: var(--pixels-white);
+            border-radius: 12px;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+            position: relative;
+            overflow-y: auto; /* Allow scrolling inside the modal */
+        }
+        .modal.open .modal-content {
+            transform: scale(1);
+        }
+        .modal-body {
+            color: black;
+            padding: 0;
+        }
+        .close-modal {
+            position: fixed;
+            top: 3%;
+            right: 3%;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border-radius: 50%;
+            border: 1px solid #4b5563;
+            cursor: pointer;
+            z-index: 2010;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .close-modal:hover {
+            transform: scale(1.1) rotate(90deg);
+            background-color: var(--pixels-yellow);
+            color: black;
+        }
+        /* Demo-specific styles */
+        .demo-countdown { display: flex; justify-content: center; gap: 1rem; }
+        .demo-countdown > div { background-color: rgba(0,0,0,0.05); padding: 0.5rem 1rem; border-radius: 8px; }
+        .demo-countdown span { display: block; }
+        .demo-countdown .number { font-size: 2rem; font-weight: bold; }
+        .demo-countdown .label { font-size: 0.8rem; text-transform: uppercase; color: #6b7280;}
+        
+        .demo-gallery-item { transition: transform 0.3s ease; }
+        .demo-gallery-item:hover { transform: scale(1.05); }
+
+        .demo-card-inner { transition: transform 0.8s; transform-style: preserve-3d; }
+        .demo-card-3d.flipped .demo-card-inner { transform: rotateY(180deg); }
+        .demo-card-front, .demo-card-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .demo-card-back { transform: rotateY(180deg); }
+        
+        /* Map container */
+        .map-container {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #e5e7eb;
+        }
+
+        /* --- Animated Counter --- */
+        .stat-number {
+            transition: all 0.3s ease;
+        }
+        .stat-item:hover .stat-number {
+             transform: scale(1.1);
+             text-shadow: 0 0 20px rgba(250, 204, 21, 0.5);
+        }
+        
+        /* --- Contact Buttons --- */
+        .contact-button {
+            transition: all 0.3s ease;
+        }
+        .contact-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        /* --- Scroll Animations --- */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.slide-in-up { transform: translateY(40px); }
+        .animate-on-scroll.slide-in-left { transform: translateX(-40px); }
+        .animate-on-scroll.slide-in-right { transform: translateX(40px); }
+        .animate-on-scroll.zoom-in { transform: scale(0.9); }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0) translateX(0) scale(1);
+        }
+
+
+    </style>
+</head>
+<body class="font-body">
+
+    <!-- Header -->
+    <header id="header" class="header py-4">
+        <nav class="container mx-auto flex justify-between items-center px-6">
+            <a href="#inicio" class="flex items-center gap-3">
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/LOGO%20PIXELS-03.png?raw=true" alt="Pixels Studios Logo" class="w-10 h-auto">
+                <span class="text-xl font-bold tracking-wider uppercase text-black">Pixels Studios</span>
+            </a>
+            <ul class="hidden md:flex items-center gap-8 text-black">
+                <li><a href="#servicios" class="nav-link">Servicios</a></li>
+                <li><a href="#demos" class="nav-link">Demos</a></li>
+                <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+                <li><a href="#ubicacion" class="nav-link">Ubicación</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+             <button id="mobile-menu-btn" class="md:hidden text-2xl z-50 text-black">☰</button>
+        </nav>
+    </header>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-sm z-40 hidden flex-col items-center justify-center gap-8 text-2xl text-black">
+        <a href="#servicios" class="nav-link-mobile">Servicios</a>
+        <a href="#demos" class="nav-link-mobile">Demos</a>
+        <a href="#nosotros" class="nav-link-mobile">Nosotros</a>
+        <a href="#ubicacion" class="nav-link-mobile">Ubicación</a>
+        <a href="#contacto" class="nav-link-mobile">Contacto</a>
+    </div>
+
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div id="pixel-container" class="absolute inset-0"></div>
+        <div class="text-center z-10 px-4 animate-on-scroll zoom-in is-visible">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-pixel">Pixels Studios</h1>
+            <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-700 mt-6">
+                Llevamos el arte a un nuevo nivel: combinamos estrategia, talento y creatividad para llamarlo PUBLICIDAD.
+            </p>
+            <a href="#demos" class="mt-10 inline-block bg-yellow-400 text-black px-8 py-4 rounded-md font-bold text-lg hover:bg-yellow-300 transition-transform hover:scale-105">Ver Proyectos</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="py-20 md:py-32 bg-gray-50 dynamic-bg">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="section-title text-4xl md:text-5xl font-pixel font-bold mb-16 animate-on-scroll slide-in-up">Servicios</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="service-card p-8 rounded-lg animate-on-scroll slide-in-up" style="transition-delay: 100ms;">
+                    <i class="fas fa-palette text-4xl text-yellow-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Diseño Gráfico</h3>
+                    <p class="text-gray-600">Identidades visuales únicas que conectan con tu audiencia y transmiten los valores de tu marca.</p>
+                </div>
+                <div class="service-card p-8 rounded-lg animate-on-scroll slide-in-up" style="transition-delay: 200ms;">
+                    <i class="fas fa-laptop-code text-4xl text-yellow-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Diseño Digital</h3>
+                    <p class="text-gray-600">Invitaciones interactivas, interfaces web y apps que destacan en el mundo digital.</p>
+                </div>
+                <div class="service-card p-8 rounded-lg animate-on-scroll slide-in-up" style="transition-delay: 300ms;">
+                    <i class="fas fa-bullhorn text-4xl text-yellow-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Publicidad</h3>
+                    <p class="text-gray-600">Campañas creativas que generan impacto, engagement y convierten a tu audiencia en clientes.</p>
+                </div>
+                 <div class="service-card p-8 rounded-lg animate-on-scroll slide-in-up" style="transition-delay: 400ms;">
+                    <i class="fas fa-copyright text-4xl text-yellow-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Branding</h3>
+                    <p class="text-gray-600">Desarrollamos marcas memorables con estrategias sólidas que posicionan tu negocio.</p>
+                </div>
+                <div class="service-card p-8 rounded-lg animate-on-scroll slide-in-up" style="transition-delay: 500ms;">
+                    <i class="fas fa-camera-retro text-4xl text-yellow-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Fotografía</h3>
+                    <p class="text-gray-600">Capturamos momentos y productos con un enfoque profesional que eleva tu presencia visual.</p>
+                </div>
+                <div class="service-card p-8 rounded-lg animate-on-scroll slide-in-up" style="transition-delay: 600ms;">
+                    <i class="fas fa-video text-4xl text-yellow-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Producción de Video</h3>
+                    <p class="text-gray-600">Contenido audiovisual dinámico que cuenta historias y conecta emocionalmente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demos Showcase Section -->
+    <section id="demos" class="py-20 md:py-32">
+        <div class="container mx-auto px-6">
+            <div class="text-center animate-on-scroll slide-in-up">
+                <h2 class="section-title text-4xl md:text-5xl font-pixel font-bold mb-4">Demos Interactivos</h2>
+                <p class="max-w-2xl mx-auto text-gray-600 mb-16">Haz clic en cualquier diseño para explorar una demostración en vivo a pantalla completa.</p>
+            </div>
+            <!-- Swiper Carousel -->
+            <div class="swiper-container animate-on-scroll zoom-in">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1: Boda -->
+                    <div class="swiper-slide">
+                         <div class="demo-card h-96 rounded-lg overflow-hidden relative" style="background-image: url('https://images.pexels.com/photos/1806622/pexels-photo-1806622.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');" onclick="openDemo('boda')">
+                            <div class="overlay absolute inset-0 bg-black/20 flex flex-col justify-end p-8 text-left">
+                                <h3 class="text-3xl font-bold font-script">Bodas</h3>
+                                <div class="icon text-lg font-semibold mt-2"><i class="fas fa-expand"></i> Ver Demo</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2: XV Años -->
+                    <div class="swiper-slide">
+                         <div class="demo-card h-96 rounded-lg overflow-hidden relative" style="background-image: url('https://images.pexels.com/photos/278887/pexels-photo-278887.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');" onclick="openDemo('quince')">
+                             <div class="overlay absolute inset-0 bg-black/20 flex flex-col justify-end p-8 text-left">
+                                <h3 class="text-3xl font-bold font-script">XV Años</h3>
+                                <div class="icon text-lg font-semibold mt-2"><i class="fas fa-expand"></i> Ver Demo</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3: Baby Shower -->
+                    <div class="swiper-slide">
+                         <div class="demo-card h-96 rounded-lg overflow-hidden relative" style="background-image: url('https://images.pexels.com/photos/7282819/pexels-photo-7282819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');" onclick="openDemo('baby')">
+                             <div class="overlay absolute inset-0 bg-black/20 flex flex-col justify-end p-8 text-left">
+                                <h3 class="text-3xl font-bold font-script">Baby Shower</h3>
+                                <div class="icon text-lg font-semibold mt-2"><i class="fas fa-expand"></i> Ver Demo</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 4: Corporativo -->
+                     <div class="swiper-slide">
+                         <div class="demo-card h-96 rounded-lg overflow-hidden relative" style="background-image: url('https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');" >
+                             <div class="overlay absolute inset-0 bg-black/20 flex flex-col justify-end p-8 text-left">
+                                <h3 class="text-3xl font-bold font-script">Corporativo</h3>
+                                <div class="icon text-lg font-semibold mt-2"><i class="fas fa-expand"></i> Próximamente</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+             <!-- Add Navigation -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="nosotros" class="py-20 md:py-32 bg-gray-50 dynamic-bg">
+        <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+            <div class="animate-on-scroll slide-in-left">
+                <h2 class="section-title text-4xl md:text-5xl font-pixel font-bold mb-8 text-center lg:text-left">Nosotros</h2>
+                <p class="text-gray-600 leading-relaxed mb-6">En Pixels Studio somos un equipo apasionado que transforma ideas en realidades visuales impactantes. Nos especializamos en crear soluciones creativas que no solo se ven increíbles, sino que también generan resultados tangibles.</p>
+                <p class="text-gray-600 leading-relaxed">Nuestra filosofía se basa en la combinación perfecta entre creatividad, estrategia y tecnología para superar tus expectativas.</p>
+            </div>
+            <div class="grid grid-cols-2 gap-8 animate-on-scroll slide-in-right">
+                <div class="stat-item text-center bg-white p-6 rounded-lg border border-gray-200">
+                    <span class="stat-number text-4xl font-bold text-yellow-400">150+</span>
+                    <span class="block mt-2 text-gray-600">Proyectos</span>
+                </div>
+                 <div class="stat-item text-center bg-white p-6 rounded-lg border border-gray-200">
+                    <span class="stat-number text-4xl font-bold text-yellow-400">50+</span>
+                    <span class="block mt-2 text-gray-600">Clientes Felices</span>
+                </div>
+                 <div class="stat-item text-center bg-white p-6 rounded-lg border border-gray-200">
+                    <span class="stat-number text-4xl font-bold text-yellow-400">5</span>
+                    <span class="block mt-2 text-gray-600">Años</span>
+                </div>
+                 <div class="stat-item text-center bg-white p-6 rounded-lg border border-gray-200">
+                    <span class="stat-number text-4xl font-bold text-yellow-400">100%</span>
+                    <span class="block mt-2 text-gray-600">Creatividad</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Location Section -->
+    <section id="ubicacion" class="py-20 md:py-32">
+        <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+             <div class="animate-on-scroll slide-in-left">
+                <h2 class="section-title text-4xl md:text-5xl font-pixel font-bold mb-8 text-center lg:text-left">Nuestra Sede</h2>
+                <p class="text-gray-600 leading-relaxed mb-4"><i class="fas fa-map-marker-alt mr-2 text-yellow-400"></i> Blvd. Morazán, Tegucigalpa, Honduras</p>
+                 <p class="text-gray-600 leading-relaxed mb-4"><i class="fas fa-clock mr-2 text-yellow-400"></i> Lunes a Viernes: 9:00 AM - 5:00 PM</p>
+                 <p class="text-gray-600 leading-relaxed">Visítanos para una consulta creativa y déjanos ser parte de tu próximo gran proyecto. ¡El café corre por nuestra cuenta!</p>
+            </div>
+            <div class="map-container h-96 animate-on-scroll zoom-in">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30953.30852891243!2d-87.19213562089845!3d14.083333000000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6fbddc18c9453d%3A0xb36a29df143a5307!2sBulevar%20Moraz%C3%A1n!5e0!3m2!1ses!2shn!4v1727397686566!5m2!1ses!2shn" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Contact Section -->
+    <section id="contacto" class="py-20 md:py-32 bg-gray-50 dynamic-bg">
+        <div class="container mx-auto px-6 text-center animate-on-scroll zoom-in">
+            <h2 class="section-title text-4xl md:text-5xl font-pixel font-bold mb-4">Contáctanos</h2>
+            <p class="max-w-2xl mx-auto text-gray-600 mb-12">¿Listo para empezar tu próximo proyecto? ¡Hablemos!</p>
+            <div class="flex flex-col md:flex-row gap-6 justify-center">
+                <a href="https://wa.me/50494843406?text=Hola%2C%20vengo%20de%20su%20sitio%20web%20y%20me%20gustar%C3%ADa%20cotizar%20un%20proyecto." target="_blank" class="contact-button flex items-center justify-center gap-3 bg-yellow-400 text-black px-8 py-4 rounded-md font-bold text-lg">
+                    <i class="fab fa-whatsapp text-2xl"></i>
+                    <span>Chatea por WhatsApp</span>
+                </a>
+                <a href="mailto:contacto@pixelsstudios.com" class="contact-button flex items-center justify-center gap-3 bg-gray-800 text-white px-8 py-4 rounded-md font-bold text-lg hover:bg-black">
+                    <i class="fas fa-envelope text-2xl"></i>
+                    <span>Envíanos un Correo</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-16">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+             <a href="#inicio" class="inline-block mb-8">
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/LOGO%20PIXELS-03.png?raw=true" alt="Pixels Studios Logo" class="w-16 h-auto">
+            </a>
+            <p class="max-w-xl mx-auto mb-8">Transformando ideas en experiencias visuales inolvidables.</p>
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="https://www.instagram.com/pixelshn/?hl=es" target="_blank" class="text-2xl hover:text-yellow-400 transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/channel/UCELl40GbWd6sM-jayZgIVZQ" target="_blank" class="text-2xl hover:text-yellow-400 transition-colors"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="text-2xl hover:text-yellow-400 transition-colors"><i class="fab fa-facebook-f"></i></a>
+            </div>
+            <p>&copy; 2025 Pixels Studios. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal Container -->
+    <div id="demo-modal" class="modal">
+        <div class="modal-content">
+             <button id="close-modal-btn" class="close-modal text-2xl">&times;</button>
+            <div id="modal-body" class="modal-body">
+                <!-- Demo content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Demo Content -->
+    <div id="demo-content-container" class="hidden">
+        
+        <!-- Boda Demo Content -->
+        <div id="boda-demo">
+             <div class="min-h-full" style="background-color: #f7f3e9;">
+                <div class="w-full h-80 bg-cover bg-center" style="background-image: url('https://images.pexels.com/photos/169198/pexels-photo-169198.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')"></div>
+                <div class="text-center p-8 -mt-20">
+                    <div class="inline-block bg-white p-6 rounded-lg shadow-xl">
+                        <h1 class="text-5xl font-script text-gray-700">Nuestra Boda</h1>
+                        <p class="text-3xl font-display mt-2 text-gray-600">Ana & Juan</p>
+                    </div>
+                    <div id="countdown-demo" class="demo-countdown text-gray-700 mt-8"></div>
+                </div>
+                <div class="p-8 md:p-12 max-w-4xl mx-auto">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h2 class="text-3xl font-display border-b-2 border-yellow-400 pb-2 mb-4">Itinerario</h2>
+                            <ul class="space-y-3">
+                                <li class="flex items-center gap-4"><i class="fas fa-church text-2xl text-yellow-500 w-8 text-center"></i><span><strong class="block">4:00 PM</strong>Ceremonia Religiosa</span></li>
+                                <li class="flex items-center gap-4"><i class="fas fa-glass-cheers text-2xl text-yellow-500 w-8 text-center"></i><span><strong class="block">6:00 PM</strong>Recepción y Cóctel</span></li>
+                                <li class="flex items-center gap-4"><i class="fas fa-utensils text-2xl text-yellow-500 w-8 text-center"></i><span><strong class="block">7:00 PM</strong>Cena</span></li>
+                                <li class="flex items-center gap-4"><i class="fas fa-music text-2xl text-yellow-500 w-8 text-center"></i><span><strong class="block">9:00 PM</strong>¡A bailar!</span></li>
+                            </ul>
+                        </div>
+                        <div>
+                             <h2 class="text-3xl font-display border-b-2 border-yellow-400 pb-2 mb-4">Mesa de Regalos</h2>
+                             <p class="text-gray-600 mb-4">Tu presencia es nuestro mejor regalo, pero si deseas obsequiarnos algo, puedes hacerlo a través de:</p>
+                             <button class="w-full text-left p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition">Lluvia de Sobres</button>
+                        </div>
+                    </div>
+                     <h2 class="text-3xl font-display border-b-2 border-yellow-400 pb-2 mb-4 mt-12">Galería</h2>
+                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                        <img src="https://images.pexels.com/photos/1806622/pexels-photo-1806622.jpeg?auto=compress&cs=tinysrgb&w=400" class="rounded-lg shadow-md demo-gallery-item">
+                        <img src="https://images.pexels.com/photos/313707/pexels-photo-313707.jpeg?auto=compress&cs=tinysrgb&w=400" class="rounded-lg shadow-md demo-gallery-item">
+                        <img src="https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=400" class="rounded-lg shadow-md demo-gallery-item">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quince Demo Content -->
+        <div id="quince-demo">
+            <div class="min-h-full bg-gray-900 text-white" style="background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.pexels.com/photos/1407305/pexels-photo-1407305.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); background-size: cover; background-position: center;">
+                <div class="text-center p-8 md:p-16">
+                    <h1 class="text-6xl font-script" style="color: #f472b6;">Mis XV Años</h1>
+                    <p class="text-4xl font-display mt-2 uppercase tracking-widest">Valentina</p>
+                </div>
+                <div class="p-8 md:p-12 max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-8">
+                         <div>
+                            <h2 class="text-3xl font-display border-b-2 border-pink-400 pb-2 mb-4 text-pink-300">Programa</h2>
+                            <ul class="space-y-2">
+                                <li><strong>7:00 PM</strong> - Recepción</li>
+                                <li><strong>8:00 PM</strong> - Vals</li>
+                                <li><strong>9:00 PM</strong> - Cena y Brindis</li>
+                                <li><strong>10:00 PM</strong> - Fiesta Neón</li>
+                            </ul>
+                        </div>
+                         <div>
+                            <h2 class="text-3xl font-display border-b-2 border-pink-400 pb-2 mb-4 text-pink-300">Pide tu Canción</h2>
+                            <input type="text" placeholder="Tu canción favorita..." class="w-full bg-white/10 p-3 rounded-lg border border-white/20 focus:outline-none focus:ring-2 focus:ring-pink-400 text-sm">
+                        </div>
+                    </div>
+                    <div>
+                         <img src="https://images.pexels.com/photos/278887/pexels-photo-278887.jpeg?auto=compress&cs=tinysrgb&w=600" class="rounded-lg shadow-2xl w-full">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Baby Shower Demo Content -->
+        <div id="baby-demo">
+             <div class="min-h-full" style="background-color: #e0f7fa;">
+                <div class="text-center p-8 md:p-12">
+                    <h1 class="text-6xl font-script text-cyan-700">Dulce Espera</h1>
+                    <p class="text-gray-600 mt-2">Una pequeña bendición está en camino...</p>
+                </div>
+                <div class="p-8 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-full md:w-1/2 perspective-[1000px]">
+                        <div class="demo-card-3d relative w-full h-80 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                            <div class="demo-card-inner relative w-full h-full">
+                                <div class="demo-card-front absolute w-full h-full bg-white rounded-lg shadow-xl flex flex-col items-center justify-center p-6 border-4 border-cyan-200">
+                                    <img src="https://images.pexels.com/photos/7282819/pexels-photo-7282819.jpeg?auto=compress&cs=tinysrgb&w=400" class="w-24 h-24 rounded-full mb-4 object-cover">
+                                    <h3 class="text-2xl font-display text-cyan-800">¿Niño o Niña?</h3>
+                                    <p class="bg-cyan-500 text-white px-4 py-1 rounded-full text-sm mt-4">¡Gira para descubrir!</p>
+                                </div>
+                                <div class="demo-card-back absolute w-full h-full bg-white rounded-lg shadow-xl flex flex-col items-center justify-center p-6 border-4 border-pink-200">
+                                     <h3 class="text-3xl font-display text-pink-500">¡Es una Niña!</h3>
+                                     <p class="font-bold text-gray-700 mt-2">Sábado, 25 de Enero | 2:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-3xl font-display border-b-2 border-cyan-300 pb-2 mb-4 text-cyan-800">Sugerencias</h2>
+                        <p class="text-gray-600 mb-4">¡Ayúdanos a elegir un nombre para nuestra pequeña!</p>
+                        <textarea placeholder="Escribe tu sugerencia aquí..." class="w-full h-24 p-3 rounded-lg border border-cyan-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"></textarea>
+                        <button class="w-full mt-2 bg-cyan-500 text-white py-2 rounded-lg font-bold hover:bg-cyan-600">Enviar Sugerencia</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        // --- Header Scroll Effect ---
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // --- Mobile Menu ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinks = document.querySelectorAll('.nav-link-mobile');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('flex');
+            // Change icon based on menu state
+            mobileMenuBtn.innerHTML = mobileMenu.classList.contains('hidden') ? '☰' : '×';
+        });
+        
+        // Close mobile menu when a link is clicked
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                 mobileMenu.classList.add('hidden');
+                 mobileMenu.classList.remove('flex');
+                 mobileMenuBtn.innerHTML = '☰';
+            });
+        });
+
+        // --- Hero Pixels Animation ---
+        const pixelContainer = document.getElementById('pixel-container');
+        if (pixelContainer) {
+            for (let i = 0; i < 50; i++) {
+                const pixel = document.createElement('div');
+                pixel.className = 'pixel';
+                const size = Math.random() * 3 + 1;
+                pixel.style.width = `${size}px`;
+                pixel.style.height = `${size}px`;
+                pixel.style.left = `${Math.random() * 100}%`;
+                pixel.style.top = `${Math.random() * 100}%`;
+                pixel.style.animationDelay = `${Math.random() * 10}s`;
+                pixel.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                pixelContainer.appendChild(pixel);
+            }
+        }
+        
+        // --- Animated Counter on Scroll ---
+        function animateCounter(el) {
+            const finalNumberText = el.textContent;
+            const isPercentage = finalNumberText.includes('%');
+            const target = parseInt(finalNumberText.replace('+', '').replace('%', ''));
+            if (isNaN(target)) return;
+            
+            let current = 0;
+            const increment = target / 100;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    clearInterval(timer);
+                    el.textContent = finalNumberText;
+                } else {
+                    el.textContent = Math.ceil(current) + (finalNumberText.includes('+') ? '+' : '') + (isPercentage ? '%' : '');
+                }
+            }, 20);
+        }
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.animated) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach(animateCounter);
+                    entry.target.dataset.animated = "true";
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        const statsSection = document.querySelector('#nosotros');
+        if(statsSection) statsObserver.observe(statsSection);
+        
+        // --- General Scroll Animations ---
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            scrollObserver.observe(el);
+        });
+
+
+        // --- Demo Modal Logic ---
+        const demoModal = document.getElementById('demo-modal');
+        const modalBody = document.getElementById('modal-body');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        
+        function openDemo(demoType) {
+            const demoContent = document.getElementById(`${demoType}-demo`).innerHTML;
+            if (demoContent) {
+                modalBody.innerHTML = demoContent;
+                demoModal.classList.add('open');
+                // Special logic for countdown if it exists in the opened demo
+                const countdownDemoEl = document.getElementById('countdown-demo');
+                if (countdownDemoEl) {
+                    startCountdown(countdownDemoEl);
+                }
+            }
+        }
+
+        function closeModal() {
+            demoModal.classList.remove('open');
+            // Reset modal body to stop any running scripts/audio
+            setTimeout(() => { modalBody.innerHTML = ''; }, 400);
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        demoModal.addEventListener('click', (e) => {
+            // Check if the click is on the modal backdrop itself, not its children
+            if (e.target === demoModal) {
+                closeModal();
+            }
+        });
+        
+        // --- Countdown for Demo ---
+        let countdownInterval;
+        function startCountdown(element) {
+             clearInterval(countdownInterval); // Clear previous interval if any
+             const countdownDate = new Date("Dec 31, 2025 23:59:59").getTime();
+             countdownInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = countdownDate - now;
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                element.innerHTML = `<div><span class="number">${days}</span><span class="label">Días</span></div> <div><span class="number">${hours}</span><span class="label">Horas</span></div> <div><span class="number">${minutes}</span><span class="label">Min</span></div> <div><span class="number">${seconds}</span><span class="label">Seg</span></div>`;
+                if(distance < 0) {
+                    clearInterval(countdownInterval);
+                    element.innerHTML = "¡El día llegó!";
+                }
+             }, 1000);
+        }
+
+        // --- Swiper Carousel Initialization ---
+        const swiper = new Swiper('.swiper-container', {
+            loop: true,
+            slidesPerView: 1,
+            spaceBetween: 30,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
+
