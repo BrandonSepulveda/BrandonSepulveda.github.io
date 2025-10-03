@@ -50,7 +50,30 @@
 </head>
 <body class="bg-slate-100 text-slate-800">
 
-    <div id="app" class="flex flex-col h-screen">
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-2xl w-full max-w-sm text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Acceso Protegido</h2>
+            <p class="text-gray-500 mb-6">Ingresa tus credenciales para continuar.</p>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label for="username" class="sr-only">Usuario</label>
+                    <input type="text" id="username-input" placeholder="Usuario" class="w-full text-center px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="sr-only">Contraseña</label>
+                    <input type="password" id="password-input" placeholder="Contraseña" class="w-full text-center px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <p id="error-message" class="text-red-500 text-sm mb-4 hidden">Usuario o contraseña incorrectos.</p>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+                    <i data-lucide="log-in" class="w-5 h-5"></i>
+                    <span>Ingresar</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app" class="flex flex-col h-screen hidden">
         <!-- Header -->
         <header class="bg-white shadow-md w-full p-4 flex justify-between items-center z-10">
             <div class="flex items-center gap-3">
@@ -542,22 +565,56 @@
         }
         
         document.addEventListener('DOMContentLoaded', () => {
-            renderAll();
+            // --- LOGIN LOGIC ---
+            const correctUserHash = "YWRtaW4="; // "admin" in Base64
+            const correctPasswordHash = "UGFzc3cwcmQ="; // "Passw0rd" in Base64
+            const loginOverlay = document.getElementById('login-overlay');
+            const loginForm = document.getElementById('login-form');
+            const usernameInput = document.getElementById('username-input');
+            const passwordInput = document.getElementById('password-input');
+            const errorMessage = document.getElementById('error-message');
+            const appContainer = document.getElementById('app');
             
-            // Event Listeners
-            editorPanel.addEventListener('input', handleEditorUpdate);
-            editorPanel.addEventListener('click', handleDeleteItem);
-            
-            document.getElementById('add-insight-btn').addEventListener('click', () => handleAddItem('insights'));
-            document.getElementById('add-categoria-btn').addEventListener('click', () => handleAddItem('categorias'));
-            document.getElementById('add-recomendacion-btn').addEventListener('click', () => handleAddItem('recomendaciones'));
+            lucide.createIcons(); // Create login icon
 
-            document.getElementById('save-json-btn').addEventListener('click', saveDataToJson);
-            document.getElementById('load-json-btn').addEventListener('click', () => document.getElementById('load-json-input').click());
-            document.getElementById('load-json-input').addEventListener('change', loadDataFromJson);
-            document.getElementById('export-pdf-btn').addEventListener('click', exportToPdf);
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                // Decode from Base64 and compare
+                try {
+                    if (usernameInput.value === atob(correctUserHash) && passwordInput.value === atob(correctPasswordHash)) {
+                        loginOverlay.classList.add('hidden');
+                        appContainer.classList.remove('hidden');
+                        // Initialize the app after successful login
+                        initializeApp();
+                    } else {
+                        errorMessage.classList.remove('hidden');
+                        passwordInput.value = '';
+                        usernameInput.focus();
+                    }
+                } catch (err) {
+                    console.error("Error decoding credentials:", err);
+                    errorMessage.classList.remove('hidden');
+                }
+            });
 
-            lucide.createIcons();
+            function initializeApp() {
+                renderAll();
+                
+                // Event Listeners
+                editorPanel.addEventListener('input', handleEditorUpdate);
+                editorPanel.addEventListener('click', handleDeleteItem);
+                
+                document.getElementById('add-insight-btn').addEventListener('click', () => handleAddItem('insights'));
+                document.getElementById('add-categoria-btn').addEventListener('click', () => handleAddItem('categorias'));
+                document.getElementById('add-recomendacion-btn').addEventListener('click', () => handleAddItem('recomendaciones'));
+
+                document.getElementById('save-json-btn').addEventListener('click', saveDataToJson);
+                document.getElementById('load-json-btn').addEventListener('click', () => document.getElementById('load-json-input').click());
+                document.getElementById('load-json-input').addEventListener('change', loadDataFromJson);
+                document.getElementById('export-pdf-btn').addEventListener('click', exportToPdf);
+
+                lucide.createIcons(); // Re-run for icons inside the app
+            }
         });
     </script>
 </body>
