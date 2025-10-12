@@ -10,7 +10,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico" />
     
-    <!-- Analytics -->
+    <!-- Analytics (Mantener) -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112" crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
     <script>
@@ -21,9 +21,9 @@
     </script>
     
     <!-- Stylesheets -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,17 +31,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Enhanced Black & White Theme --- */
+        /* --- Enhanced Black & White Theme (Actualizado) --- */
         :root {
             --bg-dark: #000000;
             --bg-medium: #111111;
-            --bg-light: #1A1A1A;
+            --bg-light: #1A1A1A; /* Usado para tarjetas de proyectos y ahora Toolbox */
             --text-light: #FFFFFF;
             --text-muted: #999999;
-            --text-muted-lighter: #b0b0b0; /* Lighter muted color for subtitles */
+            --text-muted-lighter: #b0b0b0; 
             --accent-primary: #FFFFFF;
             --accent-secondary: #333333;
-            --kick-color: #53FC18; /* Kick Green */
+            --kick-color: #53FC18; 
+            --powershell-color: #53FCF1; 
+            --tiktok-color: #fe2c55; /* TikTok Red */
             --border-color: rgba(255, 255, 255, 0.1);
             --shadow-color: rgba(255, 255, 255, 0.05);
             --transition-speed: 0.4s;
@@ -76,7 +78,7 @@
             margin-left: auto;
             margin-right: auto;
             margin-bottom: 4rem;
-            color: var(--text-muted-lighter); /* Using lighter muted color */
+            color: var(--text-muted-lighter); 
         }
 
         /* --- Navigation Bar --- */
@@ -118,8 +120,7 @@
         #mainNav .navbar-toggler-icon {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
-
-        /* --- Hero Section (Masthead) --- */
+        /* --- Hero Section (Mantener) --- */
         .masthead {
             position: relative;
             width: 100%;
@@ -171,7 +172,7 @@
             border: 2px solid transparent;
         }
         .btn-light {
-            background-color: var(--accent-primary);
+             background-color: var(--accent-primary);
             color: var(--bg-dark);
         }
         .btn-light:hover {
@@ -201,8 +202,19 @@
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 0 30px rgba(83, 252, 24, 0.5);
         }
+        .btn-tiktok {
+            background-color: var(--tiktok-color);
+            color: var(--text-light);
+            box-shadow: 0 0 20px rgba(254, 44, 85, 0.3);
+        }
+        .btn-tiktok:hover {
+            background-color: var(--tiktok-color);
+            color: var(--text-light);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 30px rgba(254, 44, 85, 0.5);
+        }
 
-        /* --- About Section --- */
+        /* --- About Section (Corregido) --- */
         #about { background-color: var(--bg-medium); }
         .about-img {
             width: 300px;
@@ -219,10 +231,10 @@
             box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
         }
 
-        /* --- Skills Section --- */
-        #skills { background-color: var(--bg-dark); }
+        /* --- Skills Section (Mantener) --- */
+        #skills { background-color: var(--bg-medium); } 
         .skill-card {
-            background-color: var(--bg-medium);
+            background-color: var(--bg-light);
             padding: 1.5rem;
             border-radius: 12px;
             border: 1px solid var(--border-color);
@@ -242,8 +254,8 @@
             font-weight: 600;
         }
 
-        /* --- Projects Section --- */
-        #projects { background-color: var(--bg-medium); }
+        /* --- Project Card Styles --- */
+        #projects { background-color: var(--bg-medium); } 
         .project-card {
             background-color: var(--bg-light);
             border: 1px solid var(--border-color);
@@ -251,6 +263,7 @@
             overflow: hidden;
             transition: all var(--transition-speed) ease;
             height: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         .project-card:hover {
             transform: translateY(-10px);
@@ -267,8 +280,8 @@
             flex-direction: column;
         }
         .project-card .card-title {
-            color: var(--text-light); /* Explicitly set to white */
-            font-weight: 800; /* Ensure it's bold */
+            color: var(--text-light); 
+            font-weight: 800; 
         }
         .project-card .card-text {
             color: var(--text-muted);
@@ -284,45 +297,158 @@
             font-weight: 600;
             margin: 3px;
         }
-        .kick-card {
-            border-color: var(--kick-color);
+        .powershell-card {
+            border-color: var(--powershell-color);
         }
-        .kick-card:hover {
-            box-shadow: 0 0 40px rgba(83, 252, 24, 0.2);
-            border-color: var(--kick-color);
+        .powershell-card:hover {
+            box-shadow: 0 0 40px rgba(83, 252, 241, 0.2);
+            border-color: var(--powershell-color);
+        }
+        .code-block {
+            background-color: var(--bg-dark);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--powershell-color);
+            overflow-x: auto;
         }
 
-        /* --- Contact Section --- */
-        #contact {
+
+        /* --- LIVE STREAM SECTION (KICK & TIKTOK) --- */
+        #live-stream-section {
             background-color: var(--bg-dark);
-            position: relative;
-            overflow: hidden;
+            padding: 5rem 0;
         }
-        #contact::before {
-            content: '';
+        #tiktok-section {
+            background-color: var(--bg-medium); 
+            padding: 5rem 0;
+        }
+        /* Kick: Estilo limpio */
+        .stream-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 para Kick */
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid var(--border-color); /* Borde suave */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Sombra suave */
+        }
+        
+        .stream-container iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.08), transparent 40%),
-                radial-gradient(circle at 85% 75%, rgba(255, 255, 255, 0.05), transparent 40%);
-            animation: subtle-aurora 15s infinite alternate;
-            z-index: 0;
+            border: none;
         }
-        @keyframes subtle-aurora {
-            from { transform: rotate(0deg) scale(1.2); }
-            to { transform: rotate(20deg) scale(1.5); }
+
+        /* TikTok: Formato de 2 clips lado a lado */
+        .tiktok-clip-container {
+            background-color: transparent; 
+            padding: 0;
+            box-shadow: none;
+            max-width: 900px; /* Ancho máximo para que los 2 clips se vean bien */
+            margin: 0 auto;
         }
-        #contact .container {
+        .tiktok-embed-wrapper {
             position: relative;
-            z-index: 1;
+            width: 100%;
+            /* Ajuste el padding para eliminar espacio vertical extra */
+            padding-top: 177.77%; /* 9:16 aspect ratio */
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-light); 
+        }
+        .tiktok-embed-wrapper iframe {
+             position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            min-height: 100%; 
+            min-width: 100%;
+        }
+
+        .live-tag {
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 10;
+        }
+        .kick-live-tag {
+            background-color: var(--kick-color);
+            color: var(--bg-dark);
+            animation: pulse-kick 2s infinite;
+        }
+        .tiktok-live-tag {
+            background-color: var(--tiktok-color);
+            color: var(--text-light);
+        }
+        @keyframes pulse-kick {
+            0% { box-shadow: 0 0 0 0 rgba(83, 252, 24, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(83, 252, 24, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(83, 252, 24, 0); }
+        }
+
+
+        /* --- Toolbox Digital Section (Corregido a tema oscuro) --- */
+        #digital-toolbox { 
+            background-color: var(--bg-dark); 
+        }
+        .tool-card {
+            background-color: var(--bg-light); /* Fondo de tarjeta a gris oscuro (light) */
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--powershell-color);
+        }
+        .tool-card h5 {
+            color: var(--text-light); /* Título blanco */
+            font-weight: 700; /* Asegurar que el título sea visible */
+        }
+        .tool-card p {
+            color: var(--text-muted); /* Texto gris */
+        }
+        .tool-card .btn-outline-light {
+            color: var(--text-light); /* Botón con texto blanco */
+            border-color: var(--border-color);
+            background-color: transparent;
+            padding: 0.5rem 1.5rem; /* Ajustar padding del botón */
+        }
+        .tool-card .btn-outline-light:hover {
+            background-color: var(--powershell-color);
+            color: var(--bg-dark);
+            border-color: var(--powershell-color);
+        }
+
+
+        /* --- Contact Section --- */
+        #contact {
+            background-color: var(--bg-dark); 
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--border-color); 
         }
         .social-icons a {
-            color: var(--text-muted);
-            font-size: 2rem; /* Made icons slightly larger */
-            margin: 0 1.25rem; /* Increased spacing */
+             color: var(--text-muted);
+            font-size: 2rem; 
+            margin: 0 1.25rem; 
             transition: all var(--transition-speed) ease;
             display: inline-block;
         }
@@ -333,18 +459,28 @@
         .social-icons a.kick-icon:hover {
             color: var(--kick-color);
         }
+        .social-icons a.tiktok-icon:hover {
+            color: var(--tiktok-color) !important;
+            transform: translateY(-5px);
+        }
 
-        /* --- Footer --- */
+        /* --- Footer (Mejorar visibilidad) --- */
         footer {
             background-color: var(--bg-medium);
             padding: 3rem 0;
             border-top: 1px solid var(--border-color);
         }
+        footer p {
+            color: var(--text-muted-lighter); 
+            font-size: 0.9rem;
+        }
+
 
     </style>
 </head>
 <body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="80">
 
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="#page-top">
@@ -357,17 +493,18 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#about">Sobre Mí</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills">Habilidades</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#live-stream-section">Kick Live</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tiktok-section">TikTok</a></li>
                     <li class="nav-item"><a class="nav-link" href="#projects">Proyectos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://brandonsepulveda.github.io/toolboxbs" target="_blank">ToolboxBS</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://brandonsepulveda.github.io/WinDeploy.html"target="_blank">WinDeploy</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://brandonsepulveda.github.io/herramientas">Herramientas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#digital-toolbox">Toolbox Digital</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Habilidades</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
+    <!-- Header (Hero) -->
     <header class="masthead">
         <div id="particles-js"></div>
         <div class="container text-center">
@@ -377,11 +514,12 @@
                     <span id="typing-text"></span><span id="cursor">|</span>
                 </p>
                 <a class="btn btn-light" href="#about">Descubre Más</a>
-                <a class="btn btn-outline-light ms-2" href="#projects">Mis Proyectos</a>
+                <a class="btn btn-kick ms-2" href="#live-stream-section"><i class="fa-solid fa-bolt me-2"></i>Kick Live!</a>
             </div>
         </div>
     </header>
 
+    <!-- About Section -->
     <section class="section" id="about">
         <div class="container">
             <div class="row gx-lg-5 align-items-center">
@@ -399,13 +537,252 @@
                     <p class="mb-4">
                         Cuando no estoy programando, puedes encontrarme transmitiendo en vivo en <strong>Kick (@papibrandon)</strong>, donde comparto desde gameplays intensos hasta sesiones de desarrollo y charlas casuales. Mi objetivo es combinar mis dos pasiones para crear contenido valioso y entretenido.
                     </p>
-                    <a href="#projects" class="btn btn-light">Ver mis proyectos</a>
+                    <a class="btn btn-light" href="#projects">Ver mis proyectos</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section" id="skills">
+    <!-- LIVE STREAM SECTION - KICK (Estilo limpio) -->
+    <section id="live-stream-section" class="section">
+        <div class="container text-center">
+            <h2 class="section-title" data-aos="fade-up"><i class="fa-solid fa-satellite-dish me-2 text-success"></i>KICK EN VIVO</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                ¡Sígueme y únete al parche! Mira mi último clip o stream en vivo si estoy transmitiendo.
+            </p>
+            <div id="kick-stream" class="row justify-content-center" data-aos="zoom-in" data-aos-delay="300">
+                <div class="col-lg-10">
+                    <div class="stream-container">
+                        <div class="live-tag kick-live-tag">LIVE <i class="fa-solid fa-bolt"></i></div>
+                        <iframe 
+                            src="https://player.kick.com/papibrandon" 
+                            allowfullscreen 
+                            scrolling="no" 
+                            title="Kick Stream - papibrandon">
+                        </iframe>
+                    </div>
+                    <a class="btn btn-kick mt-4" href="https://kick.com/papibrandon" target="_blank"><i class="fa-solid fa-share me-2"></i>Ver en Kick</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE STREAM SECTION - TIKTOK (Formato 2 Clips Fijos) -->
+    <section id="tiktok-section" class="section" style="background-color: var(--bg-medium);">
+        <div class="container text-center">
+            <h2 class="section-title" data-aos="fade-up"><i class="fab fa-tiktok me-2" style="color: var(--tiktok-color);"></i>TikTok Clips</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Los mejores momentos y clips virales de mi canal.
+            </p>
+            
+            <div id="tiktok-clips-fixed" class="row justify-content-center g-4 tiktok-clip-container" data-aos="zoom-in" data-aos-delay="300">
+                
+                <!-- Clip 1 -->
+                <div class="col-lg-6 col-md-8 col-12 d-flex flex-column align-items-center">
+                    <div class="tiktok-embed-wrapper">
+                        <div class="live-tag tiktok-live-tag">CLIP</div>
+                        <iframe 
+                            src="https://www.tiktok.com/embed/7541587373377801478" 
+                            allowfullscreen 
+                            scrolling="no" 
+                            title="TikTok Clip 1"
+                            style="background-color: var(--bg-light);">
+                        </iframe>
+                    </div>
+                </div>
+                
+                <!-- Clip 2 -->
+                <div class="col-lg-6 col-md-8 col-12 d-flex flex-column align-items-center">
+                    <div class="tiktok-embed-wrapper">
+                        <div class="live-tag tiktok-live-tag">CLIP</div>
+                        <iframe 
+                            src="https://www.tiktok.com/embed/7504103069173533958" 
+                            allowfullscreen 
+                            scrolling="no" 
+                            title="TikTok Clip 3"
+                            style="background-color: var(--bg-light);">
+                        </iframe>
+                    </div>
+                </div>
+
+            </div>
+            
+            <a class="btn btn-tiktok mt-4" href="https://www.tiktok.com/@papibrandon7" target="_blank"><i class="fa-solid fa-share me-2"></i>Ver más en TikTok</a>
+        </div>
+    </section>
+
+
+    <!-- Projects Section (Mantener) -->
+    <section class="section" id="projects">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title" data-aos="fade-up">Proyectos Destacados</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Mi trabajo en automatización, desarrollo y contenido digital.</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+
+                <!-- 1. ToolboxBS -->
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card project-card powershell-card">
+                        <img class="card-img-top" src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" alt="Nuevo Logo BS Toolbox">
+                        <div class="card-body p-4">
+                            <h4 class="card-title">ToolboxBS (Suite de Utilidades)</h4>
+                            <p class="card-text mb-3">La navaja suiza para Windows. Centraliza instalación de apps, optimización, reparación de archivos del sistema y más, con una interfaz intuitiva.</p>
+                            <div class="mb-3"><span class="tech-tag">Windows</span><span class="tech-tag">PowerShell</span><span class="tech-tag">GUI</span></div>
+                            <div class="mt-auto align-self-start">
+                                <p class="text-white fw-bold mb-1"><i class="fa-solid fa-terminal me-2"></i>Ejecución Rápida:</p>
+                                <code class="code-block">irm "https://brandonsepulveda.github.io/Tool" | iex</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. WinDeploy -->
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card project-card powershell-card">
+                        <img class="card-img-top" src="https://github.com/BrandonSepulveda/WinDeploy/blob/main/Gemini_Generated_Image_t41in8t41in8t41i.png?raw=true" alt="WinDeploy Logo">
+                        <div class="card-body p-4">
+                            <h4 class="card-title">WinDeploy (Instalación Automática)</h4>
+                            <p class="card-text mb-3">Script de PowerShell con GUI que **automatiza por completo** la instalación de Windows y las aplicaciones esenciales sin necesidad de USBs.</p>
+                            <div class="mb-3"><span class="tech-tag">PowerShell</span><span class="tech-tag">Windows Automation</span><span class="tech-tag">Deployment</span></div>
+                            <div class="mt-auto align-self-start">
+                                <p class="text-white fw-bold mb-1"><i class="fa-solid fa-terminal me-2"></i>Ejecución Rápida:</p>
+                                <code class="code-block">irm "brandonsepulveda.github.io/WinDeployBS" | iex</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 3. ClipsAuto / ClipsMaker -->
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card project-card">
+                        <img class="card-img-top" src="https://github.com/BrandonSepulveda/ClipsAuto/blob/main/Video%20Editing%20Command%20Icon.png?raw=true" alt="ClipsMaker Logo" style="object-fit: contain; background-color: #222;">
+                        <div class="card-body p-4">
+                            <h4 class="card-title">ClipsAuto (Clips Automáticos)</h4>
+                            <p class="card-text mb-3">Script que utiliza **FFmpeg** para procesar videos automáticamente, extraer clips y momentos destacados, simplificando la creación de contenido para redes.</p>
+                            <div class="mb-3"><span class="tech-tag">PowerShell</span><span class="tech-tag">FFmpeg</span><span class="tech-tag">Video Automation</span></div>
+                            <div class="mt-auto align-self-start">
+                                <p class="text-white fw-bold mb-1"><i class="fa-solid fa-terminal me-2"></i>Ejecución Rápida:</p>
+                                <code class="code-block">irm "brandonsepulveda.github.io/ClipsMaker" | iex</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. MyPowerShellConfig -->
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card project-card powershell-card">
+                        <div class="d-flex align-items-center justify-content-center p-5" style="background-color: var(--bg-dark); border-bottom: 1px solid var(--border-color);">
+                            <i class="fa-solid fa-terminal" style="font-size: 5rem; color: var(--powershell-color);"></i>
+                        </div>
+                        <div class="card-body p-4">
+                            <h4 class="card-title">My PowerShell Config</h4>
+                            <p class="card-text mb-3">Automatización básica para personalizar tu perfil de PowerShell con herramientas como Oh-My-Posh y terminales tipo 'nerdfetch', incluyendo fuentes y estilos.</p>
+                            <div class="mb-3"><span class="tech-tag>PowerShell</span><span class="tech-tag">Personalization</span><span class="tech-tag">Oh-My-Posh</span></div>
+                             <div class="mt-auto align-self-start">
+                                <p class="text-white fw-bold mb-1"><i class="fa-solid fa-terminal me-2"></i>Ejecución Rápida:</p>
+                                <code class="code-block">irm "brandonsepulveda.github.io/PPB" | iex</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 5. TYBYTE PRO (Restaurado) -->
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card project-card">
+                        <img class="card-img-top" src="https://raw.githubusercontent.com/BrandonSepulveda/BrandonSepulveda.github.io/main/20230130_221518_0000.png" alt="TYBYTE" loading="lazy" />
+                        <div class="card-body p-4">
+                            <h4 class="card-title">TYBYTE PRO</h4>
+                            <p class="card-text mb-3">Plataforma y comunidad enfocada en contenido digital, tutoriales y recursos tecnológicos para entusiastas y profesionales del sector.</p>
+                            <div class="mb-3"><span class="tech-tag">Contenido Digital</span><span class="tech-tag">Tutoriales</span></div>
+                            <a class="btn btn-outline-light mt-auto align-self-start" href="https://allmylinks.com/tbytepro404" target="_blank">Visitar Proyecto</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. SQUAD (Restaurado) -->
+                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="card project-card">
+                        <img class="card-img-top" src="https://raw.githubusercontent.com/BrandonSepulveda/BrandonSepulveda.github.io/main/InShot_20240622_184423032.jpg" alt="SQUAD" loading="lazy" />
+                        <div class="card-body p-4">
+                            <h4 class="card-title">SQUAD</h4>
+                            <p class="card-text mb-3">Proyecto de comunidad y entretenimiento en redes sociales, enfocado en crear un espacio de interacción, humor y diversión para todos.</p>
+                            <div class="mb-3"><span class="tech-tag">Instagram</span><span class="tech-tag">Social Media</span></div>
+                            <a class="btn btn-outline-light mt-auto align-self-start" href="https://www.instagram.com/elsquaddelputeooficial/" target="_blank">Ver en Instagram</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toolbox Digital Section (Estilo Corregido) -->
+    <section class="section" id="digital-toolbox" style="background-color: var(--bg-dark);">
+        <div class="container text-center">
+            <h2 class="section-title" data-aos="fade-up"><i class="fa-solid fa-screwdriver-wrench me-2"></i>Toolbox Digital</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Mis herramientas web, en línea y sencillas para tareas del día a día. ¡Siempre disponibles!
+            </p>
+            <div class="row g-4 justify-content-center">
+                
+                <!-- Remover Fondos -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                    <a href="https://brandonsepulveda.github.io/quitarfondo.html" target="_blank" class="text-decoration-none">
+                        <div class="tool-card">
+                            <div>
+                                <h5 class="d-flex align-items-center"><i class="fa-solid fa-image tool-icon" style="color: var(--powershell-color);"></i>Remover Fondos</h5>
+                                <p>Utilidad para eliminar el fondo de cualquier imagen de forma automática y precisa.</p>
+                            </div>
+                            <span class="btn btn-outline-light btn-sm align-self-start">Probar Herramienta</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Windows ISO Downloader -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                    <a href="https://brandonsepulveda.github.io/descargawindows.html" target="_blank" class="text-decoration-none">
+                        <div class="tool-card">
+                            <div>
+                                <h5 class="d-flex align-items-center"><i class="fab fa-windows tool-icon" style="color: var(--powershell-color);"></i>Descargador de ISO</h5>
+                                <p>Acceso rápido y fácil para descargar imágenes ISO oficiales de Windows 10 y Windows 11.</p>
+                            </div>
+                            <span class="btn btn-outline-light btn-sm align-self-start">Ir a Descargas</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Compresor Universal -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="400">
+                    <a href="https://brandonsepulveda.github.io/compresor.html" target="_blank" class="text-decoration-none">
+                        <div class="tool-card">
+                            <div>
+                                <h5 class="d-flex align-items-center"><i class="fa-solid fa-file-zipper tool-icon" style="color: var(--powershell-color);"></i>Compresor Universal (ZIP)</h5>
+                                <p>Arrastra archivos o carpetas para comprimirlos en un archivo .ZIP con diferentes niveles de compresión.</p>
+                            </div>
+                            <span class="btn btn-outline-light btn-sm align-self-start">Abrir Compresor</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Repositorio de Apps -->
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="500">
+                    <a href="https://brandonsepulveda.github.io/apps" target="_blank" class="text-decoration-none">
+                        <div class="tool-card">
+                            <div>
+                                <h5 class="d-flex align-items-center"><i class="fa-solid fa-database tool-icon" style="color: var(--powershell-color);"></i>Repositorio de Apps</h5>
+                                <p>Una colección curada de software y aplicaciones esenciales para desarrolladores y usuarios avanzados.</p>
+                            </div>
+                            <span class="btn btn-outline-light btn-sm align-self-start">Ir al Repositorio</span>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section (Mantener) -->
+    <section class="section" id="skills" style="background-color: var(--bg-medium);">
         <div class="container text-center">
             <h2 class="section-title" data-aos="fade-up">Habilidades Técnicas</h2>
             <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
@@ -427,66 +804,9 @@
         </div>
     </section>
 
-    <section class="section" id="projects">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-title" data-aos="fade-up">Mis Proyectos</h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Una selección de mis trabajos y creaciones más destacadas.</p>
-            </div>
-            <div class="row g-4 justify-content-center">
 
-                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card project-card">
-                        <img class="card-img-top" src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" alt="Nuevo Logo BS Toolbox">
-                        <div class="card-body p-4">
-                            <h4 class="card-title">ToolboxBS</h4>
-                            <p class="card-text mb-3">Suite de utilidades para Windows que centraliza información del sistema, instalación de apps, optimización y reparación de archivos del sistema en una interfaz intuitiva.</p>
-                            <div class="mb-3"><span class="tech-tag">Windows</span><span class="tech-tag">PowerShell</span><span class="tech-tag">Batch</span></div>
-                            <a class="btn btn-outline-light mt-auto align-self-start" href="https://brandonsepulveda.github.io/toolboxbs.html" target="_blank">Ver Detalles</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card project-card kick-card">
-                        <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Kick.com_icon_logo.svg/2048px-Kick.com_icon_logo.svg.png" alt="KICK Streaming" loading="lazy" />
-                        <div class="card-body p-4">
-                            <h4 class="card-title">Streaming en Kick</h4>
-                            <p class="card-text mb-3">Mi canal de streaming en vivo donde comparto gameplays, sesiones de desarrollo en directo (live-coding) y contenido interactivo con la comunidad.</p>
-                            <div class="mb-3"><span class="tech-tag">Streaming</span><span class="tech-tag">Gaming</span><span class="tech-tag">Comunidad</span></div>
-                            <a class="btn btn-kick mt-auto align-self-start" href="https://kick.com/papibrandon" target="_blank"><i class="fa-solid fa-satellite-dish me-2"></i>Ir al Canal</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card project-card">
-                        <img class="card-img-top" src="https://raw.githubusercontent.com/BrandonSepulveda/BrandonSepulveda.github.io/main/20230130_221518_0000.png" alt="TYBYTE" loading="lazy" />
-                        <div class="card-body p-4">
-                            <h4 class="card-title">TYBYTE PRO</h4>
-                            <p class="card-text mb-3">Plataforma y comunidad enfocada en contenido digital, tutoriales y recursos tecnológicos para entusiastas y profesionales del sector.</p>
-                            <div class="mb-3"><span class="tech-tag">Contenido Digital</span><span class="tech-tag">Tutoriales</span></div>
-                            <a class="btn btn-outline-light mt-auto align-self-start" href="https://allmylinks.com/tbytepro404" target="_blank">Visitar Proyecto</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card project-card">
-                        <img class="card-img-top" src="https://raw.githubusercontent.com/BrandonSepulveda/BrandonSepulveda.github.io/main/InShot_20240622_184423032.jpg" alt="SQUAD" loading="lazy" />
-                        <div class="card-body p-4">
-                            <h4 class="card-title">SQUAD</h4>
-                            <p class="card-text mb-3">Proyecto de comunidad y entretenimiento en redes sociales, enfocado en crear un espacio de interacción, humor y diversión para todos.</p>
-                            <div class="mb-3"><span class="tech-tag">Instagram</span><span class="tech-tag">Social Media</span></div>
-                            <a class="btn btn-outline-light mt-auto align-self-start" href="https://www.instagram.com/elsquaddelputeooficial/" target="_blank">Ver en Instagram</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="section" id="contact">
+    <!-- Contact Section (Restaurado estilo base, fondo dark) -->
+    <section class="section" id="contact" style="background-color: var(--bg-dark);">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
@@ -499,20 +819,22 @@
             <div class="social-icons text-center mt-4" data-aos="fade-up" data-aos-delay="200">
                 <a href="https://www.instagram.com/brandonsepulveda_66" target="_blank" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
                 <a href="https://github.com/BrandonSepulveda" target="_blank" aria-label="GitHub" title="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://kick.com/papibrandon" target="_blank" class="kick-icon" aria-label="Kick" title="Kick"><i class="fab fa-kickstarter-k"></i></a>
+                <a href="https://kick.com/papibrandon" target="_blank" class="kick-icon" aria-label="Kick" title="Kick"><i class="fa-brands fa-kickstarter-k"></i></a>
                 <a href="https://twitter.com/PapiBrandon66" target="_blank" aria-label="Twitter" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.tiktok.com/@papibrandon7" target="_blank" class="tiktok-icon" aria-label="TikTok" title="TikTok" style="margin-left: 1.25rem;"><i class="fab fa-tiktok"></i></a>
             </div>
         </div>
     </section>
 
-    <footer class="footer text-center">
+    <!-- Footer (Visibilidad de Copyright mejorada) -->
+    <footer class="footer text-center" style="background-color: var(--bg-medium);">
         <div class="container">
-            <p class="text-muted mb-0">Copyright &copy; Jhon Brandon Sepulveda Valdes 2025</p>
+            <p class="text-muted mb-0" style="color: var(--text-muted-lighter);">Copyright &copy; Jhon Brandon Sepulveda Valdes 2025</p>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
@@ -528,6 +850,7 @@
             // Navbar shrink function
             const mainNav = document.getElementById('mainNav');
             if (mainNav) {
+                // Ensure ScrollSpy targets all relevant IDs
                 new bootstrap.ScrollSpy(document.body, {
                     target: '#mainNav',
                     offset: 80,
