@@ -1,0 +1,6 @@
+# ToolboxBS PowerShell Launcher
+# Autor: Brandon Sepulveda
+# Web: https://brandonsepulveda.github.io
+
+# Redirigir a la última versión de ToolboxBS.ps1
+Invoke-Expression (Invoke-RestMethod https://github.com/BrandonSepulveda/ClipsAuto/releases/latest/download/ClipMaker.Pro.ps1)
