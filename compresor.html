@@ -1,101 +1,423 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Compresor de Archivos y Carpetas (ZIP) | Brandon Sepulveda</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico" />
-    
-    <!-- Analytics -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112" crossorigin="anonymous"></script>
+    <title>Compresor ZIP Pro | Brandon Sepulveda</title>
+
+    <link rel="icon" type="image/x-icon"
+        href="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico" />
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112"
+        crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-2RY7LG5R21');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-2RY7LG5R21');
     </script>
-    
-    <!-- Stylesheets (Unificadas y Mejoradas) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-    <!-- Fonts (Unificadas con el portafolio principal) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
     <style>
         :root {
-            --bg-dark: #000000;
-            --bg-medium: #111111;
-            --bg-light: #1A1A1A;
-            --text-light: #FFFFFF;
-            --text-muted: #999999;
-            --text-muted-lighter: #b0b0b0;
-            --accent-primary: #FFFFFF;
-            --accent-secondary: #333333;
+            --bg-dark: #050505;
+            --bg-panel: rgba(20, 20, 20, 0.6);
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
             --kick-color: #53FC18;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --transition-speed: 0.4s;
+            --kick-glow: rgba(83, 252, 24, 0.4);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-muted); display: flex; flex-direction: column; min-height: 100vh; }
-        main { flex: 1 0 auto; }
-        h1, h2, h3, h4, h5, h6 { font-weight: 800; color: var(--text-light); }
-        .section { padding: 6rem 0; }
-        .section-title { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 900; margin-bottom: 1rem; }
-        .section-subtitle { font-size: 1.1rem; max-width: 650px; margin-left: auto; margin-right: auto; margin-bottom: 4rem; color: var(--text-muted-lighter); }
-        #mainNav { background-color: transparent; padding: 1.25rem 0; transition: all var(--transition-speed) ease; }
-        #mainNav.navbar-scrolled { background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(15px); padding: 0.75rem 0; border-bottom: 1px solid var(--border-color); }
-        #mainNav .navbar-brand { color: var(--text-light); font-weight: 800; font-size: 1.25rem; }
-        #mainNav .navbar-brand img { transition: transform var(--transition-speed) ease; }
-        #mainNav .navbar-brand:hover img { transform: rotate(-15deg); }
-        #mainNav .nav-link { color: var(--text-muted); font-weight: 600; padding: 0.5rem 1rem; transition: color var(--transition-speed) ease; }
-        #mainNav .nav-link:hover, #mainNav .nav-link.active { color: var(--text-light); }
-        #mainNav .navbar-toggler { border: 1px solid var(--border-color); }
-        #mainNav .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
-        
-        .upload-area { border: 2px dashed var(--border-color); border-radius: 15px; padding: 3rem; text-align: center; cursor: pointer; background-color: var(--bg-light); transition: all var(--transition-speed) ease; }
-        .upload-area.dragover { border-color: var(--kick-color); background-color: var(--accent-secondary); transform: scale(1.02); }
-        .upload-area i { font-size: 3rem; color: var(--kick-color); margin-bottom: 1rem; }
 
-        .control-panel { background-color: var(--bg-light); border-radius: 15px; padding: 1.5rem; border: 1px solid var(--border-color); }
-        .control-panel label { font-weight: 600; color: var(--text-muted-lighter); margin-bottom: 0.75rem; display: block; }
-        
-        .form-control { background-color: var(--bg-medium); color: var(--text-light); border-color: var(--border-color); }
-        .form-control:focus { background-color: var(--bg-medium); color: var(--text-light); border-color: var(--kick-color); box-shadow: 0 0 15px rgba(83, 252, 24, 0.2); }
-        input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; background: var(--accent-secondary); border-radius: 5px; outline: none; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: var(--kick-color); cursor: pointer; border-radius: 50%; }
-        .slider-value { min-width: 40px; text-align: center; background-color: var(--bg-medium); padding: 5px 10px; border-radius: 10px; font-weight: 600; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(83, 252, 24, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(80, 80, 255, 0.05), transparent 25%);
+            background-attachment: fixed;
+        }
 
-        .file-list-container { max-height: 500px; overflow-y: auto; background-color: var(--bg-light); border-radius: 15px; padding: 1rem; border: 1px solid var(--border-color); }
-        .file-item { display: flex; align-items: center; gap: 1rem; background-color: var(--bg-medium); padding: 0.75rem 1rem; border-radius: 10px; margin-bottom: 0.5rem; border: 1px solid var(--border-color); font-size: 0.9rem; }
-        .file-item i { color: var(--kick-color); }
-        .file-item-path { flex-grow: 1; color: var(--text-light); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .file-item-size { font-weight: 600; color: var(--text-muted); }
+        /* Scrollbar Personalizado */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
 
-        .btn { padding: 0.8rem 2rem; font-weight: 700; border-radius: 50px; transition: all var(--transition-speed) ease; border: 2px solid transparent; }
-        .btn-kick { background-color: var(--kick-color); color: var(--bg-dark); box-shadow: 0 0 20px rgba(83, 252, 24, 0.3); }
-        .btn-kick:hover:not(:disabled) { background-color: var(--kick-color); color: var(--bg-dark); transform: translateY(-3px) scale(1.05); box-shadow: 0 0 30px rgba(83, 252, 24, 0.5); }
-        .btn.disabled, .btn:disabled { background-color: var(--accent-secondary); border-color: var(--accent-secondary); color: var(--text-muted); cursor: not-allowed; transform: none; box-shadow: none; }
-        
-        .progress { height: 10px; background-color: var(--accent-secondary); }
-        .progress-bar { background-color: var(--kick-color); }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
 
-        footer { background-color: var(--bg-medium); padding: 3rem 0; border-top: 1px solid var(--border-color); }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--kick-color);
+        }
+
+        /* Navbar Glassmorphism */
+        #mainNav {
+            padding: 1.5rem 0;
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        #mainNav.navbar-scrolled {
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-glass);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-brand img {
+            transition: var(--transition);
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+        }
+
+        .navbar-brand:hover img {
+            transform: rotate(-10deg) scale(1.1);
+            filter: drop-shadow(0 0 8px var(--kick-color));
+        }
+
+        .nav-link {
+            color: var(--text-muted) !important;
+            font-weight: 600;
+            position: relative;
+            padding: 5px 0 !important;
+            margin: 0 15px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--kick-color);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-main) !important;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Estructura Principal */
+        .glass-panel {
+            background: var(--bg-panel);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 900;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+            line-height: 1.6;
+        }
+
+        /* Area de Carga (Upload) */
+        .upload-area {
+            border: 2px dashed var(--border-glass);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .upload-area:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--kick-color);
+            background: rgba(83, 252, 24, 0.05);
+            transform: scale(1.01);
+            box-shadow: 0 0 30px rgba(83, 252, 24, 0.1) inset;
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .upload-area:hover .upload-icon,
+        .upload-area.dragover .upload-icon {
+            color: var(--kick-color);
+            transform: translateY(-10px);
+            text-shadow: 0 0 20px var(--kick-glow);
+        }
+
+        /* Controles y Formularios */
+        .form-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .custom-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-glass);
+            color: white;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-color: var(--kick-color);
+            box-shadow: 0 0 15px rgba(83, 252, 24, 0.15);
+        }
+
+        /* Slider Range Personalizado */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #333;
+            border-radius: 5px;
+            outline: none;
+            margin: 15px 0;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            background: var(--kick-color);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--kick-color);
+            transition: transform 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Lista de Archivos */
+        .file-list-wrapper {
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .file-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .file-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            overflow: hidden;
+        }
+
+        .file-icon {
+            color: var(--kick-color);
+            font-size: 1.2rem;
+            min-width: 25px;
+        }
+
+        .file-details {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .file-name {
+            font-weight: 500;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-size {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .btn-remove-file {
+            background: transparent;
+            border: none;
+            color: #555;
+            cursor: pointer;
+            padding: 5px;
+            transition: 0.2s;
+        }
+
+        .btn-remove-file:hover {
+            color: #ff4444;
+            transform: scale(1.1);
+        }
+
+        /* Botones Principales */
+        .btn-action {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-kick {
+            background: var(--kick-color);
+            color: #000;
+            box-shadow: 0 0 25px rgba(83, 252, 24, 0.2);
+        }
+
+        .btn-kick:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 0 40px rgba(83, 252, 24, 0.5);
+            background: #60ff26;
+        }
+
+        .btn-kick:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-clear {
+            background: rgba(255, 68, 68, 0.1);
+            color: #ff4444;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            padding: 0.6rem;
+        }
+
+        .btn-clear:hover:not(:disabled) {
+            background: rgba(255, 68, 68, 0.2);
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-glass);
+            background: #000;
+            padding: 3rem 0;
+            margin-top: auto;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            height: 6px;
+            background: #222;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--kick-color);
+            width: 0%;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 15px var(--kick-color);
+        }
     </style>
 </head>
+
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Logo" style="height: 30px; width: auto; margin-right: 10px;">
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true"
+                    alt="Logo" style="height: 30px; width: auto;">
                 Brandon Sepulveda
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -108,238 +430,352 @@
         </div>
     </nav>
 
-    <main>
-        <section class="section">
+    <main class="d-flex align-items-center" style="min-height: 100vh; padding-top: 80px;">
+        <section class="section w-100 py-5">
             <div class="container">
-                <div class="text-center" data-aos="fade-up">
-                    <h2 class="section-title">Compresor de Archivos Universal</h2>
+                <div class="text-center mb-5" data-aos="fade-down">
+                    <h1 class="section-title">Compresor ZIP Universal</h1>
                     <p class="section-subtitle">
-                        Arrastra y suelta archivos o carpetas para crear un archivo .ZIP al instante. Ideal para agrupar y enviar archivos pesados de forma segura.
+                        Seguro, rápido y directamente en tu navegador. <br>Tus archivos nunca se suben a ningún
+                        servidor.
                     </p>
                 </div>
 
-                <div class="row g-4">
-                    <div class="col-lg-4" data-aos="fade-right">
-                        <div class="control-panel mb-4">
-                             <h5><i class="fas fa-cogs me-2"></i>Opciones</h5>
-                             <hr class="border-secondary my-3">
-                             <div class="mb-3">
-                                 <label for="zipName">Nombre del Archivo ZIP</label>
-                                 <input type="text" id="zipName" class="form-control" value="paquete-comprimido">
-                             </div>
-                             <div class="mb-3">
-                                <label for="compressionLevel">Nivel de Compresión</label>
-                                <div class="d-flex align-items-center gap-3">
-                                    <input type="range" id="compressionLevel" min="1" max="9" step="1" value="6">
-                                    <span class="slider-value" id="compressionLevelValue">6</span>
-                                </div>
-                                <small class="form-text text-muted mt-2 d-block">Nivel 9: Mejor compresión, más lento.</small>
+                <div class="row g-4 justify-content-center">
+
+                    <div class="col-lg-4" data-aos="fade-right" data-aos-delay="100">
+                        <div class="glass-panel h-100 d-flex flex-column">
+                            <h4 class="mb-4 text-white"><i class="fas fa-sliders-h me-2"
+                                    style="color:var(--kick-color)"></i>Configuración</h4>
+
+                            <div class="mb-4">
+                                <label class="form-label">Nombre del Archivo</label>
+                                <input type="text" id="zipName" class="custom-input" placeholder="mi-paquete"
+                                    value="archivos-comprimidos">
                             </div>
-                        </div>
-                        <div class="d-grid gap-2">
-                            <button id="compressButton" class="btn btn-kick" disabled><i class="fas fa-file-archive me-2"></i>Comprimir y Descargar</button>
-                            <button id="clearListButton" class="btn btn-sm btn-danger mt-2" disabled><i class="fas fa-trash me-2"></i>Limpiar Lista</button>
-                        </div>
-                         <div id="progressContainer" class="mt-4 d-none">
-                            <p id="progressLabel" class="mb-1 text-light fw-bold">Comprimiendo...</p>
-                            <div class="progress">
-                                <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between">
+                                    <label class="form-label">Nivel de Compresión</label>
+                                    <span id="compressionValue"
+                                        style="color:var(--kick-color); font-weight:700;">6</span>
+                                </div>
+                                <input type="range" id="compressionLevel" min="1" max="9" step="1" value="6">
+                                <div class="d-flex justify-content-between text-muted" style="font-size: 0.75rem;">
+                                    <span>Rápido</span>
+                                    <span>Máximo</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto">
+                                <div id="totalSizeContainer" class="text-center mb-3 text-muted small d-none">
+                                    Total: <span id="totalSizeLabel" class="text-white fw-bold">0 MB</span>
+                                </div>
+
+                                <button id="compressButton" class="btn-action btn-kick" disabled>
+                                    <i class="fas fa-download me-2"></i> Crear ZIP
+                                </button>
+
+                                <div class="progress-container" id="progressContainer">
+                                    <div class="progress-bar-fill" id="progressBar"></div>
+                                </div>
+                                <p id="statusText" class="text-center mt-2 small text-muted mb-0"></p>
+
+                                <button id="clearListButton" class="btn-action btn-clear" disabled>
+                                    <i class="fas fa-trash-alt me-2"></i> Limpiar Todo
+                                </button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-8" data-aos="fade-left">
-                        <div id="uploadContainer">
+                    <div class="col-lg-7" data-aos="fade-left" data-aos-delay="200">
+                        <div class="glass-panel h-100 d-flex flex-column">
                             <div class="upload-area" id="uploadArea">
-                                <i class="fas fa-folder-plus"></i>
-                                <h5>Añadir Archivos y Carpetas</h5>
-                                <p class="small text-muted">Haz clic o arrastra contenido aquí</p>
+                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                <h4 class="fw-bold text-white">Arrastra tus archivos aquí</h4>
+                                <p class="text-muted mb-0">Soporta carpetas enteras y múltiples archivos</p>
                                 <input type="file" id="fileInput" class="d-none" multiple webkitdirectory>
                             </div>
-                        </div>
-                        <div id="fileListContainer" class="file-list-container mt-4 d-none">
-                            <div id="fileList"></div>
+
+                            <div id="fileListContainer" class="file-list-wrapper mt-4 d-none flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center mb-3 px-2">
+                                    <span class="text-muted small fw-bold">ARCHIVOS EN COLA</span>
+                                    <span id="fileCountBadge" class="badge bg-secondary rounded-pill">0</span>
+                                </div>
+                                <div id="fileList"></div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
     </main>
-    
-    <footer class="footer text-center">
+
+    <footer class="text-center">
         <div class="container">
-            <p class="text-muted mb-0">Copyright &copy; Jhon Brandon Sepulveda Valdes 2025</p>
+            <p class="text-muted mb-0 small">Diseñado & Desarrollado por Jhon Brandon Sepulveda Valdes &copy; 2025</p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            AOS.init({ duration: 800, once: true, offset: 50 });
+            // Inicializar animaciones
+            AOS.init({ duration: 800, once: true, offset: 30 });
 
+            // Elementos del DOM
             const mainNav = document.getElementById('mainNav');
-            if (mainNav) {
-                window.addEventListener('scroll', () => {5
-                    if (window.scrollY > 50) mainNav.classList.add('navbar-scrolled');
-                    else mainNav.classList.remove('scrolled');
-                });
-            }
-
             const fileInput = document.getElementById('fileInput');
             const uploadArea = document.getElementById('uploadArea');
             const fileListContainer = document.getElementById('fileListContainer');
             const fileList = document.getElementById('fileList');
-            const zipNameInput = document.getElementById('zipName');
-            const compressionLevelSlider = document.getElementById('compressionLevel');
-            const compressionLevelValue = document.getElementById('compressionLevelValue');
+            const fileCountBadge = document.getElementById('fileCountBadge');
+            const totalSizeContainer = document.getElementById('totalSizeContainer');
+            const totalSizeLabel = document.getElementById('totalSizeLabel');
             const compressButton = document.getElementById('compressButton');
             const clearListButton = document.getElementById('clearListButton');
             const progressContainer = document.getElementById('progressContainer');
             const progressBar = document.getElementById('progressBar');
-            const progressLabel = document.getElementById('progressLabel');
+            const statusText = document.getElementById('statusText');
+            const slider = document.getElementById('compressionLevel');
+            const sliderValue = document.getElementById('compressionValue');
 
-            let filesToProcess = [];
+            let filesMap = new Map(); // Usamos Map para manejar IDs únicos por archivo
 
+            // Navbar Scroll Effect
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 30) mainNav.classList.add('navbar-scrolled');
+                else mainNav.classList.remove('navbar-scrolled');
+            });
+
+            // Slider Interactivo
+            slider.addEventListener('input', (e) => sliderValue.textContent = e.target.value);
+
+            // Utilidades
             const formatBytes = (bytes, decimals = 2) => {
-                if (!bytes || bytes === 0) return '0 Bytes';
+                if (!bytes || bytes === 0) return '0 B';
                 const k = 1024;
                 const dm = decimals < 0 ? 0 : decimals;
                 const sizes = ['Bytes', 'KB', 'MB', 'GB'];
                 const i = Math.floor(Math.log(bytes) / Math.log(k));
                 return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
             };
-            
-            const getFileIcon = (fileName) => {
-                const extension = fileName.split('.').pop().toLowerCase();
-                const iconMap = {
-                    'png': 'fa-file-image', 'jpg': 'fa-file-image', 'jpeg': 'fa-file-image', 'gif': 'fa-file-image',
-                    'pdf': 'fa-file-pdf',
-                    'doc': 'fa-file-word', 'docx': 'fa-file-word',
-                    'xls': 'fa-file-excel', 'xlsx': 'fa-file-excel',
+
+            const getIconClass = (name) => {
+                const ext = name.split('.').pop().toLowerCase();
+                const icons = {
+                    'png': 'fa-image', 'jpg': 'fa-image', 'jpeg': 'fa-image', 'gif': 'fa-image', 'svg': 'fa-bezier-curve',
+                    'pdf': 'fa-file-pdf', 'doc': 'fa-file-word', 'docx': 'fa-file-word',
+                    'xls': 'fa-file-excel', 'xlsx': 'fa-file-excel', 'csv': 'fa-table',
                     'zip': 'fa-file-archive', 'rar': 'fa-file-archive',
-                    'txt': 'fa-file-alt',
-                    'mp3': 'fa-file-audio', 'wav': 'fa-file-audio',
-                    'mp4': 'fa-file-video', 'mov': 'fa-file-video',
+                    'mp3': 'fa-music', 'wav': 'fa-music', 'mp4': 'fa-video',
+                    'js': 'fa-brands fa-js', 'html': 'fa-brands fa-html5', 'css': 'fa-brands fa-css3',
+                    'txt': 'fa-file-alt'
                 };
-                return iconMap[extension] || 'fa-file';
+                return icons[ext] || 'fa-file';
             };
 
+            const showToast = (msg, type = 'normal') => {
+                Toastify({
+                    text: msg,
+                    duration: 3000,
+                    gravity: "bottom",
+                    position: "center",
+                    style: {
+                        background: type === 'success' ? "linear-gradient(to right, #00b09b, #96c93d)" : "#333",
+                        boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+                        borderRadius: "10px"
+                    }
+                }).showToast();
+            };
+
+            // Gestión de Archivos
             const updateUI = () => {
-                const hasFiles = filesToProcess.length > 0;
-                compressButton.disabled = !hasFiles;
-                clearListButton.disabled = !hasFiles;
-                fileListContainer.classList.toggle('d-none', !hasFiles);
+                fileList.innerHTML = '';
+                let totalSize = 0;
+
+                if (filesMap.size === 0) {
+                    fileListContainer.classList.add('d-none');
+                    compressButton.disabled = true;
+                    clearListButton.disabled = true;
+                    totalSizeContainer.classList.add('d-none');
+                    return;
+                }
+
+                fileListContainer.classList.remove('d-none');
+                compressButton.disabled = false;
+                clearListButton.disabled = false;
+                totalSizeContainer.classList.remove('d-none');
+
+                filesMap.forEach((file, id) => {
+                    totalSize += file.size;
+                    const path = file.webkitRelativePath || file.name;
+
+                    const item = document.createElement('div');
+                    item.className = 'file-item';
+                    item.innerHTML = `
+                        <div class="file-info">
+                            <i class="fas ${getIconClass(file.name)} file-icon"></i>
+                            <div class="file-details">
+                                <div class="file-name" title="${path}">${path}</div>
+                                <div class="file-size">${formatBytes(file.size)}</div>
+                            </div>
+                        </div>
+                        <button class="btn-remove-file" onclick="removeFile('${id}')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    fileList.appendChild(item);
+                });
+
+                fileCountBadge.textContent = filesMap.size;
+                totalSizeLabel.textContent = formatBytes(totalSize);
             };
 
-            const addFileToList = (file) => {
-                const filePath = file.webkitRelativePath || file.name;
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <i class="fas ${getFileIcon(file.name)} me-2"></i>
-                    <span class="file-item-path">${filePath}</span>
-                    <span class="file-item-size">${formatBytes(file.size)}</span>
-                `;
-                fileList.appendChild(fileItem);
+            // Función global para que el botón de eliminar HTML pueda acceder
+            window.removeFile = (id) => {
+                filesMap.delete(id);
+                updateUI();
             };
 
             const handleFiles = (files) => {
-                [...files].forEach(file => {
-                    filesToProcess.push(file);
-                    addFileToList(file);
+                let addedCount = 0;
+                Array.from(files).forEach(file => {
+                    // Crear un ID único basado en ruta y tamaño para evitar duplicados exactos si se desea,
+                    // o usar Random para permitir duplicados. Aquí evitamos duplicados de nombre+tamaño.
+                    const uniqueId = `${file.name}-${file.size}-${file.lastModified}`;
+                    if (!filesMap.has(uniqueId)) {
+                        filesMap.set(uniqueId, file);
+                        addedCount++;
+                    }
                 });
+                if (addedCount > 0) showToast(`+ ${addedCount} archivos añadidos`);
                 updateUI();
             };
-            
-            const handleDrop = async (e) => {
+
+            // Drag & Drop Logic (Avanzado con lectura de carpetas recursiva)
+            const traverseFileTree = async (item, path = "") => {
+                if (item.isFile) {
+                    return new Promise((resolve) => {
+                        item.file((file) => {
+                            // Parchear la ruta relativa para ZIP
+                            const fullPath = path + file.name;
+                            // Creamos una propiedad custom para guardar la ruta completa
+                            Object.defineProperty(file, 'webkitRelativePath', {
+                                value: fullPath,
+                                writable: true
+                            });
+                            const uniqueId = `${fullPath}-${file.size}`;
+                            filesMap.set(uniqueId, file);
+                            resolve();
+                        });
+                    });
+                } else if (item.isDirectory) {
+                    const dirReader = item.createReader();
+                    const entries = await new Promise((resolve) => {
+                        dirReader.readEntries((entries) => resolve(entries));
+                    });
+                    // Esperar a que todos los sub-items se procesen
+                    const promises = entries.map(entry => traverseFileTree(entry, path + item.name + "/"));
+                    await Promise.all(promises);
+                }
+            };
+
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+
+            uploadArea.addEventListener('drop', async (e) => {
                 e.preventDefault();
                 uploadArea.classList.remove('dragover');
-                if (!e.dataTransfer) return;
 
                 const items = e.dataTransfer.items;
+                if (!items) return;
+
+                const promises = [];
                 for (const item of items) {
                     const entry = item.webkitGetAsEntry();
                     if (entry) {
-                        await traverseFileTree(entry);
+                        promises.push(traverseFileTree(entry));
                     }
                 }
-                updateUI();
-            };
-            
-            const traverseFileTree = async (entry) => {
-                if (entry.isFile) {
-                    entry.file(file => {
-                        file.webkitRelativePath = entry.fullPath.substring(1);
-                        filesToProcess.push(file);
-                        addFileToList(file);
-                    });
-                } else if (entry.isDirectory) {
-                    const dirReader = entry.createReader();
-                    dirReader.readEntries(async (entries) => {
-                        for (const subEntry of entries) {
-                            await traverseFileTree(subEntry);
-                        }
-                    });
-                }
-            };
 
-            compressButton.addEventListener('click', async () => {
-                if (filesToProcess.length === 0) return;
+                // Mostrar indicador de carga si son muchos archivos
+                statusText.textContent = "Analizando archivos...";
+                await Promise.all(promises);
+                statusText.textContent = "";
+                showToast("Archivos procesados correctamente");
+                updateUI();
+            });
+
+            uploadArea.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+                fileInput.value = ''; // Reset para permitir subir el mismo archivo de nuevo si se borró
+            });
+
+            // Botón Limpiar
+            clearListButton.addEventListener('click', () => {
+                filesMap.clear();
+                updateUI();
+                showToast("Lista limpiada");
+            });
+
+            // Lógica de Compresión
+            compressButton.addEventListener('click', () => {
+                if (filesMap.size === 0) return;
 
                 compressButton.disabled = true;
-                progressContainer.classList.remove('d-none');
-                
+                clearListButton.disabled = true;
+                progressContainer.style.display = 'block';
+                statusText.textContent = "Iniciando motor de compresión...";
+
                 const zip = new JSZip();
-                filesToProcess.forEach(file => {
+                filesMap.forEach((file) => {
                     const path = file.webkitRelativePath || file.name;
                     zip.file(path, file);
                 });
 
-                const compressionLevel = parseInt(compressionLevelSlider.value, 10);
+                const level = parseInt(slider.value);
 
-                zip.generateAsync({ 
-                    type: 'blob',
+                zip.generateAsync({
+                    type: "blob",
                     compression: "DEFLATE",
-                    compressionOptions: {
-                        level: compressionLevel
-                    }
+                    compressionOptions: { level: level }
                 }, (metadata) => {
-                    const percent = metadata.percent.toFixed(2);
-                    progressBar.style.width = `${percent}%`;
-                    progressLabel.textContent = `Comprimiendo... ${Math.round(percent)}%`;
-                }).then(content => {
+                    const percent = metadata.percent.toFixed(0);
+                    progressBar.style.width = percent + "%";
+                    statusText.textContent = `Comprimiendo: ${percent}%`;
+                }).then((content) => {
                     const link = document.createElement('a');
                     link.href = URL.createObjectURL(content);
-                    const zipFileName = zipNameInput.value || 'paquete-comprimido';
-                    link.download = `${zipFileName}.zip`;
+                    const name = document.getElementById('zipName').value || 'archivos_comprimidos';
+                    link.download = `${name}.zip`;
                     link.click();
-                    
-                    progressLabel.textContent = '¡Completado!';
+
+                    statusText.textContent = "¡Descarga iniciada!";
+                    statusText.style.color = "var(--kick-color)";
+                    showToast("¡ZIP creado con éxito!", "success");
+
                     setTimeout(() => {
-                        progressContainer.classList.add('d-none');
                         compressButton.disabled = false;
-                    }, 2000);
+                        clearListButton.disabled = false;
+                        progressContainer.style.display = 'none';
+                        progressBar.style.width = "0%";
+                        statusText.textContent = "";
+                        statusText.style.color = "var(--text-muted)";
+                    }, 3000);
                 });
             });
-            
-            clearListButton.addEventListener('click', () => {
-                fileList.innerHTML = '';
-                filesToProcess = [];
-                updateUI();
-            });
-            
-            compressionLevelSlider.addEventListener('input', () => {
-                compressionLevelValue.textContent = compressionLevelSlider.value;
-            });
-
-            uploadArea.addEventListener('click', () => fileInput.click());
-            fileInput.addEventListener('change', e => handleFiles(e.target.files));
-            uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
-            uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
-            uploadArea.addEventListener('drop', handleDrop);
         });
     </script>
 </body>
+
 </html>
