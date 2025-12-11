@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Removedor de Fondos | Brandon Sepulveda</title>
+    <title>Removedor de Fondos Pro | Brandon Sepulveda</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico" />
@@ -18,355 +18,507 @@
       gtag('config', 'G-2RY7LG5R21');
     </script>
     
-    <!-- Stylesheets (Unificadas y Mejoradas) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Librerías Externas -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     
-    <!-- Fonts (Unificadas con el portafolio principal) -->
+    <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Paleta de Colores y Estilos Base (Unificados con el Portafolio) --- */
         :root {
-            --bg-dark: #000000;
-            --bg-medium: #111111;
-            --bg-light: #1A1A1A;
-            --text-light: #FFFFFF;
-            --text-muted: #999999;
-            --text-muted-lighter: #b0b0b0;
-            --accent-primary: #FFFFFF;
-            --accent-secondary: #333333;
-            --kick-color: #53FC18; /* Kick Green */
-            --border-color: rgba(255, 255, 255, 0.1);
-            --shadow-color: rgba(255, 255, 255, 0.05);
-            --transition-speed: 0.4s;
+            /* Paleta de Colores Refinada */
+            --bg-dark: #050505;
+            --bg-glass: rgba(20, 20, 20, 0.6);
+            --bg-glass-border: rgba(255, 255, 255, 0.08);
+            --kick-color: #53FC18;
+            --kick-glow: rgba(83, 252, 24, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #cccccc; /* Mucho más claro para mejor lectura */
         }
 
+        /* --- Base & Background Animado --- */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             background-color: var(--bg-dark);
-            color: var(--text-muted);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            color: var(--text-main);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-        }
-
-        main { flex: 1 0 auto; }
-        h1, h2, h3, h4, h5, h6 { font-weight: 800; color: var(--text-light); }
-        .section { padding: 6rem 0; }
-        .section-title { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 900; margin-bottom: 1rem; }
-        .section-subtitle { font-size: 1.1rem; max-width: 650px; margin-left: auto; margin-right: auto; margin-bottom: 4rem; color: var(--text-muted-lighter); }
-
-        /* --- Navigation Bar (Estilo unificado) --- */
-        #mainNav { background-color: transparent; padding: 1.25rem 0; transition: all var(--transition-speed) ease; }
-        #mainNav.navbar-scrolled { background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(15px); padding: 0.75rem 0; border-bottom: 1px solid var(--border-color); }
-        #mainNav .navbar-brand { color: var(--text-light); font-weight: 800; font-size: 1.25rem; }
-        #mainNav .navbar-brand img { transition: transform var(--transition-speed) ease; }
-        #mainNav .navbar-brand:hover img { transform: rotate(-15deg); }
-        #mainNav .nav-link { color: var(--text-muted); font-weight: 600; padding: 0.5rem 1rem; transition: color var(--transition-speed) ease; }
-        #mainNav .nav-link:hover, #mainNav .nav-link.active { color: var(--text-light); }
-        #mainNav .navbar-toggler { border: 1px solid var(--border-color); }
-        #mainNav .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
-
-        /* --- MEJORA: Contenedor principal de la herramienta --- */
-        .tool-container {
-            background-color: var(--bg-light);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 2rem;
-        }
-
-        /* --- MEJORA: Área de carga de archivos --- */
-        .upload-area {
-            border: 2px dashed var(--border-color);
-            border-radius: 10px;
-            padding: 2.5rem;
-            text-align: center;
-            cursor: pointer;
-            background-color: var(--bg-medium);
-            transition: all var(--transition-speed) ease;
-        }
-        .upload-area.dragover {
-            border-color: var(--kick-color);
-            background-color: var(--accent-secondary);
-            transform: scale(1.02);
-        }
-        .upload-area i {
-            font-size: 3rem;
-            color: var(--kick-color);
-            margin-bottom: 1rem;
-        }
-
-        /* --- MEJORA: Paneles de control --- */
-        .control-panel {
-            background-color: var(--bg-medium);
-            border-radius: 10px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-        }
-        .control-panel label {
-            font-weight: 600;
-            color: var(--text-muted-lighter);
-            margin-bottom: 0.75rem;
-            display: block;
-        }
-
-        /* --- MEJORA: Estilos de controles (Color, Slider) --- */
-        input[type="color"] {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            width: 50px;
-            height: 50px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-        }
-        input[type="color"]::-webkit-color-swatch {
-            border-radius: 50%;
-            border: 2px solid var(--border-color);
-        }
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 8px;
-            background: var(--accent-secondary);
-            border-radius: 5px;
-            outline: none;
-        }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: var(--kick-color);
-            cursor: pointer;
-            border-radius: 50%;
-        }
-        .slider-value {
-            min-width: 40px;
-            text-align: center;
-            background-color: var(--bg-light);
-            padding: 5px 10px;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-
-        /* --- MEJORA: Área de previsualización --- */
-        .preview-container {
-            background-color: var(--bg-medium);
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: center;
-            border: 1px solid var(--border-color);
-        }
-        .preview-container h5 {
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 1rem;
-        }
-        canvas {
-            max-width: 100%;
-            border-radius: 5px;
+            overflow-x: hidden;
             background-image: 
-                linear-gradient(45deg, var(--accent-secondary) 25%, transparent 25%), 
-                linear-gradient(-45deg, var(--accent-secondary) 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, var(--accent-secondary) 75%),
-                linear-gradient(-45deg, transparent 75%, var(--accent-secondary) 75%);
-            background-size: 20px 20px;
-            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+                radial-gradient(circle at 15% 50%, rgba(83, 252, 24, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 25%);
+        }
+
+        /* CORRECCIÓN DE VISIBILIDAD DE TEXTO */
+        h1, h2, h3, h4, h5, h6 { color: #ffffff !important; }
+        p, span, div { color: inherit; }
+        
+        /* Forzamos que la clase text-muted sea visible en fondo negro */
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+
+        /* Scrollbar Personalizado */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--kick-color); }
+
+        /* --- Navbar Glassmorphism --- */
+        #mainNav {
+            padding: 1.5rem 0;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            z-index: 1000;
+        }
+        #mainNav.navbar-scrolled {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--bg-glass-border);
         }
         
-        /* --- Botones (Estilo unificado) --- */
-        .btn { padding: 0.8rem 2rem; font-weight: 700; border-radius: 50px; transition: all var(--transition-speed) ease; border: 2px solid transparent; }
-        .btn-kick { background-color: var(--kick-color); color: var(--bg-dark); box-shadow: 0 0 20px rgba(83, 252, 24, 0.3); }
-        .btn-kick:hover:not(:disabled) { background-color: var(--kick-color); color: var(--bg-dark); transform: translateY(-3px) scale(1.05); box-shadow: 0 0 30px rgba(83, 252, 24, 0.5); }
-        .btn-outline-light { color: var(--text-light); border-color: var(--accent-secondary); }
-        .btn-outline-light:hover:not(:disabled) { background-color: var(--accent-primary); color: var(--bg-dark); border-color: var(--accent-primary); transform: translateY(-3px); }
-        .btn.disabled, .btn:disabled { background-color: var(--accent-secondary); border-color: var(--accent-secondary); color: var(--text-muted); cursor: not-allowed; transform: none; box-shadow: none; }
-
-        /* --- MEJORA: Spinner de carga --- */
-        .loading-spinner {
-            border: 4px solid var(--border-color);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border-left-color: var(--kick-color);
-            animation: spin 1s linear infinite;
+        /* CORRECCIÓN LOGO Y LINKS */
+        .navbar-brand { 
+            font-weight: 800; 
+            font-size: 1.4rem; 
+            letter-spacing: -0.5px;
+            color: #ffffff !important; /* Forzado a blanco */
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .nav-link { 
+            color: #bbbbbb !important; /* Gris claro por defecto */
+            font-weight: 500; 
+            transition: 0.3s; 
+            position: relative;
+        }
+        .nav-link:hover, .nav-link.active { color: #ffffff !important; }
+        .nav-link.active::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 5px; height: 5px; background: var(--kick-color); border-radius: 50%; box-shadow: 0 0 10px var(--kick-color);
+        }
 
-        /* --- Footer (Estilo unificado) --- */
-        footer { background-color: var(--bg-medium); padding: 3rem 0; border-top: 1px solid var(--border-color); }
+        /* --- Cards & Containers (Glass Effect) --- */
+        .glass-panel {
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--bg-glass-border);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        /* --- Upload Area --- */
+        .upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255,255,255,0.02);
+            position: relative;
+            overflow: hidden;
+        }
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--kick-color);
+            background: rgba(83, 252, 24, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px -10px rgba(83, 252, 24, 0.1);
+        }
+        .upload-icon-wrapper {
+            width: 70px; height: 70px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--kick-color);
+            font-size: 1.8rem;
+            transition: 0.3s;
+        }
+        .upload-area:hover .upload-icon-wrapper { transform: scale(1.1) rotate(5deg); background: var(--kick-color); color: #000; }
+
+        /* --- Controles --- */
+        .control-group {
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+            padding: 1.25rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 1rem;
+        }
+        .control-label {
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+            color: #b0b0b0; /* Texto de etiquetas más claro */
+            font-weight: 700; margin-bottom: 0.8rem; display: block;
+        }
+        
+        /* Color Input Custom */
+        .color-input-wrapper { display: flex; gap: 10px; align-items: center; }
+        input[type="color"] {
+            -webkit-appearance: none; border: none; width: 50px; height: 50px; padding: 0; background: none; cursor: pointer;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: 2px solid rgba(255,255,255,0.2); border-radius: 12px; }
+
+        /* Slider Custom */
+        input[type="range"] {
+            -webkit-appearance: none; width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 22px; height: 22px; background: var(--kick-color);
+            border-radius: 50%; cursor: pointer; box-shadow: 0 0 15px var(--kick-glow); transition: 0.2s;
+            border: 3px solid #000;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+        /* --- Canvas & Preview --- */
+        .canvas-wrapper {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+        canvas {
+            display: block; width: 100%; height: auto;
+            background-image: 
+                linear-gradient(45deg, #1a1a1a 25%, transparent 25%), 
+                linear-gradient(-45deg, #1a1a1a 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #1a1a1a 75%),
+                linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            background-color: #111;
+        }
+
+        /* --- Botones --- */
+        .btn-kick {
+            background: var(--kick-color);
+            color: #000;
+            font-weight: 800;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            border: none;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 25px rgba(83, 252, 24, 0.2);
+        }
+        .btn-kick:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 35px rgba(83, 252, 24, 0.4);
+            background: #60ff26;
+            color: #000;
+        }
+        .btn-secondary-custom {
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 0.6rem 1rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-secondary-custom:hover, .btn-secondary-custom.active {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+        .btn-secondary-custom.active-mode {
+            background: #ff4757;
+            border-color: #ff4757;
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* --- Loading & Utilities --- */
+        .loading-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 10;
+            opacity: 0; pointer-events: none; transition: 0.3s;
+            border-radius: 16px;
+        }
+        .loading-overlay.active { opacity: 1; pointer-events: all; }
+        
+        .spinner-custom {
+            width: 50px; height: 50px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-left-color: var(--kick-color);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(255, 71, 87, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0); } }
+
+        .compare-btn {
+            position: absolute;
+            bottom: 15px; right: 15px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            pointer-events: auto;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            z-index: 5;
+            transition: 0.2s;
+        }
+        .compare-btn:hover { background: #fff; color: #000; }
+
+        footer { border-top: 1px solid var(--bg-glass-border); background: #000; padding: 2rem 0; margin-top: auto; }
     </style>
 </head>
 <body>
-    <!-- Navegación Unificada -->
+
+    <!-- Navegación -->
+    <!-- Agregado navbar-dark para compatibilidad extra -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Logo" style="height: 30px; width: auto; margin-right: 10px;">
-                Brandon Sepulveda
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Logo" width="30">
+                <span>Brandon Sepulveda</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto gap-1">
                     <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="herramientas.html">Herramientas</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#">Removedor de Fondos</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Removedor AI</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Contenido Principal -->
-    <main>
-        <section class="section">
-            <div class="container">
-                <!-- Cabecera de la sección -->
-                <div class="text-center" data-aos="fade-up">
-                    <h2 class="section-title">Removedor de Fondos Mágico</h2>
-                    <p class="section-subtitle">
-                        Sube una imagen, elige el color a eliminar y ajusta la tolerancia para un recorte perfecto. La descarga final será en la resolución original de tu imagen.
-                    </p>
-                </div>
+    <main class="section" style="padding-top: 120px; padding-bottom: 80px;">
+        <div class="container">
+            
+            <!-- Header -->
+            <div class="text-center mb-5" data-aos="fade-down">
+                <span class="badge rounded-pill border border-light text-light px-3 py-2 mb-3" style="background: rgba(255,255,255,0.05);">Versión 2.5 - HD Quality</span>
+                <h1 class="display-4 fw-black mb-2" style="font-weight: 900;">Removedor de <span style="color: var(--kick-color);">Fondos</span></h1>
+                <!-- Usamos una clase personalizada inline o !important para asegurar visibilidad -->
+                <p class="lead mx-auto text-muted" style="max-width: 600px;">
+                    Elimina colores con calidad profesional. Usa el suavizado para perfeccionar los bordes y evitar el efecto dentado.
+                </p>
+            </div>
 
-                <div class="tool-container" data-aos="fade-up" data-aos-delay="100">
-                    <div class="row g-4">
-                        <!-- Columna de Controles -->
-                        <div class="col-lg-4">
-                            <!-- Paso 1: Cargar Imagen -->
-                            <div class="upload-area mb-4" id="uploadArea">
+            <div class="glass-panel p-4 p-md-5" data-aos="fade-up">
+                <div class="row g-5">
+                    
+                    <!-- Columna Izquierda: Controles -->
+                    <div class="col-lg-4">
+                        <!-- Paso 1: Upload -->
+                        <div class="upload-area mb-4" id="uploadArea">
+                            <input type="file" id="fileInput" accept="image/*" class="d-none">
+                            <div class="upload-icon-wrapper">
                                 <i class="fas fa-cloud-upload-alt"></i>
-                                <h5>Cargar Imagen</h5>
-                                <p class="small text-muted">Haz clic o arrastra un archivo aquí</p>
-                                <input type="file" id="fileInput" accept="image/*" class="d-none">
+                            </div>
+                            <h5 class="fw-bold text-white">Sube tu Imagen</h5>
+                            <p class="small text-muted mb-0">Arrastra o haz clic aquí</p>
+                        </div>
+
+                        <!-- Paso 2: Ajustes (Oculto inicialmente) -->
+                        <div id="controlsPanel" class="d-none opacity-0" style="transition: opacity 0.5s;">
+                            
+                            <!-- Selector de Color -->
+                            <div class="control-group">
+                                <label class="control-label"><i class="fas fa-eye-dropper me-2"></i> Color a Eliminar</label>
+                                <div class="d-flex flex-column gap-2">
+                                    <div class="d-flex align-items-center gap-3 bg-black bg-opacity-25 p-2 rounded-3">
+                                        <input type="color" id="colorPicker" value="#ffffff" title="Clic para abrir paleta">
+                                        <div class="text-muted small lh-1">
+                                            <div>Hexadecimal:</div>
+                                            <div id="hexValueDisplay" class="font-monospace text-white">#FFFFFF</div>
+                                        </div>
+                                    </div>
+                                    <button id="pickFromImageBtn" class="btn btn-secondary-custom w-100 d-flex align-items-center justify-content-center gap-2">
+                                        <i class="fas fa-crosshairs"></i>
+                                        <span id="pickBtnText" style="font-weight: 900;">Seleccionar desde Imagen</span>
+                                    </button>
+                                </div>
                             </div>
 
-                            <!-- Paso 2: Controles de Ajuste -->
-                            <div id="controlsPanel" class="d-none">
-                                <div class="control-panel mb-3">
-                                    <label><i class="fas fa-palette me-2"></i>Color a Remover</label>
-                                    <div class="d-flex align-items-center gap-3">
-                                        <input type="color" id="colorPicker" value="#ffffff">
-                                        <button id="pickFromImageBtn" class="btn btn-outline-light flex-grow-1" style="padding: 0.5rem 1rem;">
-                                            <i class="fas fa-eye-dropper"></i>
+                            <!-- Tolerancia -->
+                            <div class="control-group">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <label class="control-label mb-0"><i class="fas fa-sliders-h me-2"></i> Tolerancia</label>
+                                    <span class="badge bg-light text-dark" id="toleranceValue">30</span>
+                                </div>
+                                <input type="range" id="toleranceSlider" min="0" max="200" value="30">
+                                <div class="d-flex justify-content-between text-muted small mt-2">
+                                    <span>Preciso</span>
+                                    <span>Agresivo</span>
+                                </div>
+                            </div>
+
+                            <!-- MEJORA: Suavizado (Smoothness) -->
+                            <div class="control-group">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <label class="control-label mb-0"><i class="fas fa-feather-alt me-2"></i> Suavizado de Bordes</label>
+                                    <span class="badge bg-light text-dark" id="smoothnessValue">20</span>
+                                </div>
+                                <input type="range" id="smoothnessSlider" min="0" max="100" value="20">
+                                <div class="d-flex justify-content-between text-muted small mt-2">
+                                    <span>Duro</span>
+                                    <span>Suave</span>
+                                </div>
+                            </div>
+
+                            <!-- Botones de Acción -->
+                            <div class="d-grid gap-3 mt-4">
+                                <button id="processButton" class="btn btn-kick">
+                                    <i class="fas fa-magic me-2"></i> Procesar Ahora
+                                </button>
+                                <button id="resetButton" class="btn btn-outline-light btn-sm rounded-pill" style="border-color: rgba(255,255,255,0.1);">
+                                    <i class="fas fa-undo me-2"></i> Empezar de nuevo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha: Visualización -->
+                    <div class="col-lg-8">
+                        <div id="welcomeMessage" class="h-100 d-flex flex-column align-items-center justify-content-center text-center p-5 border rounded-4 border-dashed border-secondary opacity-50">
+                            <i class="far fa-image fa-5x mb-4 text-muted"></i>
+                            <h4 class="text-white">Vista Previa</h4>
+                            <p class="text-muted">Sube una imagen para comenzar a editar</p>
+                        </div>
+
+                        <div id="previewArea" class="d-none">
+                            <!-- Tabs de navegación visual -->
+                            <ul class="nav nav-pills mb-3 gap-2" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active rounded-pill px-4" id="pills-result-tab" data-bs-toggle="pill" data-bs-target="#pills-result" type="button" role="tab">Resultado</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link rounded-pill px-4" id="pills-original-tab" data-bs-toggle="pill" data-bs-target="#pills-original" type="button" role="tab">Original</button>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="pills-tabContent">
+                                <!-- Resultado Panel -->
+                                <div class="tab-pane fade show active position-relative" id="pills-result" role="tabpanel">
+                                    <div class="canvas-wrapper">
+                                        <canvas id="transparentCanvas"></canvas>
+                                        <!-- Botón Comparar (visible solo cuando hay resultado) -->
+                                        <div id="compareOverlay" class="compare-btn d-none">
+                                            <i class="fas fa-eye"></i> Mantén para ver original
+                                        </div>
+                                        <!-- Loading Overlay -->
+                                        <div id="loadingIndicator" class="loading-overlay">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <div class="spinner-custom mb-3"></div>
+                                                <span class="fw-bold">Procesando píxeles...</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Área de Descarga -->
+                                    <div id="downloadContainer" class="mt-4 text-center d-none fade-in">
+                                        <p class="text-success small fw-bold mb-2"><i class="fas fa-check-circle me-1"></i> Imagen lista en alta resolución</p>
+                                        <button id="downloadButton" class="btn btn-kick w-100 py-3">
+                                            <i class="fas fa-download me-2"></i> Descargar PNG (HD)
                                         </button>
                                     </div>
                                 </div>
-                                <div class="control-panel">
-                                    <label><i class="fas fa-sliders-h me-2"></i>Tolerancia</label>
-                                    <div class="d-flex align-items-center gap-3">
-                                        <input type="range" id="toleranceSlider" min="0" max="200" value="30">
-                                        <span class="slider-value" id="toleranceValue">30</span>
-                                    </div>
-                                </div>
-                                <div class="d-grid mt-4">
-                                    <button id="processButton" class="btn btn-kick"><i class="fas fa-magic me-2"></i>Procesar Imagen</button>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Columna de Previsualización -->
-                        <div class="col-lg-8">
-                            <div id="previewArea" class="d-none">
-                                <div class="row g-4">
-                                    <div class="col-md-6">
-                                        <div class="preview-container">
-                                            <h5><i class="fas fa-image me-2"></i>Original</h5>
-                                            <canvas id="originalCanvas"></canvas>
-                                        </div>
+                                <!-- Original Panel (Para selección de color) -->
+                                <div class="tab-pane fade" id="pills-original" role="tabpanel">
+                                    <div class="canvas-wrapper">
+                                        <canvas id="originalCanvas"></canvas>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="preview-container">
-                                            <h5><i class="fas fa-wand-magic-sparkles me-2"></i>Resultado</h5>
-                                            <canvas id="transparentCanvas"></canvas>
-                                            <div id="loadingIndicator" class="d-none justify-content-center my-3">
-                                                <div class="loading-spinner"></div>
-                                            </div>
-                                            <div id="downloadContainer" class="d-grid d-none mt-3">
-                                                <button id="downloadButton" class="btn btn-kick"><i class="fas fa-download me-2"></i>Descargar PNG (Full HD)</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="welcomeMessage" class="d-flex align-items-center justify-content-center h-100 text-center text-muted p-5" style="border: 2px dashed var(--border-color); border-radius: 10px;">
-                                <div>
-                                    <i class="fas fa-image fa-3x mb-3"></i>
-                                    <h4>El área de previsualización aparecerá aquí</h4>
-                                    <p>Comienza por cargar una imagen.</p>
+                                    <p class="text-center small text-muted mt-2">
+                                        <i class="fas fa-info-circle"></i> Haz clic en la imagen para seleccionar el color a borrar
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
-    
-    <!-- Footer Unificado -->
-    <footer class="footer text-center">
-        <div class="container">
-            <p class="text-muted mb-0">Copyright &copy; Jhon Brandon Sepulveda Valdes 2025</p>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p class="text-muted mb-0 small">Diseñado con <span style="color: var(--kick-color);">❤</span> por Jhon Brandon Sepulveda Valdes &copy; 2025</p>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Inicializar AOS
-            AOS.init({ duration: 800, once: true, offset: 50 });
+            AOS.init({ duration: 800, once: true, offset: 30 });
 
-            // Efecto de scroll para la barra de navegación
+            // Navbar Scroll Effect
             const mainNav = document.getElementById('mainNav');
-            if (mainNav) {
-                window.addEventListener('scroll', () => {
-                    if (window.scrollY > 50) mainNav.classList.add('navbar-scrolled');
-                    else mainNav.classList.remove('navbar-scrolled');
-                });
-            }
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) mainNav.classList.add('navbar-scrolled');
+                else mainNav.classList.remove('navbar-scrolled');
+            });
 
-            // --- LÓGICA DEL REMOVEDOR DE FONDOS ---
+            // --- VARIABLES GLOBALES ---
             let originalImage = null;
             let isPickingColor = false;
+            // Canvas en memoria para procesamiento HD
             const highResCanvas = document.createElement('canvas');
             const highResCtx = highResCanvas.getContext('2d', { willReadFrequently: true });
-
-
-            // Elementos del DOM
+            
+            // Elementos DOM
             const fileInput = document.getElementById('fileInput');
             const uploadArea = document.getElementById('uploadArea');
-            const colorPicker = document.getElementById('colorPicker');
-            const pickFromImageBtn = document.getElementById('pickFromImageBtn');
-            const toleranceSlider = document.getElementById('toleranceSlider');
-            const toleranceValue = document.getElementById('toleranceValue');
-            const processButton = document.getElementById('processButton');
-            const loadingIndicator = document.getElementById('loadingIndicator');
+            const controlsPanel = document.getElementById('controlsPanel');
             const welcomeMessage = document.getElementById('welcomeMessage');
             const previewArea = document.getElementById('previewArea');
+            
+            // Controles
+            const colorPicker = document.getElementById('colorPicker');
+            const hexValueDisplay = document.getElementById('hexValueDisplay');
+            const pickFromImageBtn = document.getElementById('pickFromImageBtn');
+            const pickBtnText = document.getElementById('pickBtnText');
+            
+            // Sliders
+            const toleranceSlider = document.getElementById('toleranceSlider');
+            const toleranceValue = document.getElementById('toleranceValue');
+            const smoothnessSlider = document.getElementById('smoothnessSlider');
+            const smoothnessValue = document.getElementById('smoothnessValue');
+
+            const processButton = document.getElementById('processButton');
+            const downloadButton = document.getElementById('downloadButton');
+            const downloadContainer = document.getElementById('downloadContainer');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const resetButton = document.getElementById('resetButton');
+            const compareOverlay = document.getElementById('compareOverlay');
+
+            // Canvas de visualización
             const originalCanvas = document.getElementById('originalCanvas');
             const transparentCanvas = document.getElementById('transparentCanvas');
-            const downloadContainer = document.getElementById('downloadContainer');
-            const downloadButton = document.getElementById('downloadButton');
-            const controlsPanel = document.getElementById('controlsPanel');
-
-            // Contextos de los canvas de previsualización
             const originalCtx = originalCanvas.getContext('2d', { willReadFrequently: true });
             const transparentCtx = transparentCanvas.getContext('2d');
 
-            // Cargar y mostrar la imagen
+            // --- FUNCIONES ---
+
+            // Cargar Imagen
             const loadImage = (file) => {
                 if (!file || !file.type.match('image.*')) return;
 
@@ -374,36 +526,52 @@
                 reader.onload = e => {
                     originalImage = new Image();
                     originalImage.onload = () => {
+                        // Mostrar UI
                         welcomeMessage.classList.add('d-none');
                         previewArea.classList.remove('d-none');
                         controlsPanel.classList.remove('d-none');
+                        setTimeout(() => controlsPanel.classList.remove('opacity-0'), 50);
                         downloadContainer.classList.add('d-none');
+
+                        // Ajustar tamaño del canvas al contenedor visual
+                        // CORRECCIÓN CRÍTICA: Usamos el ancho de transparentCanvas porque es el que está visible en la pestaña activa
+                        // originalCanvas está en una pestaña oculta (display:none), por lo que su ancho era 0
+                        const containerWidth = transparentCanvas.parentElement.clientWidth;
                         
-                        const maxCanvasWidth = originalCanvas.parentElement.clientWidth;
-                        const scale = Math.min(1, maxCanvasWidth / originalImage.width);
-                        const canvasWidth = originalImage.width * scale;
-                        const canvasHeight = originalImage.height * scale;
+                        const scale = Math.min(1, containerWidth / originalImage.width);
+                        const displayWidth = originalImage.width * scale;
+                        const displayHeight = originalImage.height * scale;
 
-                        originalCanvas.width = transparentCanvas.width = canvasWidth;
-                        originalCanvas.height = transparentCanvas.height = canvasHeight;
+                        [originalCanvas, transparentCanvas].forEach(cvs => {
+                            cvs.width = displayWidth;
+                            cvs.height = displayHeight;
+                        });
 
-                        originalCtx.drawImage(originalImage, 0, 0, canvasWidth, canvasHeight);
-                        transparentCtx.clearRect(0, 0, transparentCanvas.width, transparentCanvas.height);
+                        // Dibujar imagen original
+                        originalCtx.drawImage(originalImage, 0, 0, displayWidth, displayHeight);
+                        // Copiar al transparente como estado inicial
+                        transparentCtx.drawImage(originalImage, 0, 0, displayWidth, displayHeight);
+                        
+                        // Scroll automático suave hacia los controles
+                        controlsPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     };
                     originalImage.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
             };
-            
-            // Procesar la imagen para remover el fondo
+
+            // Procesar Imagen (Algoritmo de eliminación de fondo MEJORADO)
             const processImage = () => {
                 if (!originalImage) return;
 
-                loadingIndicator.style.display = 'flex';
+                // UI Feedback
+                loadingIndicator.classList.add('active');
                 downloadContainer.classList.add('d-none');
-                transparentCtx.clearRect(0, 0, transparentCanvas.width, transparentCanvas.height);
+                processButton.disabled = true;
 
+                // Usamos setTimeout para permitir que el navegador renderice el loading state
                 setTimeout(() => {
+                    // Configurar canvas HD
                     highResCanvas.width = originalImage.width;
                     highResCanvas.height = originalImage.height;
                     highResCtx.drawImage(originalImage, 0, 0);
@@ -412,69 +580,91 @@
                     const data = imageData.data;
                     const targetColor = hexToRgb(colorPicker.value);
                     const tolerance = parseInt(toleranceSlider.value);
+                    const smoothness = parseInt(smoothnessSlider.value); // Valor de suavizado
 
+                    // Loop de píxeles
                     for (let i = 0; i < data.length; i += 4) {
-                        const r = data[i];
-                        const g = data[i + 1];
-                        const b = data[i + 2];
-
+                        const r = data[i], g = data[i + 1], b = data[i + 2];
+                        
+                        // Distancia Euclidiana simple para comparar colores
                         const diff = Math.sqrt(
                             Math.pow(r - targetColor.r, 2) +
                             Math.pow(g - targetColor.g, 2) +
                             Math.pow(b - targetColor.b, 2)
                         );
 
-                        if (diff < tolerance) {
-                            data[i + 3] = 0;
+                        // Lógica de Suavizado (Feathering)
+                        if (diff <= tolerance) {
+                            // Dentro de la tolerancia estricta: Transparente total
+                            data[i + 3] = 0; 
+                        } else if (diff < tolerance + smoothness) {
+                            // En la zona de transición: Transparencia gradual
+                            // Cuanto más cerca del límite, más transparente
+                            // Calculamos alpha de 0 a 255
+                            const factor = (diff - tolerance) / smoothness; 
+                            data[i + 3] = factor * 255;
                         }
+                        // Si es mayor que tolerance + smoothness, se mantiene opaco (255)
                     }
 
+                    // Poner datos procesados en canvas HD
                     highResCtx.putImageData(imageData, 0, 0);
-                    
+
+                    // Actualizar vista previa (escalada)
+                    transparentCtx.clearRect(0, 0, transparentCanvas.width, transparentCanvas.height);
                     transparentCtx.drawImage(highResCanvas, 0, 0, transparentCanvas.width, transparentCanvas.height);
 
-                    loadingIndicator.style.display = 'none';
+                    // Finalizar UI
+                    loadingIndicator.classList.remove('active');
                     downloadContainer.classList.remove('d-none');
-                }, 50);
+                    downloadContainer.classList.add('fade-in');
+                    compareOverlay.classList.remove('d-none');
+                    processButton.disabled = false;
+                    
+                    // Activar tab de resultado si no está activo
+                    document.getElementById('pills-result-tab').click();
+
+                }, 100); // Pequeño delay para UX
             };
 
-            // Descargar la imagen resultante
+            // Descargar
             const downloadImage = () => {
                 const link = document.createElement('a');
-                link.download = 'imagen_sin_fondo.png';
+                link.download = `BS_Removedor_${Date.now()}.png`;
                 link.href = highResCanvas.toDataURL('image/png');
                 link.click();
             };
 
-            // ⭐ MEJORA: Activar/desactivar el modo de selección de color CON TEXTO EXTRA-BOLD
+            // Selector de Color (Modo Gotero)
             const toggleColorPicking = (enable) => {
                 isPickingColor = enable;
                 originalCanvas.style.cursor = enable ? 'crosshair' : 'default';
-                pickFromImageBtn.classList.toggle('active', enable);
+                
                 if (enable) {
-                    // Texto extra-bold cuando está activo
-                    pickFromImageBtn.innerHTML = `<i class="fas fa-times"></i> <span style="font-weight: 900;">Salir del gotero</span>`;
-                    pickFromImageBtn.classList.add('btn-danger');
+                    pickFromImageBtn.classList.add('active-mode');
+                    pickBtnText.textContent = "Cancelar Gotero";
+                    // Cambiar automáticamente al tab original
+                    document.getElementById('pills-original-tab').click();
                 } else {
-                    // Texto extra-bold cuando está inactivo
-                    pickFromImageBtn.innerHTML = `<i class="fas fa-eye-dropper"></i> <span style="font-weight: 900;">Escoger de la imagen</span>`;
-                    pickFromImageBtn.classList.remove('btn-danger');
+                    pickFromImageBtn.classList.remove('active-mode');
+                    pickBtnText.textContent = "Seleccionar desde Imagen";
                 }
             };
-            
-            // Convertir color HEX a RGB
+
+            // Utiles Color
             const hexToRgb = (hex) => {
                 const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
                 return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : null;
             };
-
-            // Convertir RGB a HEX
             const rgbToHex = (r, g, b) => "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
 
-            // Event Listeners
+            // --- EVENT LISTENERS ---
+
+            // Upload
             uploadArea.addEventListener('click', () => fileInput.click());
             fileInput.addEventListener('change', e => loadImage(e.target.files[0]));
             
+            // Drag & Drop
             uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
             uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
             uploadArea.addEventListener('drop', e => {
@@ -483,28 +673,68 @@
                 loadImage(e.dataTransfer.files[0]);
             });
 
+            // Sliders & Botones
             toleranceSlider.addEventListener('input', () => toleranceValue.textContent = toleranceSlider.value);
+            smoothnessSlider.addEventListener('input', () => smoothnessValue.textContent = smoothnessSlider.value); // Nuevo listener
+            
+            colorPicker.addEventListener('input', (e) => hexValueDisplay.textContent = e.target.value.toUpperCase());
             processButton.addEventListener('click', processImage);
             downloadButton.addEventListener('click', downloadImage);
             
-            pickFromImageBtn.addEventListener('click', () => toggleColorPicking(!isPickingColor));
+            // Reset
+            resetButton.addEventListener('click', () => {
+                location.reload(); // Forma más simple de resetear todo limpio
+            });
 
+            // Lógica Gotero
+            pickFromImageBtn.addEventListener('click', () => toggleColorPicking(!isPickingColor));
+            
             originalCanvas.addEventListener('click', e => {
                 if (!isPickingColor) return;
+                
                 const rect = originalCanvas.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
                 
+                // Calcular coordenadas reales en la imagen visualizada
                 const scaleX = originalCanvas.width / rect.width;
                 const scaleY = originalCanvas.height / rect.height;
 
                 const pixelData = originalCtx.getImageData(x * scaleX, y * scaleY, 1, 1).data;
-                colorPicker.value = rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
+                const hexColor = rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
+                
+                colorPicker.value = hexColor;
+                hexValueDisplay.textContent = hexColor;
+                
                 toggleColorPicking(false);
+                
+                // Efecto visual al seleccionar
+                pickFromImageBtn.innerHTML = `<i class="fas fa-check"></i> <span style="font-weight:900;">Color Seleccionado</span>`;
+                setTimeout(() => {
+                    pickFromImageBtn.innerHTML = `<i class="fas fa-crosshairs"></i> <span id="pickBtnText" style="font-weight: 900;">Seleccionar desde Imagen</span>`;
+                }, 1500);
             });
 
-            // Inicializar el texto del botón del gotero en negrita
-            toggleColorPicking(false);
+            // Función Comparar (Press to view original)
+            const showOriginalPreview = () => {
+                transparentCtx.clearRect(0, 0, transparentCanvas.width, transparentCanvas.height);
+                transparentCtx.drawImage(originalImage, 0, 0, transparentCanvas.width, transparentCanvas.height);
+                compareOverlay.innerHTML = '<i class="fas fa-eye-slash"></i> Soltar para ver resultado';
+            };
+            
+            const returnToResult = () => {
+                transparentCtx.clearRect(0, 0, transparentCanvas.width, transparentCanvas.height);
+                transparentCtx.drawImage(highResCanvas, 0, 0, transparentCanvas.width, transparentCanvas.height);
+                compareOverlay.innerHTML = '<i class="fas fa-eye"></i> Mantén para ver original';
+            };
+
+            compareOverlay.addEventListener('mousedown', showOriginalPreview);
+            compareOverlay.addEventListener('mouseup', returnToResult);
+            compareOverlay.addEventListener('mouseleave', returnToResult);
+            // Soporte táctil
+            compareOverlay.addEventListener('touchstart', (e) => { e.preventDefault(); showOriginalPreview(); });
+            compareOverlay.addEventListener('touchend', (e) => { e.preventDefault(); returnToResult(); });
+
         });
     </script>
 </body>
