@@ -1,263 +1,433 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Windows ISO Downloader | Brandon Sepulveda</title>
-    
+
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico" />
-    
+    <link rel="icon" type="image/x-icon"
+        href="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico" />
+
     <!-- Analytics -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112"
+        crossorigin="anonymous"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-2RY7LG5R21');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-2RY7LG5R21');
     </script>
-    
-    <!-- Stylesheets (Unificadas y Mejoradas) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Librerías Externas -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-    <!-- Fonts (Unificadas con el portafolio principal) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Paleta de Colores y Estilos Base (Unificados con el Portafolio) --- */
+        /* --- VARIABLES & BASE --- */
         :root {
-            --bg-dark: #000000;
-            --bg-medium: #111111;
-            --bg-light: #1A1A1A;
-            --text-light: #FFFFFF;
-            --text-muted: #999999;
-            --text-muted-lighter: #b0b0b0;
-            --accent-primary: #FFFFFF;
-            --accent-secondary: #333333;
-            --kick-color: #53FC18; /* Kick Green */
-            --border-color: rgba(255, 255, 255, 0.1);
-            --shadow-color: rgba(255, 255, 255, 0.05);
-            --transition-speed: 0.4s;
+            --bg-dark: #050505;
+            --bg-card: rgba(20, 20, 20, 0.6);
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --kick-green: #53FC18;
+            --kick-glow: rgba(83, 252, 24, 0.4);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --blur-strength: 12px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-dark);
-            color: var(--text-muted);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            color: var(--text-main);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            overflow-x: hidden;
+            /* Fondo con gradiente sutil */
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(83, 252, 24, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(83, 252, 24, 0.03) 0%, transparent 40%);
         }
 
-        main {
-            flex: 1 0 auto;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 800;
-            color: var(--text-light);
-        }
-
-        .section {
-            padding: 6rem 0;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 5vw, 2.8rem);
-            font-weight: 900;
-            margin-bottom: 1rem;
-        }
-
-        .section-subtitle {
-            font-size: 1.1rem;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 4rem;
-            color: var(--text-muted-lighter);
-        }
-
-        /* --- Navigation Bar (Estilo unificado) --- */
-        #mainNav {
-            background-color: transparent;
-            padding: 1.25rem 0;
-            transition: all var(--transition-speed) ease;
-        }
-        #mainNav.navbar-scrolled {
-            background-color: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(15px);
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-        #mainNav .navbar-brand { color: var(--text-light); font-weight: 800; font-size: 1.25rem; }
-        #mainNav .navbar-brand img { transition: transform var(--transition-speed) ease; }
-        #mainNav .navbar-brand:hover img { transform: rotate(-15deg); }
-        #mainNav .nav-link { color: var(--text-muted); font-weight: 600; padding: 0.5rem 1rem; transition: color var(--transition-speed) ease; }
-        #mainNav .nav-link:hover, #mainNav .nav-link.active { color: var(--text-light); }
-        #mainNav .navbar-toggler { border: 1px solid var(--border-color); }
-        #mainNav .navbar-toggler-icon { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); }
-
-        /* --- MEJORA: Estructura de Asistente (Wizard) --- */
-        .wizard-step {
-            background-color: var(--bg-light);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            transition: all var(--transition-speed) ease;
-        }
-        .wizard-step.disabled {
-            opacity: 0.5;
+        /* --- BACKGROUND MESH --- */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            z-index: -1;
             pointer-events: none;
         }
+
+        /* --- NAVBAR --- */
+        #mainNav {
+            padding: 1rem 0;
+            transition: var(--transition);
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid transparent;
+        }
+
+        #mainNav.navbar-scrolled {
+            background: rgba(5, 5, 5, 0.85);
+            border-bottom: 1px solid var(--border-glass);
+            padding: 0.5rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-brand img {
+            filter: drop-shadow(0 0 5px var(--kick-glow));
+            transition: var(--transition);
+        }
+
+        .navbar-brand:hover img {
+            transform: rotate(-10deg) scale(1.1);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-muted) !important;
+            position: relative;
+            margin: 0 10px;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--kick-green) !important;
+            text-shadow: 0 0 10px var(--kick-glow);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background: var(--kick-green);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* --- MAIN SECTION --- */
+        .section-title {
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 50px;
+            border: 1px solid var(--kick-green);
+            color: var(--kick-green);
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: rgba(83, 252, 24, 0.1);
+            margin-bottom: 1rem;
+            box-shadow: 0 0 15px var(--kick-glow);
+        }
+
+        /* --- WIZARD STEPS (GLASSMORPHISM) --- */
+        .wizard-container {
+            position: relative;
+        }
+
+        /* Línea conectora entre pasos */
+        .wizard-container::before {
+            content: '';
+            position: absolute;
+            left: 28px;
+            /* Ajustar según tamaño del icono */
+            top: 40px;
+            bottom: 40px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--kick-green) 50%, rgba(255, 255, 255, 0.1) 100%);
+            z-index: 0;
+        }
+
+        .wizard-step {
+            background: var(--bg-card);
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .wizard-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--kick-green);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .wizard-step.active-step {
+            border-color: rgba(83, 252, 24, 0.3);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+            transform: translateX(10px);
+        }
+
+        .wizard-step.active-step::before {
+            opacity: 1;
+        }
+
+        .wizard-step.disabled {
+            opacity: 0.4;
+            filter: grayscale(1);
+            pointer-events: none;
+            transform: scale(0.98);
+        }
+
         .step-header {
             display: flex;
             align-items: center;
             margin-bottom: 1.5rem;
         }
-        .step-number {
-            background-color: var(--accent-secondary);
-            color: var(--text-light);
-            font-weight: 700;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            border: 2px solid var(--border-color);
-        }
-        .step-title {
-            font-size: 1.5rem;
-            margin-bottom: 0;
-        }
-        .step-content .form-label {
-            font-weight: 600;
-            color: var(--text-muted-lighter);
-        }
-        .form-select {
-            background-color: var(--bg-medium);
-            color: var(--text-light);
-            border: 1px solid var(--border-color);
-            padding: 0.8rem 1rem;
-            font-weight: 500;
-        }
-        .form-select:focus {
-            background-color: var(--bg-medium);
-            color: var(--text-light);
-            border-color: var(--kick-color);
-            box-shadow: 0 0 15px rgba(83, 252, 24, 0.2);
-            outline: none;
-        }
-        .form-select option {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-        }
 
-        /* --- Botones (Estilo unificado) --- */
-        .btn {
-            padding: 0.8rem 2rem;
-            font-weight: 700;
-            border-radius: 50px;
-            transition: all var(--transition-speed) ease;
-            border: 2px solid transparent;
-        }
-        .btn-kick {
-            background-color: var(--kick-color);
-            color: var(--bg-dark);
-            box-shadow: 0 0 20px rgba(83, 252, 24, 0.3);
-        }
-        .btn-kick:hover {
-            background-color: var(--kick-color);
-            color: var(--bg-dark);
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 0 30px rgba(83, 252, 24, 0.5);
-        }
-        .btn.disabled, .btn:disabled {
-            background-color: var(--accent-secondary);
-            border-color: var(--accent-secondary);
+        .step-icon {
+            width: 56px;
+            height: 56px;
+            background: #111;
+            border: 2px solid var(--border-glass);
             color: var(--text-muted);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        /* --- MEJORA: Estilo para los enlaces de descarga --- */
-        #downloadLinksList .list-group-item {
-            background-color: var(--bg-medium);
-            border-color: var(--border-color);
-            color: var(--text-light);
-            font-weight: 600;
-            padding: 1rem 1.5rem;
-            transition: all var(--transition-speed) ease;
-        }
-        #downloadLinksList .list-group-item:hover {
-            background-color: var(--accent-secondary);
-            color: var(--text-light);
-            transform: translateX(5px);
-            border-left: 4px solid var(--kick-color);
-        }
-        #downloadLinksList .download-icon {
-            color: var(--kick-color);
-            font-size: 1.2rem;
-            transition: transform var(--transition-speed) ease;
-        }
-        #downloadLinksList .list-group-item:hover .download-icon {
-            transform: scale(1.2);
-        }
-
-        /* --- MEJORA: Alertas de estado --- */
-        #status-container .alert {
-            background-color: var(--bg-light);
-            border: 1px solid var(--border-color);
-            color: var(--text-light);
-            font-weight: 600;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-        }
-        #status-container .alert i {
-            margin-right: 0.75rem;
+            justify-content: center;
             font-size: 1.2rem;
+            font-weight: 700;
+            margin-right: 1.5rem;
+            transition: var(--transition);
+            box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.5);
+            /* Espacio para la línea */
+            position: relative;
+            z-index: 2;
         }
-        #status-container .alert-success { border-left: 4px solid var(--kick-color); }
-        #status-container .alert-danger { border-left: 4px solid #ff4136; }
-        #status-container .alert-info { border-left: 4px solid #007bff; }
 
-        /* --- Footer (Estilo unificado) --- */
-        footer {
-            background-color: var(--bg-medium);
-            padding: 3rem 0;
-            border-top: 1px solid var(--border-color);
+        .active-step .step-icon {
+            background: var(--kick-green);
+            color: #000;
+            border-color: var(--kick-green);
+            box-shadow: 0 0 20px var(--kick-glow), 0 0 0 5px rgba(0, 0, 0, 0.5);
         }
-        footer .footer-link {
-            color: var(--kick-color);
+
+        .step-title {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        /* --- FORMS --- */
+        .form-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-select {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-glass);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2353FC18' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+        }
+
+        .form-select:focus {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-color: var(--kick-green);
+            box-shadow: 0 0 0 4px rgba(83, 252, 24, 0.1);
+            color: white;
+        }
+
+        .form-select option {
+            background-color: #111;
+            color: white;
+            padding: 10px;
+        }
+
+        /* --- DOWNLOAD LINKS --- */
+        .list-group-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            margin-bottom: 10px;
+            border-radius: 10px !important;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+            padding: 1.2rem;
+        }
+
+        .list-group-item:hover {
+            background: rgba(83, 252, 24, 0.05);
+            border-color: var(--kick-green);
+            transform: translateY(-3px);
+            z-index: 10;
+        }
+
+        .btn-download {
+            background: var(--kick-green);
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .btn-download:hover {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 15px var(--kick-glow);
+        }
+
+        .btn-copy {
+            background: transparent;
+            border: 1px solid var(--border-glass);
+            color: var(--text-muted);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn-copy:hover {
+            border-color: #fff;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- LOADING SPINNER --- */
+        .loading-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--kick-green);
+            font-weight: 600;
+            margin-top: 15px;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .loading-container.active {
+            opacity: 1;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .spinner-custom {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(83, 252, 24, 0.3);
+            border-top-color: var(--kick-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border-glass);
+            padding: 3rem 0;
+            background: #000;
+        }
+
+        .footer-link {
+            color: var(--kick-green);
             text-decoration: none;
             font-weight: 600;
-            transition: color var(--transition-speed) ease;
+            transition: var(--transition);
         }
-        footer .footer-link:hover {
-            color: var(--text-light);
+
+        .footer-link:hover {
+            color: #fff;
+            text-decoration: underline;
+            text-shadow: 0 0 10px var(--kick-glow);
         }
     </style>
 </head>
+
 <body>
-    <!-- Navegación Unificada -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+
+    <!-- Background Grid Effect -->
+    <div class="bg-grid"></div>
+
+    <!-- Navegación -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true" alt="Logo" style="height: 30px; width: auto; margin-right: 10px;">
-                Brandon Sepulveda
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true"
+                    alt="Logo" width="30" height="30">
+                <span>Brandon Sepulveda</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarResponsive">
+                <i class="fas fa-bars text-white fs-4"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
@@ -270,193 +440,293 @@
     </nav>
 
     <!-- Contenido Principal -->
-    <main>
-        <section class="section">
-            <div class="container">
-                <!-- Cabecera de la sección -->
-                <div class="text-center" data-aos="fade-up">
-                    <h2 class="section-title">Descargador de ISOs de Windows</h2>
-                    <p class="section-subtitle">
-                        Una herramienta simplificada para obtener enlaces de descarga directa para las imágenes ISO oficiales de Windows 10 y 11. Sigue los pasos a continuación.
-                    </p>
-                </div>
+    <main style="padding-top: 100px; padding-bottom: 50px;">
+        <div class="container">
+            <!-- Header Sección -->
+            <div class="text-center mb-5" data-aos="fade-up">
+                <div class="hero-badge"><i class="fas fa-bolt me-1"></i> UPDATED V2.0</div>
+                <h1 class="section-title display-4">Windows ISO Downloader</h1>
+                <p class="text-muted mx-auto" style="max-width: 600px;">
+                    Accede a las imágenes de disco oficiales de Microsoft de forma rápida, segura y directa. Sin
+                    intermediarios, sin esperas.
+                </p>
+            </div>
 
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <!-- Paso 1: Seleccionar Versión -->
-                        <div id="step1" class="wizard-step" data-aos="fade-up" data-aos-delay="100">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="wizard-container">
+
+                        <!-- Paso 1: Versión -->
+                        <div id="step1" class="wizard-step active-step" data-aos="fade-right">
                             <div class="step-header">
-                                <span class="step-number">1</span>
-                                <h3 class="step-title">Seleccionar Versión</h3>
+                                <div class="step-icon">
+                                    <i class="fab fa-windows"></i>
+                                </div>
+                                <div>
+                                    <h3 class="step-title">Sistema Operativo</h3>
+                                    <small class="text-muted">Selecciona la edición que necesitas</small>
+                                </div>
                             </div>
-                            <div class="step-content">
-                                <label for="windowsVersion" class="form-label">Elige la versión de Windows que deseas descargar:</label>
+                            <div class="step-content ps-0 ps-md-5 ms-0 ms-md-4">
+                                <label for="windowsVersion" class="form-label">Versión Disponible</label>
                                 <select id="windowsVersion" class="form-select">
-                                    <option selected disabled>-- Elige una opción --</option>
-                                    <option value="2618">Windows 10 22H2 v1 (19045.2965)</option>
-                                    <option value="3262">Windows 11 25H2 (26200.6584)</option>
+                                    <option selected disabled value="">-- Seleccionar Versión --</option>
+                                    <option value="2618">Windows 10 22H2 (Build 19045)</option>
+                                    <option value="3262">Windows 11 24H2 (Build 26100)</option>
+                                    <!-- Se pueden añadir más IDs si se conocen -->
                                 </select>
                             </div>
                         </div>
 
-                        <!-- Paso 2: Seleccionar Idioma -->
-                        <div id="step2" class="wizard-step disabled" data-aos="fade-up" data-aos-delay="200">
+                        <!-- Spinner Paso 1 -> 2 -->
+                        <div id="loader1" class="loading-container ms-5 ps-4">
+                            <div class="spinner-custom"></div>
+                            <span>Consultando servidores de Microsoft...</span>
+                        </div>
+
+                        <!-- Paso 2: Idioma -->
+                        <div id="step2" class="wizard-step disabled" data-aos="fade-right" data-aos-delay="100">
                             <div class="step-header">
-                                <span class="step-number">2</span>
-                                <h3 class="step-title">Seleccionar Idioma</h3>
+                                <div class="step-icon">
+                                    <i class="fas fa-language"></i>
+                                </div>
+                                <div>
+                                    <h3 class="step-title">Región e Idioma</h3>
+                                    <small class="text-muted">Define el idioma de la instalación</small>
+                                </div>
                             </div>
-                            <div class="step-content">
-                                <label for="languageSelect" class="form-label">Ahora, elige el idioma para la ISO:</label>
-                                <select id="languageSelect" class="form-select"></select>
+                            <div class="step-content ps-0 ps-md-5 ms-0 ms-md-4">
+                                <label for="languageSelect" class="form-label">Idiomas Disponibles</label>
+                                <select id="languageSelect" class="form-select" disabled>
+                                    <option selected disabled>Esperando selección de versión...</option>
+                                </select>
                             </div>
                         </div>
 
-                        <!-- Paso 3: Enlaces de Descarga -->
-                        <div id="step3" class="wizard-step disabled" data-aos="fade-up" data-aos-delay="300">
+                        <!-- Spinner Paso 2 -> 3 -->
+                        <div id="loader2" class="loading-container ms-5 ps-4">
+                            <div class="spinner-custom"></div>
+                            <span>Generando enlaces seguros...</span>
+                        </div>
+
+                        <!-- Paso 3: Descarga -->
+                        <div id="step3" class="wizard-step disabled" data-aos="fade-right" data-aos-delay="200">
                             <div class="step-header">
-                                <span class="step-number">3</span>
-                                <h3 class="step-title">¡Listo! Descarga tu ISO</h3>
+                                <div class="step-icon">
+                                    <i class="fas fa-download"></i>
+                                </div>
+                                <div>
+                                    <h3 class="step-title">Descarga Directa</h3>
+                                    <small class="text-muted">Enlaces válidos por 24 horas</small>
+                                </div>
                             </div>
-                            <div class="step-content">
-                                <p>A continuación están los enlaces de descarga directa. Los enlaces son válidos por 24 horas.</p>
-                                <div class="list-group" id="downloadLinksList"></div>
+                            <div class="step-content ps-0 ps-md-5 ms-0 ms-md-4">
+                                <div id="downloadLinksList" class="list-group list-group-flush">
+                                    <!-- Los enlaces se inyectarán aquí -->
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Contenedor de Estado -->
-                        <div id="status-container" class="mt-4"></div>
+                        <!-- Área de Estado/Errores -->
+                        <div id="status-container" class="mt-4 text-center"></div>
+
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
-    
-    <!-- Footer Unificado -->
-    <footer class="footer text-center">
-        <div class="container">
-            <p class="text-muted mb-1">
-                Basado en el proyecto <a href="https://github.com/gravesoft/msdl" target="_blank" class="footer-link">MSDL de Gravesoft</a>.
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true"
+                alt="BS" width="40" class="mb-3 opacity-50">
+            <p class="text-muted mb-1 small">
+                Este proyecto utiliza la API de <a href="https://github.com/gravesoft/msdl" target="_blank"
+                    class="footer-link">Gravesoft</a> para obtener enlaces oficiales.
             </p>
-            <p class="text-muted small">Adaptación y diseño por Jhon Brandon Sepulveda Valdes &copy; 2025</p>
+            <p class="text-muted small mb-0">&copy; 2025 Brandon Sepulveda. Diseñado con <i
+                    class="fas fa-bolt text-warning"></i> y código.</p>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Inicializar AOS
-            AOS.init({ duration: 800, once: true, offset: 50 });
+            AOS.init({ duration: 800, once: true, offset: 20 });
 
-            // Efecto de scroll para la barra de navegación
+            // Navbar Scroll Effect
             const mainNav = document.getElementById('mainNav');
-            if (mainNav) {
-                window.addEventListener('scroll', () => {
-                    if (window.scrollY > 50) {
-                        mainNav.classList.add('navbar-scrolled');
-                    } else {
-                        mainNav.classList.remove('navbar-scrolled');
-                    }
-                });
-            }
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    mainNav.classList.add('navbar-scrolled');
+                } else {
+                    mainNav.classList.remove('navbar-scrolled');
+                }
+            });
 
-            // --- LÓGICA DEL DESCARGADOR ---
+            // --- LÓGICA DEL CORE ---
             const API_BASE_URL = 'https://api.gravesoft.dev/msdl/';
 
-            // Elementos del DOM
-            const step1 = document.getElementById('step1');
-            const step2 = document.getElementById('step2');
-            const step3 = document.getElementById('step3');
-            const windowsVersionSelect = document.getElementById('windowsVersion');
-            const languageSelect = document.getElementById('languageSelect');
-            const downloadLinksList = document.getElementById('downloadLinksList');
-            const statusContainer = document.getElementById('status-container');
-
-            // Función para mostrar mensajes de estado
-            const showStatus = (message, type = 'info') => {
-                const iconMap = {
-                    info: 'fas fa-circle-info',
-                    success: 'fas fa-check-circle',
-                    danger: 'fas fa-exclamation-triangle'
-                };
-                statusContainer.innerHTML = `<div class="alert alert-${type}" role="alert"><i class="${iconMap[type]}"></i> ${message}</div>`;
+            const els = {
+                step1: document.getElementById('step1'),
+                step2: document.getElementById('step2'),
+                step3: document.getElementById('step3'),
+                versionSelect: document.getElementById('windowsVersion'),
+                langSelect: document.getElementById('languageSelect'),
+                linksList: document.getElementById('downloadLinksList'),
+                status: document.getElementById('status-container'),
+                loader1: document.getElementById('loader1'),
+                loader2: document.getElementById('loader2')
             };
 
-            // Función para resetear los pasos
+            // Helpers
+            const setLoader = (loader, active) => {
+                if (active) loader.classList.add('active');
+                else loader.classList.remove('active');
+            };
+
+            const activateStep = (stepElement) => {
+                stepElement.classList.remove('disabled');
+                stepElement.classList.add('active-step');
+                // Scroll suave al siguiente paso
+                setTimeout(() => {
+                    stepElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            };
+
             const resetSteps = (fromStep) => {
                 if (fromStep <= 2) {
-                    step2.classList.add('disabled');
-                    languageSelect.innerHTML = '';
+                    els.step2.classList.add('disabled');
+                    els.step2.classList.remove('active-step');
+                    els.langSelect.innerHTML = '<option selected disabled>Esperando selección...</option>';
+                    els.langSelect.disabled = true;
                 }
                 if (fromStep <= 3) {
-                    step3.classList.add('disabled');
-                    downloadLinksList.innerHTML = '';
+                    els.step3.classList.add('disabled');
+                    els.step3.classList.remove('active-step');
+                    els.linksList.innerHTML = '';
                 }
-                statusContainer.innerHTML = '';
+                els.status.innerHTML = '';
             };
 
-            // Event Listener para la selección de versión de Windows
-            windowsVersionSelect.addEventListener('change', async () => {
-                const productId = windowsVersionSelect.value;
+            const showError = (msg) => {
+                els.status.innerHTML = `<div class="alert alert-danger bg-transparent border-danger text-danger"><i class="fas fa-exclamation-triangle me-2"></i>${msg}</div>`;
+            };
+
+            // Event: Seleccionar Versión
+            els.versionSelect.addEventListener('change', async () => {
+                const productId = els.versionSelect.value;
                 if (!productId) return;
 
                 resetSteps(2);
-                showStatus('Obteniendo lista de idiomas...', 'info');
-                
+                setLoader(els.loader1, true);
+
                 try {
                     const response = await fetch(`${API_BASE_URL}skuinfo?product_id=${productId}`);
-                    if (!response.ok) throw new Error('La respuesta de la API no fue exitosa.');
-                    
+                    if (!response.ok) throw new Error('Error de conexión con API');
                     const data = await response.json();
-                    
-                    languageSelect.innerHTML = '<option selected disabled>-- Elige un idioma --</option>';
+
+                    els.langSelect.innerHTML = '<option selected disabled>-- Selecciona un idioma --</option>';
                     data.Skus.forEach(sku => {
-                        const option = new Option(sku.LocalizedLanguage, sku.Id);
-                        languageSelect.add(option);
+                        const opt = document.createElement('option');
+                        opt.value = sku.Id;
+                        opt.textContent = sku.LocalizedLanguage;
+                        els.langSelect.appendChild(opt);
                     });
 
-                    step2.classList.remove('disabled');
-                    showStatus('Idiomas cargados. Por favor, selecciona uno.', 'success');
+                    els.langSelect.disabled = false;
+                    activateStep(els.step2);
                 } catch (error) {
-                    showStatus(`Error al cargar idiomas: ${error.message}`, 'danger');
+                    showError(`No se pudieron cargar los idiomas: ${error.message}`);
+                } finally {
+                    setLoader(els.loader1, false);
                 }
             });
 
-            // Event Listener para la selección de idioma
-            languageSelect.addEventListener('change', async () => {
-                const productId = windowsVersionSelect.value;
-                const skuId = languageSelect.value;
+            // Event: Seleccionar Idioma
+            els.langSelect.addEventListener('change', async () => {
+                const productId = els.versionSelect.value;
+                const skuId = els.langSelect.value;
                 if (!skuId) return;
 
                 resetSteps(3);
-                showStatus('Buscando enlaces de descarga...', 'info');
+                setLoader(els.loader2, true);
 
                 try {
                     const response = await fetch(`${API_BASE_URL}proxy?product_id=${productId}&sku_id=${skuId}`);
-                    if (!response.ok) throw new Error('La respuesta de la API no fue exitosa.');
-
+                    if (!response.ok) throw new Error('Error al generar enlaces');
                     const data = await response.json();
-                    
-                    downloadLinksList.innerHTML = ''; // Limpiar lista anterior
+
+                    els.linksList.innerHTML = '';
+
+                    if (data.ProductDownloadOptions.length === 0) {
+                        showError("No se encontraron enlaces para esta selección.");
+                        return;
+                    }
+
                     data.ProductDownloadOptions.forEach(option => {
-                        const filename = option.Uri.split('?')[0].split('/').pop();
-                        const linkItem = document.createElement('a');
-                        linkItem.href = option.Uri;
-                        linkItem.className = 'list-group-item list-group-item-action d-flex justify-content-between align-items-center';
-                        linkItem.target = '_blank';
-                        linkItem.innerHTML = `<span>${filename}</span><i class="fas fa-download download-icon"></i>`;
-                        downloadLinksList.appendChild(linkItem);
+                        // Limpieza del nombre de archivo
+                        let filename = 'Archivo ISO';
+                        try {
+                            const urlObj = new URL(option.Uri);
+                            const path = urlObj.pathname.split('/');
+                            filename = path[path.length - 1] || 'Windows.iso';
+                        } catch (e) { filename = 'Windows.iso'; }
+
+                        const architecture = filename.includes('x64') ? '64-bit' : (filename.includes('x32') || filename.includes('x86') ? '32-bit' : 'ARM64');
+                        const archIcon = architecture === '64-bit' ? 'fa-memory' : 'fa-microchip';
+
+                        const div = document.createElement('div');
+                        div.className = 'list-group-item';
+                        div.innerHTML = `
+                            <div class="d-flex align-items-center">
+                                <div class="me-3 text-muted"><i class="fas ${archIcon} fa-lg"></i></div>
+                                <div>
+                                    <div class="fw-bold text-white">${architecture}</div>
+                                    <div class="small text-muted" style="font-size: 0.75rem; word-break: break-all;">${filename}</div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <button class="btn-copy" title="Copiar enlace" onclick="copyToClipboard('${option.Uri}', this)">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                                <a href="${option.Uri}" class="btn-download" target="_blank">
+                                    Descargar <i class="fas fa-arrow-down"></i>
+                                </a>
+                            </div>
+                        `;
+                        els.linksList.appendChild(div);
                     });
 
-                    step3.classList.remove('disabled');
-                    showStatus('¡Enlaces listos para descargar!', 'success');
+                    activateStep(els.step3);
+
                 } catch (error) {
-                    showStatus(`Error al obtener enlaces: ${error.message}`, 'danger');
+                    showError(`Error al obtener descargas: ${error.message}`);
+                } finally {
+                    setLoader(els.loader2, false);
                 }
             });
         });
+
+        // Función global para copiar
+        function copyToClipboard(text, btnElement) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalIcon = btnElement.innerHTML;
+                btnElement.innerHTML = '<i class="fas fa-check text-success"></i>';
+                btnElement.style.borderColor = 'var(--kick-green)';
+                setTimeout(() => {
+                    btnElement.innerHTML = originalIcon;
+                    btnElement.style.borderColor = '';
+                }, 2000);
+            });
+        }
     </script>
 </body>
-</html>
 
+</html>
