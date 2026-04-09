@@ -1,1037 +1,1287 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description"
-        content="Portafolio personal de Brandon Sepulveda - Desarrollador, Creador de Contenido e Innovador Tecnológico." />
-    <meta name="author" content="Brandon Sepulveda" />
-    <title>Brandon Sepulveda 🦇 | Dev & Creator</title>
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon"
-        href="https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/images/Logo-30.ico" />
-
-    <!-- Analytics (Preservados) -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112"
-        crossorigin="anonymous"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-2RY7LG5R21');
-    </script>
-
-    <!-- Stylesheets -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap"
-        rel="stylesheet">
-
-    <style>
-        /* --- CORE VARIABLES & RESET --- */
-        :root {
-            --bg-dark: #050505;
-            --bg-glass: rgba(20, 20, 20, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
-            --text-muted: #a0a0a0;
-            --text-desc: #d1d1d1;
-            /* Nuevo color para descripciones */
-            --accent-green: #53FC18;
-            /* Kick Green */
-            --accent-blue: #53FCF1;
-            /* PowerShell Blue */
-            --accent-red: #fe2c55;
-            /* TikTok Red */
-            --glow-green: 0 0 20px rgba(83, 252, 24, 0.4);
-            --glow-blue: 0 0 20px rgba(83, 252, 241, 0.4);
-            --font-main: 'Outfit', sans-serif;
-            --font-display: 'Space Grotesk', sans-serif;
-        }
-
-        body {
-            font-family: var(--font-main);
-            background-color: var(--bg-dark);
-            color: var(--text-muted);
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* --- BACKGROUND GRADIENT MESH --- */
-        .bg-mesh {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            background: radial-gradient(circle at 15% 50%, rgba(83, 252, 241, 0.05), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(83, 252, 24, 0.05), transparent 25%);
-            pointer-events: none;
-        }
-
-        /* --- TYPOGRAPHY --- */
-        h1,
-        h2,
-        h3,
-        h4,
-        h5 {
-            color: var(--text-main);
-            font-family: var(--font-display);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-        }
-
-        .section-title {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            background: linear-gradient(to right, #fff, #b0b0b0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-subtitle {
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto 4rem auto;
-            color: var(--text-desc);
-        }
-
-        /* --- GLASSMORPHISM CARDS --- */
-        .glass-card {
-            background: var(--bg-glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transition: 0.5s;
-        }
-
-        .glass-card:hover::before {
-            left: 100%;
-        }
-
-        /* --- NAVIGATION --- */
-        #mainNav {
-            padding: 1.5rem 0;
-            transition: all 0.4s ease;
-        }
-
-        #mainNav.navbar-scrolled {
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(15px);
-            padding: 0.8rem 0;
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .navbar-brand {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .navbar-brand img {
-            transition: transform 0.5s ease;
-        }
-
-        .navbar-brand:hover img {
-            transform: rotate(360deg);
-        }
-
-        .nav-link {
-            color: var(--text-muted) !important;
-            font-weight: 500;
-            margin: 0 0.5rem;
-            position: relative;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: var(--text-main) !important;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: var(--accent-blue);
-            transition: width 0.3s ease, left 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-            left: 0;
-        }
-
-        .navbar-toggler {
-            border: none;
-            color: white;
-        }
-
-        /* --- HERO SECTION --- */
-        .masthead {
-            height: 100vh;
-            min-height: 600px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
-            overflow: hidden;
-        }
-
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-
-        .hero-title {
-            font-size: clamp(4rem, 12vw, 9rem);
-            font-weight: 800;
-            line-height: 0.9;
-            margin-bottom: 1rem;
-            background: linear-gradient(to bottom right, #fff, #555);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .glitch-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        /* --- BUTTONS --- */
-        .btn-custom {
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: none;
-            z-index: 1;
-        }
-
-        .btn-primary-glow {
-            background: transparent;
-            border: 1px solid var(--text-main);
-            color: var(--text-main);
-        }
-
-        .btn-primary-glow:hover {
-            background: var(--text-main);
-            color: var(--bg-dark);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-        }
-
-        .btn-kick {
-            background-color: var(--accent-green);
-            color: #000;
-            box-shadow: var(--glow-green);
-        }
-
-        .btn-kick:hover {
-            background-color: #60ff26;
-            box-shadow: 0 0 40px rgba(83, 252, 24, 0.6);
-            transform: translateY(-3px);
-            color: black;
-        }
-
-        .btn-tiktok {
-            background-color: var(--accent-red);
-            color: white;
-            box-shadow: 0 0 20px rgba(254, 44, 85, 0.4);
-        }
-
-        .btn-tiktok:hover {
-            background-color: #ff4d73;
-            box-shadow: 0 0 40px rgba(254, 44, 85, 0.6);
-            transform: translateY(-3px);
-            color: white;
-        }
-
-        /* --- ABOUT SECTION --- */
-        .about-avatar-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 0 auto;
-        }
-
-        .about-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 30px;
-            position: relative;
-            z-index: 2;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .about-glow {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 100%;
-            height: 100%;
-            border: 2px solid var(--accent-blue);
-            border-radius: 30px;
-            z-index: 1;
-            transition: all 0.4s ease;
-        }
-
-        .about-avatar-container:hover .about-glow {
-            top: 10px;
-            left: 10px;
-            border-color: var(--accent-green);
-            box-shadow: 0 0 20px rgba(83, 252, 24, 0.2);
-        }
-
-        /* --- PROJECTS & TECH --- */
-        .tech-tag {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: var(--text-main);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .card-img-wrapper {
-            width: 100%;
-            height: 180px;
-            overflow: hidden;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-        }
-
-        .card-img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .glass-card:hover .card-img-wrapper img {
-            transform: scale(1.1);
-        }
-
-        .code-snippet {
-            background: #000;
-            border-radius: 8px;
-            padding: 10px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-            color: var(--accent-blue);
-            border: 1px solid #333;
-            margin-top: auto;
-        }
-
-        .powershell-glow:hover {
-            border-color: var(--accent-blue);
-            box-shadow: var(--glow-blue);
-        }
-
-        /* --- STREAMING SECTION --- */
-        .stream-frame {
-            border: 2px solid #333;
-            border-radius: 16px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-            background: #000;
-        }
-
-        .stream-frame::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 16px;
-            background: linear-gradient(45deg, var(--accent-green), transparent, var(--accent-green));
-            z-index: -1;
-            opacity: 0.3;
-        }
-
-        /* --- TOOLBOX --- */
-        .tool-icon-box {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-main);
-            transition: all 0.3s;
-        }
-
-        .glass-card:hover .tool-icon-box {
-            background: var(--accent-blue);
-            color: #000;
-        }
-
-        /* --- CONTACT --- */
-        .social-link {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--text-main);
-            margin: 0 10px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-decoration: none;
-        }
-
-        .social-link:hover {
-            transform: scale(1.15);
-            background: white;
-            color: black;
-        }
-
-        .social-link.kick:hover {
-            background: var(--accent-green);
-            color: black;
-            box-shadow: var(--glow-green);
-            border-color: var(--accent-green);
-        }
-
-        .social-link.tiktok:hover {
-            background: var(--accent-red);
-            color: white;
-            box-shadow: 0 0 20px rgba(254, 44, 85, 0.6);
-            border-color: var(--accent-red);
-        }
-
-        .social-link.github:hover {
-            background: #fff;
-            color: #000;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            background: #020202;
-            padding: 3rem 0;
-        }
-
-        /* --- UTILS --- */
-        .section {
-            padding: 6rem 0;
-        }
-
-        .text-accent-green {
-            color: var(--accent-green);
-        }
-
-        .text-accent-blue {
-            color: var(--accent-blue);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-green);
-        }
-
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 4rem;
-            }
-
-            .section {
-                padding: 4rem 0;
-            }
-
-            .glass-card {
-                padding: 1.5rem;
-            }
-        }
-    </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+<meta name="description" content="Portafolio personal de Brandon Sepulveda - Desarrollador, Creador de Contenido e Innovador Tecnológico."/>
+<meta name="author" content="Brandon Sepulveda"/>
+<title>Brandon Sepulveda 🦇 | Dev & Creator</title>
+<link rel="icon" type="image/png" href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS_Removedor_1768162986835.png?raw=true"/>
+<link rel="apple-touch-icon" href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS_Removedor_1768162986835.png?raw=true"/>
+
+<!-- Analytics -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-2RY7LG5R21');</script>
+
+<!-- Libs -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #060608;
+  --surface: #0d0d10;
+  --surface2: #131318;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(255,255,255,0.18);
+  --green: #4afa1e;
+  --cyan: #00f5e4;
+  --red: #ff2d55;
+  --white: #f0f0f0;
+  --muted: #666;
+  --dimmed: #999;
+  --font-display: 'Syne', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'Inter', sans-serif;
+  --glow-g: 0 0 40px rgba(74,250,30,0.25);
+  --glow-c: 0 0 40px rgba(0,245,228,0.25);
+  --r: 14px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--dimmed);
+  overflow-x: hidden;
+}
+
+/* ─── NOISE TEXTURE ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ─── GRID OVERLAY ─── */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── AMBIENT ORBS ─── */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.12;
+}
+.orb-1 { width: 600px; height: 600px; background: var(--green); top: -200px; left: -100px; animation: float 20s ease-in-out infinite; }
+.orb-2 { width: 500px; height: 500px; background: var(--cyan); bottom: -100px; right: -100px; animation: float 25s ease-in-out infinite reverse; }
+.orb-3 { width: 300px; height: 300px; background: var(--red); top: 40%; left: 50%; animation: float 18s ease-in-out infinite 5s; }
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+/* ─── NAV ─── */
+#mainNav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 1.2rem 0;
+  transition: all 0.4s ease;
+}
+#mainNav.scrolled {
+  background: rgba(6,6,8,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.7rem 0;
+}
+.navbar-brand {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--white) !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+.brand-dot {
+  width: 8px; height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--green);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.8); }
+}
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted) !important;
+  letter-spacing: 0.05em;
+  padding: 0.4rem 0.8rem !important;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-link span.idx {
+  color: var(--green);
+  margin-right: 4px;
+  font-size: 0.7rem;
+}
+.nav-link:hover { color: var(--white) !important; }
+.navbar-toggler { border: none; color: var(--white); background: none; font-size: 1.2rem; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 8rem 0 4rem;
+}
+#particles-js {
+  position: absolute;
+  inset: 0;
+}
+.hero-inner {
+  position: relative;
+  z-index: 2;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(74,250,30,0.08);
+  border: 1px solid rgba(74,250,30,0.2);
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--green);
+  margin-bottom: 2rem;
+  letter-spacing: 0.05em;
+}
+.hero-tag-dot {
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+.hero-title .line-2 {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.25);
+}
+.hero-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 480px;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+.hero-subtitle .typing-cursor { color: var(--green); animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.btn-primary-bs {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.85rem 2rem;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid var(--green);
+  color: #000;
+  background: var(--green);
+  box-shadow: var(--glow-g);
+}
+.btn-primary-bs:hover {
+  background: transparent;
+  color: var(--green);
+  box-shadow: 0 0 60px rgba(74,250,30,0.4);
+  transform: translateY(-2px);
+}
+.btn-outline-bs {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.85rem 2rem;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-hover);
+  color: var(--white);
+  background: transparent;
+}
+.btn-outline-bs:hover {
+  border-color: var(--white);
+  background: rgba(255,255,255,0.05);
+  transform: translateY(-2px);
+  color: var(--white);
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  z-index: 2;
+}
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--green), transparent);
+  animation: scroll-drop 1.5s ease-in-out infinite;
+}
+@keyframes scroll-drop {
+  0%, 100% { opacity: 1; transform: scaleY(1); }
+  50% { opacity: 0.4; transform: scaleY(0.6); }
+}
+
+/* ─── SECTIONS ─── */
+.section { padding: 7rem 0; position: relative; z-index: 1; }
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--green);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--green);
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  line-height: 1;
+}
+
+/* ─── CARD BASE ─── */
+.card-bs {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.75rem;
+  transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+.card-bs::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(74,250,30,0.04), transparent 40%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.card-bs:hover { border-color: var(--border-hover); transform: translateY(-6px); }
+.card-bs:hover::after { opacity: 1; }
+
+/* ─── ABOUT ─── */
+.about-img-wrap {
+  position: relative;
+  width: 320px;
+  margin: 0 auto;
+}
+.about-img {
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  position: relative;
+  z-index: 2;
+  display: block;
+}
+.about-img-accent {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  bottom: 12px;
+  left: 12px;
+  border: 1px solid rgba(0,245,228,0.2);
+  border-radius: 24px;
+  z-index: 1;
+  transition: all 0.4s ease;
+}
+.about-img-wrap:hover .about-img-accent {
+  top: -8px;
+  right: -8px;
+  bottom: 8px;
+  left: 8px;
+  border-color: rgba(74,250,30,0.3);
+  box-shadow: 0 0 30px rgba(74,250,30,0.1);
+}
+
+.stat-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem 1rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+.stat-chip:hover { border-color: var(--border-hover); }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-num.green { color: var(--green); }
+.stat-num.cyan { color: var(--cyan); }
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ─── SKILL BADGE ─── */
+.skill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--dimmed);
+  transition: all 0.3s;
+  text-decoration: none;
+  cursor: default;
+}
+.skill-badge:hover {
+  border-color: var(--border-hover);
+  color: var(--white);
+  background: var(--surface);
+  transform: translateY(-2px);
+}
+.skill-badge i { font-size: 1rem; }
+
+/* GitHub link badge on project cards */
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.project-card[onclick] .project-img-wrap::after {
+  content: 'Ver en GitHub ↗';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--cyan);
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.project-card[onclick]:hover .project-img-wrap::after { opacity: 1; }
+.project-card[onclick] .project-img-wrap { position: relative; }
+.gh-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-left: auto;
+  transition: all 0.3s;
+}
+.project-card[onclick]:hover .gh-badge { border-color: var(--cyan); color: var(--cyan); }
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.project-card:hover { border-color: rgba(0,245,228,0.3); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+.project-img-wrap {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.project-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.project-card:hover .project-img-wrap img { transform: scale(1.08); }
+.project-img-wrap .icon-fallback { font-size: 3rem; color: var(--muted); }
+.project-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+.project-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+.ptag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.project-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.02em;
+}
+.project-desc {
+  font-size: 0.85rem;
+  color: var(--dimmed);
+  line-height: 1.7;
+  flex: 1;
+}
+.code-block {
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--cyan);
+  margin-top: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+}
+.code-block .prompt { color: var(--green); flex-shrink: 0; }
+.copy-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+.copy-btn:hover { color: var(--white); }
+
+/* ─── TOOLBOX ─── */
+.tool-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.4rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.tool-card:hover {
+  border-color: rgba(0,245,228,0.3);
+  background: var(--surface2);
+  transform: translateX(4px);
+}
+.tool-icon {
+  width: 48px; height: 48px;
+  background: var(--surface2);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  color: var(--cyan);
+  flex-shrink: 0;
+  transition: all 0.3s;
+  border: 1px solid var(--border);
+}
+.tool-card:hover .tool-icon {
+  background: rgba(0,245,228,0.1);
+  border-color: rgba(0,245,228,0.3);
+}
+.tool-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+.tool-sub {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.tool-arrow {
+  margin-left: auto;
+  color: var(--muted);
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+.tool-card:hover .tool-arrow { color: var(--cyan); transform: translateX(3px); }
+
+/* ─── STREAMING ─── */
+.stream-container {
+  border: 1px solid rgba(74,250,30,0.15);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 80px rgba(74,250,30,0.08);
+}
+.stream-bar {
+  background: #0a0a0a;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.stream-live {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--white);
+  letter-spacing: 0.05em;
+}
+.live-dot {
+  width: 7px; height: 7px;
+  background: #ff3b3b;
+  border-radius: 50%;
+  animation: pulse-dot 1.5s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(255,59,59,0.6);
+}
+.tiktok-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+/* ─── CONTACT / SOCIALS ─── */
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--dimmed);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  transition: all 0.3s;
+}
+.social-btn:hover { border-color: var(--border-hover); color: var(--white); transform: translateY(-3px); }
+.social-btn.kick:hover { border-color: var(--green); color: var(--green); box-shadow: 0 0 20px rgba(74,250,30,0.2); }
+.social-btn.tiktok:hover { border-color: var(--red); color: var(--red); box-shadow: 0 0 20px rgba(255,45,85,0.2); }
+.social-btn.github:hover { border-color: #fff; color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.15); }
+.social-btn i { font-size: 1.1rem; }
+
+/* ─── TERMINAL BLOCK ─── */
+.terminal {
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: var(--font-mono);
+}
+.terminal-bar {
+  background: #111;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.dot-r { width: 12px; height: 12px; border-radius: 50%; background: #ff5f57; }
+.dot-y { width: 12px; height: 12px; border-radius: 50%; background: #febc2e; }
+.dot-g { width: 12px; height: 12px; border-radius: 50%; background: #28c840; }
+.terminal-title {
+  margin-left: 8px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.terminal-body { padding: 1.5rem; font-size: 0.82rem; line-height: 2; }
+.t-line { display: flex; gap: 10px; }
+.t-prompt { color: var(--green); flex-shrink: 0; }
+.t-cmd { color: #e0e0e0; }
+.t-comment { color: var(--muted); }
+.t-output { color: var(--cyan); padding-left: 20px; }
+.t-warn { color: #febc2e; padding-left: 20px; }
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 3rem 0;
+  position: relative;
+  z-index: 1;
+}
+footer p {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+footer a:hover { color: var(--white); }
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
+/* ─── FADE-IN ─── */
+.fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* code-text inside code-block inherits cyan color from parent */
+.code-block .code-text { color: var(--cyan); flex: 1; word-break: break-all; }
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 3.5rem; }
+  .section { padding: 5rem 0; }
+  .about-img-wrap { width: 260px; }
+  .hero-ctas { flex-direction: column; }
+}
+</style>
 </head>
 
 <body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="80">
 
-    <!-- Background Atmospheric Mesh -->
-    <div class="bg-mesh"></div>
+<div class="grid-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="#page-top">
-                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/Logo-30.png?raw=true"
-                    alt="Logo" width="30" height="30">
-                JBSV
+<!-- ─── NAV ─── -->
+<nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="#page-top">
+      <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS_Removedor_1768162986835.png?raw=true" alt="Logo" width="36" height="36" style="border-radius:8px; object-fit:contain;">
+      JBSV
+      <div class="brand-dot"></div>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
+      <ul class="navbar-nav gap-1">
+        <li class="nav-item"><a class="nav-link" href="#about"><span class="idx">01.</span>Perfil</a></li>
+        <li class="nav-item"><a class="nav-link" href="#live"><span class="idx">02.</span>Live</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects"><span class="idx">03.</span>Dev</a></li>
+        <li class="nav-item"><a class="nav-link" href="#toolbox"><span class="idx">04.</span>Tools</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skills"><span class="idx">05.</span>Stack</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact"><span class="idx">06.</span>Social</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<header class="hero">
+  <div id="particles-js"></div>
+  <div class="container hero-inner">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <div class="hero-tag">
+          <div class="hero-tag-dot"></div>
+          Disponible para proyectos
+        </div>
+        <h1 class="hero-title">
+          <span class="d-block">BRANDON</span>
+          <span class="d-block line-2">SEPULVEDA</span>
+        </h1>
+        <p class="hero-subtitle">
+          <span id="typing-text"></span><span class="typing-cursor" id="typing-cursor">|</span>
+        </p>
+        <div class="hero-ctas">
+          <a href="https://kick.com/papibrandon" target="_blank" class="btn-primary-bs">
+            <i class="fa-solid fa-bolt"></i> KICK LIVE
+          </a>
+          <a href="#projects" class="btn-outline-bs">
+            Ver Proyectos <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-4 d-none d-lg-block">
+        <!-- Terminal animada decorativa -->
+        <div class="terminal" style="margin-top: 2rem;">
+          <div class="terminal-bar">
+            <div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div>
+            <span class="terminal-title">powershell.exe</span>
+          </div>
+          <div class="terminal-body">
+            <div class="t-line"><span class="t-prompt">PS&gt;</span><span class="t-cmd" id="t-cmd-1"></span></div>
+            <div class="t-output" id="t-out-1" style="display:none;"></div>
+            <div class="t-line" style="margin-top:8px;"><span class="t-prompt">PS&gt;</span><span class="t-cmd" id="t-cmd-2"></span></div>
+            <div class="t-output" id="t-out-2" style="display:none;"></div>
+            <div class="t-warn" id="t-out-3" style="display:none;"></div>
+            <div class="t-line" style="margin-top:8px;"><span class="t-prompt">PS&gt;</span><span class="t-cmd" id="t-cmd-3"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>SCROLL</span>
+  </div>
+</header>
+
+<!-- ─── ABOUT ─── -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="row align-items-center gx-5">
+      <div class="col-lg-5 mb-5 mb-lg-0 fade-up">
+        <div class="about-img-wrap">
+          <img class="about-img"
+            src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/InShot_20241226_194550935.jpg?raw=true"
+            alt="Brandon Sepulveda">
+          <div class="about-img-accent"></div>
+        </div>
+      </div>
+      <div class="col-lg-7 fade-up" style="transition-delay: 0.15s;">
+        <div class="section-label">¿Quién soy?</div>
+        <h2 class="section-title mb-3">Dev, Streamer<br>& Builder.</h2>
+        <p style="color: var(--dimmed); line-height: 1.9; margin-bottom: 1rem;">
+          En el mundo digital soy <strong style="color: var(--white);">Papibrandon</strong> — desarrollador colombiano en la intersección entre el código y el entretenimiento. Mi especialidad es la <strong style="color: var(--cyan);">Automatización con PowerShell</strong> y el desarrollo de herramientas prácticas para Windows.
+        </p>
+        <p style="color: var(--dimmed); line-height: 1.9; margin-bottom: 2rem;">
+          Cuando cierro el editor, enciendo cámaras en <strong style="color: var(--green);">Kick</strong> para compartir gameplays, desarrollo en vivo y momentos reales con la comunidad <strong style="color: var(--white);">SQUAD</strong>.
+        </p>
+        <div class="row g-3 mb-3">
+          <div class="col-4"><div class="stat-chip"><div class="stat-num">3+</div><div class="stat-label">Años Dev</div></div></div>
+          <div class="col-4"><div class="stat-chip"><div class="stat-num green">Partner</div><div class="stat-label">Kick</div></div></div>
+          <div class="col-4"><div class="stat-chip"><div class="stat-num cyan">+20K</div><div class="stat-label">Runs GitHub</div></div></div>
+        </div>
+        <div class="row g-3">
+          <div class="col-4"><div class="stat-chip"><div class="stat-num" style="font-size:1.4rem;">+7K</div><div class="stat-label">TikTok Followers</div></div></div>
+          <div class="col-4"><div class="stat-chip"><div class="stat-num cyan" style="font-size:1.4rem;">+2M</div><div class="stat-label">Video Views</div></div></div>
+          <div class="col-4"><div class="stat-chip"><div class="stat-num" style="font-size:1.4rem;">🇨🇴</div><div class="stat-label">Colombia</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LIVE ─── -->
+<section id="live" class="section" style="background: linear-gradient(to bottom, var(--bg), var(--surface) 50%, var(--bg));">
+  <div class="container">
+    <div class="text-center mb-5 fade-up">
+      <div class="section-label" style="justify-content: center;">En vivo & Clips</div>
+      <h2 class="section-title">Streaming<br><span style="-webkit-text-fill-color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.25);">Station</span></h2>
+      <p style="color: var(--muted); font-family: var(--font-mono); font-size: 0.85rem; margin-top: 1rem;">
+        Entretenimiento real. Sin filtros. Con la SQUAD.
+      </p>
+    </div>
+    <div class="row justify-content-center mb-5 fade-up">
+      <div class="col-lg-10">
+        <div class="stream-container">
+          <div class="stream-bar">
+            <div class="stream-live">
+              <div class="live-dot"></div>
+              KICK.COM/PAPIBRANDON
+            </div>
+            <a href="https://kick.com/papibrandon" target="_blank" class="btn-primary-bs" style="padding: 0.45rem 1.2rem; font-size: 0.75rem;">
+              Ir al Chat <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.7rem;"></i>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about">Perfil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#live">Live</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Dev</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#toolbox">Toolbox</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Social</a></li>
-                </ul>
-            </div>
+          </div>
+          <div class="ratio ratio-16x9">
+            <iframe src="https://player.kick.com/papibrandon" allowfullscreen></iframe>
+          </div>
         </div>
-    </nav>
-
-    <!-- Header / Hero -->
-    <header class="masthead">
-        <div id="particles-js"></div>
-        <div class="container text-center" style="position: relative; z-index: 2;">
-            <div data-aos="zoom-out" data-aos-duration="1200">
-                <div class="glitch-wrapper">
-                    <h1 class="hero-title">JBSV</h1>
-                </div>
-                <h2 class="h4 mb-4 text-white fw-light" style="letter-spacing: 2px;">BRANDON SEPULVEDA</h2>
-                <p class="lead mb-5 mx-auto" style="max-width: 600px; color: var(--text-muted);">
-                    <span id="typing-text"></span><span class="text-accent-green">|</span>
-                </p>
-
-                <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <a class="btn btn-custom btn-primary-glow" href="#projects">Ver Proyectos</a>
-                    <a class="btn btn-custom btn-kick" href="https://kick.com/papibrandon" target="_blank">
-                        <i class="fa-solid fa-bolt me-2"></i>KICK LIVE
-                    </a>
-                </div>
-            </div>
+      </div>
+    </div>
+    <div class="row g-4 justify-content-center">
+      <div class="col-12 text-center mb-2 fade-up">
+        <h4 style="font-family: var(--font-display); color: var(--white); font-weight: 700; font-size: 1.5rem;">
+          <i class="fab fa-tiktok" style="color: var(--red); margin-right: 8px;"></i>TikTok Highlights
+        </h4>
+      </div>
+      <div class="col-md-5 col-lg-4 fade-up">
+        <div class="tiktok-card">
+          <iframe style="width:100%; height:600px; border:none;" src="https://www.tiktok.com/embed/7541587373377801478"></iframe>
         </div>
-
-        <!-- Scroll Indicator -->
-        <div style="position: absolute; bottom: 30px; animation: bounce 2s infinite;">
-            <i class="fa-solid fa-chevron-down text-muted"></i>
+      </div>
+      <div class="col-md-5 col-lg-4 fade-up" style="transition-delay: 0.1s;">
+        <div class="tiktok-card">
+          <iframe style="width:100%; height:600px; border:none;" src="https://www.tiktok.com/embed/7504103069173533958"></iframe>
         </div>
-    </header>
+      </div>
+    </div>
+    <div class="text-center mt-5 fade-up">
+      <a href="https://www.tiktok.com/@papibrandon7" target="_blank" class="btn-outline-bs">
+        <i class="fab fa-tiktok" style="color: var(--red);"></i> Ver más en TikTok
+      </a>
+    </div>
+  </div>
+</section>
 
-    <!-- About Section -->
-    <section class="section" id="about">
-        <div class="container">
-            <div class="row align-items-center gx-5">
-                <div class="col-lg-5 mb-5 mb-lg-0 text-center" data-aos="fade-right">
-                    <div class="about-avatar-container">
-                        <img class="about-img"
-                            src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/InShot_20241226_194550935.jpg?raw=true"
-                            alt="Brandon Profile">
-                        <div class="about-glow"></div>
-                    </div>
-                </div>
-                <div class="col-lg-7" data-aos="fade-left">
-                    <h5 class="text-accent-green text-uppercase mb-2">¿Quién soy?</h5>
-                    <h2 class="mb-4 display-6 fw-bold text-white">Desarrollador, Streamer & <br>Creador de Comunidades.
-                    </h2>
-                    <div class="glass-card" style="padding: 20px; background: rgba(255,255,255,0.03);">
-                        <p class="mb-3">
-                            En el mundo digital me conocen como <strong>"Papibrandon"</strong>. Soy de Colombia y vivo
-                            en la intersección entre el código y el entretenimiento.
-                        </p>
-                        <p class="mb-3">
-                            Mi pasión técnica se centra en la <strong>Automatización con PowerShell</strong> y el
-                            desarrollo de utilidades prácticas (como ToolboxBS) para hacer la vida en Windows más fácil.
-                        </p>
-                        <p class="mb-0">
-                            Cuando cierro el editor de código, enciendo las cámaras en <strong>Kick</strong> para
-                            compartir gameplays, desarrollo en vivo y momentos de "parche" real con la comunidad.
-                        </p>
-                    </div>
+<!-- ─── PROJECTS ─── -->
+<section class="section" id="projects">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-lg-6 fade-up">
+        <div class="section-label">Dev Projects</div>
+        <h2 class="section-title">Lo que<br>construyo.</h2>
+      </div>
+      <div class="col-lg-6 d-flex align-items-end fade-up" style="transition-delay: 0.1s;">
+        <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.8;">
+          Automatización, scripts y utilidades para Windows. Código real que usa gente real.
+        </p>
+      </div>
+    </div>
+    <div class="row g-4">
 
-                    <!-- NEW STATS DASHBOARD -->
-                    <div class="row mt-4 g-3 text-center">
-                        <!-- Badges Row -->
-                        <div class="col-4">
-                            <div class="p-2 border border-secondary rounded bg-dark bg-opacity-50">
-                                <h3 class="fw-bold mb-0 text-white">3+</h3>
-                                <small class="text-white text-uppercase fw-bold"
-                                    style="font-size: 0.7rem; opacity: 0.9;">Años Dev</small>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="p-2 border border-secondary rounded bg-dark bg-opacity-50">
-                                <h3 class="fw-bold mb-0 text-accent-green">Partner</h3>
-                                <small class="text-white text-uppercase fw-bold"
-                                    style="font-size: 0.7rem; opacity: 0.9;">Kick</small>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="p-2 border border-secondary rounded bg-dark bg-opacity-50">
-                                <h3 class="fw-bold mb-0 text-accent-blue">Creator</h3>
-                                <small class="text-white text-uppercase fw-bold"
-                                    style="font-size: 0.7rem; opacity: 0.9;">Toolbox</small>
-                            </div>
-                        </div>
-
-                        <!-- Stats Metrics Row (Added as requested) -->
-                        <div class="col-4 mt-3">
-                            <h4 class="fw-bold mb-0 text-white">+7k</h4>
-                            <small class="text-white-50" style="font-size: 0.75rem;">Followers TikTok</small>
-                        </div>
-                        <div class="col-4 mt-3 border-start border-secondary">
-                            <h4 class="fw-bold mb-0 text-accent-blue">+2M</h4>
-                            <small class="text-white-50" style="font-size: 0.75rem;">Visitas Video</small>
-                        </div>
-                        <div class="col-4 mt-3 border-start border-secondary">
-                            <h4 class="fw-bold mb-0 text-accent-green">+20k</h4>
-                            <small class="text-white-50" style="font-size: 0.75rem;">Runs GitHub</small>
-                        </div>
-                    </div>
-                </div>
+      <!-- ToolboxBS -->
+      <div class="col-md-6 col-lg-4 fade-up">
+        <div class="project-card" onclick="window.open('https://github.com/BrandonSepulveda/ToolboxBS','_blank')" style="cursor:pointer;">
+          <div class="project-img-wrap">
+            <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" alt="ToolboxBS">
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="ptag">PowerShell</span>
+              <span class="ptag">WPF GUI</span>
+              <span class="ptag">Windows</span>
+              <span class="gh-badge"><i class="fab fa-github"></i> GitHub</span>
             </div>
+            <div class="project-title">ToolboxBS Suite</div>
+            <p class="project-desc">La navaja suiza definitiva. Centraliza instalaciones, optimización y reparación de Windows en una interfaz gráfica moderna con glassmorphism.</p>
+            <div class="code-block">
+              <span class="prompt">&gt;_</span>
+              <span class="code-text">irm "https://brandonsepulveda.github.io/Tool" | iex</span>
+              <button class="copy-btn" onclick="event.stopPropagation(); copyCmd(this, 'irm \"https://brandonsepulveda.github.io/Tool\" | iex')">
+                <i class="fa-regular fa-copy"></i>
+              </button>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
 
-    <!-- LIVE & CLIPS HYBRID SECTION -->
-    <section id="live" class="section position-relative"
-        style="background: linear-gradient(to bottom, var(--bg-dark), #0a0a0a);">
-        <div class="container">
-            <div class="text-center mb-5">
-                <span class="badge bg-danger mb-2">EN VIVO / CLIPS</span>
-                <h2 class="section-title">Streaming Station</h2>
-                <p class="section-subtitle">Lo mejor del entretenimiento en tiempo real y highlights virales.</p>
+      <!-- WinDeploy -->
+      <div class="col-md-6 col-lg-4 fade-up" style="transition-delay: 0.1s;">
+        <div class="project-card" onclick="window.open('https://github.com/BrandonSepulveda/WinDeploy','_blank')" style="cursor:pointer;">
+          <div class="project-img-wrap">
+            <img src="https://github.com/BrandonSepulveda/WinDeploy/blob/main/Gemini_Generated_Image_t41in8t41in8t41i.png?raw=true" alt="WinDeploy">
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="ptag">Automation</span>
+              <span class="ptag">Cloud</span>
+              <span class="ptag">Deploy</span>
+              <span class="gh-badge"><i class="fab fa-github"></i> GitHub</span>
             </div>
-
-            <!-- Kick Main Stage -->
-            <div class="row justify-content-center mb-5" data-aos="zoom-in">
-                <div class="col-lg-10">
-                    <div class="stream-frame">
-                        <div class="ratio ratio-16x9">
-                            <iframe src="https://player.kick.com/papibrandon" allowfullscreen></iframe>
-                        </div>
-                        <div class="p-3 d-flex justify-content-between align-items-center bg-black">
-                            <div class="d-flex align-items-center gap-2">
-                                <i class="fa-solid fa-circle text-success fa-xs fa-beat-fade"></i>
-                                <span class="text-white fw-bold">KICK.COM/PAPIBRANDON</span>
-                            </div>
-                            <a href="https://kick.com/papibrandon" target="_blank"
-                                class="btn btn-sm btn-kick rounded-pill px-3">Ir al Chat</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="project-title">WinDeploy</div>
+            <p class="project-desc">Automatización total de instalaciones post-formateo. Olvida las USBs, todo se instala desde la nube con un solo comando.</p>
+            <div class="code-block">
+              <span class="prompt">&gt;_</span>
+              <span class="code-text">irm "brandonsepulveda.github.io/WinDeployBS" | iex</span>
+              <button class="copy-btn" onclick="event.stopPropagation(); copyCmd(this, 'irm \"brandonsepulveda.github.io/WinDeployBS\" | iex')">
+                <i class="fa-regular fa-copy"></i>
+              </button>
             </div>
-
-            <!-- TikTok Grid -->
-            <div class="row g-4 justify-content-center">
-                <div class="col-12 text-center mb-3">
-                    <h4 class="text-white"><i class="fab fa-tiktok text-white me-2"
-                            style="text-shadow: 2px 2px 0px #fe2c55;"></i>Destacados en TikTok</h4>
-                </div>
-
-                <div class="col-md-5 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="glass-card p-0 overflow-hidden text-center" style="border-radius: 20px;">
-                        <iframe style="width: 100%; height: 600px; border: none;"
-                            src="https://www.tiktok.com/embed/7541587373377801478"></iframe>
-                    </div>
-                </div>
-
-                <div class="col-md-5 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="glass-card p-0 overflow-hidden text-center" style="border-radius: 20px;">
-                        <iframe style="width: 100%; height: 600px; border: none;"
-                            src="https://www.tiktok.com/embed/7504103069173533958"></iframe>
-                    </div>
-                </div>
-            </div>
-
-            <div class="text-center mt-5">
-                <a href="https://www.tiktok.com/@papibrandon7" target="_blank" class="btn btn-tiktok btn-custom">
-                    Ver más locuras en TikTok
-                </a>
-            </div>
+          </div>
         </div>
-    </section>
+      </div>
 
-    <!-- Projects Section -->
-    <section class="section" id="projects">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-title">Dev Projects</h2>
-                <p class="section-subtitle" style="color: var(--text-desc);">Automatización, Scripts y Utilidades para
-                    Windows.</p>
+      <!-- ClipsAuto -->
+      <div class="col-md-6 col-lg-4 fade-up" style="transition-delay: 0.2s;">
+        <div class="project-card" onclick="window.open('https://github.com/BrandonSepulveda/ClipsAuto','_blank')" style="cursor:pointer;">
+          <div class="project-img-wrap" style="background: #0a0a0a;">
+            <img src="https://github.com/BrandonSepulveda/ClipsAuto/blob/main/Video%20Editing%20Command%20Icon.png?raw=true" style="object-fit: contain; height: 80%;" alt="ClipsAuto">
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="ptag">FFmpeg</span>
+              <span class="ptag">Content</span>
+              <span class="ptag">Automation</span>
+              <span class="gh-badge"><i class="fab fa-github"></i> GitHub</span>
             </div>
-
-            <div class="row g-4">
-                <!-- Project 1: ToolboxBS -->
-                <div class="col-md-6 col-lg-4" data-aos="fade-up">
-                    <div class="glass-card powershell-glow d-flex flex-column">
-                        <div class="card-img-wrapper">
-                            <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true"
-                                alt="ToolboxBS">
-                        </div>
-                        <div class="mt-3 flex-grow-1">
-                            <div class="mb-2">
-                                <span class="tech-tag">PowerShell</span>
-                                <span class="tech-tag">GUI</span>
-                            </div>
-                            <h4 class="text-white mb-2">ToolboxBS Suite</h4>
-                            <p class="small" style="color: rgba(255,255,255,0.8);">La navaja suiza definitiva.
-                                Centraliza instalaciones, optimización y reparación de Windows en una interfaz gráfica
-                                moderna.</p>
-                        </div>
-                        <div class="code-snippet mt-3">
-                            <span class="text-muted">>_</span> irm "https://brandonsepulveda.github.io/Tool" | iex
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 2: WinDeploy -->
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="glass-card powershell-glow d-flex flex-column">
-                        <div class="card-img-wrapper">
-                            <img src="https://github.com/BrandonSepulveda/WinDeploy/blob/main/Gemini_Generated_Image_t41in8t41in8t41i.png?raw=true"
-                                alt="WinDeploy">
-                        </div>
-                        <div class="mt-3 flex-grow-1">
-                            <div class="mb-2">
-                                <span class="tech-tag">Automation</span>
-                                <span class="tech-tag">Deploy</span>
-                            </div>
-                            <h4 class="text-white mb-2">WinDeploy</h4>
-                            <p class="small" style="color: rgba(255,255,255,0.8);">Automatización total de instalaciones
-                                post-formateo. Olvida las USBs, todo se instala desde la nube.</p>
-                        </div>
-                        <div class="code-snippet mt-3">
-                            <span class="text-muted">>_</span> irm "brandonsepulveda.github.io/WinDeployBS" | iex
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 3: ClipsAuto -->
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="glass-card powershell-glow d-flex flex-column">
-                        <div class="card-img-wrapper"
-                            style="background: #111; display:flex; align-items:center; justify-content:center;">
-                            <img src="https://github.com/BrandonSepulveda/ClipsAuto/blob/main/Video%20Editing%20Command%20Icon.png?raw=true"
-                                style="object-fit:contain; height:80%;" alt="ClipsAuto">
-                        </div>
-                        <div class="mt-3 flex-grow-1">
-                            <div class="mb-2">
-                                <span class="tech-tag">FFmpeg</span>
-                                <span class="tech-tag">Content</span>
-                            </div>
-                            <h4 class="text-white mb-2">ClipsAuto</h4>
-                            <p class="small" style="color: rgba(255,255,255,0.8);">Script inteligente con FFmpeg para
-                                procesar videos largos y extraer clips automáticamente para redes sociales.</p>
-                        </div>
-                        <div class="code-snippet mt-3">
-                            <span class="text-muted">>_</span> irm "brandonsepulveda.github.io/ClipsMaker" | iex
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 4: Config -->
-                <div class="col-md-6 col-lg-4" data-aos="fade-up">
-                    <div class="glass-card powershell-glow d-flex flex-column">
-                        <div class="card-img-wrapper d-flex align-items-center justify-content-center bg-dark">
-                            <i class="fas fa-terminal fa-3x text-accent-blue"></i>
-                        </div>
-                        <div class="mt-3 flex-grow-1">
-                            <h4 class="text-white mb-2">My PS Config</h4>
-                            <p class="small" style="color: rgba(255,255,255,0.8);">Personalización avanzada de terminal:
-                                Oh-My-Posh, fuentes nerd y estética hacker.</p>
-                        </div>
-                        <div class="code-snippet mt-3">
-                            <span class="text-muted">>_</span> irm "brandonsepulveda.github.io/PPB" | iex
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 5: SQUAD -->
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="glass-card d-flex flex-column">
-                        <div class="card-img-wrapper">
-                            <img src="https://raw.githubusercontent.com/BrandonSepulveda/BrandonSepulveda.github.io/main/InShot_20240622_184423032.jpg"
-                                alt="Squad">
-                        </div>
-                        <div class="mt-3">
-                            <h4 class="text-white mb-2">SQUAD</h4>
-                            <p class="small" style="color: rgba(255,255,255,0.8);">Comunidad de entretenimiento en
-                                Instagram. Humor, interacción y cultura digital.</p>
-                            <a href="https://www.instagram.com/elsquaddelputeooficial/" target="_blank"
-                                class="btn btn-sm btn-outline-light rounded-pill mt-2">Visitar IG</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="project-title">ClipsAuto</div>
+            <p class="project-desc">Script inteligente con FFmpeg para procesar videos largos y extraer clips automáticamente para redes sociales. Creador de contenido mode: ON.</p>
+            <div class="code-block">
+              <span class="prompt">&gt;_</span>
+              <span class="code-text">irm "brandonsepulveda.github.io/ClipsMaker" | iex</span>
+              <button class="copy-btn" onclick="event.stopPropagation(); copyCmd(this, 'irm \"brandonsepulveda.github.io/ClipsMaker\" | iex')">
+                <i class="fa-regular fa-copy"></i>
+              </button>
             </div>
+          </div>
         </div>
-    </section>
+      </div>
 
-    <!-- Digital Toolbox Section -->
-    <section class="section" id="toolbox">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-4 mb-4 mb-lg-0" data-aos="fade-right">
-                    <h2 class="display-5 fw-bold text-white mb-3">Toolbox<br><span
-                            class="text-accent-blue">Digital</span></h2>
-                    <p class="mb-4" style="color: var(--text-desc); font-size: 1.1rem;">Herramientas web rápidas que he
-                        desarrollado y utilizo en mi día a día. Sin instalaciones, directo en el navegador.</p>
-                    <a href="#contact" class="btn btn-primary-glow btn-custom">Sugerir Herramienta</a>
-                </div>
-                <div class="col-lg-8">
-                    <div class="row g-3">
-                        <!-- Tool 1 -->
-                        <div class="col-md-6" data-aos="zoom-in" data-aos-delay="100">
-                            <a href="https://brandonsepulveda.github.io/quitarfondo.html" target="_blank"
-                                class="text-decoration-none">
-                                <div class="glass-card p-4 d-flex align-items-center gap-3">
-                                    <div class="tool-icon-box"><i class="fa-solid fa-eraser"></i></div>
-                                    <div>
-                                        <h5 class="text-white m-0">Remover Fondo</h5>
-                                        <small style="color: rgba(255,255,255,0.7); font-weight: 500;">IA
-                                            Removal</small>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Tool 2 -->
-                        <div class="col-md-6" data-aos="zoom-in" data-aos-delay="200">
-                            <a href="https://brandonsepulveda.github.io/descargawindows.html" target="_blank"
-                                class="text-decoration-none">
-                                <div class="glass-card p-4 d-flex align-items-center gap-3">
-                                    <div class="tool-icon-box"><i class="fab fa-windows"></i></div>
-                                    <div>
-                                        <h5 class="text-white m-0">ISOs Windows</h5>
-                                        <small style="color: rgba(255,255,255,0.7); font-weight: 500;">Oficiales
-                                            MS</small>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Tool 3 -->
-                        <div class="col-md-6" data-aos="zoom-in" data-aos-delay="300">
-                            <a href="https://brandonsepulveda.github.io/compresor.html" target="_blank"
-                                class="text-decoration-none">
-                                <div class="glass-card p-4 d-flex align-items-center gap-3">
-                                    <div class="tool-icon-box"><i class="fa-solid fa-file-zipper"></i></div>
-                                    <div>
-                                        <h5 class="text-white m-0">Compresor ZIP</h5>
-                                        <small style="color: rgba(255,255,255,0.7); font-weight: 500;">Local &
-                                            Rápido</small>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Tool 4 -->
-                        <div class="col-md-6" data-aos="zoom-in" data-aos-delay="400">
-                            <a href="https://brandonsepulveda.github.io/apps" target="_blank"
-                                class="text-decoration-none">
-                                <div class="glass-card p-4 d-flex align-items-center gap-3">
-                                    <div class="tool-icon-box"><i class="fa-solid fa-box-open"></i></div>
-                                    <div>
-                                        <h5 class="text-white m-0">Repo Apps</h5>
-                                        <small style="color: rgba(255,255,255,0.7); font-weight: 500;">Software
-                                            Esencial</small>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+      <!-- My PS Config -->
+      <div class="col-md-6 col-lg-4 fade-up">
+        <div class="project-card" onclick="window.open('https://github.com/BrandonSepulvedaValdes/My-PS-Config','_blank')" style="cursor:pointer;">
+          <div class="project-img-wrap" style="background: #000;">
+            <div class="icon-fallback"><i class="fas fa-terminal" style="color: var(--cyan);"></i></div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="ptag">Oh-My-Posh</span>
+              <span class="ptag">Nerd Fonts</span>
+              <span class="ptag">Hacker</span>
+              <span class="gh-badge"><i class="fab fa-github"></i> GitHub</span>
             </div>
+            <div class="project-title">My PS Config</div>
+            <p class="project-desc">Personalización avanzada de terminal: Oh-My-Posh, fuentes nerd y estética hacker. Tu terminal también puede verse fire.</p>
+            <div class="code-block">
+              <span class="prompt">&gt;_</span>
+              <span class="code-text">irm "brandonsepulveda.github.io/PPB" | iex</span>
+              <button class="copy-btn" onclick="event.stopPropagation(); copyCmd(this, 'irm \"brandonsepulveda.github.io/PPB\" | iex')">
+                <i class="fa-regular fa-copy"></i>
+              </button>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
 
-    <!-- Skills Section -->
-    <section id="skills" class="section text-center">
-        <div class="container">
-            <h2 class="section-title mb-5">Tech Stack</h2>
-            <div class="d-flex flex-wrap justify-content-center gap-4" data-aos="fade-up">
-                <!-- Row 1 (Based on image) -->
-                <div class="glass-card py-3 px-4 d-flex align-items-center gap-2">
-                    <i class="fab fa-html5 fa-2x text-danger"></i> <span class="fw-bold text-white">HTML5</span>
-                </div>
-                <div class="glass-card py-3 px-4 d-flex align-items-center gap-2">
-                    <i class="fab fa-css3-alt fa-2x text-primary"></i> <span class="fw-bold text-white">CSS3</span>
-                </div>
-                <div class="glass-card py-3 px-4 d-flex align-items-center gap-2">
-                    <i class="fab fa-js fa-2x text-warning"></i> <span class="fw-bold text-white">JavaScript</span>
-                </div>
-                <div class="glass-card py-3 px-4 d-flex align-items-center gap-2">
-                    <i class="fab fa-python fa-2x text-info"></i> <span class="fw-bold text-white">Python</span>
-                </div>
-                <div class="glass-card py-3 px-4 d-flex align-items-center gap-2">
-                    <i class="fas fa-terminal fa-2x text-white"></i> <span class="fw-bold text-white">PowerShell</span>
-                </div>
-                <div class="glass-card py-3 px-4 d-flex align-items-center gap-2">
-                    <i class="fab fa-bootstrap fa-2x text-white"></i> <span class="fw-bold text-white">Bootstrap</span>
-                </div>
-
-                <!-- Row 2 (Based on image) -->
-                <div class="glass-card py-3 px-4 d-flex align-items-center gap-2">
-                    <i class="fab fa-windows fa-2x text-info"></i> <span class="fw-bold text-white">Windows Sys</span>
-                </div>
-                <div class="glass-card py-3 px-4 d-flex align-items-center gap-2">
-                    <i class="fab fa-git-alt fa-2x text-danger"></i> <span class="fw-bold text-white">Git &
-                        GitHub</span>
-                </div>
-                <div class="glass-card py-3 px-4 d-flex align-items-center gap-2">
-                    <i class="fas fa-cogs fa-2x text-secondary"></i> <span class="fw-bold text-white">Soporte IT</span>
-                </div>
-                <div class="glass-card py-3 px-4 d-flex align-items-center gap-2">
-                    <i class="fas fa-gamepad fa-2x text-white"></i> <span class="fw-bold text-white">Manquear</span>
-                </div>
-                <div class="glass-card py-3 px-4 d-flex align-items-center gap-2">
-                    <i class="fas fa-comments fa-2x text-white"></i> <span class="fw-bold text-white">Hablar Paja</span>
-                </div>
+      <!-- SQUAD -->
+      <div class="col-md-6 col-lg-4 fade-up" style="transition-delay: 0.1s;">
+        <div class="project-card" onclick="window.open('https://www.instagram.com/elsquaddelputeooficial/','_blank')" style="cursor:pointer;">
+          <div class="project-img-wrap">
+            <img src="https://raw.githubusercontent.com/BrandonSepulveda/BrandonSepulveda.github.io/main/InShot_20240622_184423032.jpg" alt="SQUAD">
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="ptag">Community</span>
+              <span class="ptag">Instagram</span>
+              <span class="ptag">Content</span>
+              <span class="gh-badge" style="border-color: rgba(225,48,108,0.3); color: rgba(225,48,108,0.7);"><i class="fab fa-instagram"></i> IG</span>
             </div>
+            <div class="project-title">SQUAD</div>
+            <p class="project-desc">Comunidad de entretenimiento en Instagram. Humor, interacción y cultura digital. El parche virtual real.</p>
+            <a href="https://www.instagram.com/elsquaddelputeooficial/" target="_blank" onclick="event.stopPropagation()" class="btn-outline-bs" style="margin-top: 1.25rem; padding: 0.6rem 1.2rem; font-size: 0.78rem;">
+              <i class="fab fa-instagram" style="color: #e1306c;"></i> Visitar Instagram
+            </a>
+          </div>
         </div>
-    </section>
+      </div>
 
-    <!-- Footer / Contact -->
-    <footer id="contact">
-        <div class="container text-center">
-            <div class="mb-5" data-aos="zoom-in">
-                <h2 class="display-6 fw-bold text-white mb-4">¿Conectamos?</h2>
-                <div class="d-flex justify-content-center flex-wrap gap-3">
-                    <a href="https://kick.com/papibrandon" target="_blank" class="social-link kick"><i
-                            class="fa-brands fa-kickstarter-k"></i></a>
-                    <a href="https://www.tiktok.com/@papibrandon7" target="_blank" class="social-link tiktok"><i
-                            class="fab fa-tiktok"></i></a>
-                    <a href="https://www.instagram.com/brandonsepulveda_66" target="_blank" class="social-link"><i
-                            class="fab fa-instagram"></i></a>
-                    <a href="https://github.com/BrandonSepulveda" target="_blank" class="social-link github"><i
-                            class="fab fa-github"></i></a>
-                    <a href="https://twitter.com/PapiBrandon66" target="_blank" class="social-link"><i
-                            class="fab fa-twitter"></i></a>
-                </div>
+      <!-- Aura OS -->
+      <div class="col-md-6 col-lg-4 fade-up" style="transition-delay: 0.2s;">
+        <div class="project-card" onclick="window.open('https://github.com/BrandonSepulveda','_blank')" style="cursor:pointer; border-color: rgba(74,250,30,0.15);">
+          <div class="project-img-wrap" style="background: linear-gradient(135deg, #060608, #0a1a0a);">
+            <div class="icon-fallback"><i class="fas fa-robot" style="color: var(--green);"></i></div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="ptag">Python</span>
+              <span class="ptag">AI</span>
+              <span class="ptag" style="border-color: rgba(74,250,30,0.3); color: var(--green);">Personal</span>
             </div>
-            <div class="border-top border-secondary pt-4 opacity-50">
-                <small class="text-muted">© 2025 Jhon Brandon Sepulveda Valdes. Designed with <i
-                        class="fas fa-heart text-danger"></i> & Code.</small>
+            <div class="project-title" style="color: var(--green);">Aura OS</div>
+            <p class="project-desc">Asistente personal con voz, visión, control por Telegram y memoria estructurada. Mi propio JARVIS — en desarrollo activo.</p>
+            <div class="code-block" style="border-color: rgba(74,250,30,0.15);">
+              <span class="prompt" style="color: var(--muted);">#</span>
+              <span style="color: var(--muted); font-size: 0.72rem;">Proyecto privado — en desarrollo</span>
             </div>
+          </div>
         </div>
-    </footer>
+      </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    </div>
+  </div>
+</section>
 
-    <script>
-        // Init AOS
-        AOS.init({ duration: 800, once: true, offset: 50 });
+<!-- ─── TOOLBOX DIGITAL ─── -->
+<section class="section" id="toolbox" style="background: linear-gradient(to bottom, var(--bg), var(--surface) 50%, var(--bg));">
+  <div class="container">
+    <div class="row align-items-center gx-5">
+      <div class="col-lg-4 mb-5 mb-lg-0 fade-up">
+        <div class="section-label">Web Tools</div>
+        <h2 class="section-title mb-4">Toolbox<br><span style="color: var(--cyan);">Digital</span></h2>
+        <p style="color: var(--dimmed); line-height: 1.9; font-size: 0.9rem;">
+          Herramientas web que construí y uso día a día. Sin instalaciones, todo en el navegador. Gratis, rápido, punto.
+        </p>
+        <a href="#contact" class="btn-outline-bs" style="margin-top: 1.5rem;">
+          Sugerir Herramienta <i class="fa-solid fa-lightbulb"></i>
+        </a>
+      </div>
+      <div class="col-lg-8 fade-up" style="transition-delay: 0.1s;">
+        <div class="d-flex flex-column gap-3">
+          <a href="https://brandonsepulveda.github.io/quitarfondo.html" target="_blank" class="tool-card">
+            <div class="tool-icon"><i class="fa-solid fa-eraser"></i></div>
+            <div>
+              <div class="tool-name">Remover Fondo</div>
+              <div class="tool-sub">IA Removal — Elimina fondos con inteligencia artificial</div>
+            </div>
+            <div class="tool-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          </a>
+          <a href="https://brandonsepulveda.github.io/descargawindows.html" target="_blank" class="tool-card">
+            <div class="tool-icon"><i class="fab fa-windows"></i></div>
+            <div>
+              <div class="tool-name">ISOs Windows</div>
+              <div class="tool-sub">Oficiales MS — Descargas directas de Microsoft</div>
+            </div>
+            <div class="tool-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          </a>
+          <a href="https://brandonsepulveda.github.io/compresor.html" target="_blank" class="tool-card">
+            <div class="tool-icon"><i class="fa-solid fa-file-zipper"></i></div>
+            <div>
+              <div class="tool-name">Compresor ZIP</div>
+              <div class="tool-sub">Local & Rápido — Todo se procesa en tu navegador</div>
+            </div>
+            <div class="tool-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          </a>
+          <a href="https://brandonsepulveda.github.io/apps" target="_blank" class="tool-card">
+            <div class="tool-icon"><i class="fa-solid fa-box-open"></i></div>
+            <div>
+              <div class="tool-name">Repo de Apps</div>
+              <div class="tool-sub">Software Esencial — Curado para devs y power users</div>
+            </div>
+            <div class="tool-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // Navbar Scroll Effect
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('mainNav');
-            if (window.scrollY > 50) nav.classList.add('navbar-scrolled');
-            else nav.classList.remove('navbar-scrolled');
-        });
+<!-- ─── TECH STACK ─── -->
+<section id="skills" class="section">
+  <div class="container">
+    <div class="text-center mb-5 fade-up">
+      <div class="section-label" style="justify-content: center;">Tech Stack</div>
+      <h2 class="section-title">Con qué<br>trabajo.</h2>
+    </div>
+    <div class="d-flex flex-wrap justify-content-center gap-3 fade-up" style="transition-delay: 0.1s;">
+      <div class="skill-badge"><i class="fab fa-html5" style="color: #e34f26;"></i> HTML5</div>
+      <div class="skill-badge"><i class="fab fa-css3-alt" style="color: #264de4;"></i> CSS3</div>
+      <div class="skill-badge"><i class="fab fa-js" style="color: #f7df1e;"></i> JavaScript</div>
+      <div class="skill-badge"><i class="fab fa-python" style="color: #3776ab;"></i> Python</div>
+      <div class="skill-badge"><i class="fas fa-terminal" style="color: var(--cyan);"></i> PowerShell</div>
+      <div class="skill-badge"><i class="fab fa-bootstrap" style="color: #7952b3;"></i> Bootstrap</div>
+      <div class="skill-badge"><i class="fab fa-windows" style="color: #00a4ef;"></i> Windows Sys</div>
+      <div class="skill-badge"><i class="fab fa-git-alt" style="color: #f05032;"></i> Git & GitHub</div>
+      <div class="skill-badge"><i class="fas fa-cogs" style="color: var(--muted);"></i> Soporte IT</div>
+      <div class="skill-badge"><i class="fas fa-robot" style="color: var(--green);"></i> IA & Automatización</div>
+      <div class="skill-badge"><i class="fas fa-gamepad"></i> Manquear</div>
+      <div class="skill-badge"><i class="fas fa-comments"></i> Hablar Paja</div>
+    </div>
+  </div>
+</section>
 
-        // Typing Effect (Mejorado)
-        const phrases = [
-            "Desarrollador",
-            "Experto soporte de IT",
-            "Creador de Contenido",
-            "Streamer en Kick ⚡"
-        ];
-        let i = 0, j = 0, isDeleting = false;
-        const speed = 100, wait = 2000;
+<!-- ─── CONTACT ─── -->
+<footer id="contact">
+  <div class="container">
+    <div class="row align-items-center gy-4">
+      <div class="col-lg-5 fade-up">
+        <div class="section-label">Contact</div>
+        <h2 class="section-title mb-3">¿Conectamos?</h2>
+        <p style="color: var(--muted); font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.8;">
+          Abierto a colaboraciones, proyectos de automatización o simplemente parchar en el stream.
+        </p>
+      </div>
+      <div class="col-lg-7 fade-up" style="transition-delay: 0.1s;">
+        <div class="d-flex flex-wrap gap-3 justify-content-lg-end">
+          <a href="https://kick.com/papibrandon" target="_blank" class="social-btn kick">
+            <i class="fa-brands fa-kickstarter-k"></i> Kick
+          </a>
+          <a href="https://www.tiktok.com/@papibrandon7" target="_blank" class="social-btn tiktok">
+            <i class="fab fa-tiktok"></i> TikTok
+          </a>
+          <a href="https://www.instagram.com/brandonsepulveda_66" target="_blank" class="social-btn">
+            <i class="fab fa-instagram" style="color: #e1306c;"></i> Instagram
+          </a>
+          <a href="https://github.com/BrandonSepulveda" target="_blank" class="social-btn github">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+          <a href="https://twitter.com/PapiBrandon66" target="_blank" class="social-btn">
+            <i class="fab fa-twitter" style="color: #1d9bf0;"></i> Twitter
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="border-top mt-5 pt-4" style="border-color: var(--border) !important; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <p>© 2025 Jhon Brandon Sepulveda Valdes — Hecho con <i class="fas fa-heart" style="color: var(--red);"></i> & PowerShell.</p>
+      <p><a href="#page-top"><i class="fa-solid fa-arrow-up" style="margin-right: 6px;"></i>Volver arriba</a></p>
+    </div>
+  </div>
+</footer>
 
-        function type() {
-            const current = phrases[i];
-            const display = isDeleting ? current.substring(0, j--) : current.substring(0, j++);
-            document.getElementById('typing-text').textContent = display;
+<!-- ─── SCRIPTS ─── -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
 
-            if (!isDeleting && j === current.length + 1) {
-                isDeleting = true;
-                setTimeout(type, wait);
-            } else if (isDeleting && j === 0) {
-                isDeleting = false;
-                i = (i + 1) % phrases.length;
-                setTimeout(type, 500);
-            } else {
-                setTimeout(type, isDeleting ? 50 : speed);
-            }
-        }
-        document.addEventListener('DOMContentLoaded', type);
+// Particles
+particlesJS('particles-js', {
+  particles: {
+    number: { value: 50, density: { enable: true, value_area: 900 } },
+    color: { value: ['#4afa1e', '#00f5e4', '#ffffff'] },
+    shape: { type: 'circle' },
+    opacity: { value: 0.3, random: true, anim: { enable: true, speed: 0.5, opacity_min: 0.05, sync: false } },
+    size: { value: 2, random: true },
+    line_linked: { enable: true, distance: 120, color: '#1a1a1a', opacity: 0.5, width: 1 },
+    move: { enable: true, speed: 0.8, direction: 'none', random: true, out_mode: 'out' }
+  },
+  interactivity: {
+    detect_on: 'canvas',
+    events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: false } },
+    modes: { grab: { distance: 120, line_linked: { opacity: 0.5 } } }
+  },
+  retina_detect: true
+});
 
-        // Particles Configuration (Más sutil y conectado)
-        particlesJS('particles-js', {
-            "particles": {
-                "number": { "value": 40 },
-                "color": { "value": "#53FCF1" },
-                "shape": { "type": "circle" },
-                "opacity": { "value": 0.3, "random": true },
-                "size": { "value": 3, "random": true },
-                "line_linked": { "enable": true, "distance": 150, "color": "#53FCF1", "opacity": 0.15, "width": 1 },
-                "move": { "enable": true, "speed": 1 }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": { "onhover": { "enable": true, "mode": "grab" } },
-                "modes": { "grab": { "distance": 200, "line_opacity": 0.3 } }
-            }
-        });
-    </script>
+// Navbar scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Typing effect hero
+const phrases = ['Desarrollador PowerShell.', 'Experto soporte IT.', 'Creador de Contenido.', 'Streamer en Kick ⚡', 'Builder de herramientas.'];
+let pi = 0, ci = 0, deleting = false;
+function typeHero() {
+  const el = document.getElementById('typing-text');
+  const cur = phrases[pi];
+  el.textContent = deleting ? cur.substring(0, ci--) : cur.substring(0, ci++);
+  let delay = deleting ? 60 : 100;
+  if (!deleting && ci === cur.length + 1) { deleting = true; delay = 2000; }
+  else if (deleting && ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; delay = 400; }
+  setTimeout(typeHero, delay);
+}
+typeHero();
+
+// Terminal animation
+function typeInto(el, text, speed, cb) {
+  let i = 0;
+  function t() {
+    if (i <= text.length) { el.textContent = text.substring(0, i++); setTimeout(t, speed); }
+    else if (cb) setTimeout(cb, 300);
+  }
+  t();
+}
+setTimeout(() => {
+  const c1 = document.getElementById('t-cmd-1');
+  const o1 = document.getElementById('t-out-1');
+  if (!c1) return;
+  typeInto(c1, 'Get-SysInfo -Full', 65, () => {
+    o1.style.display = 'block';
+    o1.textContent = '✓ CPU: Ryzen 5  RAM: 16GB  SSD: 1TB';
+    const c2 = document.getElementById('t-cmd-2');
+    const o2 = document.getElementById('t-out-2');
+    const o3 = document.getElementById('t-out-3');
+    setTimeout(() => {
+      typeInto(c2, 'irm "bs.github.io/Tool" | iex', 55, () => {
+        o2.style.display = 'block'; o2.textContent = '→ Cargando ToolboxBS...';
+        setTimeout(() => {
+          o3.style.display = 'block'; o3.textContent = '⚡ Listo. Bienvenido, amo Brandon.';
+          const c3 = document.getElementById('t-cmd-3');
+          setTimeout(() => { if(c3) { c3.textContent = ''; let on = true; setInterval(() => { c3.textContent = on ? '_' : ''; on = !on; }, 600); } }, 400);
+        }, 500);
+      });
+    }, 600);
+  });
+}, 1200);
+
+// Fade-up on scroll
+const fadeEls = document.querySelectorAll('.fade-up');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+fadeEls.forEach(el => io.observe(el));
+
+// Card mouse glow
+document.querySelectorAll('.card-bs').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+// Copy command
+function copyCmd(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="fa-solid fa-check" style="color: var(--green);"></i>';
+    setTimeout(() => btn.innerHTML = orig, 1500);
+  });
+}
+
+</script>
 </body>
-
 </html>
