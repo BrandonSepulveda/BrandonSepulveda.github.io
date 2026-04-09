@@ -1,840 +1,838 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="ToolboxBS - La suite definitiva para optimización, diagnóstico y mantenimiento de sistemas Windows." />
-    <meta name="author" content="Brandon Sepulveda" />
-    <title>ToolboxBS | Ultimate Windows Optimization Suite</title>
-    
-    <link rel="icon" type="image/x-icon" href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" />
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
-    <script src="https://use.fontawesome.com/releases/v6.5.2/js/all.js" crossorigin="anonymous"></script>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="ToolboxBS - Suite integral de optimización y mantenimiento para Windows. Desarrollada con PowerShell por Brandon Sepulveda."/>
+<title>ToolboxBS | Windows Optimization Suite</title>
+<link rel="icon" type="image/png" href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS_Removedor_1768162986835.png?raw=true"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 
-    <style>
-        /* --- VARIABLES & CORE SETUP --- */
-        :root {
-            --accent-primary: #3b82f6;      /* Bright Blue */
-            --accent-glow: #60a5fa;         /* Light Blue for glow */
-            --accent-secondary: #8b5cf6;    /* Violet for gradients */
-            
-            --bg-deep: #050505;             /* Almost Black */
-            --bg-panel: rgba(20, 20, 25, 0.6);
-            --bg-card: rgba(30, 30, 35, 0.4);
-            
-            --text-main: #ffffff;
-            --text-muted: #9ca3af;
-            
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-shine: rgba(255, 255, 255, 0.03);
-            
-            --ease-elastic: cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
+<style>
+:root {
+  --bg: #060608;
+  --surface: #0d0d10;
+  --surface2: #131318;
+  --border: rgba(255,255,255,0.07);
+  --border-h: rgba(255,255,255,0.16);
+  --green: #4afa1e;
+  --cyan: #00f5e4;
+  --blue: #1e90ff;
+  --red: #ff2d55;
+  --white: #f0f0f0;
+  --muted: #555;
+  --dim: #888;
+  --fd: 'Syne', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+  --fb: 'Inter', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--fb); background: var(--bg); color: var(--dim); overflow-x: hidden; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+/* noise */
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+/* grid */
+.grid-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+/* orbs */
+.orb { position: fixed; border-radius: 50%; filter: blur(110px); pointer-events: none; z-index: 0; }
+.orb-1 { width: 500px; height: 500px; background: var(--green); opacity: 0.07; top: -150px; left: -80px; animation: fl 22s ease-in-out infinite; }
+.orb-2 { width: 400px; height: 400px; background: var(--cyan); opacity: 0.06; bottom: -100px; right: -80px; animation: fl 28s ease-in-out infinite reverse; }
+.orb-3 { width: 250px; height: 250px; background: var(--blue); opacity: 0.05; top: 50%; left: 45%; animation: fl 18s ease-in-out infinite 4s; }
+@keyframes fl { 0%,100%{transform:translate(0,0)} 33%{transform:translate(30px,-25px)} 66%{transform:translate(-20px,20px)} }
 
-        body {
-            font-family: 'Manrope', sans-serif;
-            background-color: var(--bg-deep);
-            color: var(--text-muted);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
+/* ─ NAV ─ */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.1rem 0; transition: all 0.4s; }
+nav.scrolled { background: rgba(6,6,8,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0.65rem 0; }
+.nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; }
+.nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--fd); font-weight: 800; font-size: 1.15rem; color: var(--white); letter-spacing: -0.02em; }
+.nav-brand img { width: 32px; height: 32px; border-radius: 8px; object-fit: contain; }
+.nav-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pdot 2s ease-in-out infinite; }
+@keyframes pdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+.nav-links { display: flex; gap: 0.5rem; list-style: none; }
+.nav-links a { font-family: var(--fm); font-size: 0.75rem; color: var(--muted); text-decoration: none; padding: 0.4rem 0.9rem; border-radius: 6px; transition: all 0.3s; letter-spacing: 0.05em; }
+.nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+.nav-cta { font-family: var(--fm); font-size: 0.75rem; font-weight: 700; color: #000; background: var(--green); border: none; padding: 0.55rem 1.2rem; border-radius: 7px; cursor: pointer; letter-spacing: 0.05em; transition: all 0.3s; box-shadow: 0 0 20px rgba(74,250,30,0.3); text-decoration: none; }
+.nav-cta:hover { background: #5fff25; box-shadow: 0 0 40px rgba(74,250,30,0.5); transform: translateY(-1px); }
+.hamburger { display: none; background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; color: var(--dim); cursor: pointer; font-size: 1rem; }
 
-        h1, h2, h3, h4 { color: var(--text-main); font-weight: 800; letter-spacing: -0.02em; }
-        .font-mono { font-family: 'JetBrains Mono', monospace; }
+/* ─ HERO ─ */
+.hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding: 8rem 0 5rem; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(30,144,255,0.08); border: 1px solid rgba(30,144,255,0.2); padding: 5px 14px; border-radius: 100px; font-family: var(--fm); font-size: 0.72rem; color: var(--blue); margin-bottom: 1.5rem; letter-spacing: 0.06em; }
+.hero-badge-dot { width: 5px; height: 5px; background: var(--blue); border-radius: 50%; animation: pdot 2s ease-in-out infinite; }
+.hero-title { font-family: var(--fd); font-size: clamp(3.5rem, 10vw, 8rem); font-weight: 800; line-height: 0.9; letter-spacing: -0.04em; color: var(--white); margin-bottom: 0.5rem; }
+.hero-title .accent { -webkit-text-fill-color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.2); }
+.hero-version { font-family: var(--fm); font-size: 0.75rem; color: var(--green); letter-spacing: 0.1em; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px; }
+.hero-version::before { content: ''; width: 20px; height: 1px; background: var(--green); }
+.hero-desc { font-size: 1rem; color: var(--dim); max-width: 520px; line-height: 1.8; margin-bottom: 2.5rem; }
+.hero-desc strong { color: var(--white); }
+.ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.btn-green { display: inline-flex; align-items: center; gap: 10px; padding: 0.9rem 2rem; border-radius: 8px; font-family: var(--fm); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em; text-decoration: none; color: #000; background: var(--green); border: 1px solid var(--green); box-shadow: 0 0 30px rgba(74,250,30,0.25); transition: all 0.3s; }
+.btn-green:hover { background: transparent; color: var(--green); box-shadow: 0 0 50px rgba(74,250,30,0.4); transform: translateY(-2px); }
+.btn-outline { display: inline-flex; align-items: center; gap: 10px; padding: 0.9rem 2rem; border-radius: 8px; font-family: var(--fm); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em; text-decoration: none; color: var(--white); background: transparent; border: 1px solid var(--border-h); transition: all 0.3s; }
+.btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.04); transform: translateY(-2px); color: var(--white); }
+.hero-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+.hstat { display: flex; flex-direction: column; }
+.hstat-num { font-family: var(--fd); font-size: 1.6rem; font-weight: 800; color: var(--white); letter-spacing: -0.03em; line-height: 1; }
+.hstat-num.g { color: var(--green); }
+.hstat-num.c { color: var(--cyan); }
+.hstat-label { font-family: var(--fm); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 3px; }
+/* terminal hero */
+.hero-terminal { background: #000; border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; font-family: var(--fm); }
+.term-bar { background: #111; padding: 10px 14px; display: flex; align-items: center; gap: 7px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.td { width: 12px; height: 12px; border-radius: 50%; }
+.tr { background: #ff5f57; } .ty { background: #febc2e; } .tg { background: #28c840; }
+.tname { margin-left: 8px; font-size: 0.7rem; color: var(--muted); }
+.term-body { padding: 1.25rem; font-size: 0.8rem; line-height: 2; }
+.tp { color: var(--green); }
+.tc { color: #e0e0e0; }
+.to { color: var(--cyan); padding-left: 1rem; }
+.tw { color: #febc2e; padding-left: 1rem; }
+.tm { color: var(--muted); padding-left: 1rem; font-size: 0.72rem; }
 
-        /* --- BACKGROUND ANIMATION (Cyber Grid) --- */
-        .cyber-grid {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-size: 50px 50px;
-            background-image: 
-                linear-gradient(to right, rgba(59, 130, 246, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
-            z-index: -2;
-            transform: perspective(500px) rotateX(60deg) translateY(-100px) scale(2);
-            animation: gridMove 20s linear infinite;
-            pointer-events: none;
-        }
-        .cyber-vignette {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, transparent 0%, var(--bg-deep) 90%);
-            z-index: -1; pointer-events: none;
-        }
+/* ─ SECTIONS ─ */
+.section { padding: 7rem 0; position: relative; z-index: 1; }
+.section-alt { background: linear-gradient(to bottom, var(--bg), var(--surface) 50%, var(--bg)); }
+.sec-label { font-family: var(--fm); font-size: 0.7rem; letter-spacing: 0.15em; color: var(--green); text-transform: uppercase; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px; }
+.sec-label::before { content: ''; width: 22px; height: 1px; background: var(--green); }
+.sec-title { font-family: var(--fd); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; color: var(--white); line-height: 1; }
 
-        @keyframes gridMove {
-            0% { transform: perspective(500px) rotateX(60deg) translateY(0) scale(2); }
-            100% { transform: perspective(500px) rotateX(60deg) translateY(50px) scale(2); }
-        }
+/* ─ FEATURE CARDS ─ */
+.feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 4rem; }
+.feat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); position: relative; overflow: hidden; }
+.feat-card::after { content: ''; position: absolute; inset: 0; background: radial-gradient(400px circle at var(--mx,50%) var(--my,50%), rgba(74,250,30,0.04), transparent 40%); pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+.feat-card:hover { border-color: var(--border-h); transform: translateY(-6px); }
+.feat-card:hover::after { opacity: 1; }
+.feat-icon { width: 52px; height: 52px; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.25rem; transition: all 0.3s; color: var(--cyan); }
+.feat-card:hover .feat-icon { border-color: rgba(0,245,228,0.3); background: rgba(0,245,228,0.08); }
+.feat-title { font-family: var(--fd); font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.6rem; letter-spacing: -0.02em; }
+.feat-desc { font-size: 0.85rem; color: var(--dim); line-height: 1.7; }
+.feat-list { list-style: none; margin-top: 1rem; display: flex; flex-direction: column; gap: 5px; }
+.feat-list li { font-family: var(--fm); font-size: 0.72rem; color: var(--dim); display: flex; align-items: center; gap: 8px; }
+.feat-list li::before { content: '→'; color: var(--green); font-size: 0.65rem; flex-shrink: 0; }
 
-        /* --- INTRO SEQUENCE --- */
-        .intro-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-deep);
-            z-index: 9999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.8s ease, visibility 0.8s;
-        }
-        .intro-overlay.vanish { opacity: 0; visibility: hidden; pointer-events: none; }
-        
-        .matrix-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.3; }
-        
-        .intro-logo-wrapper {
-            position: relative; width: 120px; height: 120px;
-            display: flex; justify-content: center; align-items: center;
-            background: rgba(255,255,255,0.05);
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 0 50px rgba(59, 130, 246, 0.3);
-            animation: pulseLogo 2s infinite;
-        }
-        .intro-logo-wrapper img { width: 80%; height: 80%; object-fit: contain; }
-        
-        .loading-bar-container {
-            width: 200px; height: 4px; background: rgba(255,255,255,0.1);
-            margin-top: 30px; border-radius: 2px; overflow: hidden;
-        }
-        .loading-bar {
-            width: 0%; height: 100%; background: var(--accent-primary);
-            box-shadow: 0 0 10px var(--accent-primary);
-            transition: width 0.1s linear;
-        }
-        
-        @keyframes pulseLogo {
-            0% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.2); transform: scale(1); }
-            50% { box-shadow: 0 0 60px rgba(59, 130, 246, 0.5); transform: scale(1.05); }
-            100% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.2); transform: scale(1); }
-        }
+/* ─ INSTALL SECTION ─ */
+.install-box { background: #000; border: 1px solid rgba(74,250,30,0.15); border-radius: 16px; overflow: hidden; max-width: 780px; margin: 3rem auto 0; box-shadow: 0 0 60px rgba(74,250,30,0.06); }
+.install-bar { background: #0a0a0a; padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 8px; }
+.install-title { font-family: var(--fm); font-size: 0.72rem; color: var(--muted); margin-left: 8px; letter-spacing: 0.05em; }
+.install-body { padding: 2rem; }
+.cmd-line { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.cmd-prompt { color: var(--green); font-family: var(--fm); font-size: 0.85rem; flex-shrink: 0; }
+.cmd-text { color: var(--cyan); font-family: var(--fm); font-size: 0.85rem; flex: 1; word-break: break-all; }
+.cmd-copy { background: none; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); cursor: pointer; padding: 6px 12px; font-family: var(--fm); font-size: 0.7rem; transition: all 0.2s; flex-shrink: 0; display: flex; align-items: center; gap: 5px; }
+.cmd-copy:hover { border-color: var(--green); color: var(--green); }
+.install-alt { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
+.install-note { font-family: var(--fm); font-size: 0.72rem; color: var(--muted); display: flex; align-items: center; gap: 6px; padding: 0.5rem 0; }
+.install-note i { color: var(--green); font-size: 0.7rem; }
 
-        /* --- NAVBAR --- */
-        .navbar {
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            padding: 1.2rem 2rem;
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(5, 5, 5, 0.7);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
-        }
-        .nav-logo {
-            display: flex; align-items: center; gap: 10px;
-            color: var(--text-main); text-decoration: none; font-weight: 800; font-size: 1.2rem;
-        }
-        .nav-logo img { height: 32px; }
-        
-        .nav-links { display: flex; gap: 2rem; }
-        .nav-link {
-            color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500;
-            transition: color 0.3s; position: relative;
-        }
-        .nav-link:hover { color: var(--accent-primary); }
-        .nav-link::after {
-            content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
-            background: var(--accent-primary); transition: width 0.3s ease;
-        }
-        .nav-link:hover::after { width: 100%; }
+/* ─ STATS COUNTER ─ */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 4rem; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; text-align: center; transition: all 0.3s; }
+.stat-card:hover { border-color: var(--border-h); }
+.stat-big { font-family: var(--fd); font-size: 2.5rem; font-weight: 800; color: var(--white); letter-spacing: -0.04em; line-height: 1; margin-bottom: 6px; }
+.stat-big.g { color: var(--green); }
+.stat-big.c { color: var(--cyan); }
+.stat-big.b { color: var(--blue); }
+.stat-sub { font-family: var(--fm); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
-        .btn-cta {
-            padding: 0.6rem 1.4rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem;
-            text-decoration: none; transition: all 0.3s ease;
-            display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: white; border: 1px solid transparent;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
-        }
-        .btn-outline {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); color: var(--text-main);
-        }
-        .btn-outline:hover {
-            background: rgba(255,255,255,0.1); border-color: var(--text-main);
-        }
+/* ─ TESTIMONIALS ─ */
+.testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+.testi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; transition: all 0.3s; }
+.testi-card:hover { border-color: var(--border-h); }
+.testi-stars { color: #febc2e; font-size: 0.85rem; margin-bottom: 1rem; letter-spacing: 2px; }
+.testi-text { font-size: 0.9rem; color: var(--dim); line-height: 1.8; font-style: italic; margin-bottom: 1.25rem; }
+.testi-author { display: flex; align-items: center; gap: 10px; }
+.testi-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: var(--fd); font-size: 0.85rem; font-weight: 700; color: var(--cyan); flex-shrink: 0; }
+.testi-name { font-family: var(--fd); font-size: 0.9rem; font-weight: 700; color: var(--white); }
+.testi-role { font-family: var(--fm); font-size: 0.68rem; color: var(--muted); }
 
-        /* --- HERO SECTION --- */
-        .hero {
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
-            padding: 120px 20px 60px; position: relative;
-            text-align: center;
-        }
-        .hero-content { max-width: 900px; z-index: 10; }
-        
-        /* Glitch Effect Title */
-        .glitch-wrapper { position: relative; display: inline-block; }
-        .hero-title {
-            font-size: clamp(3rem, 6vw, 5rem);
-            line-height: 1.1; margin-bottom: 20px;
-            background: linear-gradient(to right, #fff, #94a3b8);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-        }
-        
-        .hero-subtitle {
-            font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--text-muted);
-            max-width: 600px; margin: 0 auto 40px;
-        }
-        
-        /* Typing Terminal Effect */
-        .hero-terminal {
-            background: rgba(0,0,0,0.8); border: 1px solid var(--glass-border);
-            border-radius: 12px; padding: 15px 25px;
-            display: inline-flex; align-items: center; gap: 10px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot-red { background: #ef4444; } .dot-yellow { background: #f59e0b; } .dot-green { background: #10b981; }
-        .terminal-text { color: var(--accent-glow); font-family: 'JetBrains Mono'; font-size: 0.9rem; }
-        .cursor { display: inline-block; width: 8px; height: 15px; background: var(--accent-glow); animation: blink 1s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+/* ─ MODAL ─ */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal { background: var(--surface); border: 1px solid rgba(74,250,30,0.2); border-radius: 20px; padding: 2.5rem; max-width: 480px; width: 90%; position: relative; transform: scale(0.95); transition: transform 0.3s; box-shadow: 0 0 80px rgba(74,250,30,0.1); }
+.modal-overlay.open .modal { transform: scale(1); }
+.modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.modal-close:hover { border-color: var(--red); color: var(--red); }
+.modal-title { font-family: var(--fd); font-size: 1.5rem; font-weight: 800; color: var(--white); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.modal-sub { font-family: var(--fm); font-size: 0.78rem; color: var(--muted); margin-bottom: 2rem; }
+.modal-options { display: flex; flex-direction: column; gap: 1rem; }
+.modal-btn { display: flex; align-items: center; gap: 14px; padding: 1rem 1.25rem; border-radius: 10px; text-decoration: none; border: 1px solid var(--border); background: var(--surface2); transition: all 0.3s; cursor: pointer; }
+.modal-btn:hover { border-color: var(--border-h); background: var(--surface); transform: translateX(4px); }
+.modal-btn-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+.modal-btn-icon.ps { background: rgba(0,245,228,0.08); border: 1px solid rgba(0,245,228,0.2); color: var(--cyan); }
+.modal-btn-icon.exe { background: rgba(74,250,30,0.08); border: 1px solid rgba(74,250,30,0.2); color: var(--green); }
+.modal-btn-icon.web { background: rgba(30,144,255,0.08); border: 1px solid rgba(30,144,255,0.2); color: var(--blue); }
+.modal-btn-label { font-family: var(--fd); font-weight: 700; font-size: 0.95rem; color: var(--white); line-height: 1.2; }
+.modal-btn-sub { font-family: var(--fm); font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+.modal-btn-arr { margin-left: auto; color: var(--muted); transition: all 0.3s; font-size: 0.85rem; }
+.modal-btn:hover .modal-btn-arr { color: var(--white); transform: translateX(3px); }
 
-        /* --- CARDS (Tilt Effect) --- */
-        .section-title {
-            text-align: center; font-size: 2.5rem; margin-bottom: 60px;
-        }
-        .text-gradient {
-            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-        }
+/* ─ FOOTER ─ */
+footer { border-top: 1px solid var(--border); padding: 3rem 0; position: relative; z-index: 1; }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+.footer-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.footer-brand img { width: 28px; height: 28px; border-radius: 6px; }
+.footer-brand span { font-family: var(--fd); font-weight: 700; color: var(--white); font-size: 0.95rem; }
+.footer-links { display: flex; gap: 1.5rem; list-style: none; }
+.footer-links a { font-family: var(--fm); font-size: 0.72rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.footer-links a:hover { color: var(--white); }
+.footer-copy { font-family: var(--fm); font-size: 0.7rem; color: var(--muted); }
 
-        .cards-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px; max-width: 1200px; margin: 0 auto; padding: 0 20px;
-        }
+/* ─ UTILS ─ */
+.fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--green); }
 
-        .tilt-card {
-            background: var(--bg-card);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 40px 30px;
-            position: relative;
-            transform-style: preserve-3d;
-            transform: perspective(1000px);
-            transition: transform 0.1s ease; /* Fast transition for mouse movement */
-        }
-        
-        .card-content {
-            transform: translateZ(20px); /* Pop out effect */
-            pointer-events: none;
-        }
-
-        .card-icon {
-            font-size: 2.5rem; color: var(--accent-primary); margin-bottom: 20px;
-            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4));
-        }
-
-        .card-glow {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: 20px;
-            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.15), transparent 60%);
-            opacity: 0; transition: opacity 0.3s; pointer-events: none;
-        }
-        .tilt-card:hover .card-glow { opacity: 1; }
-
-        /* --- FEATURES (Alternating) --- */
-        .features-section { padding: 100px 0; }
-        .feature-row {
-            display: flex; align-items: center; gap: 60px;
-            max-width: 1200px; margin: 0 auto 100px; padding: 0 20px;
-        }
-        .feature-row:nth-child(even) { flex-direction: row-reverse; }
-        
-        .feature-info { flex: 1; }
-        .feature-visual { flex: 1; perspective: 1000px; }
-        
-        .feature-img-container {
-            position: relative; border-radius: 16px; overflow: hidden;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            transform: rotateY(-5deg) rotateX(5deg);
-            transition: transform 0.5s ease;
-        }
-        .feature-row:nth-child(even) .feature-img-container { transform: rotateY(5deg) rotateX(5deg); }
-        .feature-img-container:hover { transform: rotateY(0) rotateX(0) scale(1.02); }
-        
-        .feature-img-container img { width: 100%; display: block; }
-
-        .feature-list { list-style: none; margin-top: 20px; }
-        .feature-list li {
-            margin-bottom: 15px; padding-left: 25px; position: relative; color: var(--text-muted);
-        }
-        .feature-list li::before {
-            content: '▹'; position: absolute; left: 0; color: var(--accent-primary);
-        }
-
-        /* --- INSTALLATION (Fake Terminal) --- */
-        .install-section {
-            background: linear-gradient(to bottom, var(--bg-deep), #0a0a0f);
-            padding: 100px 0; text-align: center;
-        }
-        
-        .terminal-window {
-            max-width: 700px; margin: 40px auto 0;
-            background: #1e1e1e; border-radius: 10px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-            border: 1px solid #333;
-            overflow: hidden; text-align: left;
-        }
-        .terminal-header {
-            background: #2d2d2d; padding: 10px 15px;
-            display: flex; gap: 8px; border-bottom: 1px solid #333;
-        }
-        .terminal-body { padding: 20px; font-family: 'JetBrains Mono', monospace; color: #d4d4d4; }
-        .cmd-prompt { color: #10b981; margin-right: 10px; }
-        .cmd-command { color: #fff; }
-        
-        .copy-overlay {
-            margin-top: 15px; display: flex; justify-content: flex-end;
-        }
-        .btn-copy {
-            background: rgba(255,255,255,0.1); border: none; color: white;
-            padding: 8px 12px; border-radius: 4px; cursor: pointer;
-            font-size: 0.8rem; display: flex; align-items: center; gap: 6px;
-            transition: background 0.2s;
-        }
-        .btn-copy:hover { background: rgba(255,255,255,0.2); }
-
-        /* --- STATS SLIDER (Marquee) --- */
-        .stats-marquee {
-            overflow: hidden; white-space: nowrap; padding: 40px 0;
-            background: var(--bg-panel); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);
-        }
-        .track {
-            display: inline-block; animation: marquee 80s linear infinite; /* Slowed down for readability */
-        }
-        .stat-badge {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: rgba(255,255,255,0.05); padding: 10px 20px;
-            border-radius: 50px; margin: 0 15px; border: 1px solid var(--glass-border);
-        }
-        .stat-badge img { width: 20px; border-radius: 2px; }
-        
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        /* --- FOOTER --- */
-        footer {
-            background: #000; padding: 60px 20px; text-align: center;
-            border-top: 1px solid var(--glass-border);
-        }
-        .social-icons { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; }
-        .social-btn {
-            width: 45px; height: 45px; border-radius: 50%;
-            background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;
-            color: white; text-decoration: none; transition: all 0.3s; border: 1px solid var(--glass-border);
-        }
-        .social-btn:hover { background: var(--accent-primary); transform: translateY(-3px); border-color: transparent; }
-
-        /* --- UTILS --- */
-        .hide-mobile { display: block; }
-        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: white; }
-
-        @media (max-width: 768px) {
-            .hero-title { font-size: 2.5rem; }
-            .feature-row { flex-direction: column !important; gap: 30px; }
-            .feature-img-container { transform: none !important; }
-            .hide-mobile { display: none; }
-            .hamburger { display: block; }
-            .nav-links {
-                position: fixed; top: 70px; left: 0; width: 100%;
-                background: var(--bg-deep); flex-direction: column;
-                padding: 20px; border-bottom: 1px solid var(--glass-border);
-                transform: translateY(-150%); transition: transform 0.3s;
-            }
-            .nav-links.active { transform: translateY(0); }
-        }
-        
-        /* Modal for Download/Execute */
-        .modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-            z-index: 2000; display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s;
-        }
-        .modal.active { opacity: 1; pointer-events: auto; }
-        .modal-box {
-            background: #1a1a1a; padding: 40px; border-radius: 16px;
-            max-width: 500px; width: 90%; border: 1px solid var(--glass-border);
-            text-align: center; position: relative;
-            transform: scale(0.9); transition: transform 0.3s;
-        }
-        .modal.active .modal-box { transform: scale(1); }
-        .modal-close { position: absolute; top: 15px; right: 20px; cursor: pointer; font-size: 1.5rem; }
-    </style>
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: block; }
+  .hero-row { flex-direction: column; }
+  .hero-terminal { display: none; }
+  .ctas { flex-direction: column; }
+  .install-alt { flex-direction: column; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+</style>
 </head>
 <body>
 
-    <!-- Background Grid -->
-    <div class="cyber-grid"></div>
-    <div class="cyber-vignette"></div>
+<div class="grid-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
 
-    <!-- Intro Loading Screen -->
-    <div class="intro-overlay" id="intro-screen">
-        <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
-        <div class="intro-logo-wrapper">
-            <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" alt="Logo">
-        </div>
-        <div class="loading-bar-container">
-            <div class="loading-bar" id="loading-bar"></div>
-        </div>
-        <div style="margin-top: 15px; font-family: 'JetBrains Mono'; font-size: 0.8rem; color: var(--accent-glow);">
-            INITIALIZING SYSTEM...
-        </div>
-        <button onclick="skipIntro()" style="position: absolute; bottom: 30px; background: transparent; border: 1px solid #333; color: #666; padding: 5px 10px; cursor: pointer; border-radius: 4px;">SKIP INTRO</button>
-    </div>
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="https://brandonsepulveda.github.io">
+      <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS_Removedor_1768162986835.png?raw=true" alt="BS Logo">
+      ToolboxBS
+      <div class="nav-dot"></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Características</a></li>
+      <li><a href="#stats">Stats</a></li>
+      <li><a href="#install">Instalación</a></li>
+      <li><a href="#testimonials">Opiniones</a></li>
+    </ul>
+    <a href="https://brandonsepulveda.github.io/ToolboxBSweb" target="_blank" class="nav-cta">
+      <i class="fa-solid fa-globe" style="font-size:0.7rem;"></i> Versión Web
+    </a>
+    <button class="hamburger"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <a href="#" class="nav-logo">
-            <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" alt="TB">
-            <span>ToolboxBS</span>
-        </a>
-        <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-        <div class="nav-links" id="nav-links">
-            <a href="#features" class="nav-link" onclick="toggleMenu()">Características</a>
-            <a href="#stats" class="nav-link" onclick="toggleMenu()">Stats</a>
-            <a href="#install" class="nav-link" onclick="toggleMenu()">Instalación</a>
-            <a href="#testimonials" class="nav-link" onclick="toggleMenu()">Opiniones</a>
-            <a href="javascript:void(0)" onclick="openModal()" class="btn-cta btn-primary">
-                <i class="fas fa-bolt"></i> Ejecutar
-            </a>
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div style="display:flex; align-items:center; gap:4rem; flex-wrap:wrap;" class="hero-row">
+      <div style="flex:1; min-width:280px;">
+        <div class="hero-badge fade-up">
+          <div class="hero-badge-dot"></div>
+          POWERSHELL + WPF · VERSIÓN 3.1
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-terminal">
-                <div class="terminal-dot dot-red"></div>
-                <div class="terminal-dot dot-yellow"></div>
-                <div class="terminal-dot dot-green"></div>
-                <div class="terminal-text">
-                    PS C:\Users\Admin> <span id="typing-text"></span><span class="cursor"></span>
-                </div>
-            </div>
-            
-            <h1 class="hero-title">
-                Optimización de Windows<br>
-                <span class="text-gradient">Redefinida.</span>
-            </h1>
-            
-            <p class="hero-subtitle">
-                ToolboxBS no es solo una herramienta, es una central de comando para limpiar, acelerar y diagnosticar tu PC con un solo script.
-            </p>
-            
-            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                <a href="javascript:void(0)" onclick="openModal()" class="btn-cta btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem;">
-                    <i class="fas fa-download"></i> Comenzar Ahora
-                </a>
-                <a href="#features" class="btn-cta btn-outline" style="padding: 1rem 2rem; font-size: 1.1rem;">
-                    <i class="fas fa-info-circle"></i> Saber Más
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3D Cards Section -->
-    <section id="features" style="padding-bottom: 100px;">
-        <h2 class="section-title">Tu Nuevo <span class="text-gradient">Superpoder</span></h2>
-        <div class="cards-grid">
-            <div class="tilt-card" data-tilt>
-                <div class="card-glow"></div>
-                <div class="card-content">
-                    <i class="fas fa-rocket card-icon"></i>
-                    <h3>Boost FPS</h3>
-                    <p style="margin-top: 10px; color: var(--text-muted);">
-                        Libera memoria RAM y detiene procesos inútiles para maximizar el rendimiento en juegos.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="tilt-card" data-tilt>
-                <div class="card-glow"></div>
-                <div class="card-content">
-                    <i class="fas fa-microchip card-icon"></i>
-                    <h3>Diagnóstico</h3>
-                    <p style="margin-top: 10px; color: var(--text-muted);">
-                        Escanea tu hardware, temperaturas y estado de salud del sistema en segundos.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="tilt-card" data-tilt>
-                <div class="card-glow"></div>
-                <div class="card-content">
-                    <i class="fas fa-trash-alt card-icon"></i>
-                    <h3>Limpieza Profunda</h3>
-                    <p style="margin-top: 10px; color: var(--text-muted);">
-                        Elimina gigabytes de basura, caché de Windows Update y archivos temporales.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Marquee -->
-    <section id="stats" class="stats-marquee">
-        <div class="track" id="stats-track">
-            <!-- Content will be injected by JavaScript -->
-            <span class="stat-badge" style="color: #666;">Cargando estadísticas...</span>
-        </div>
-    </section>
-
-    <!-- Detailed Features -->
-    <section class="features-section">
-        <div class="feature-row">
-            <div class="feature-info">
-                <h3 style="font-size: 2rem; margin-bottom: 20px;">Interfaz Intuitiva y <span class="text-gradient">Potente</span></h3>
-                <p style="color: var(--text-muted);">
-                    Olvídate de memorizar comandos complejos. ToolboxBS agrupa scripts avanzados de PowerShell en una interfaz gráfica (GUI) amigable.
-                </p>
-                <ul class="feature-list">
-                    <li>Instalación de Software Masivo (Chocolatey)</li>
-                    <li>Debloater de Windows (Eliminar Apps Basura)</li>
-                    <li>Reparación de Windows Update y Tienda</li>
-                </ul>
-            </div>
-            <div class="feature-visual">
-                <div class="feature-img-container">
-                    <img src="https://private-user-images.githubusercontent.com/88468929/466818098-20dff9b7-a20d-4bee-bbc7-aa3fa940897e.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjU0NjAyNzEsIm5iZiI6MTc2NTQ1OTk3MSwicGF0aCI6Ii84ODQ2ODkyOS80NjY4MTgwOTgtMjBkZmY5YjctYTIwZC00YmVlLWJiYzctYWEzZmE5NDA4OTdlLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTEyMTElMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMjExVDEzMzI1MVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWEyZmM3MTY1M2RmMzJmM2MyZjk3NjQ5MWVmMDhjNTZlMTA0ZWRkNDViM2JlNGZkMTAyYWExNDgzMTkyZjIzYjMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.o-MXt4HYv8DGicp5aglg5eHDnSNBeMEH3FEuHjaRUCY" alt="UI" onerror="this.src='https://placehold.co/600x400/1E1E1E/FFF?text=Interfaz+UI'">
-                </div>
-            </div>
-        </div>
-
-        <div class="feature-row">
-            <div class="feature-info">
-                <h3 style="font-size: 2rem; margin-bottom: 20px;">Control Total del <span class="text-gradient">Sistema</span></h3>
-                <p style="color: var(--text-muted);">
-                    Accede a herramientas ocultas del sistema operativo y toma el control de tu privacidad y rendimiento.
-                </p>
-                <ul class="feature-list">
-                    <li>Gestión de Servicios y Inicio</li>
-                    <li>Tweaks de Registro Seguros</li>
-                    <li>Verificación de Integridad (SFC / DISM)</li>
-                </ul>
-            </div>
-            <div class="feature-visual">
-                <div class="feature-img-container">
-                    <img src="https://private-user-images.githubusercontent.com/88468929/466818483-b9d7f542-1d54-4768-8967-f22de798ab36.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjU0NjAyNzEsIm5iZiI6MTc2NTQ1OTk3MSwicGF0aCI6Ii84ODQ2ODkyOS80NjY4MTg0ODMtYjlkN2Y1NDItMWQ1NC00NzY4LTg5NjctZjIyZGU3OThhYjM2LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTEyMTElMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMjExVDEzMzI1MVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWVmYjU2OGNiYzlmYTM5YTYxZjM3YTRmZTJmNzc4MGVkNjVmN2IxNWJjMjQxMzY5ZmI2OTY2OTk2NDMxYmY5MWMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.irmCA3uZRBeVMlxLTVfdTK4q3qDFgvAXWPWhPgCFACE" alt="Optimizacion" onerror="this.src='https://placehold.co/600x400/1E1E1E/FFF?text=Optimizacion'">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Install Terminal -->
-    <section id="install" class="install-section">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <h2 class="section-title">Instalación <span class="text-gradient">Zero-Touch</span></h2>
-            <p style="color: var(--text-muted); max-width: 600px; margin: -40px auto 40px;">
-                Sin instaladores pesados. Simplemente copia y pega este comando en tu PowerShell como Administrador.
-            </p>
-
-            <div class="terminal-window">
-                <div class="terminal-header">
-                    <div class="terminal-dot dot-red"></div>
-                    <div class="terminal-dot dot-yellow"></div>
-                    <div class="terminal-dot dot-green"></div>
-                    <span style="margin-left: 10px; font-size: 0.8rem; color: #888;">Administrator: PowerShell</span>
-                </div>
-                <div class="terminal-body">
-                    <div>
-                        <span class="cmd-prompt">PS C:\Windows\system32></span>
-                        <span class="cmd-command" id="cmd-text">irm "https://cutt.ly/ToolboxBS" | iex</span>
-                    </div>
-                    <div class="copy-overlay">
-                        <button class="btn-copy" onclick="copyCommand()">
-                            <i class="fas fa-copy"></i> Copiar Comando
-                        </button>
-                        <span id="copy-msg" style="margin-left: 10px; color: var(--accent-primary); opacity: 0; transition: opacity 0.3s; font-size: 0.8rem; padding-top: 5px;">¡Copiado!</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section id="testimonials" style="padding: 100px 20px; text-align: center;">
-        <h2 class="section-title">Comunidad</h2>
-        <div class="cards-grid">
-            <div class="tilt-card" style="text-align: left;">
-                <p style="font-style: italic; color: #ccc;">"Increíble. ToolboxBS reunió todas las herramientas que usaba por separado en un solo lugar."</p>
-                <div style="margin-top: 20px; display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 40px; height: 40px; background: #333; border-radius: 50%;"></div>
-                    <div>
-                        <h4 style="font-size: 0.9rem;">John Muñóz</h4>
-                        <span style="font-size: 0.8rem; color: var(--text-muted);">Ing. Sistemas</span>
-                    </div>
-                </div>
-            </div>
-            <div class="tilt-card" style="text-align: left;">
-                <p style="font-style: italic; color: #ccc;">"La función de instalación por PowerShell es una genialidad. Es seguro y rápido."</p>
-                <div style="margin-top: 20px; display: flex; align-items: center; gap: 10px;">
-                    <div style="width: 40px; height: 40px; background: #333; border-radius: 50%;"></div>
-                    <div>
-                        <h4 style="font-size: 0.9rem;">Julio Valencia</h4>
-                        <span style="font-size: 0.8rem; color: var(--text-muted);">Dev</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="social-icons">
-            <a href="https://github.com/BrandonSepulveda" target="_blank" class="social-btn"><i class="fab fa-github"></i></a>
-            <a href="https://kick.com/papibrandon" target="_blank" class="social-btn"><i class="fab fa-kickstarter-k"></i></a>
-            <a href="https://www.instagram.com/brandonsepulveda_66" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
-        </div>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">
-            &copy; 2025 Brandon Sepulveda. Distribuido bajo licencia AGPL v3.0.<br>
-            Hecho con <i class="fas fa-bolt" style="color: var(--accent-primary);"></i> para Windows.
+        <h1 class="hero-title fade-up" style="transition-delay:0.05s;">
+          TOOLBOX<span class="accent">BS</span>
+        </h1>
+        <div class="hero-version fade-up" style="transition-delay:0.1s;">WINDOWS OPTIMIZATION SUITE</div>
+        <p class="hero-desc fade-up" style="transition-delay:0.15s;">
+          No es solo una herramienta. Es una <strong>central de comando</strong> para limpiar, acelerar y diagnosticar tu PC con <strong>un solo script</strong>. Desarrollada con PowerShell y WPF por Brandon Sepulveda.
         </p>
-    </footer>
-
-    <!-- Execution Modal -->
-    <div class="modal" id="execModal">
-        <div class="modal-box">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <h2 style="margin-bottom: 20px;">Elige tu Camino</h2>
-            <p style="color: var(--text-muted); margin-bottom: 30px;">
-                Puedes ejecutar el script directamente desde la nube o descargar el ejecutable portable.
-            </p>
-            <div style="display: flex; flex-direction: column; gap: 15px;">
-                <button onclick="copyCommand(); closeModal()" class="btn-cta btn-primary" style="justify-content: center;">
-                    <i class="fas fa-terminal"></i> Copiar Comando PowerShell
-                </button>
-                <a href="https://github.com/BrandonSepulveda/ToolboxBS/releases/latest/download/ToolboxBS.exe" class="btn-cta btn-outline" style="justify-content: center;">
-                    <i class="fas fa-file-download"></i> Descargar .EXE (Portable)
-                </a>
-                <a href="https://brandonsepulveda.github.io/ToolboxBSweb" target="_blank" class="btn-cta btn-outline" style="justify-content: center;">
-                    <i class="fas fa-globe-americas"></i> Versión Web Online
-                </a>
-            </div>
+        <div class="ctas fade-up" style="transition-delay:0.2s;">
+          <button class="btn-green" onclick="openModal()">
+            <i class="fa-solid fa-bolt"></i> Ejecutar Ahora
+          </button>
+          <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank" class="btn-outline">
+            <i class="fab fa-github"></i> Ver en GitHub
+          </a>
         </div>
+        <div class="hero-stats fade-up" style="transition-delay:0.25s;">
+          <div class="hstat"><span class="hstat-num g" id="cnt-dl">+20K</span><span class="hstat-label">Descargas</span></div>
+          <div class="hstat"><span class="hstat-num c">3.1</span><span class="hstat-label">Versión actual</span></div>
+          <div class="hstat"><span class="hstat-num">97%</span><span class="hstat-label">PowerShell</span></div>
+          <div class="hstat"><span class="hstat-num">31+</span><span class="hstat-label">Releases</span></div>
+        </div>
+      </div>
+      <div style="flex:0 0 380px;" class="fade-up hero-terminal" style="transition-delay:0.3s;">
+        <div class="hero-terminal">
+          <div class="term-bar">
+            <div class="td tr"></div><div class="td ty"></div><div class="td tg"></div>
+            <span class="tname">Administrator: PowerShell 5.1</span>
+          </div>
+          <div class="term-body">
+            <div style="display:flex;gap:8px;"><span class="tp">PS&gt;</span><span class="tc" id="tc1"></span></div>
+            <div class="to" id="to1" style="display:none;"></div>
+            <div style="display:flex;gap:8px;margin-top:6px;"><span class="tp">PS&gt;</span><span class="tc" id="tc2"></span></div>
+            <div class="to" id="to2" style="display:none;"></div>
+            <div class="tw" id="to3" style="display:none;"></div>
+            <div class="tm" id="to4" style="display:none;"></div>
+            <div style="display:flex;gap:8px;margin-top:6px;"><span class="tp">PS&gt;</span><span class="tc" id="tc3"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- scroll indicator -->
+  <div style="position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2;">
+    <div style="width:1px;height:44px;background:linear-gradient(to bottom,var(--green),transparent);animation:sdrop 1.5s ease-in-out infinite;"></div>
+    <span style="font-family:var(--fm);font-size:0.65rem;color:var(--muted);letter-spacing:0.12em;">SCROLL</span>
+  </div>
+</section>
+<style>@keyframes sdrop{0%,100%{opacity:1;transform:scaleY(1)}50%{opacity:0.3;transform:scaleY(0.5)}}</style>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="text-center fade-up" style="text-align:center;">
+      <div class="sec-label" style="justify-content:center;">Características</div>
+      <h2 class="sec-title">Todo lo que<br>necesitas.</h2>
+      <p style="color:var(--dim);font-size:0.9rem;margin-top:1rem;font-family:var(--fm);">Un script. Cero instaladores pesados. Control total de Windows.</p>
+    </div>
+    <div class="feat-grid">
+
+      <div class="feat-card fade-up">
+        <div class="feat-icon"><i class="fas fa-gauge-high"></i></div>
+        <div class="feat-title">Boost de Rendimiento</div>
+        <p class="feat-desc">Libera memoria RAM, detiene procesos basura y optimiza servicios para máximo FPS y velocidad general.</p>
+        <ul class="feat-list">
+          <li>Optimización de RAM con RAMMap</li>
+          <li>Gestión de servicios de inicio</li>
+          <li>Tweaks de registro seguros</li>
+        </ul>
+      </div>
+
+      <div class="feat-card fade-up" style="transition-delay:0.05s;">
+        <div class="feat-icon"><i class="fas fa-stethoscope"></i></div>
+        <div class="feat-title">Diagnóstico Completo</div>
+        <p class="feat-desc">Informe detallado de hardware, temperaturas, estado de disco y salud general del sistema en segundos.</p>
+        <ul class="feat-list">
+          <li>CPU, GPU, RAM, SSD info</li>
+          <li>Análisis de pantallazos azules</li>
+          <li>Diagnóstico de batería</li>
+        </ul>
+      </div>
+
+      <div class="feat-card fade-up" style="transition-delay:0.1s;">
+        <div class="feat-icon"><i class="fas fa-broom"></i></div>
+        <div class="feat-title">Limpieza Profunda</div>
+        <p class="feat-desc">Elimina gigabytes de basura acumulada: caché de Windows Update, temporales y archivos huérfanos.</p>
+        <ul class="feat-list">
+          <li>Limpieza de archivos temporales</li>
+          <li>Caché de Windows Update</li>
+          <li>Prefetch y minidumps</li>
+        </ul>
+      </div>
+
+      <div class="feat-card fade-up" style="transition-delay:0.15s;">
+        <div class="feat-icon"><i class="fas fa-box-open"></i></div>
+        <div class="feat-title">Gestor de Apps</div>
+        <p class="feat-desc">Instala o desinstala aplicaciones esenciales en lote usando Winget o Chocolatey. Centro de Apps integrado.</p>
+        <ul class="feat-list">
+          <li>Autoinstalación de gestores</li>
+          <li>Chocolatey + Winget</li>
+          <li>HP, Lenovo, TeamViewer y más</li>
+        </ul>
+      </div>
+
+      <div class="feat-card fade-up" style="transition-delay:0.2s;">
+        <div class="feat-icon"><i class="fas fa-wrench"></i></div>
+        <div class="feat-title">Reparación del Sistema</div>
+        <p class="feat-desc">SFC, DISM, reparación de red y gestión de drivers. Restaura tu sistema a su estado óptimo.</p>
+        <ul class="feat-list">
+          <li>SFC / DISM automatizado</li>
+          <li>Reparación de Windows Update</li>
+          <li>Puntos de restauración</li>
+        </ul>
+      </div>
+
+      <div class="feat-card fade-up" style="transition-delay:0.25s;">
+        <div class="feat-icon" style="color:var(--green);"><i class="fas fa-file-alt"></i></div>
+        <div class="feat-title">Reporte Automático</div>
+        <p class="feat-desc">Al terminar, genera un .txt en tu escritorio con fecha, equipo y lista exacta de tareas. Ideal para clientes.</p>
+        <ul class="feat-list">
+          <li>Reporte en el escritorio</li>
+          <li>Comprobante para clientes</li>
+          <li>Historial de mantenimiento</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="section section-alt" id="stats">
+  <div class="container">
+    <div style="text-align:center;" class="fade-up">
+      <div class="sec-label" style="justify-content:center;">Números reales</div>
+      <h2 class="sec-title">El impacto<br><span style="-webkit-text-fill-color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.2);">en datos.</span></h2>
     </div>
 
-    <script>
-        // --- MATRIX RAIN EFFECT ---
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポ1234567890';
-        const characters = katakana.split('');
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
-        const drops = [];
-        
-        for(let x = 0; x < columns; x++) drops[x] = 1;
-        
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#3b82f6'; // Blue Matrix
-            ctx.font = fontSize + 'px monospace';
-            
-            for(let i = 0; i < drops.length; i++) {
-                const text = characters[Math.floor(Math.random() * characters.length)];
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            }
-        }
-        
-        const matrixInterval = setInterval(drawMatrix, 33);
-        
-        // --- INTRO LOGIC ---
-        const introScreen = document.getElementById('intro-screen');
-        const loadingBar = document.getElementById('loading-bar');
-        
-        // Simulate Loading
-        setTimeout(() => { loadingBar.style.width = '30%'; }, 500);
-        setTimeout(() => { loadingBar.style.width = '70%'; }, 1500);
-        setTimeout(() => { loadingBar.style.width = '100%'; }, 2500);
-        
-        function skipIntro() {
-            introScreen.classList.add('vanish');
-            clearInterval(matrixInterval);
-            startTypewriter();
-        }
-        
-        setTimeout(skipIntro, 3500); // Auto skip after 3.5s
+    <!-- top metrics -->
+    <div class="stats-grid">
+      <div class="stat-card fade-up">
+        <div class="stat-big g">+15.6K</div>
+        <div class="stat-sub">Descargas totales</div>
+      </div>
+      <div class="stat-card fade-up" style="transition-delay:0.07s;">
+        <div class="stat-big c">19</div>
+        <div class="stat-sub">Países alcanzados</div>
+      </div>
+      <div class="stat-card fade-up" style="transition-delay:0.14s;">
+        <div class="stat-big b">31+</div>
+        <div class="stat-sub">Versiones publicadas</div>
+      </div>
+      <div class="stat-card fade-up" style="transition-delay:0.21s;">
+        <div class="stat-big">368</div>
+        <div class="stat-sub">Commits en GitHub</div>
+      </div>
+      <div class="stat-card fade-up" style="transition-delay:0.28s;">
+        <div class="stat-big g">12</div>
+        <div class="stat-sub">Stars en GitHub</div>
+      </div>
+      <div class="stat-card fade-up" style="transition-delay:0.35s;">
+        <div class="stat-big c">75%</div>
+        <div class="stat-sub">Latinoamérica</div>
+      </div>
+    </div>
 
-        // --- TYPEWRITER EFFECT ---
-        function startTypewriter() {
-            const text = "Run-ToolboxBS -Optimize";
-            const element = document.getElementById('typing-text');
-            let i = 0;
-            element.innerHTML = "";
-            
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, 100);
-                }
-            }
-            setTimeout(type, 500);
-        }
+    <!-- country carousel -->
+    <div class="fade-up" style="margin-top:4rem; transition-delay:0.1s;">
+      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.75rem;">
+        <div>
+          <div class="sec-label">Distribución por país</div>
+          <h3 style="font-family:var(--fd); font-size:1.4rem; font-weight:800; color:var(--white); letter-spacing:-0.02em;">19 Países · +15.6K descargas</h3>
+        </div>
+        <p style="font-family:var(--fm); font-size:0.68rem; color:var(--muted);">
+          <i class="fas fa-circle" style="color:var(--green);font-size:0.45rem;vertical-align:middle;"></i> Datos reales · UTC
+        </p>
+      </div>
 
-        // --- 3D TILT EFFECT (Vanilla JS) ---
-        const cards = document.querySelectorAll('.tilt-card');
-        
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = ((y - centerY) / centerY) * -10; // Max rotation deg
-                const rotateY = ((x - centerX) / centerX) * 10;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-                
-                // Glow effect positioning
-                const glow = card.querySelector('.card-glow');
-                if(glow) glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(59, 130, 246, 0.2), transparent 70%)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
-            });
-        });
+      <!-- carousel wrapper con fade edges -->
+      <div class="carousel-outer">
+        <div class="carousel-track" id="carousel-track"></div>
+      </div>
 
-        // --- COPY COMMAND ---
-        function copyCommand() {
-            const commandText = document.getElementById('cmd-text').innerText;
-            
-            // Create temporary textarea for execCommand
-            const textarea = document.createElement('textarea');
-            textarea.value = commandText;
-            document.body.appendChild(textarea);
-            textarea.select();
-            
-            try {
-                document.execCommand('copy');
-                const msg = document.getElementById('copy-msg');
-                msg.style.opacity = '1';
-                setTimeout(() => msg.style.opacity = '0', 2000);
-            } catch (err) {
-                console.error('Failed to copy', err);
-            }
-            
-            document.body.removeChild(textarea);
-        }
+      <!-- selected country detail -->
+      <div id="country-detail" class="country-detail">
+        <span id="cd-flag" class="cd-flag"></span>
+        <div>
+          <div id="cd-name" class="cd-name"></div>
+          <div id="cd-stats" class="cd-stats"></div>
+        </div>
+        <div class="cd-bar-wrap">
+          <div id="cd-bar" class="cd-bar"></div>
+        </div>
+        <div id="cd-count" class="cd-count"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // --- MODAL & MENU ---
-        const modal = document.getElementById('execModal');
-        const navLinks = document.getElementById('nav-links');
+<style>
+/* ── CAROUSEL ── */
+.carousel-outer {
+  position: relative;
+  overflow: hidden;
+  padding: 8px 0;
+}
+.carousel-outer::before,
+.carousel-outer::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+.carousel-outer::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+.carousel-outer::after  { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
 
-        function openModal() { modal.classList.add('active'); }
-        function closeModal() { modal.classList.remove('active'); }
-        
-        // Close modal on outside click
-        modal.addEventListener('click', (e) => {
-            if(e.target === modal) closeModal();
-        });
+.carousel-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  animation: scroll-x 30s linear infinite;
+  cursor: grab;
+}
+.carousel-track:active { cursor: grabbing; }
+.carousel-track.paused { animation-play-state: paused; }
 
-        function toggleMenu() {
-            navLinks.classList.toggle('active');
-        }
+@keyframes scroll-x {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
-        // Window Resize fix for Matrix
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
+.c-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  min-width: 110px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  position: relative;
+  user-select: none;
+}
+.c-card:hover, .c-card.active {
+  border-color: var(--border-h);
+  background: var(--surface2);
+  transform: translateY(-4px);
+}
+.c-card.rank-1 { border-color: rgba(74,250,30,0.3); box-shadow: 0 0 20px rgba(74,250,30,0.08); }
+.c-card.rank-1:hover, .c-card.rank-1.active { border-color: rgba(74,250,30,0.6); box-shadow: 0 0 30px rgba(74,250,30,0.15); }
+.c-card.rank-2, .c-card.rank-3 { border-color: rgba(0,245,228,0.2); }
+.c-flag { font-size: 2rem; line-height: 1; }
+.c-name { font-family: var(--fm); font-size: 0.65rem; color: var(--dim); text-align: center; white-space: nowrap; max-width: 90px; overflow: hidden; text-overflow: ellipsis; }
+.c-num  { font-family: var(--fd); font-size: 0.85rem; font-weight: 700; color: var(--white); }
+.c-num.g { color: var(--green); }
+.c-num.c { color: var(--cyan); }
+.c-rank-badge {
+  position: absolute;
+  top: -6px; right: -6px;
+  width: 18px; height: 18px;
+  background: var(--surface2);
+  border: 1px solid var(--border-h);
+  border-radius: 50%;
+  font-family: var(--fm);
+  font-size: 0.58rem;
+  color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+}
+.c-card.rank-1 .c-rank-badge { background: rgba(74,250,30,0.15); border-color: var(--green); color: var(--green); }
+.c-card.rank-2 .c-rank-badge, .c-card.rank-3 .c-rank-badge { background: rgba(0,245,228,0.1); border-color: var(--cyan); color: var(--cyan); }
 
-        // --- DYNAMIC STATS (UPDATED) ---
-        // New country data provided by user
-        const countries = [
-            { name: "Colombia", code: "co", count: 10916 },
-            { name: "México", code: "mx", count: 814 },
-            { name: "España", code: "es", count: 574 },
-            { name: "Perú", code: "pe", count: 373 },
-            { name: "Argentina", code: "ar", count: 301 },
-            { name: "Chile", code: "cl", count: 191 },
-            { name: "USA", code: "us", count: 163 },
-            { name: "Venezuela", code: "ve", count: 154 },
-            { name: "R. Dominicana", code: "do", count: 130 },
-            { name: "Bolivia", code: "bo", count: 92 },
-            { name: "Paraguay", code: "py", count: 77 },
-            { name: "Reino Unido", code: "gb", count: 55 },
-            { name: "Ecuador", code: "ec", count: 42 },
-            { name: "Rusia", code: "ru", count: 31 },
-            { name: "Nicaragua", code: "ni", count: 29 },
-            { name: "Guatemala", code: "gt", count: 29 },
-            { name: "Alemania", code: "de", count: 27 },
-            { name: "Honduras", code: "hn", count: 22 },
-            { name: "Costa Rica", code: "cr", count: 21 },
-            { name: "Panamá", code: "pa", count: 20 }
-        ];
+/* ── DETAIL BAR ── */
+.country-detail {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-top: 1.25rem;
+  transition: all 0.3s;
+  flex-wrap: wrap;
+}
+.cd-flag  { font-size: 1.8rem; flex-shrink:0; }
+.cd-name  { font-family: var(--fd); font-size: 0.95rem; font-weight: 700; color: var(--white); }
+.cd-stats { font-family: var(--fm); font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
+.cd-bar-wrap { flex: 1; min-width: 120px; background: rgba(255,255,255,0.05); border-radius: 4px; height: 6px; overflow: hidden; }
+.cd-bar { height: 100%; border-radius: 4px; background: var(--cyan); transition: width 0.8s cubic-bezier(0.16,1,0.3,1); width: 0; }
+.cd-count { font-family: var(--fd); font-size: 1.2rem; font-weight: 800; color: var(--white); flex-shrink:0; white-space:nowrap; }
+</style>
 
-        async function initStats() {
-            const track = document.getElementById('stats-track');
-            if (!track) return;
+<script>
+(function(){
+  const data = [
+    { name:'Colombia',       flag:'🇨🇴', count:11727 },
+    { name:'España',         flag:'🇪🇸', count:956   },
+    { name:'México',         flag:'🇲🇽', count:932   },
+    { name:'Perú',           flag:'🇵🇪', count:435   },
+    { name:'Argentina',      flag:'🇦🇷', count:418   },
+    { name:'Chile',          flag:'🇨🇱', count:215   },
+    { name:'Venezuela',      flag:'🇻🇪', count:193   },
+    { name:'USA',            flag:'🇺🇸', count:191   },
+    { name:'R. Dominicana',  flag:'🇩🇴', count:144   },
+    { name:'Bolivia',        flag:'🇧🇴', count:102   },
+    { name:'Paraguay',       flag:'🇵🇾', count:81    },
+    { name:'Ecuador',        flag:'🇪🇨', count:58    },
+    { name:'Reino Unido',    flag:'🇬🇧', count:55    },
+    { name:'Guatemala',      flag:'🇬🇹', count:42    },
+    { name:'Alemania',       flag:'🇩🇪', count:37    },
+    { name:'Rusia',          flag:'🇷🇺', count:32    },
+    { name:'Nicaragua',      flag:'🇳🇮', count:29    },
+    { name:'Costa Rica',     flag:'🇨🇷', count:25    },
+    { name:'Honduras',       flag:'🇭🇳', count:23    },
+  ];
+  const total = data.reduce((s,d)=>s+d.count,0);
+  const max   = data[0].count;
+  const track = document.getElementById('carousel-track');
 
-            // Fetch GitHub Total Downloads
-            let totalDownloads = 0;
-            try {
-                const response = await fetch('https://api.github.com/repos/BrandonSepulveda/ToolboxBS/releases');
-                if (response.ok) {
-                    const releases = await response.json();
-                    releases.forEach(release => {
-                        release.assets.forEach(asset => {
-                            totalDownloads += asset.download_count;
-                        });
-                    });
-                } else {
-                    console.warn("GitHub API limit likely reached. Using backup total.");
-                    totalDownloads = "11,500+"; // Fallback if API fails
-                }
-            } catch (e) {
-                console.error("Error fetching stats:", e);
-                totalDownloads = "11,500+"; // Fallback
-            }
+  function makeCard(d, i, ghost) {
+    const card = document.createElement('div');
+    const rank = i+1;
+    const rankClass = rank<=3 ? `rank-${rank}` : '';
+    const numClass  = rank===1 ? 'g' : rank<=3 ? 'c' : '';
+    card.className = `c-card ${rankClass}`;
+    if (!ghost) card.dataset.idx = i;
+    card.innerHTML = `
+      <div class="c-rank-badge">${rank}</div>
+      <span class="c-flag">${d.flag}</span>
+      <span class="c-name">${d.name}</span>
+      <span class="c-num ${numClass}">${d.count>=1000?(d.count/1000).toFixed(1)+'K':d.count}</span>
+    `;
+    if (!ghost) {
+      card.addEventListener('click', ()=>{ selectCountry(i); });
+      card.addEventListener('mouseenter', ()=>{ track.classList.add('paused'); });
+      card.addEventListener('mouseleave', ()=>{ track.classList.remove('paused'); });
+    }
+    return card;
+  }
 
-            // Create Total Badge HTML
-            const totalBadgeHtml = `
-                <span class="stat-badge" style="border-color: var(--accent-primary); box-shadow: 0 0 10px rgba(59,130,246,0.3);">
-                    <i class="fas fa-download" style="color:var(--accent-primary)"></i> 
-                    Total Descargas: <span style="font-weight:800; color:white;">${totalDownloads.toLocaleString()}</span>
-                </span>
-            `;
+  // render cards × 2 (infinite loop)
+  data.forEach((d,i) => track.appendChild(makeCard(d,i,false)));
+  data.forEach((d,i) => track.appendChild(makeCard(d,i,true)));
 
-            // Create Country Badges HTML
-            let countriesHtml = '';
-            countries.forEach(c => {
-                countriesHtml += `
-                    <span class="stat-badge">
-                        <img src="https://flagcdn.com/${c.code}.svg" alt="${c.name}"> 
-                        ${c.name}: ${c.count.toLocaleString()}
-                    </span>
-                `;
-            });
+  // detail panel
+  function selectCountry(i) {
+    const d   = data[i];
+    const pct = ((d.count/total)*100).toFixed(1);
+    const barW= ((d.count/max)*100).toFixed(1);
+    const isTop = i===0;
+    document.getElementById('cd-flag').textContent  = d.flag;
+    document.getElementById('cd-name').textContent  = d.name;
+    document.getElementById('cd-stats').textContent = `Puesto #${i+1} · ${pct}% del total`;
+    document.getElementById('cd-count').textContent = d.count.toLocaleString();
+    const bar = document.getElementById('cd-bar');
+    bar.style.background = isTop ? 'var(--green)' : i<3 ? 'var(--cyan)' : 'rgba(255,255,255,0.3)';
+    bar.style.width = '0';
+    setTimeout(()=>{ bar.style.width = barW+'%'; }, 50);
+    // highlight card
+    document.querySelectorAll('.c-card[data-idx]').forEach(c => c.classList.toggle('active', +c.dataset.idx===i));
+  }
 
-            // Combine and Duplicate for Infinite Loop
-            // Structure: [Total] [Countries] [Total] [Countries]
-            const fullContent = totalBadgeHtml + countriesHtml;
-            track.innerHTML = fullContent + fullContent;
-        }
+  selectCountry(0); // default Colombia
 
-        // Initialize Stats on Load
-        document.addEventListener('DOMContentLoaded', initStats);
+  // drag to scroll
+  let isDown=false, startX=0, scrollLeft=0;
+  track.addEventListener('mousedown',  e=>{ isDown=true; track.classList.add('paused'); startX=e.pageX; scrollLeft=track.parentElement.scrollLeft; });
+  track.addEventListener('mouseleave', ()=>{ isDown=false; });
+  track.addEventListener('mouseup',    ()=>{ isDown=false; });
+  track.addEventListener('mousemove',  e=>{ if(!isDown) return; e.preventDefault(); track.parentElement.scrollLeft=scrollLeft-(e.pageX-startX); });
+})();
+</script>
 
-    </script>
+<!-- INSTALL -->
+<section class="section" id="install">
+  <div class="container">
+    <div style="text-align:center;" class="fade-up">
+      <div class="sec-label" style="justify-content:center;">Instalación</div>
+      <h2 class="sec-title">Zero-Touch<br>Setup.</h2>
+      <p style="color:var(--dim);font-size:0.9rem;margin-top:1rem;font-family:var(--fm);">Abre PowerShell como Administrador y pega uno de estos comandos.</p>
+    </div>
+    <div class="install-box fade-up" style="transition-delay:0.1s;">
+      <div class="install-bar">
+        <div class="td tr"></div><div class="td ty"></div><div class="td tg"></div>
+        <span class="install-title">Administrator: Windows PowerShell</span>
+      </div>
+      <div class="install-body">
+        <p style="font-family:var(--fm);font-size:0.7rem;color:var(--muted);margin-bottom:1rem;letter-spacing:0.05em;"># COMANDO PRINCIPAL</p>
+        <div class="cmd-line">
+          <span class="cmd-prompt">PS&gt;</span>
+          <span class="cmd-text">irm "https://cutt.ly/ToolboxBS" | iex</span>
+          <button class="cmd-copy" onclick="copyText(this,'irm \"https://cutt.ly/ToolboxBS\" | iex')">
+            <i class="fa-regular fa-copy"></i> Copiar
+          </button>
+        </div>
+        <p style="font-family:var(--fm);font-size:0.7rem;color:var(--muted);margin-bottom:1rem;letter-spacing:0.05em;"># ALTERNATIVO</p>
+        <div class="cmd-line">
+          <span class="cmd-prompt">PS&gt;</span>
+          <span class="cmd-text">irm "https://brandonsepulveda.github.io/Tool" | iex</span>
+          <button class="cmd-copy" onclick="copyText(this,'irm \"https://brandonsepulveda.github.io/Tool\" | iex')">
+            <i class="fa-regular fa-copy"></i> Copiar
+          </button>
+        </div>
+        <div class="install-alt">
+          <a href="https://brandonsepulveda.github.io/ToolboxBSweb" target="_blank" class="btn-green" style="padding:0.7rem 1.4rem;font-size:0.78rem;">
+            <i class="fa-solid fa-globe"></i> Versión Web Online
+          </a>
+          <a href="https://github.com/BrandonSepulveda/ToolboxBS/releases/latest/download/ToolboxBS.exe" class="btn-outline" style="padding:0.7rem 1.4rem;font-size:0.78rem;opacity:0.7;">
+            <i class="fa-solid fa-download"></i> Descargar .EXE
+            <span style="font-size:0.6rem;background:rgba(255,188,46,0.15);border:1px solid rgba(255,188,46,0.4);color:#febc2e;padding:1px 6px;border-radius:4px;letter-spacing:0.05em;">BETA</span>
+          </a>
+        </div>
+        <div style="margin-top:1.25rem;display:flex;gap:1.5rem;flex-wrap:wrap;">
+          <span class="install-note"><i class="fas fa-check-circle"></i> Sin instalador</span>
+          <span class="install-note"><i class="fas fa-check-circle"></i> Script portable</span>
+          <span class="install-note"><i class="fas fa-check-circle"></i> Código abierto AGPL v3</span>
+          <span class="install-note"><i class="fas fa-check-circle"></i> Win 10 / 11</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section section-alt" id="testimonials">
+  <div class="container">
+    <div style="text-align:center;" class="fade-up">
+      <div class="sec-label" style="justify-content:center;">Opiniones</div>
+      <h2 class="sec-title">Lo que dicen<br>los usuarios.</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card fade-up">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Increíble. ToolboxBS reunió todas las herramientas que usaba por separado en un solo lugar. Mi flujo de trabajo de soporte IT cambió completamente."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">JM</div>
+          <div><div class="testi-name">John Muñoz</div><div class="testi-role">Ing. Sistemas</div></div>
+        </div>
+      </div>
+      <div class="testi-card fade-up" style="transition-delay:0.07s;">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"La función de instalación por PowerShell es una genialidad. Es seguro, rápido y el reporte automático que deja en el escritorio es perfecto para los clientes."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">JV</div>
+          <div><div class="testi-name">Julio Valencia</div><div class="testi-role">Dev & Soporte IT</div></div>
+        </div>
+      </div>
+      <div class="testi-card fade-up" style="transition-delay:0.14s;">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"El debloater de Windows funciona de maravilla. Eliminé toda la basura preinstalada en minutos. Lo uso en cada formateo que hago."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">CA</div>
+          <div><div class="testi-name">Carlos Arenas</div><div class="testi-role">Técnico PC</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a class="footer-brand" href="https://brandonsepulveda.github.io">
+        <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS_Removedor_1768162986835.png?raw=true" alt="Logo">
+        <span>Brandon Sepulveda</span>
+      </a>
+      <ul class="footer-links">
+        <li><a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank">GitHub</a></li>
+        <li><a href="https://github.com/BrandonSepulveda/ToolboxBS/releases" target="_blank">Releases</a></li>
+        <li><a href="https://brandonsepulveda.github.io">Portafolio</a></li>
+        <li><a href="https://kick.com/papibrandon" target="_blank">Kick</a></li>
+      </ul>
+      <p class="footer-copy">© 2025 Brandon Sepulveda · AGPL v3.0 · Hecho con <i class="fas fa-heart" style="color:var(--red);"></i></p>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    <h3 class="modal-title">Elige tu Camino</h3>
+    <p class="modal-sub">Tres formas de ejecutar ToolboxBS.</p>
+    <div class="modal-options">
+      <div class="modal-btn" onclick="copyModal()">
+        <div class="modal-btn-icon ps"><i class="fas fa-terminal"></i></div>
+        <div>
+          <div class="modal-btn-label">PowerShell <span style="font-size:0.65rem;background:rgba(74,250,30,0.1);border:1px solid rgba(74,250,30,0.3);color:var(--green);padding:1px 7px;border-radius:4px;margin-left:4px;">RECOMENDADO</span></div>
+          <div class="modal-btn-sub" id="modal-copy-sub">irm "https://cutt.ly/ToolboxBS" | iex</div>
+        </div>
+        <i class="fa-regular fa-copy modal-btn-arr"></i>
+      </div>
+      <a href="https://brandonsepulveda.github.io/ToolboxBSweb" target="_blank" class="modal-btn">
+        <div class="modal-btn-icon web"><i class="fas fa-globe"></i></div>
+        <div>
+          <div class="modal-btn-label">Versión Web Online</div>
+          <div class="modal-btn-sub">Herramientas básicas sin instalar nada</div>
+        </div>
+        <i class="fas fa-arrow-right modal-btn-arr"></i>
+      </a>
+      <a href="https://github.com/BrandonSepulveda/ToolboxBS/releases/latest/download/ToolboxBS.exe" class="modal-btn" style="opacity:0.65;">
+        <div class="modal-btn-icon exe"><i class="fas fa-download"></i></div>
+        <div>
+          <div class="modal-btn-label">Descargar .EXE <span style="font-size:0.62rem;background:rgba(255,188,46,0.12);border:1px solid rgba(255,188,46,0.35);color:#febc2e;padding:1px 7px;border-radius:4px;margin-left:4px;">BETA</span></div>
+          <div class="modal-btn-sub">Puede generar falsos positivos en antivirus</div>
+        </div>
+        <i class="fas fa-arrow-right modal-btn-arr"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// Nav scroll
+window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50); });
+
+// Fade-up
+const fels = document.querySelectorAll('.fade-up');
+const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} }), {threshold:0.08,rootMargin:'0px 0px -30px 0px'});
+fels.forEach(el => obs.observe(el));
+setTimeout(() => fels.forEach(el => { const r=el.getBoundingClientRect(); if(r.top<window.innerHeight) el.classList.add('visible'); }), 80);
+
+// Card mouse glow
+document.querySelectorAll('.feat-card').forEach(c => c.addEventListener('mousemove', e => {
+  const r=c.getBoundingClientRect();
+  c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+  c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+}));
+
+// Copy
+function copyText(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check" style="color:var(--green)"></i> ¡Copiado!';
+    btn.style.borderColor = 'var(--green)'; btn.style.color = 'var(--green)';
+    setTimeout(() => { btn.innerHTML = orig; btn.style.borderColor=''; btn.style.color=''; }, 1800);
+  });
+}
+
+// Modal
+function openModal() { document.getElementById('modal').classList.add('open'); }
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+function closeModalOutside(e) { if(e.target===document.getElementById('modal')) closeModal(); }
+function copyModal() {
+  const cmd = 'irm "https://cutt.ly/ToolboxBS" | iex';
+  navigator.clipboard.writeText(cmd).then(() => {
+    document.getElementById('modal-copy-sub').textContent = '¡Copiado al portapapeles!';
+    setTimeout(() => { document.getElementById('modal-copy-sub').textContent = cmd; }, 2000);
+  });
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+// Terminal animation
+function typeEl(el, text, spd, cb) {
+  let i=0;
+  function t() { if(i<=text.length){el.textContent=text.substring(0,i++);setTimeout(t,spd);} else if(cb) setTimeout(cb,250); }
+  t();
+}
+setTimeout(() => {
+  const tc1=document.getElementById('tc1'), to1=document.getElementById('to1');
+  const tc2=document.getElementById('tc2'), to2=document.getElementById('to2');
+  const to3=document.getElementById('to3'), to4=document.getElementById('to4');
+  const tc3=document.getElementById('tc3');
+  if(!tc1) return;
+  typeEl(tc1,'Get-SystemInfo -Detail',62,()=>{
+    to1.style.display='block'; to1.textContent='✓ Win11 Pro | Ryzen 5 | 16GB RAM | 1TB SSD';
+    setTimeout(()=>{
+      typeEl(tc2,'irm "cutt.ly/ToolboxBS" | iex',55,()=>{
+        to2.style.display='block'; to2.textContent='→ Descargando ToolboxBS v3.1...';
+        setTimeout(()=>{
+          to3.style.display='block'; to3.textContent='⚡ Iniciando interfaz gráfica...';
+          setTimeout(()=>{
+            to4.style.display='block'; to4.textContent='# Presiona CTRL+C para cancelar en cualquier momento';
+            setTimeout(()=>{ tc3.textContent=''; let on=true; setInterval(()=>{ tc3.textContent=on?'_':''; on=!on; },550); },400);
+          },500);
+        },600);
+      });
+    },700);
+  });
+},1000);
+</script>
 </body>
 </html>
