@@ -1,2563 +1,1658 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ToolboxBS Web | Centro de Comando</title>
-  <link rel="icon" type="image/png"
-    href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS_Removedor_1768162986835.png?raw=true">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;700&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-  <style>
-    /* ═══════════════════════════════════════════
-   VARIABLES & RESET
-═══════════════════════════════════════════ */
-    :root {
-      --bg: #060608;
-      --s1: #0d0d10;
-      --s2: #131318;
-      --s3: #1a1a22;
-      --b: rgba(255, 255, 255, 0.07);
-      --bh: rgba(255, 255, 255, 0.15);
-      --green: #4afa1e;
-      --cyan: #00f5e4;
-      --yellow: #febc2e;
-      --red: #ff2d55;
-      --orange: #ff6b35;
-      --purple: #a855f7;
-      --blue: #3b82f6;
-      --white: #f0f0f0;
-      --muted: #555;
-      --dim: #888;
-      --fd: 'Syne', sans-serif;
-      --fm: 'JetBrains Mono', monospace;
-      --sidebar: 260px;
-      --sidebar-sm: 64px;
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
-    body {
-      height: 100%;
-      overflow: hidden;
-    }
-
-    body {
-      font-family: var(--fm);
-      background: var(--bg);
-      color: var(--dim);
-    }
-
-    /* ── BG DECORATIONS ── */
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background-image: linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
-      background-size: 50px 50px;
-    }
-
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(100px);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .orb-1 {
-      width: 400px;
-      height: 400px;
-      background: var(--green);
-      opacity: 0.05;
-      top: -100px;
-      left: -80px;
-      animation: fl 20s ease-in-out infinite;
-    }
-
-    .orb-2 {
-      width: 350px;
-      height: 350px;
-      background: var(--cyan);
-      opacity: 0.04;
-      bottom: -80px;
-      right: -60px;
-      animation: fl 26s ease-in-out infinite reverse;
-    }
-
-    .orb-3 {
-      width: 200px;
-      height: 200px;
-      background: var(--purple);
-      opacity: 0.04;
-      top: 50%;
-      left: 40%;
-      animation: fl 16s ease-in-out infinite 3s;
-    }
-
-    @keyframes fl {
-
-      0%,
-      100% {
-        transform: translate(0, 0)
-      }
-
-      33% {
-        transform: translate(25px, -20px)
-      }
-
-      66% {
-        transform: translate(-15px, 18px)
-      }
-    }
-
-    /* ═══════════════════════════════════════════
-   LAYOUT
-═══════════════════════════════════════════ */
-    .app {
-      display: flex;
-      height: 100vh;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── SIDEBAR ── */
-    .sidebar {
-      width: var(--sidebar);
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      background: rgba(10, 10, 14, 0.9);
-      backdrop-filter: blur(20px);
-      border-right: 1px solid var(--b);
-      z-index: 50;
-      transition: width 0.3s ease;
-      overflow: hidden;
-    }
-
-    .sidebar-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 1.25rem 1.1rem;
-      border-bottom: 1px solid var(--b);
-      flex-shrink: 0;
-    }
-
-    .sidebar-logo img {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-
-    .sidebar-logo-text {
-      overflow: hidden;
-    }
-
-    .sidebar-logo-text h1 {
-      font-family: var(--fd);
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: -0.02em;
-      white-space: nowrap;
-    }
-
-    .sidebar-logo-text p {
-      font-size: 0.6rem;
-      color: var(--muted);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-top: 1px;
-      white-space: nowrap;
-    }
-
-    .nav-items {
-      flex: 1;
-      padding: 0.75rem 0.6rem;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 0.65rem 0.85rem;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.2s;
-      color: var(--muted);
-      border: 1px solid transparent;
-      white-space: nowrap;
-      overflow: hidden;
-      background: none;
-      text-align: left;
-      width: 100%;
-      font-family: var(--fm);
-      font-size: 0.8rem;
-    }
-
-    .nav-item i {
-      font-size: 1rem;
-      flex-shrink: 0;
-      width: 20px;
-      text-align: center;
-      transition: color 0.2s;
-    }
-
-    .nav-item span {
-      font-size: 0.78rem;
-      font-weight: 500;
-      overflow: hidden;
-    }
-
-    .nav-item:hover {
-      color: var(--white);
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .nav-item.active {
-      color: var(--white);
-      background: rgba(255, 255, 255, 0.07);
-      border-color: var(--b);
-    }
-
-    .nav-section-label {
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: 0.75rem 0.85rem 0.3rem;
-      opacity: 0.6;
-      white-space: nowrap;
-    }
-
-    .sidebar-bottom {
-      padding: 0.75rem 0.6rem;
-      border-top: 1px solid var(--b);
-      flex-shrink: 0;
-    }
-
-    .accent-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.4rem 0.85rem;
-      margin-bottom: 4px;
-    }
-
-    .accent-label {
-      font-size: 0.68rem;
-      color: var(--muted);
-    }
-
-    .accent-dots {
-      display: flex;
-      gap: 6px;
-    }
-
-    .accent-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: all 0.2s;
-    }
-
-    .accent-dot:hover,
-    .accent-dot.active {
-      border-color: rgba(255, 255, 255, 0.5);
-      transform: scale(1.2);
-    }
-
-    /* ── MAIN ── */
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      min-width: 0;
-    }
-
-    /* top bar */
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.85rem 1.5rem;
-      border-bottom: 1px solid var(--b);
-      background: rgba(6, 6, 8, 0.6);
-      backdrop-filter: blur(10px);
-      flex-shrink: 0;
-      gap: 1rem;
-    }
-
-    .topbar-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .hamburger {
-      background: none;
-      border: 1px solid var(--b);
-      border-radius: 7px;
-      color: var(--dim);
-      cursor: pointer;
-      padding: 6px 9px;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-    }
-
-    .hamburger:hover {
-      border-color: var(--bh);
-      color: var(--white);
-    }
-
-    .page-title {
-      font-family: var(--fd);
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: -0.02em;
-    }
-
-    .page-sub {
-      font-size: 0.68rem;
-      color: var(--muted);
-    }
-
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-
-    .counter-pill {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--s2);
-      border: 1px solid var(--b);
-      border-radius: 100px;
-      padding: 0.4rem 1rem;
-      font-size: 0.72rem;
-      color: var(--dim);
-      transition: all 0.3s;
-    }
-
-    .counter-pill.has-items {
-      border-color: rgba(74, 250, 30, 0.3);
-      color: var(--white);
-    }
-
-    .counter-num {
-      background: var(--s3);
-      color: var(--muted);
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.72rem;
-      transition: all 0.3s;
-    }
-
-    .counter-pill.has-items .counter-num {
-      background: var(--green);
-      color: #000;
-    }
-
-    .btn-generate {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--fm);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      padding: 0.5rem 1.25rem;
-      border-radius: 8px;
-      border: 1px solid var(--green);
-      background: var(--green);
-      color: #000;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 0 20px rgba(74, 250, 30, 0.2);
-    }
-
-    .btn-generate:hover {
-      background: transparent;
-      color: var(--green);
-    }
-
-    .btn-generate:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      background: var(--s2);
-      color: var(--muted);
-      border-color: var(--b);
-      box-shadow: none;
-    }
-
-    /* content */
-    .content {
-      flex: 1;
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding: 1.5rem;
-    }
-
-    .content::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .content::-webkit-scrollbar-thumb {
-      background: var(--s3);
-      border-radius: 2px;
-    }
-
-    .content::-webkit-scrollbar-thumb:hover {
-      background: var(--green);
-    }
-
-    /* views */
-    .view {
-      display: none;
-      animation: fadeUp 0.3s ease;
-    }
-
-    .view.active {
-      display: block;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* ═══════════════════════════════════════════
-   COMPONENTS
-═══════════════════════════════════════════ */
-
-    /* section header */
-    .view-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 1.75rem;
-    }
-
-    .view-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      flex-shrink: 0;
-    }
-
-    .view-header h2 {
-      font-family: var(--fd);
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-    }
-
-    .view-header p {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-
-    /* grid utils */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 10px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
-    }
-
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 10px;
-    }
-
-    /* tool card toggle */
-    .tool-card {
-      background: var(--s1);
-      border: 1px solid var(--b);
-      border-radius: 12px;
-      padding: 1rem 1.1rem;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      user-select: none;
-    }
-
-    .tool-card:hover {
-      border-color: var(--bh);
-      background: var(--s2);
-    }
-
-    .tool-card.selected {
-      border-color: var(--accent, var(--green));
-      background: rgba(74, 250, 30, 0.04);
-    }
-
-    .tool-card-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 9px;
-      background: var(--s2);
-      border: 1px solid var(--b);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      flex-shrink: 0;
-      transition: all 0.25s;
-    }
-
-    .tool-card.selected .tool-card-icon {
-      background: rgba(74, 250, 30, 0.1);
-      border-color: rgba(74, 250, 30, 0.3);
-    }
-
-    .tool-card-body {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .tool-card-title {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--white);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .tool-card-sub {
-      font-size: 0.67rem;
-      color: var(--muted);
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* toggle switch */
-    .toggle {
-      width: 38px;
-      height: 20px;
-      background: var(--s3);
-      border-radius: 100px;
-      position: relative;
-      flex-shrink: 0;
-      border: 1px solid var(--b);
-      transition: all 0.25s;
-    }
-
-    .toggle::after {
-      content: '';
-      position: absolute;
-      top: 3px;
-      left: 3px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--muted);
-      transition: all 0.25s;
-    }
-
-    .tool-card.selected .toggle {
-      background: var(--accent, var(--green));
-      border-color: var(--accent, var(--green));
-    }
-
-    .tool-card.selected .toggle::after {
-      transform: translateX(18px);
-      background: #000;
-    }
-
-    .cleanup-card.selected .toggle {
-      background: var(--green);
-      border-color: var(--green);
-    }
-
-    .cleanup-card.selected .toggle::after {
-      transform: translateX(18px);
-      background: #000;
-    }
-
-    .info-card.selected .toggle {
-      background: var(--purple);
-      border-color: var(--purple);
-    }
-
-    .info-card.selected .toggle::after {
-      transform: translateX(18px);
-      background: #fff;
-    }
-
-    /* tool card vertical (tweaks) */
-    .tool-card-v {
-      background: var(--s1);
-      border: 1px solid var(--b);
-      border-radius: 12px;
-      padding: 1.1rem;
-      cursor: pointer;
-      transition: all 0.25s;
-      user-select: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .tool-card-v:hover {
-      border-color: var(--bh);
-      background: var(--s2);
-    }
-
-    .tool-card-v.selected {
-      border-color: var(--accent, var(--yellow));
-      background: rgba(254, 188, 46, 0.04);
-    }
-
-    .tool-card-v-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-
-    .tool-card-v-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 9px;
-      background: var(--s2);
-      border: 1px solid var(--b);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
-      transition: all 0.25s;
-    }
-
-    .tool-card-v.selected .tool-card-v-icon {
-      background: rgba(254, 188, 46, 0.1);
-      border-color: rgba(254, 188, 46, 0.3);
-    }
-
-    .tool-card-v h4 {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--white);
-    }
-
-    .tool-card-v p {
-      font-size: 0.67rem;
-      color: var(--muted);
-    }
-
-    .toggle-sm {
-      width: 32px;
-      height: 17px;
-      background: var(--s3);
-      border-radius: 100px;
-      position: relative;
-      flex-shrink: 0;
-      border: 1px solid var(--b);
-      transition: all 0.25s;
-    }
-
-    .toggle-sm::after {
-      content: '';
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: var(--muted);
-      transition: all 0.25s;
-    }
-
-    .tool-card-v.selected .toggle-sm {
-      background: var(--yellow);
-      border-color: var(--yellow);
-    }
-
-    .tool-card-v.selected .toggle-sm::after {
-      transform: translateX(15px);
-      background: #000;
-    }
-
-    /* dashboard quick cards */
-    .dash-card {
-      background: var(--s1);
-      border: 1px solid var(--b);
-      border-radius: 14px;
-      padding: 1.25rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .dash-card:hover {
-      border-color: var(--bh);
-      transform: translateY(-3px);
-    }
-
-    .dash-card-bg-icon {
-      position: absolute;
-      right: -10px;
-      top: -10px;
-      font-size: 4rem;
-      opacity: 0.04;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-
-    .dash-card:hover .dash-card-bg-icon {
-      opacity: 0.08;
-    }
-
-    .dash-card h3 {
-      font-family: var(--fd);
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--white);
-      letter-spacing: -0.02em;
-    }
-
-    .dash-card p {
-      font-size: 0.68rem;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    .dash-card-bar {
-      height: 3px;
-      border-radius: 2px;
-      margin-top: 1rem;
-      background: var(--s3);
-      overflow: hidden;
-    }
-
-    .dash-card-bar-fill {
-      height: 100%;
-      border-radius: 2px;
-    }
-
-    /* info card */
-    .info-card {
-      background: var(--s1);
-      border: 1px solid var(--b);
-      border-radius: 14px;
-      padding: 1.5rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-
-    .info-card:hover {
-      border-color: rgba(168, 85, 247, 0.3);
-    }
-
-    .info-card.selected {
-      border-color: rgba(168, 85, 247, 0.5);
-      background: rgba(168, 85, 247, 0.04);
-    }
-
-    .info-card-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      background: rgba(168, 85, 247, 0.1);
-      border: 1px solid rgba(168, 85, 247, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      color: var(--purple);
-      flex-shrink: 0;
-    }
-
-    .info-card h3 {
-      font-family: var(--fd);
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--white);
-    }
-
-    .info-card p {
-      font-size: 0.72rem;
-      color: var(--muted);
-      margin-top: 4px;
-      line-height: 1.6;
-    }
-
-    /* cleanup big card */
-    .cleanup-card {
-      background: var(--s1);
-      border: 1px solid var(--b);
-      border-radius: 14px;
-      padding: 1.25rem 1.5rem;
-      cursor: pointer;
-      transition: all 0.25s;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      border-left: 3px solid transparent;
-    }
-
-    .cleanup-card:hover {
-      border-left-color: var(--green);
-      background: var(--s2);
-    }
-
-    .cleanup-card.selected {
-      border-left-color: var(--green);
-      background: rgba(74, 250, 30, 0.04);
-      border-color: rgba(74, 250, 30, 0.2);
-    }
-
-    .cleanup-card-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 11px;
-      background: var(--s2);
-      border: 1px solid var(--b);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      color: var(--green);
-      flex-shrink: 0;
-    }
-
-    .cleanup-card h4 {
-      font-family: var(--fd);
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--white);
-    }
-
-    .cleanup-card p {
-      font-size: 0.7rem;
-      color: var(--muted);
-      margin-top: 3px;
-    }
-
-    /* quick action pill */
-    .qa-card {
-      background: var(--s1);
-      border: 1px solid var(--b);
-      border-radius: 12px;
-      padding: 0.9rem;
-      cursor: pointer;
-      transition: all 0.25s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      text-align: center;
-      user-select: none;
-    }
-
-    .qa-card:hover {
-      border-color: var(--bh);
-      background: var(--s2);
-    }
-
-    .qa-card.selected {
-      border-color: rgba(59, 130, 246, 0.5);
-      background: rgba(59, 130, 246, 0.05);
-    }
-
-    .qa-card i {
-      font-size: 1.3rem;
-      color: var(--blue);
-    }
-
-    .qa-card span {
-      font-size: 0.72rem;
-      color: var(--dim);
-    }
-
-    .qa-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--s3);
-      transition: all 0.25s;
-    }
-
-    .qa-card.selected .qa-dot {
-      background: var(--blue);
-      box-shadow: 0 0 8px var(--blue);
-    }
-
-    /* ═══════════════════════════════════════════
-   MODAL SCRIPT OUTPUT
-═══════════════════════════════════════════ */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-
-    .modal-overlay.open {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .modal {
-      background: var(--s1);
-      border: 1px solid var(--b);
-      border-radius: 18px;
-      overflow: hidden;
-      width: min(860px, 95vw);
-      max-height: 85vh;
-      display: flex;
-      flex-direction: column;
-      transform: scale(0.97);
-      transition: transform 0.3s;
-    }
-
-    .modal-overlay.open .modal {
-      transform: scale(1);
-    }
-
-    .modal-header {
-      padding: 1rem 1.5rem;
-      border-bottom: 1px solid var(--b);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(0, 0, 0, 0.4);
-      flex-shrink: 0;
-    }
-
-    .modal-header-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .modal-dots {
-      display: flex;
-      gap: 7px;
-    }
-
-    .modal-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-
-    .modal-title {
-      font-size: 0.78rem;
-      color: var(--green);
-      letter-spacing: 0.06em;
-    }
-
-    .modal-close {
-      background: none;
-      border: 1px solid var(--b);
-      border-radius: 6px;
-      color: var(--muted);
-      cursor: pointer;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      transition: all 0.2s;
-    }
-
-    .modal-close:hover {
-      border-color: var(--red);
-      color: var(--red);
-    }
-
-    .modal-body {
-      flex: 1;
-      overflow-y: auto;
-      background: #000;
-      padding: 1.5rem;
-    }
-
-    .modal-body::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .modal-body::-webkit-scrollbar-thumb {
-      background: var(--s3);
-      border-radius: 2px;
-    }
-
-    .modal-body pre {
-      font-size: 0.78rem;
-      line-height: 1.8;
-      color: #c9d1d9;
-      white-space: pre-wrap;
-    }
-
-    .modal-footer {
-      padding: 1rem 1.5rem;
-      border-top: 1px solid var(--b);
-      background: rgba(0, 0, 0, 0.4);
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-
-    .btn-cancel {
-      font-family: var(--fm);
-      font-size: 0.75rem;
-      color: var(--muted);
-      background: none;
-      border: 1px solid var(--b);
-      border-radius: 7px;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-cancel:hover {
-      border-color: var(--bh);
-      color: var(--white);
-    }
-
-    .btn-copy-modal {
-      font-family: var(--fm);
-      font-size: 0.75rem;
-      color: var(--dim);
-      background: var(--s2);
-      border: 1px solid var(--b);
-      border-radius: 7px;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .btn-copy-modal:hover {
-      border-color: var(--bh);
-      color: var(--white);
-    }
-
-    .btn-download {
-      font-family: var(--fm);
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #000;
-      background: var(--green);
-      border: 1px solid var(--green);
-      border-radius: 7px;
-      padding: 0.5rem 1.25rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .btn-download:hover {
-      background: transparent;
-      color: var(--green);
-    }
-
-    /* mobile overlay sidebar */
-    .sidebar-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 49;
-      display: none;
-    }
-
-    .sidebar-overlay.show {
-      display: block;
-    }
-
-    @media (max-width: 700px) {
-      .sidebar {
-        position: fixed;
-        left: -100%;
-        top: 0;
-        bottom: 0;
-        z-index: 50;
-        transition: left 0.3s ease;
-      }
-
-      .sidebar.open {
-        left: 0;
-      }
-
-      .main {
-        width: 100%;
-      }
-    }
-
-    /* color chip for acents */
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolboxBS Web | Centro de Comando</title>
+    <link rel="icon" type="image/png"
+        href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS_Removedor_1768162986835.png?raw=true">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        zinc: {
+                            850: '#1f1f22',
+                            900: '#18181b',
+                            950: '#09090b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* VARIABLES PARA TEMAS DINÁMICOS Y ANIMACIONES */
+        :root {
+            --accent: #3b82f6;
+            /* Azul comercial por defecto */
+            --accent-rgb: 59, 130, 246;
+        }
+
+        body {
+            background-color: #09090b;
+            /* zinc-950 */
+            color: #e4e4e7;
+            /* zinc-200 */
+            overflow: hidden;
+        }
+
+        /* Scrollbar personalizada más elegante */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3f3f46;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* Fondos decorativos sutiles */
+        .bg-grid {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.15;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(30px, -30px);
+            }
+
+            66% {
+                transform: translate(-20px, 20px);
+            }
+        }
+
+
+        /* Vistas */
+        .view {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Nav Item States */
+        .nav-item {
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        /* Cards interactivos */
+        .tool-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tool-card:hover {
+            border-color: #3f3f46;
+            /* zinc-700 */
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .tool-card.selected {
+            border-color: var(--accent);
+            background-color: rgba(var(--accent-rgb), 0.05);
+        }
+
+        .tool-card-icon {
+            transition: all 0.2s ease;
+        }
+
+        .tool-card.selected .tool-card-icon {
+            background-color: rgba(var(--accent-rgb), 0.15);
+            color: var(--accent);
+            border-color: rgba(var(--accent-rgb), 0.3);
+        }
+
+        /* Toggles modernos */
+        .toggle {
+            width: 44px;
+            height: 24px;
+            background-color: #27272a;
+            /* zinc-800 */
+            border-radius: 999px;
+            position: relative;
+            transition: background-color 0.3s;
+            border: 1px solid #3f3f46;
+            cursor: pointer;
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 18px;
+            height: 18px;
+            background-color: #a1a1aa;
+            /* zinc-400 */
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .tool-card.selected .toggle,
+        .cleanup-card.selected .toggle,
+        .info-card.selected .toggle {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .tool-card.selected .toggle::after,
+        .cleanup-card.selected .toggle::after,
+        .info-card.selected .toggle::after {
+            transform: translateX(20px);
+            background-color: #fff;
+        }
+
+        /* Toggles pequeños */
+        .toggle-sm {
+            width: 36px;
+            height: 20px;
+            background-color: #27272a;
+            border-radius: 999px;
+            position: relative;
+            transition: all 0.3s;
+            border: 1px solid #3f3f46;
+        }
+
+        .toggle-sm::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 14px;
+            height: 14px;
+            background-color: #a1a1aa;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .tool-card.selected .toggle-sm {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .tool-card.selected .toggle-sm::after {
+            transform: translateX(16px);
+            background-color: #fff;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.open .modal-content {
+            transform: scale(1) translateY(0);
+        }
+    </style>
 </head>
 
-<body>
+<body class="antialiased flex h-screen text-zinc-300 font-sans">
 
-  <div class="grid-bg"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-
-  <div class="app">
-
-    <!-- ══════════ SIDEBAR ══════════ -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-logo">
-        <img
-          src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS_Removedor_1768162986835.png?raw=true"
-          alt="Logo">
-        <div class="sidebar-logo-text">
-          <h1>TOOLBOX<span style="color:var(--green)">BS</span></h1>
-          <p>Web v3.1 · Centro de Comando</p>
-        </div>
-      </div>
-
-      <div class="nav-items">
-        <div class="nav-section-label">Principal</div>
-        <button class="nav-item active" data-view="home" onclick="switchView('home',this)">
-          <i class="fas fa-th-large" style="color:var(--blue)"></i>
-          <span>Dashboard</span>
-        </button>
-
-        <div class="nav-section-label" style="margin-top:8px;">Módulos</div>
-        <button class="nav-item" data-view="repair" onclick="switchView('repair',this)">
-          <i class="fas fa-wrench" style="color:var(--red)"></i>
-          <span>Reparación</span>
-        </button>
-        <button class="nav-item" data-view="tweaks" onclick="switchView('tweaks',this)">
-          <i class="fas fa-bolt" style="color:var(--yellow)"></i>
-          <span>Tweaks</span>
-        </button>
-        <button class="nav-item" data-view="tools" onclick="switchView('tools',this)">
-          <i class="fas fa-briefcase" style="color:var(--orange)"></i>
-          <span>Herramientas</span>
-        </button>
-        <button class="nav-item" data-view="cleanup" onclick="switchView('cleanup',this)">
-          <i class="fas fa-broom" style="color:var(--green)"></i>
-          <span>Limpieza</span>
-        </button>
-        <button class="nav-item" data-view="info" onclick="switchView('info',this)">
-          <i class="fas fa-microchip" style="color:var(--purple)"></i>
-          <span>Info Sistema</span>
-        </button>
-      </div>
-
-      <div class="sidebar-bottom">
-        <div class="accent-row">
-          <span class="accent-label">Acento</span>
-          <div class="accent-dots">
-            <div class="accent-dot active" style="background:#4afa1e" onclick="setAccent('#4afa1e',this)" title="Verde">
-            </div>
-            <div class="accent-dot" style="background:#00f5e4" onclick="setAccent('#00f5e4',this)" title="Cyan"></div>
-            <div class="accent-dot" style="background:#3b82f6" onclick="setAccent('#3b82f6',this)" title="Azul"></div>
-            <div class="accent-dot" style="background:#a855f7" onclick="setAccent('#a855f7',this)" title="Morado"></div>
-            <div class="accent-dot" style="background:#febc2e" onclick="setAccent('#febc2e',this)" title="Amarillo">
-            </div>
-          </div>
-        </div>
-        <button class="nav-item"
-          onclick="window.open('https://brandonsepulveda.github.io/Documentacion.html','_blank')">
-          <i class="fas fa-book" style="color:var(--muted)"></i>
-          <span>Documentación</span>
-        </button>
-        <button class="nav-item" onclick="window.open('https://brandonsepulveda.github.io','_blank')">
-          <i class="fas fa-arrow-left" style="color:var(--muted)"></i>
-          <span>Portafolio</span>
-        </button>
-      </div>
-    </aside>
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-
-    <!-- ══════════ MAIN ══════════ -->
-    <div class="main">
-
-      <!-- TOPBAR -->
-      <div class="topbar">
-        <div class="topbar-left">
-          <button class="hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-          <div>
-            <div class="page-title" id="pageTitle">Dashboard</div>
-            <div class="page-sub" id="pageSub">Centro de Comando · ToolboxBS Web</div>
-          </div>
-        </div>
-        <div class="topbar-right">
-          <div class="counter-pill" id="counterPill">
-            <span>Pendientes</span>
-            <div class="counter-num" id="counterNum">0</div>
-          </div>
-          <button class="btn-generate" id="btnGenerate" onclick="generateScript()" disabled>
-            <i class="fas fa-terminal" style="font-size:0.75rem;"></i> Generar Script
-          </button>
-        </div>
-      </div>
-
-      <!-- CONTENT -->
-      <div class="content">
-
-        <!-- ══ VIEW: DASHBOARD ══ -->
-        <div class="view active" id="view-home">
-          <div style="margin-bottom:1.75rem;">
-            <h2
-              style="font-family:var(--fd);font-size:1.8rem;font-weight:800;color:var(--white);letter-spacing:-0.03em;line-height:1;">
-              Centro de Comando</h2>
-            <p style="font-size:0.78rem;color:var(--muted);margin-top:6px;">Selecciona módulos, configura tu script y
-              ejecútalo en segundos.</p>
-          </div>
-
-          <!-- Quick cards -->
-          <div class="grid-4" style="margin-bottom:1.75rem;">
-            <div class="dash-card" onclick="window.open('https://brandonsepulveda.github.io/apps.html','_blank')">
-              <div class="dash-card-bg-icon"><i class="fas fa-download"></i></div>
-              <h3>Apps</h3>
-              <p>Repositorio de Software</p>
-              <div class="dash-card-bar">
-                <div class="dash-card-bar-fill" style="width:100%;background:var(--blue)"></div>
-              </div>
-            </div>
-            <div class="dash-card" onclick="switchView('repair',null)">
-              <div class="dash-card-bg-icon"><i class="fas fa-wrench"></i></div>
-              <h3>Reparar</h3>
-              <p>Herramientas críticas</p>
-              <div class="dash-card-bar">
-                <div class="dash-card-bar-fill" style="width:75%;background:var(--red)"></div>
-              </div>
-            </div>
-            <div class="dash-card" onclick="switchView('tweaks',null)">
-              <div class="dash-card-bg-icon"><i class="fas fa-bolt"></i></div>
-              <h3>Tweaks</h3>
-              <p>Scripts de rendimiento</p>
-              <div class="dash-card-bar">
-                <div class="dash-card-bar-fill" style="width:60%;background:var(--yellow)"></div>
-              </div>
-            </div>
-            <div class="dash-card" onclick="switchView('cleanup',null)">
-              <div class="dash-card-bg-icon"><i class="fas fa-broom"></i></div>
-              <h3>Limpieza</h3>
-              <p>Espacio en disco & RAM</p>
-              <div class="dash-card-bar">
-                <div class="dash-card-bar-fill" style="width:80%;background:var(--green)"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Quick Actions -->
-          <p
-            style="font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.75rem;">
-            Acciones Rápidas</p>
-          <div class="grid-4">
-            <div class="qa-card" onclick="qaToggle(this,'home-control-panel')">
-              <i class="fas fa-sliders-h"></i>
-              <span>Panel de Control</span>
-              <div class="qa-dot"></div>
-            </div>
-            <div class="qa-card" onclick="qaToggle(this,'home-windows-settings')">
-              <i class="fas fa-cog"></i>
-              <span>Configuración</span>
-              <div class="qa-dot"></div>
-            </div>
-            <div class="qa-card" onclick="qaToggle(this,'home-powershell-console')">
-              <i class="fas fa-terminal"></i>
-              <span>PowerShell</span>
-              <div class="qa-dot"></div>
-            </div>
-            <div class="qa-card" onclick="qaToggle(this,'home-quick-diagnostic')">
-              <i class="fas fa-heartbeat"></i>
-              <span>Diag. Rápido</span>
-              <div class="qa-dot"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ══ VIEW: REPARACIÓN ══ -->
-        <div class="view" id="view-repair">
-          <div class="view-header">
-            <div class="view-icon"
-              style="background:rgba(255,45,85,0.1);color:var(--red);border:1px solid rgba(255,45,85,0.2);">
-              <i class="fas fa-wrench"></i>
-            </div>
-            <div>
-              <h2>Reparación del Sistema</h2>
-              <p>Herramientas para solucionar problemas críticos de Windows.</p>
-            </div>
-          </div>
-          <div class="grid-2">
-            <div class="tool-card" onclick="toggle(this,'create-restore-point','repair')">
-              <div class="tool-card-icon" style="color:var(--red);"><i class="fas fa-save"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Crear Punto de Restauración</div>
-                <div class="tool-card-sub">Paso de seguridad recomendado.</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-            <div class="tool-card" onclick="toggle(this,'os-maintenance','repair')">
-              <div class="tool-card-icon" style="color:var(--red);"><i class="fas fa-shield-alt"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Reparar Archivos (SFC/DISM)</div>
-                <div class="tool-card-sub">Analiza y repara integridad de Windows.</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-            <div class="tool-card" onclick="toggle(this,'bsod-info','repair')">
-              <div class="tool-card-icon" style="color:var(--red);"><i class="fas fa-exclamation-triangle"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Analizar BSOD</div>
-                <div class="tool-card-sub">Lee los logs de pantallazos azules.</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-            <div class="tool-card" onclick="toggle(this,'battery-status','repair')">
-              <div class="tool-card-icon" style="color:var(--red);"><i class="fas fa-battery-three-quarters"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Informe de Batería</div>
-                <div class="tool-card-sub">Genera reporte HTML con BatteryInfoView.</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-            <div class="tool-card" onclick="toggle(this,'driver-info','repair')">
-              <div class="tool-card-icon" style="color:var(--red);"><i class="fas fa-file-code"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Drivers del Sistema</div>
-                <div class="tool-card-sub">Exporta lista y abre Admin. de Dispositivos.</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-            <div class="tool-card" onclick="toggle(this,'repair-network','repair')">
-              <div class="tool-card-icon" style="color:var(--red);"><i class="fas fa-wifi"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Resetear Red</div>
-                <div class="tool-card-sub">IP Config, Flush DNS, Winsock Reset.</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ══ VIEW: TWEAKS ══ -->
-        <div class="view" id="view-tweaks">
-          <div class="view-header">
-            <div class="view-icon"
-              style="background:rgba(254,188,46,0.1);color:var(--yellow);border:1px solid rgba(254,188,46,0.2);">
-              <i class="fas fa-bolt"></i>
-            </div>
-            <div>
-              <h2>Tweaks y Utilidades</h2>
-              <p>Personalización y rendimiento avanzado del sistema.</p>
-            </div>
-          </div>
-          <div class="grid-3">
-            <div class="tool-card-v" onclick="toggleV(this,'winutil','tweaks')">
-              <div class="tool-card-v-top">
-                <div class="tool-card-v-icon" style="color:var(--yellow);"><i class="fas fa-box"></i></div>
-                <div class="toggle-sm"></div>
-              </div>
-              <div>
-                <h4>Chris Titus WinUtil</h4>
-                <p>La navaja suiza para Windows.</p>
-              </div>
-            </div>
-            <div class="tool-card-v" onclick="toggleV(this,'tools-optimize-system','tweaks')">
-              <div class="tool-card-v-top">
-                <div class="tool-card-v-icon" style="color:var(--yellow);"><i class="fas fa-tachometer-alt"></i></div>
-                <div class="toggle-sm"></div>
-              </div>
-              <div>
-                <h4>Performance Script</h4>
-                <p>Boost de rendimiento .bat</p>
-              </div>
-            </div>
-            <div class="tool-card-v" onclick="toggleV(this,'activate-windows','tweaks')">
-              <div class="tool-card-v-top">
-                <div class="tool-card-v-icon" style="color:var(--yellow);"><i class="fas fa-key"></i></div>
-                <div class="toggle-sm"></div>
-              </div>
-              <div>
-                <h4>Activar (BIOS Key)</h4>
-                <p>Rescata licencia OEM.</p>
-              </div>
-            </div>
-            <div class="tool-card-v" onclick="toggleV(this,'update-apps','tweaks')">
-              <div class="tool-card-v-top">
-                <div class="tool-card-v-icon" style="color:var(--yellow);"><i class="fas fa-sync-alt"></i></div>
-                <div class="toggle-sm"></div>
-              </div>
-              <div>
-                <h4>Actualizar Apps</h4>
-                <p>Vía Winget Upgrade All.</p>
-              </div>
-            </div>
-            <div class="tool-card-v" onclick="toggleV(this,'find-drivers','tweaks')">
-              <div class="tool-card-v-top">
-                <div class="tool-card-v-icon" style="color:var(--yellow);"><i class="fas fa-cloud-download-alt"></i>
-                </div>
-                <div class="toggle-sm"></div>
-              </div>
-              <div>
-                <h4>Drivers Fabricante</h4>
-                <p>Dell, HP, Lenovo tools.</p>
-              </div>
-            </div>
-            <div class="tool-card-v" onclick="toggleV(this,'disable-transparency','tweaks')">
-              <div class="tool-card-v-top">
-                <div class="tool-card-v-icon" style="color:var(--yellow);"><i class="fas fa-layer-group"></i></div>
-                <div class="toggle-sm"></div>
-              </div>
-              <div>
-                <h4>Sin Transparencias</h4>
-                <p>Ahorra recursos GPU.</p>
-              </div>
-            </div>
-            <div class="tool-card-v" onclick="toggleV(this,'system-properties','tweaks')">
-              <div class="tool-card-v-top">
-                <div class="tool-card-v-icon" style="color:var(--yellow);"><i class="fas fa-cog"></i></div>
-                <div class="toggle-sm"></div>
-              </div>
-              <div>
-                <h4>Propiedades Sistema</h4>
-                <p>Variables de entorno, perfiles.</p>
-              </div>
-            </div>
-            <div class="tool-card-v" onclick="toggleV(this,'reboot-bios','tweaks')">
-              <div class="tool-card-v-top">
-                <div class="tool-card-v-icon" style="color:var(--yellow);"><i class="fas fa-power-off"></i></div>
-                <div class="toggle-sm"></div>
-              </div>
-              <div>
-                <h4>Reiniciar en BIOS</h4>
-                <p>Entra directo al firmware UEFI.</p>
-              </div>
-            </div>
-            <div class="tool-card-v" onclick="toggleV(this,'recovery-env','tweaks')">
-              <div class="tool-card-v-top">
-                <div class="tool-card-v-icon" style="color:var(--yellow);"><i class="fas fa-life-ring"></i></div>
-                <div class="toggle-sm"></div>
-              </div>
-              <div>
-                <h4>Modo Recuperación</h4>
-                <p>Opciones avanzadas de arranque.</p>
-              </div>
-            </div>
-            <div class="tool-card-v" onclick="toggleV(this,'install-winget','tweaks')">
-              <div class="tool-card-v-top">
-                <div class="tool-card-v-icon" style="color:var(--yellow);"><i class="fas fa-plus-circle"></i></div>
-                <div class="toggle-sm"></div>
-              </div>
-              <div>
-                <h4>Instalar Winget</h4>
-                <p>Gestor de paquetes Microsoft.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ══ VIEW: HERRAMIENTAS ══ -->
-        <div class="view" id="view-tools">
-          <div class="view-header">
-            <div class="view-icon"
-              style="background:rgba(255,107,53,0.1);color:var(--orange);border:1px solid rgba(255,107,53,0.2);">
-              <i class="fas fa-briefcase"></i>
-            </div>
-            <div>
-              <h2>Herramientas de Windows</h2>
-              <p>Accesos directos a utilidades administrativas y de gestión.</p>
-            </div>
-          </div>
-          <div class="grid-3">
-            <div class="tool-card" onclick="toggle(this,'tools-task-manager','tools')">
-              <div class="tool-card-icon" style="color:var(--orange);"><i class="fas fa-tasks"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Administrador de Tareas</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-            <div class="tool-card" onclick="toggle(this,'tools-device-manager','tools')">
-              <div class="tool-card-icon" style="color:var(--orange);"><i class="fas fa-desktop"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Admin. de Dispositivos</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-            <div class="tool-card" onclick="toggle(this,'tools-windows-services','tools')">
-              <div class="tool-card-icon" style="color:var(--orange);"><i class="fas fa-server"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Servicios de Windows</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-            <div class="tool-card" onclick="toggle(this,'tools-disk-cleanup','tools')">
-              <div class="tool-card-icon" style="color:var(--orange);"><i class="fas fa-hdd"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Liberador de Espacio</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-            <div class="tool-card" onclick="toggle(this,'tools-registry-editor','tools')">
-              <div class="tool-card-icon" style="color:var(--orange);"><i class="fas fa-file-code"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Editor del Registro</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-            <div class="tool-card" onclick="toggle(this,'tools-winget-cli','tools')">
-              <div class="tool-card-icon" style="color:var(--orange);"><i class="fas fa-terminal"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Consola Winget</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-            <div class="tool-card" onclick="toggle(this,'tools-check-updates','tools')">
-              <div class="tool-card-icon" style="color:var(--orange);"><i class="fas fa-sync"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Windows Update</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-            <div class="tool-card" onclick="toggle(this,'tools-download-windows','tools')">
-              <div class="tool-card-icon" style="color:var(--orange);"><i class="fas fa-cloud-download-alt"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">Descargar Windows ISO</div>
-                <div class="tool-card-sub">Abre página oficial de Microsoft</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-            <div class="tool-card" onclick="toggle(this,'tools-install-windows','tools')">
-              <div class="tool-card-icon" style="color:var(--orange);"><i class="fas fa-compact-disc"></i></div>
-              <div class="tool-card-body">
-                <div class="tool-card-title">WinDeploy</div>
-                <div class="tool-card-sub">Instalación post-formateo cloud</div>
-              </div>
-              <div class="toggle"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ══ VIEW: LIMPIEZA ══ -->
-        <div class="view" id="view-cleanup">
-          <div class="view-header">
-            <div class="view-icon"
-              style="background:rgba(74,250,30,0.08);color:var(--green);border:1px solid rgba(74,250,30,0.2);">
-              <i class="fas fa-broom"></i>
-            </div>
-            <div>
-              <h2>Centro de Limpieza</h2>
-              <p>Recupera espacio y optimiza recursos del sistema.</p>
-            </div>
-          </div>
-
-          <div
-            style="background:rgba(74,250,30,0.03);border:1px solid rgba(74,250,30,0.1);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem;">
-            <div
-              style="width:42px;height:42px;border-radius:11px;background:rgba(74,250,30,0.08);border:1px solid rgba(74,250,30,0.2);display:flex;align-items:center;justify-content:center;color:var(--green);font-size:1.1rem;flex-shrink:0;">
-              <i class="fas fa-shield-alt"></i></div>
-            <div>
-              <div style="font-size:0.82rem;font-weight:600;color:var(--white);">Mantenimiento Seguro</div>
-              <div style="font-size:0.7rem;color:var(--muted);margin-top:2px;">Los scripts solo eliminan archivos
-                temporales. Tus documentos personales no se tocan.</div>
-            </div>
-          </div>
-
-          <div style="display:flex;flex-direction:column;gap:10px;">
-            <div class="cleanup-card" onclick="toggle(this,'cleanup-temp-files','repairCleanup')">
-              <div class="cleanup-card-icon"><i class="fas fa-trash-can"></i></div>
-              <div style="flex:1;">
-                <h4>Archivos Temporales del Sistema</h4>
-                <p>Elimina Temp, Prefetch y basura de Windows Update.</p>
-              </div>
-              <div class="toggle" style="flex-shrink:0;"></div>
-            </div>
-            <div class="cleanup-card" onclick="toggle(this,'cleanup-optimize-ram','repairCleanup')">
-              <div class="cleanup-card-icon"><i class="fas fa-memory"></i></div>
-              <div style="flex:1;">
-                <h4>Optimización de Memoria RAM</h4>
-                <p>Descarga Sysinternals RAMMap para purgar memoria en espera.</p>
-              </div>
-              <div class="toggle" style="flex-shrink:0;"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ══ VIEW: INFO SISTEMA ══ -->
-        <div class="view" id="view-info">
-          <div class="view-header">
-            <div class="view-icon"
-              style="background:rgba(168,85,247,0.1);color:var(--purple);border:1px solid rgba(168,85,247,0.2);">
-              <i class="fas fa-microchip"></i>
-            </div>
-            <div>
-              <h2>Información del Sistema</h2>
-              <p>Diagnóstico profundo y reportes del hardware y software.</p>
-            </div>
-          </div>
-
-          <div class="info-card" onclick="toggle(this,'info-hardware','info')">
-            <div class="info-card-icon"><i class="fas fa-file-alt"></i></div>
-            <div style="flex:1;">
-              <h3>Generar Reporte Completo (SystemInfoPlus)</h3>
-              <p>Reporte detallado de CPU, RAM, Discos, Red y temperaturas si están disponibles.</p>
-            </div>
-            <div class="toggle" style="flex-shrink:0;"></div>
-          </div>
-        </div>
-
-      </div><!-- /content -->
-    </div><!-- /main -->
-  </div><!-- /app -->
-
-  <!-- ══════════ MODAL SCRIPT ══════════ -->
-  <div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
-    <div class="modal">
-      <div class="modal-header">
-        <div class="modal-header-left">
-          <div class="modal-dots">
-            <div class="modal-dot" style="background:#ff5f57"></div>
-            <div class="modal-dot" style="background:#febc2e"></div>
-            <div class="modal-dot" style="background:#28c840"></div>
-          </div>
-          <span class="modal-title"><i class="fas fa-terminal" style="margin-right:6px;"></i>SCRIPT GENERADO ·
-            ToolboxBS</span>
-        </div>
-        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
-      </div>
-      <div class="modal-body">
-        <pre id="scriptOutput"></pre>
-      </div>
-      <div class="modal-footer">
-        <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-        <button class="btn-copy-modal" onclick="copyScript()"><i class="fas fa-copy"></i> Copiar</button>
-        <button class="btn-download" onclick="downloadBat()"><i class="fas fa-download"></i> Descargar .BAT</button>
-      </div>
+    <div class="fixed inset-0 bg-grid pointer-events-none z-0"></div>
+    <div class="orb bg-blue-600 w-96 h-96 -top-20 -left-20" style="animation: float 20s ease-in-out infinite;"></div>
+    <div class="orb bg-purple-600 w-80 h-80 top-1/2 left-1/3"
+        style="animation: float 25s ease-in-out infinite reverse;"></div>
+    <div class="orb bg-teal-500 w-96 h-96 -bottom-32 -right-20" style="animation: float 18s ease-in-out infinite 2s;">
     </div>
-  </div>
 
-  <script>
-    // ════════════════════════════════
-    // STATE
-    // ════════════════════════════════
-    const selected = { repair: [], tweaks: [], tools: [], repairCleanup: [], info: [], home: [] };
-    let accentColor = '#4afa1e';
-    let currentHybridBat = '';
+    <div class="flex w-full h-full relative z-10">
 
-    // helper — igual que el original
-    function openExternalLink(url) { window.open(url, '_blank'); }
+        <!-- OVERLAY MOBILE -->
+        <div id="sidebarOverlay" onclick="closeSidebar()"
+            class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden lg:hidden"></div>
 
-    // ════════════════════════════════
-    // NAVIGATION
-    // ════════════════════════════════
-    const viewMeta = {
-      home: { title: 'Dashboard', sub: 'Centro de Comando · ToolboxBS Web' },
-      repair: { title: 'Reparación', sub: 'Herramientas críticas del sistema' },
-      tweaks: { title: 'Tweaks', sub: 'Personalización y rendimiento' },
-      tools: { title: 'Herramientas', sub: 'Utilidades administrativas de Windows' },
-      cleanup: { title: 'Limpieza', sub: 'Espacio en disco y optimización' },
-      info: { title: 'Info Sistema', sub: 'Diagnóstico profundo y reportes' },
-    };
+        <!-- SIDEBAR -->
+        <aside id="sidebar"
+            class="w-[280px] bg-zinc-950/80 backdrop-blur-xl border-r border-zinc-800 flex flex-col fixed inset-y-0 left-0 transform -translate-x-full lg:relative lg:translate-x-0 transition-transform duration-300 z-50">
 
-    function switchView(id, btn) {
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      document.getElementById('view-' + id).classList.add('active');
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-      else { const b = document.querySelector(`.nav-item[data-view="${id}"]`); if (b) b.classList.add('active'); }
-      document.getElementById('pageTitle').textContent = viewMeta[id].title;
-      document.getElementById('pageSub').textContent = viewMeta[id].sub;
-      closeSidebar();
-    }
+            <!-- Logo -->
+            <div class="h-20 flex items-center gap-3 px-6 border-b border-zinc-800 flex-shrink-0">
+                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS_Removedor_1768162986835.png?raw=true"
+                    alt="Logo" class="w-9 h-9 rounded-lg object-contain bg-zinc-900 p-1 border border-zinc-800">
+                <div>
+                    <h1 class="text-white font-bold text-lg tracking-tight leading-tight">TOOLBOX<span
+                            class="text-blue-500" id="logo-accent">BS</span></h1>
+                    <p class="text-[0.65rem] text-zinc-400 font-medium tracking-wider uppercase">Web v3.1 · Enterprise
+                    </p>
+                </div>
+            </div>
 
-    // ════════════════════════════════
-    // SIDEBAR MOBILE
-    // ════════════════════════════════
-    function toggleSidebar() {
-      document.getElementById('sidebar').classList.toggle('open');
-      document.getElementById('sidebarOverlay').classList.toggle('show');
-    }
-    function closeSidebar() {
-      document.getElementById('sidebar').classList.remove('open');
-      document.getElementById('sidebarOverlay').classList.remove('show');
-    }
+            <!-- Nav Items -->
+            <nav class="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1 custom-scrollbar">
 
-    // ════════════════════════════════
-    // TOGGLE LOGIC
-    // ════════════════════════════════
-    function toggle(el, id, cat) {
-      const on = el.classList.toggle('selected');
-      if (on) { if (!selected[cat].includes(id)) selected[cat].push(id); }
-      else { selected[cat] = selected[cat].filter(x => x !== id); }
-      updateCounter();
-    }
-    function toggleV(el, id, cat) { toggle(el, id, cat); }
-    function qaToggle(el, id) { toggle(el, id, 'home'); }
+                <div class="text-[0.65rem] font-bold text-zinc-500 tracking-widest uppercase px-3 mb-1 mt-2">Principal
+                </div>
+                <button
+                    class="nav-item active w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left text-zinc-400"
+                    data-view="home" onclick="switchView('home',this)">
+                    <i class="fas fa-layer-group w-5 text-center text-blue-500"></i>
+                    <span class="text-sm font-medium">Dashboard</span>
+                </button>
 
-    function updateCounter() {
-      const total = Object.values(selected).flat().length;
-      document.getElementById('counterNum').textContent = total;
-      const pill = document.getElementById('counterPill');
-      const btn = document.getElementById('btnGenerate');
-      if (total > 0) { pill.classList.add('has-items'); btn.disabled = false; }
-      else { pill.classList.remove('has-items'); btn.disabled = true; }
-    }
+                <div class="text-[0.65rem] font-bold text-zinc-500 tracking-widest uppercase px-3 mb-1 mt-6">Módulos de
+                    Sistema</div>
 
-    // ════════════════════════════════
-    // ACCENT COLOR
-    // ════════════════════════════════
-    function setAccent(color, el) {
-      accentColor = color;
-      document.documentElement.style.setProperty('--accent', color);
-      document.querySelectorAll('.accent-dot').forEach(d => d.classList.remove('active'));
-      if (el) el.classList.add('active');
-    }
+                <button class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left text-zinc-400"
+                    data-view="repair" onclick="switchView('repair',this)">
+                    <i class="fas fa-wrench w-5 text-center text-red-500"></i>
+                    <span class="text-sm font-medium">Reparación</span>
+                </button>
 
-    // ════════════════════════════════
-    // SCRIPT GENERATION
-    // ════════════════════════════════
-    const scripts = {
-      'info-hardware': `
-#======================================================================
-# SystemInfoPlus.ps1
-# Script avanzado para recopilación detallada de información del sistema
-# Compatible con PowerShell 5.1 y superior
-#======================================================================
+                <button class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left text-zinc-400"
+                    data-view="tweaks" onclick="switchView('tweaks',this)">
+                    <i class="fas fa-bolt w-5 text-center text-yellow-500"></i>
+                    <span class="text-sm font-medium">Tweaks y Rendimiento</span>
+                </button>
 
-Clear-Host
-$ErrorActionPreference = 'SilentlyContinue'
-$WarningPreference = 'SilentlyContinue'
+                <button class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left text-zinc-400"
+                    data-view="tools" onclick="switchView('tools',this)">
+                    <i class="fas fa-briefcase w-5 text-center text-orange-500"></i>
+                    <span class="text-sm font-medium">Herramientas Admin</span>
+                </button>
 
-# Función para crear encabezados con estilo
-function Write-ColorHeader {
-    param (
-        [string]$Text,
-        [string]$ForegroundColor = 'Cyan'
-    )
-    $width = $host.UI.RawUI.WindowSize.Width - 4
-    $line = "=" * $width
-    Write-Host ""
-    Write-Host $line -ForegroundColor $ForegroundColor
-    Write-Host "  $Text" -ForegroundColor $ForegroundColor
-    Write-Host $line -ForegroundColor $ForegroundColor
-}
+                <button class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left text-zinc-400"
+                    data-view="cleanup" onclick="switchView('cleanup',this)">
+                    <i class="fas fa-broom w-5 text-center text-emerald-500"></i>
+                    <span class="text-sm font-medium">Limpieza Profunda</span>
+                </button>
 
-# Función para mostrar información con formato
-function Write-InfoLine {
-    param (
-        [string]$Label,
-        $Value,
-        [string]$ValueColor = 'White'
-    )
-    $LabelWidth = 30
-    $formattedLabel = $Label.PadRight($LabelWidth, ".")
-    Write-Host " $formattedLabel" -NoNewline -ForegroundColor 'DarkGray'
-    Write-Host " $Value" -ForegroundColor $ValueColor
-}
+                <button class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left text-zinc-400"
+                    data-view="info" onclick="switchView('info',this)">
+                    <i class="fas fa-microchip w-5 text-center text-purple-500"></i>
+                    <span class="text-sm font-medium">Diagnóstico de Hardware</span>
+                </button>
 
-# Función para crear una barra de progreso visual
-function Write-ProgressBar {
-    param (
-        [int]$Percentage,
-        [int]$BarSize = 25,
-        [string]$BarColor = 'Green',
-        [string]$EmptyColor = 'DarkGray'
-    )
-    $completedSize = [math]::Floor(($Percentage / 100) * $BarSize)
-    $remainingSize = $BarSize - $completedSize
-    Write-Host " [" -NoNewline
-    Write-Host ("■" * $completedSize) -NoNewline -ForegroundColor $BarColor
-    Write-Host ("□" * $remainingSize) -NoNewline -ForegroundColor $EmptyColor
-    Write-Host "] $Percentage%" -ForegroundColor 'DarkGray'
-}
+            </nav>
 
-# Función para convertir bytes a formato legible
-function Convert-Size {
-    param(
-        [double]$SizeInBytes
-    )
-    if ($SizeInBytes -lt 1KB) { return "$SizeInBytes B" }
-    elseif ($SizeInBytes -lt 1MB) { return "{0:N2} KB" -f ($SizeInBytes / 1KB) }
-    elseif ($SizeInBytes -lt 1GB) { return "{0:N2} MB" -f ($SizeInBytes / 1MB) }
-    elseif ($SizeInBytes -lt 1TB) { return "{0:N2} GB" -f ($SizeInBytes / 1GB) }
-    else { return "{0:N2} TB" -f ($SizeInBytes / 1TB) }
-}
+            <!-- Sidebar Bottom -->
+            <div class="p-4 border-t border-zinc-800 flex-shrink-0 bg-zinc-950/50">
 
-# Obtener información detallada de instalación
-function Get-WindowsInstallDetails {
-    try {
-        $installTime = (Get-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion").InstallTime
-        $installDate = [DateTime]::FromFileTime([Int64]::Parse($installTime))
-        $detailedInstallInfo = Get-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion" -ErrorAction SilentlyContinue
-        [PSCustomObject]@{
-            InstallDate = $installDate
-            InstallTime = $installDate.ToString("HH:mm:ss")
-            DaysSinceInstall = [math]::Round(((Get-Date) - $installDate).TotalDays, 0)
-            ReleaseId = $detailedInstallInfo.ReleaseId
-            ProductName = $detailedInstallInfo.ProductName
-            EditionID = $detailedInstallInfo.EditionID
-            BuildBranch = $detailedInstallInfo.BuildBranch
-            CurrentBuild = $detailedInstallInfo.CurrentBuild
+                <!-- selector de tema -->
+                <div
+                    class="flex items-center justify-between px-2 mb-4 bg-zinc-900 border border-zinc-800 rounded-lg p-2">
+                    <span class="text-[0.7rem] text-zinc-400 font-medium">Acento UI</span>
+                    <div class="flex gap-1.5">
+                        <button
+                            class="w-4 h-4 rounded-full bg-blue-500 ring-2 ring-transparent ring-offset-1 ring-offset-zinc-900 transition-all hover:scale-110 active-accent"
+                            onclick="setAccent('#3b82f6', '59, 130, 246', this)" title="Comercial Blue"></button>
+                        <button
+                            class="w-4 h-4 rounded-full bg-emerald-500 ring-2 ring-transparent ring-offset-1 ring-offset-zinc-900 transition-all hover:scale-110"
+                            onclick="setAccent('#10b981', '16, 185, 129', this)" title="Emerald"></button>
+                        <button
+                            class="w-4 h-4 rounded-full bg-purple-500 ring-2 ring-transparent ring-offset-1 ring-offset-zinc-900 transition-all hover:scale-110"
+                            onclick="setAccent('#a855f7', '168, 85, 247', this)" title="Purple"></button>
+                        <button
+                            class="w-4 h-4 rounded-full bg-rose-500 ring-2 ring-transparent ring-offset-1 ring-offset-zinc-900 transition-all hover:scale-110"
+                            onclick="setAccent('#f43f5e', '244, 63, 94', this)" title="Rose"></button>
+                        <button
+                            class="w-4 h-4 rounded-full bg-amber-500 ring-2 ring-transparent ring-offset-1 ring-offset-zinc-900 transition-all hover:scale-110"
+                            onclick="setAccent('#f59e0b', '245, 158, 11', this)" title="Amber"></button>
+                    </div>
+                </div>
+
+                <button class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-zinc-400"
+                    onclick="window.open('https://brandonsepulveda.github.io/Documentacion.html','_blank')">
+                    <i class="fas fa-book w-5 text-center"></i>
+                    <span class="text-[0.8rem] font-medium">Documentación</span>
+                </button>
+                <button class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-zinc-400"
+                    onclick="window.open('https://brandonsepulveda.github.io','_blank')">
+                    <i class="fas fa-arrow-left w-5 text-center"></i>
+                    <span class="text-[0.8rem] font-medium">Ver Portafolio</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 flex flex-col min-w-0 bg-zinc-950/40 relative">
+
+            <header
+                class="h-20 flex items-center justify-between px-6 border-b border-zinc-800 bg-zinc-950/60 backdrop-blur-md flex-shrink-0 sticky top-0 z-30">
+                <div class="flex items-center gap-4">
+                    <button
+                        class="lg:hidden text-zinc-400 hover:text-white bg-zinc-900 border border-zinc-800 p-2 rounded-lg transition-colors"
+                        onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h2 id="pageTitle" class="text-xl font-bold text-white tracking-tight">Dashboard</h2>
+                        <p id="pageSub" class="text-xs text-zinc-400 font-medium mt-0.5">Centro de Comando · ToolboxBS
+                            Web</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <!-- Counter Badge -->
+                    <div id="counterPill"
+                        class="hidden sm:flex items-center gap-2 bg-zinc-900 border border-zinc-800 rounded-full pl-3 pr-1.5 py-1.5 transition-all duration-300">
+                        <span class="text-xs font-medium text-zinc-400">Scripts pendientes</span>
+                        <div id="counterNum"
+                            class="bg-zinc-800 text-zinc-300 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300">
+                            0</div>
+                    </div>
+
+                    <!-- Primary CTA Button -->
+                    <button id="btnGenerate" onclick="generateScript()" disabled
+                        class="group relative flex items-center gap-2 font-semibold text-sm px-5 py-2.5 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-white bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-900/20 disabled:shadow-none border border-blue-500/50">
+                        <i class="fas fa-terminal"></i>
+                        <span>Generar Script</span>
+                        <div
+                            class="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </button>
+                </div>
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar">
+                <div class="max-w-6xl mx-auto">
+
+                    <!-- ══ VIEW: DASHBOARD ══ -->
+                    <div class="view active" id="view-home">
+                        <div class="mb-10">
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Bienvenido a
+                                ToolboxBS</h2>
+                            <p class="text-sm md:text-base text-zinc-400 mt-2 max-w-2xl">Selecciona los módulos que
+                                necesitas, configura tu entorno y genera un script de PowerShell listo para ejecutar en
+                                segundos.</p>
+                        </div>
+
+                        <!-- Dashboard Cards -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+                            <!-- Card 1 -->
+                            <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 cursor-pointer hover:-translate-y-1 hover:border-zinc-700 transition-all group relative overflow-hidden shadow-lg shadow-black/20"
+                                onclick="window.open('https://brandonsepulveda.github.io/apps.html','_blank')">
+                                <div
+                                    class="absolute -right-6 -top-6 text-6xl text-white/5 group-hover:text-white/10 transition-colors transform rotate-12">
+                                    <i class="fas fa-cloud-download-alt"></i></div>
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-500 flex items-center justify-center text-lg mb-4">
+                                    <i class="fas fa-layer-group"></i></div>
+                                <h3 class="text-lg font-bold text-white mb-1">Repositorio Apps</h3>
+                                <p class="text-xs text-zinc-400">Software esencial post-formateo</p>
+                                <div class="w-full bg-zinc-800 h-1 rounded-full mt-4 overflow-hidden">
+                                    <div class="bg-blue-500 h-full w-full"></div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 cursor-pointer hover:-translate-y-1 hover:border-zinc-700 transition-all group relative overflow-hidden shadow-lg shadow-black/20"
+                                onclick="switchView('repair',null)">
+                                <div
+                                    class="absolute -right-6 -top-6 text-6xl text-white/5 group-hover:text-white/10 transition-colors transform rotate-12">
+                                    <i class="fas fa-wrench"></i></div>
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-red-500/10 border border-red-500/20 text-red-500 flex items-center justify-center text-lg mb-4">
+                                    <i class="fas fa-shield-alt"></i></div>
+                                <h3 class="text-lg font-bold text-white mb-1">Reparación OS</h3>
+                                <p class="text-xs text-zinc-400">Solución a problemas críticos</p>
+                                <div class="w-full bg-zinc-800 h-1 rounded-full mt-4 overflow-hidden">
+                                    <div class="bg-red-500 h-full w-3/4"></div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 cursor-pointer hover:-translate-y-1 hover:border-zinc-700 transition-all group relative overflow-hidden shadow-lg shadow-black/20"
+                                onclick="switchView('tweaks',null)">
+                                <div
+                                    class="absolute -right-6 -top-6 text-6xl text-white/5 group-hover:text-white/10 transition-colors transform rotate-12">
+                                    <i class="fas fa-bolt"></i></div>
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-500 flex items-center justify-center text-lg mb-4">
+                                    <i class="fas fa-tachometer-alt"></i></div>
+                                <h3 class="text-lg font-bold text-white mb-1">Optimización</h3>
+                                <p class="text-xs text-zinc-400">Scripts de rendimiento</p>
+                                <div class="w-full bg-zinc-800 h-1 rounded-full mt-4 overflow-hidden">
+                                    <div class="bg-yellow-500 h-full w-2/3"></div>
+                                </div>
+                            </div>
+
+                            <!-- Card 4 -->
+                            <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 cursor-pointer hover:-translate-y-1 hover:border-zinc-700 transition-all group relative overflow-hidden shadow-lg shadow-black/20"
+                                onclick="switchView('cleanup',null)">
+                                <div
+                                    class="absolute -right-6 -top-6 text-6xl text-white/5 group-hover:text-white/10 transition-colors transform rotate-12">
+                                    <i class="fas fa-broom"></i></div>
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 flex items-center justify-center text-lg mb-4">
+                                    <i class="fas fa-trash-alt"></i></div>
+                                <h3 class="text-lg font-bold text-white mb-1">Limpieza</h3>
+                                <p class="text-xs text-zinc-400">Liberación de espacio y RAM</p>
+                                <div class="w-full bg-zinc-800 h-1 rounded-full mt-4 overflow-hidden">
+                                    <div class="bg-emerald-500 h-full w-4/5"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Acciones Rápidas -->
+                        <div>
+                            <h4 class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Acciones Rápidas
+                                del Sistema</h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+
+                                <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col items-center justify-center gap-2 text-center"
+                                    onclick="qaToggle(this,'home-control-panel')">
+                                    <i
+                                        class="fas fa-sliders-h text-2xl text-zinc-400 group-hover:text-blue-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-zinc-300">Panel de Control</span>
+                                    <div
+                                        class="w-1.5 h-1.5 rounded-full bg-zinc-700 mt-1 qa-indicator transition-colors">
+                                    </div>
+                                </div>
+
+                                <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col items-center justify-center gap-2 text-center"
+                                    onclick="qaToggle(this,'home-windows-settings')">
+                                    <i
+                                        class="fas fa-cog text-2xl text-zinc-400 group-hover:text-blue-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-zinc-300">Configuración</span>
+                                    <div
+                                        class="w-1.5 h-1.5 rounded-full bg-zinc-700 mt-1 qa-indicator transition-colors">
+                                    </div>
+                                </div>
+
+                                <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col items-center justify-center gap-2 text-center"
+                                    onclick="qaToggle(this,'home-powershell-console')">
+                                    <i
+                                        class="fas fa-terminal text-2xl text-zinc-400 group-hover:text-blue-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-zinc-300">PowerShell Admin</span>
+                                    <div
+                                        class="w-1.5 h-1.5 rounded-full bg-zinc-700 mt-1 qa-indicator transition-colors">
+                                    </div>
+                                </div>
+
+                                <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col items-center justify-center gap-2 text-center"
+                                    onclick="qaToggle(this,'home-quick-diagnostic')">
+                                    <i
+                                        class="fas fa-heartbeat text-2xl text-zinc-400 group-hover:text-blue-400 transition-colors"></i>
+                                    <span class="text-xs font-medium text-zinc-300">Diag. Express</span>
+                                    <div
+                                        class="w-1.5 h-1.5 rounded-full bg-zinc-700 mt-1 qa-indicator transition-colors">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <style>
+                                .tool-card.selected .qa-indicator {
+                                    background-color: var(--accent);
+                                    box-shadow: 0 0 8px var(--accent);
+                                }
+
+                                .tool-card.selected i {
+                                    color: var(--accent);
+                                }
+                            </style>
+                        </div>
+                    </div>
+
+                    <!-- ══ VIEW: REPARACIÓN ══ -->
+                    <div class="view" id="view-repair">
+                        <div class="flex items-center gap-5 mb-8">
+                            <div
+                                class="w-14 h-14 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 text-2xl shadow-inner">
+                                <i class="fas fa-wrench"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold text-white">Reparación del Sistema</h2>
+                                <p class="text-sm text-zinc-400 mt-1">Herramientas críticas para solucionar problemas y
+                                    estabilizar Windows.</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex items-center justify-between"
+                                onclick="toggle(this,'create-restore-point','repair')">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="tool-card-icon w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400 border border-zinc-700">
+                                        <i class="fas fa-save"></i></div>
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-zinc-200">Crear Punto de Restauración</h4>
+                                        <p class="text-[0.7rem] text-zinc-500 mt-0.5">Medida de seguridad recomendada
+                                            antes de aplicar cambios.</p>
+                                    </div>
+                                </div>
+                                <div class="toggle"></div>
+                            </div>
+
+                            <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex items-center justify-between"
+                                onclick="toggle(this,'os-maintenance','repair')">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="tool-card-icon w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400 border border-zinc-700">
+                                        <i class="fas fa-shield-virus"></i></div>
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-zinc-200">Reparar Archivos (SFC/DISM)</h4>
+                                        <p class="text-[0.7rem] text-zinc-500 mt-0.5">Analiza y repara la integridad de
+                                            la imagen de Windows.</p>
+                                    </div>
+                                </div>
+                                <div class="toggle"></div>
+                            </div>
+
+                            <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex items-center justify-between"
+                                onclick="toggle(this,'bsod-info','repair')">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="tool-card-icon w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400 border border-zinc-700">
+                                        <i class="fas fa-exclamation-triangle"></i></div>
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-zinc-200">Analizar BSOD (BlueScreenView)
+                                        </h4>
+                                        <p class="text-[0.7rem] text-zinc-500 mt-0.5">Lee e interpreta los logs de
+                                            pantallazos azules.</p>
+                                    </div>
+                                </div>
+                                <div class="toggle"></div>
+                            </div>
+
+                            <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex items-center justify-between"
+                                onclick="toggle(this,'battery-status','repair')">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="tool-card-icon w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400 border border-zinc-700">
+                                        <i class="fas fa-battery-half"></i></div>
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-zinc-200">Informe de Batería</h4>
+                                        <p class="text-[0.7rem] text-zinc-500 mt-0.5">Genera reporte HTML detallado del
+                                            estado de la batería.</p>
+                                    </div>
+                                </div>
+                                <div class="toggle"></div>
+                            </div>
+
+                            <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex items-center justify-between"
+                                onclick="toggle(this,'repair-network','repair')">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="tool-card-icon w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400 border border-zinc-700">
+                                        <i class="fas fa-network-wired"></i></div>
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-zinc-200">Restablecer Red Completa</h4>
+                                        <p class="text-[0.7rem] text-zinc-500 mt-0.5">Flush DNS, Winsock Reset e IP
+                                            Config Release/Renew.</p>
+                                    </div>
+                                </div>
+                                <div class="toggle"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ══ VIEW: TWEAKS ══ -->
+                    <div class="view" id="view-tweaks">
+                        <div class="flex items-center gap-5 mb-8">
+                            <div
+                                class="w-14 h-14 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-500 text-2xl shadow-inner">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold text-white">Tweaks y Rendimiento</h2>
+                                <p class="text-sm text-zinc-400 mt-1">Configuraciones avanzadas para maximizar la
+                                    velocidad del equipo.</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                            <!-- Tweaks Cards (Vertical) -->
+                            <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col justify-between"
+                                onclick="toggle(this,'winutil','tweaks')">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div
+                                        class="tool-card-icon w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400 border border-zinc-700">
+                                        <i class="fas fa-rocket"></i></div>
+                                    <div class="toggle-sm"></div>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-zinc-200">Chris Titus WinUtil</h4>
+                                    <p class="text-[0.65rem] text-zinc-500 mt-1 leading-tight">La navaja suiza
+                                        definitiva para optimizar Windows.</p>
+                                </div>
+                            </div>
+
+                            <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col justify-between"
+                                onclick="toggle(this,'tools-optimize-system','tweaks')">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div
+                                        class="tool-card-icon w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400 border border-zinc-700">
+                                        <i class="fas fa-microchip"></i></div>
+                                    <div class="toggle-sm"></div>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-zinc-200">Performance Bat</h4>
+                                    <p class="text-[0.65rem] text-zinc-500 mt-1 leading-tight">Script batch propio para
+                                        boost de rendimiento.</p>
+                                </div>
+                            </div>
+
+                            <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col justify-between"
+                                onclick="toggle(this,'activate-windows','tweaks')">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div
+                                        class="tool-card-icon w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400 border border-zinc-700">
+                                        <i class="fas fa-key"></i></div>
+                                    <div class="toggle-sm"></div>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-zinc-200">Activar (BIOS Key)</h4>
+                                    <p class="text-[0.65rem] text-zinc-500 mt-1 leading-tight">Rescata y aplica la
+                                        licencia OEM de la placa base.</p>
+                                </div>
+                            </div>
+
+                            <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col justify-between"
+                                onclick="toggle(this,'update-apps','tweaks')">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div
+                                        class="tool-card-icon w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400 border border-zinc-700">
+                                        <i class="fas fa-sync"></i></div>
+                                    <div class="toggle-sm"></div>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-zinc-200">Actualizar Apps</h4>
+                                    <p class="text-[0.65rem] text-zinc-500 mt-1 leading-tight">Usa Winget para
+                                        actualizar todo el software instalado.</p>
+                                </div>
+                            </div>
+
+                            <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col justify-between"
+                                onclick="toggle(this,'find-drivers','tweaks')">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div
+                                        class="tool-card-icon w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400 border border-zinc-700">
+                                        <i class="fas fa-download"></i></div>
+                                    <div class="toggle-sm"></div>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-zinc-200">Drivers Fabricante</h4>
+                                    <p class="text-[0.65rem] text-zinc-500 mt-1 leading-tight">Instala utilidades de
+                                        Dell, HP o Lenovo automáticamente.</p>
+                                </div>
+                            </div>
+
+                            <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex flex-col justify-between"
+                                onclick="toggle(this,'disable-transparency','tweaks')">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div
+                                        class="tool-card-icon w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400 border border-zinc-700">
+                                        <i class="fas fa-eye-slash"></i></div>
+                                    <div class="toggle-sm"></div>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-semibold text-zinc-200">Sin Transparencias</h4>
+                                    <p class="text-[0.65rem] text-zinc-500 mt-1 leading-tight">Desactiva efectos
+                                        visuales para ahorrar GPU.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ══ VIEW: HERRAMIENTAS ══ -->
+                    <div class="view" id="view-tools">
+                        <div class="flex items-center gap-5 mb-8">
+                            <div
+                                class="w-14 h-14 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500 text-2xl shadow-inner">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold text-white">Herramientas Administrativas</h2>
+                                <p class="text-sm text-zinc-400 mt-1">Accesos directos rápidos a utilidades del sistema
+                                    Windows.</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                            <!-- Helper functions for simple tools layout -->
+                            <script>
+                                const renderTool = (id, icon, title) => `
+                  <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-3 px-4 flex items-center justify-between" onclick="toggle(this,'${id}','tools')">
+                    <div class="flex items-center gap-3">
+                      <i class="${icon} text-zinc-500 w-5 text-center"></i>
+                      <span class="text-sm font-medium text-zinc-300">${title}</span>
+                    </div>
+                    <div class="toggle-sm"></div>
+                  </div>
+                `;
+                                document.write(renderTool('tools-task-manager', 'fas fa-tasks', 'Admin. de Tareas'));
+                                document.write(renderTool('tools-device-manager', 'fas fa-desktop', 'Admin. de Dispositivos'));
+                                document.write(renderTool('tools-windows-services', 'fas fa-server', 'Servicios (services.msc)'));
+                                document.write(renderTool('tools-disk-cleanup', 'fas fa-hdd', 'Liberador de Espacio'));
+                                document.write(renderTool('tools-registry-editor', 'fas fa-file-code', 'Editor del Registro'));
+                                document.write(renderTool('tools-winget-cli', 'fas fa-terminal', 'Consola Winget'));
+                                document.write(renderTool('tools-check-updates', 'fas fa-cloud-download-alt', 'Windows Update'));
+                            </script>
+
+                            <div class="tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-3 px-4 flex items-center justify-between"
+                                onclick="toggle(this,'tools-install-windows','tools')">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-compact-disc text-blue-500 w-5 text-center"></i>
+                                    <div>
+                                        <span class="text-sm font-medium text-zinc-200 block">WinDeploy</span>
+                                        <span class="text-[0.65rem] text-zinc-500">Instalación post-formateo
+                                            cloud</span>
+                                    </div>
+                                </div>
+                                <div class="toggle-sm"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ══ VIEW: LIMPIEZA ══ -->
+                    <div class="view" id="view-cleanup">
+                        <div class="flex items-center gap-5 mb-8">
+                            <div
+                                class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 text-2xl shadow-inner">
+                                <i class="fas fa-broom"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold text-white">Centro de Limpieza</h2>
+                                <p class="text-sm text-zinc-400 mt-1">Recupera espacio en disco y optimiza la memoria
+                                    RAM de forma segura.</p>
+                            </div>
+                        </div>
+
+                        <!-- Banner Informativo -->
+                        <div class="bg-blue-500/5 border border-blue-500/20 rounded-xl p-4 flex gap-4 items-start mb-6">
+                            <i class="fas fa-info-circle text-blue-500 mt-0.5"></i>
+                            <div>
+                                <h4 class="text-sm font-bold text-blue-100">Limpieza Segura Garantizada</h4>
+                                <p class="text-xs text-blue-200/70 mt-1">Estos scripts están diseñados para apuntar
+                                    únicamente a carpetas temporales, prefetch y cachés del sistema. Tus documentos
+                                    personales, descargas y archivos de usuario no se verán afectados.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-3">
+                            <div class="cleanup-card tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex items-center justify-between"
+                                onclick="toggle(this,'cleanup-temp-files','repairCleanup')">
+                                <div class="flex items-center gap-5">
+                                    <div
+                                        class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center text-emerald-500 border border-zinc-700 text-xl tool-card-icon">
+                                        <i class="fas fa-trash-alt"></i></div>
+                                    <div>
+                                        <h4 class="text-base font-bold text-white">Purgar Archivos Temporales</h4>
+                                        <p class="text-xs text-zinc-400 mt-1">Elimina recursivamente contenido de
+                                            %TEMP%, C:\Windows\Temp y libera caché de actualizaciones.</p>
+                                    </div>
+                                </div>
+                                <div class="toggle"></div>
+                            </div>
+
+                            <div class="cleanup-card tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex items-center justify-between"
+                                onclick="toggle(this,'cleanup-optimize-ram','repairCleanup')">
+                                <div class="flex items-center gap-5">
+                                    <div
+                                        class="w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center text-emerald-500 border border-zinc-700 text-xl tool-card-icon">
+                                        <i class="fas fa-memory"></i></div>
+                                    <div>
+                                        <h4 class="text-base font-bold text-white">Optimización de Memoria RAM (RAMMap)
+                                        </h4>
+                                        <p class="text-xs text-zinc-400 mt-1">Descarga y ejecuta Sysinternals RAMMap
+                                            para vaciar la memoria en espera (Standby List).</p>
+                                    </div>
+                                </div>
+                                <div class="toggle"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ══ VIEW: INFO SISTEMA ══ -->
+                    <div class="view" id="view-info">
+                        <div class="flex items-center gap-5 mb-8">
+                            <div
+                                class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500 text-2xl shadow-inner">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold text-white">Diagnóstico del Sistema</h2>
+                                <p class="text-sm text-zinc-400 mt-1">Genera reportes detallados y evalúa la salud de
+                                    los componentes.</p>
+                            </div>
+                        </div>
+
+                        <div class="info-card tool-card bg-zinc-900 border border-zinc-800 rounded-xl p-6 flex items-center justify-between"
+                            onclick="toggle(this,'info-hardware','info')">
+                            <div class="flex items-center gap-6">
+                                <div
+                                    class="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/20 text-2xl tool-card-icon shadow-inner">
+                                    <i class="fas fa-clipboard-list"></i></div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-white">Generar Reporte SystemInfoPlus</h3>
+                                    <p class="text-sm text-zinc-400 mt-1 max-w-xl">Ejecuta un script avanzado en
+                                        PowerShell que recopila datos exhaustivos sobre CPU, RAM, Almacenamiento, Red y
+                                        calcula un índice de salud general del equipo.</p>
+                                </div>
+                            </div>
+                            <div class="toggle"></div>
+                        </div>
+                    </div>
+
+                </div> <!-- fin contenedor max-w -->
+            </div> <!-- fin scroll area -->
+        </main>
+    </div>
+
+    <!-- ══════════ MODAL SCRIPT ══════════ -->
+    <div class="modal-overlay fixed inset-0 z-[100] bg-zinc-950/80 backdrop-blur-sm flex items-center justify-center p-4"
+        id="modal" onclick="closeModalOutside(event)">
+        <div class="modal-content bg-zinc-900 border border-zinc-700 rounded-2xl w-full max-w-4xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden"
+            onclick="event.stopPropagation()">
+
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-zinc-800 bg-zinc-950/50 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="flex gap-1.5">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <span class="text-sm font-mono font-medium text-zinc-300"><i
+                            class="fas fa-terminal mr-2 text-zinc-500"></i>ToolboxBS_Script.ps1</span>
+                </div>
+                <button
+                    class="text-zinc-500 hover:text-red-400 transition-colors bg-zinc-800/50 hover:bg-zinc-800 rounded-md w-8 h-8 flex items-center justify-center"
+                    onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body (Code) -->
+            <div class="flex-1 overflow-y-auto bg-[#0d1117] p-6 relative group custom-scrollbar">
+                <pre id="scriptOutput"
+                    class="text-[0.8rem] leading-relaxed text-zinc-300 font-mono whitespace-pre-wrap selection:bg-blue-500/30 selection:text-white"></pre>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 py-4 border-t border-zinc-800 bg-zinc-950 flex justify-end gap-3 items-center">
+                <button class="px-4 py-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+                    onclick="closeModal()">Cancelar</button>
+                <button
+                    class="px-4 py-2 text-sm font-medium text-white bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg transition-colors flex items-center gap-2"
+                    onclick="copyScript()">
+                    <i class="fas fa-copy text-zinc-400"></i> Copiar Código
+                </button>
+                <button
+                    class="px-5 py-2 text-sm font-semibold text-zinc-900 bg-white hover:bg-zinc-200 rounded-lg transition-colors flex items-center gap-2 shadow-lg"
+                    onclick="downloadBat()">
+                    <i class="fas fa-download"></i> Descargar .BAT
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ════════════════════════════════
+        // STATE & LOGIC (Manteniendo funcionalidad original)
+        // ════════════════════════════════
+        const selected = { repair: [], tweaks: [], tools: [], repairCleanup: [], info: [], home: [] };
+        let currentHybridBat = '';
+
+        // Navigation Meta
+        const viewMeta = {
+            home: { title: 'Dashboard', sub: 'Centro de Comando · ToolboxBS Web' },
+            repair: { title: 'Reparación de Sistema', sub: 'Herramientas críticas para solucionar problemas en Windows' },
+            tweaks: { title: 'Tweaks y Rendimiento', sub: 'Ajustes avanzados para maximizar la velocidad' },
+            tools: { title: 'Herramientas Admin', sub: 'Accesos directos a utilidades administrativas' },
+            cleanup: { title: 'Limpieza Profunda', sub: 'Liberación de espacio en disco y memoria RAM' },
+            info: { title: 'Diagnóstico de Hardware', sub: 'Reportes detallados y estado de salud del equipo' },
+        };
+
+        function switchView(id, btn) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById('view-' + id).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(n => {
+                n.classList.remove('active');
+                n.classList.add('text-zinc-400');
+                n.classList.remove('text-white', 'bg-white/10');
+            });
+
+            let activeBtn = btn || document.querySelector(`.nav-item[data-view="${id}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active', 'text-white', 'bg-white/10');
+                activeBtn.classList.remove('text-zinc-400');
+            }
+
+            document.getElementById('pageTitle').textContent = viewMeta[id].title;
+            document.getElementById('pageSub').textContent = viewMeta[id].sub;
+            closeSidebar();
         }
-    }
-    catch {
-        try {
-            $OS = Get-CimInstance Win32_OperatingSystem
-            $installDate = [System.Management.ManagementDateTimeConverter]::ToDateTime($OS.InstallDate)
-            [PSCustomObject]@{
-                InstallDate = $installDate
-                InstallTime = $installDate.ToString("HH:mm:ss")
-                DaysSinceInstall = [math]::Round(((Get-Date) - $installDate).TotalDays, 0)
-                ReleaseId = "Desconocido"
-                ProductName = $OS.Caption
-                EditionID = "Desconocido"
-                BuildBranch = "Desconocido"
-                CurrentBuild = $OS.BuildNumber
+
+        // Sidebar Mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                closeSidebar();
             }
         }
-        catch {
-            $installDate = Get-Date
-            [PSCustomObject]@{
-                InstallDate = $installDate
-                InstallTime = $installDate.ToString("HH:mm:ss")
-                DaysSinceInstall = 0
-                ReleaseId = "Desconocido"
-                ProductName = "Desconocido"
-                EditionID = "Desconocido"
-                BuildBranch = "Desconocido"
-                CurrentBuild = "Desconocido"
-            }
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.add('-translate-x-full');
+            document.getElementById('sidebarOverlay').classList.add('hidden');
         }
-    }
-}
-$installInfo = Get-WindowsInstallDetails
 
-Write-Host "\`n\`n" -NoNewline
-$progressChars = @("/", "-", "\\", "|")
-foreach ($i in 1..15) {
-    $char = $progressChars[$i % 4]
-    Write-Host "\`r $char Cargando sistema de diagnóstico avanzado... $($i * 6)%" -NoNewline -ForegroundColor 'Yellow'
-    Start-Sleep -Milliseconds 100
-}
-Write-Host "\`r √ Sistema de diagnóstico cargado completamente.    " -ForegroundColor 'Green'
-Start-Sleep -Milliseconds 500
-Clear-Host
-$title = @"
-================================================================================
- _____           _                _____         __      _____ _          
-/  ___|         | |              |_   _|       / _|    |  __ \\| |         
-\\ \`--.  _  _ __| |_ ___ _ __ ___  | | _ __   | |_ ___  | |  \\/| |  _ ___ 
- \`--. \\| | | / _\` | / _ \\ '_ \` _ \\| || '_ \\  |  _/ _ \\ | | __| | | | / __|
-/\\__/ /| |_| \\__,_|  __/ | | | | | || | | || || (_) || |_\\ \\ | |_| \\__ \\
-\\____/  \\__, |\\__,_|\\___|_| |_| |_\\___|_| |_||_| \\___/  \\____/_|\\__,_|___/
-         __/ |                                                         
-        |___/        Diagnóstico Avanzado v2.0 Complemento ToolboxBS by: Brandon Sepulveda
-================================================================================
-"@
-Write-Host $title -ForegroundColor 'Cyan'
-Write-Host ' Ejecutando diagnóstico completo del sistema...' -ForegroundColor 'Yellow'
-Write-Host ' Fecha de ejecución: $(Get-Date -Format 'dd/MM/yyyy HH:mm:ss')\`n' -ForegroundColor 'Gray'
-#========================================
-# INFORMACIÓN DEL SISTEMA OPERATIVO
-#========================================
-Write-ColorHeader 'INFORMACIÓN DEL SISTEMA OPERATIVO'
-$OS = Get-CimInstance Win32_OperatingSystem
-$computerSystem = Get-CimInstance Win32_ComputerSystem
-$bios = Get-CimInstance Win32_BIOS
-Write-InfoLine 'Nombre del equipo' $env:COMPUTERNAME 'Yellow'
-Write-InfoLine 'Usuario actual' "$env:USERDOMAIN\\$env:USERNAME" 'Yellow'
-Write-InfoLine 'Sistema Operativo' $OS.Caption 'White'
-Write-InfoLine 'Versión' $OS.Version 'White'
-Write-InfoLine 'Build' $OS.BuildNumber 'White'
-Write-InfoLine 'Arquitectura' "$($OS.OSArchitecture)" 'White'
-Write-InfoLine 'Fecha de instalación' $installInfo.InstallDate.ToString("dd/MM/yyyy HH:mm:ss") 'Magenta'
-Write-InfoLine 'Días desde instalación' "$($installInfo.DaysSinceInstall) días" 'Magenta'
-try {
-    $detailedInstallInfo = Get-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion" -ErrorAction SilentlyContinue
-    if ($detailedInstallInfo.ReleaseId) {
-        Write-InfoLine 'ID de versión' $detailedInstallInfo.ReleaseId 'White'
-    }
-    if ($detailedInstallInfo.BuildBranch) {
-        Write-InfoLine 'Rama de compilación' $detailedInstallInfo.BuildBranch 'White'
-    }
-} catch {}
-Write-InfoLine 'Último arranque' $OS.LastBootUpTime.ToString("dd/MM/yyyy HH:mm:ss") 'White'
-$upTime = (Get-Date) - $OS.LastBootUpTime
-Write-InfoLine 'Tiempo activo' "$($upTime.Days) días, $($upTime.Hours) horas, $($upTime.Minutes) minutos" 'Green'
-Write-InfoLine 'Fabricante' $computerSystem.Manufacturer 'White'
-Write-InfoLine 'Modelo' $computerSystem.Model 'White'
-Write-InfoLine 'Número de serie BIOS' $bios.SerialNumber 'White'
-#========================================
-# INFORMACIÓN DEL PROCESADOR
-#========================================
-Write-ColorHeader 'INFORMACIÓN DEL PROCESADOR'
-$processor = Get-CimInstance Win32_Processor
-$cpuLoad = (Get-CimInstance Win32_Processor | Measure-Object -Property LoadPercentage -Average).Average
-Write-InfoLine 'Procesador' $processor.Name 'White'
-Write-InfoLine 'Fabricante' $processor.Manufacturer 'White'
-Write-InfoLine 'Núcleos físicos' $processor.NumberOfCores 'White'
-Write-InfoLine 'Núcleos lógicos' $processor.NumberOfLogicalProcessors 'White'
-Write-InfoLine 'Velocidad actual' "$($processor.CurrentClockSpeed) MHz" 'White'
-Write-InfoLine 'Velocidad máxima' "$($processor.MaxClockSpeed) MHz" 'White'
-Write-InfoLine 'Socket' $processor.SocketDesignation 'White'
-Write-InfoLine 'Arquitectura' $processor.Architecture 'White'
-Write-InfoLine 'Caché L2' "$($processor.L2CacheSize) KB" 'White'
-Write-InfoLine 'Caché L3' "$($processor.L3CacheSize) KB" 'White'
-Write-Host ' Uso actual del CPU' -NoNewline -ForegroundColor 'DarkGray'
-$cpuColor = if ($cpuLoad -lt 30) { 'Green' } elseif ($cpuLoad -lt 70) { 'Yellow' } else { 'Red' }
-Write-ProgressBar -Percentage $cpuLoad -BarColor $cpuColor
-#========================================
-# INFORMACIÓN DE MEMORIA
-#========================================
-Write-ColorHeader 'INFORMACIÓN DE MEMORIA RAM'
-$totalRAM = [math]::Round($computerSystem.TotalPhysicalMemory / 1GB, 2)
-$availableRAM = [math]::Round((Get-CimInstance -ClassName Win32_OperatingSystem).FreePhysicalMemory / 1MB, 2)
-$usedRAM = [math]::Round($totalRAM - $availableRAM, 2)
-$ramUsagePercentage = [math]::Round(($usedRAM / $totalRAM) * 100, 0)
-Write-InfoLine 'Memoria total instalada' "$totalRAM GB" 'White'
-Write-InfoLine 'Memoria disponible' "$availableRAM GB" 'White'
-Write-InfoLine 'Memoria en uso' "$usedRAM GB" 'White'
-Write-Host ' Uso actual de memoria' -NoNewline -ForegroundColor 'DarkGray'
-$ramColor = if ($ramUsagePercentage -lt 30) { 'Green' } elseif ($ramUsagePercentage -lt 70) { 'Yellow' } else { 'Red' }
-Write-ProgressBar -Percentage $ramUsagePercentage -BarColor $ramColor
-#========================================
-# INFORMACIÓN DE ALMACENAMIENTO
-#========================================
-Write-ColorHeader 'INFORMACIÓN DE ALMACENAMIENTO'
-$diskdrives = Get-CimInstance Win32_DiskDrive
-$diskCounter = 1
-foreach ($disk in $diskdrives) {
-    $partitions = $disk | Get-CimAssociatedInstance -ResultClassName Win32_DiskPartition
-    $diskSize = [math]::Round($disk.Size / 1GB, 2)
-    $diskModel = $disk.Model
-    $diskInterface = $disk.InterfaceType
-    Write-Host "\`n Disco físico #$diskCounter" -ForegroundColor 'DarkCyan'
-    Write-InfoLine "    Modelo" $diskModel "White"
-    Write-InfoLine "    Tamaño" "$diskSize GB" "White"
-    Write-InfoLine "    Interfaz" $diskInterface "White"
-    Write-InfoLine "    Número de serie" $disk.SerialNumber "White"
-    Write-InfoLine "    Particiones" $partitions.Count "White"
-    $partitionCounter = 1
-    foreach ($partition in $partitions) {
-        $logicaldisks = $partition | Get-CimAssociatedInstance -ResultClassName Win32_LogicalDisk
-        foreach ($logicaldisk in $logicaldisks) {
-            $freeSpace = [math]::Round($logicaldisk.FreeSpace / 1GB, 2)
-            $totalSize = [math]::Round($logicaldisk.Size / 1GB, 2)
-            $usedSpace = [math]::Round($totalSize - $freeSpace, 2)
-            $percentFree = [math]::Round(($freeSpace / $totalSize) * 100, 0)
-            $percentUsed = 100 - $percentFree
-            Write-Host "\`n     Volumen lógico" -ForegroundColor 'DarkYellow'
-            Write-InfoLine "       Letra de unidad" "$($logicaldisk.DeviceID)" "Yellow"
-            Write-InfoLine "       Etiqueta" "$($logicaldisk.VolumeName)" "White"
-            Write-InfoLine "       Sistema de archivos" "$($logicaldisk.FileSystem)" "White"
-            Write-InfoLine "       Tamaño total" "$totalSize GB" "White"
-            Write-InfoLine "       Espacio usado" "$usedSpace GB" "White"
-            Write-InfoLine "       Espacio libre" "$freeSpace GB" "White"
-            Write-Host "       Uso del disco" -NoNewline -ForegroundColor 'DarkGray'
-            $diskColor = if ($percentUsed -lt 70) { "Green" } elseif ($percentUsed -lt 90) { "Yellow" } else { "Red" }
-            Write-ProgressBar -Percentage $percentUsed -BarColor $diskColor
-            $partitionCounter++
-        }
-    }
-    $diskCounter++
-}
-#========================================
-# INFORMACIÓN DE TARJETA GRÁFICA
-#========================================
-Write-ColorHeader 'INFORMACIÓN DE TARJETA GRÁFICA'
-$videoControllers = Get-CimInstance Win32_VideoController
-$gpuCounter = 1
-foreach ($gpu in $videoControllers) {
-    Write-Host "\`n Tarjeta gráfica #$gpuCounter" -ForegroundColor 'DarkCyan'
-    Write-InfoLine "    Nombre" $gpu.Name "White"
-    Write-InfoLine "    Fabricante" $gpu.VideoProcessor "White"
-    Write-InfoLine "    Versión de controlador" $gpu.DriverVersion "White"
-    Write-InfoLine "    Fecha del controlador" ([System.Management.ManagementDateTimeConverter]::ToDateTime($gpu.DriverDate).ToString("dd/MM/yyyy")) "White"
-    Write-InfoLine "    Resolución actual" "$($gpu.CurrentHorizontalResolution) x $($gpu.CurrentVerticalResolution)" "White"
-    Write-InfoLine "    Frecuencia de refresco" "$($gpu.CurrentRefreshRate) Hz" "White"
-    Write-InfoLine "    Memoria dedicada" "$(Convert-Size $gpu.AdapterRAM)" "White"
-    $gpuCounter++
-}
-#========================================
-# INFORMACIÓN DE RED
-#========================================
-Write-ColorHeader 'INFORMACIÓN DE RED'
-$networkAdapters = Get-CimInstance Win32_NetworkAdapter | Where-Object { $_.PhysicalAdapter -eq $true -and $_.MACAddress -ne $null }
-$adapterCounter = 1
-foreach ($adapter in $networkAdapters) {
-    $config = $adapter | Get-CimAssociatedInstance -ResultClassName Win32_NetworkAdapterConfiguration
-    if ($config -ne $null) {
-        Write-Host "\`n Adaptador de red #$adapterCounter" -ForegroundColor 'DarkCyan'
-        Write-InfoLine "    Nombre" $adapter.Name "White"
-        Write-InfoLine "    Fabricante" $adapter.Manufacturer "White"
-        Write-InfoLine "    Tipo de adaptador" $adapter.AdapterType "White"
-        Write-InfoLine "    Dirección MAC" $adapter.MACAddress "White"
-        Write-InfoLine "    Velocidad" "$([math]::Round($adapter.Speed / 1000000, 0)) Mbps" "White"
-        if ($config.IPAddress -ne $null) {
-            Write-InfoLine "    Dirección IPv4" ($config.IPAddress | Where-Object { $_ -like "*.*" })[0] "White"
-            Write-InfoLine "    Máscara de subred" $config.IPSubnet[0] "White"
-            if ($config.DefaultIPGateway -ne $null) {
-                Write-InfoLine "    Puerta de enlace" $config.DefaultIPGateway[0] "White"
+        // Toggle Logic
+        function toggle(el, id, cat) {
+            const isSelected = el.classList.toggle('selected');
+            if (isSelected) {
+                if (!selected[cat].includes(id)) selected[cat].push(id);
+            } else {
+                selected[cat] = selected[cat].filter(x => x !== id);
             }
-            if ($config.DNSServerSearchOrder -ne $null) {
-                Write-InfoLine "    Servidor DNS primario" $config.DNSServerSearchOrder[0] "White"
-                if ($config.DNSServerSearchOrder.Count -gt 1) {
-                    Write-InfoLine "    Servidor DNS secundario" $config.DNSServerSearchOrder[1] "White"
+            updateCounter();
+        }
+        function qaToggle(el, id) { toggle(el, id, 'home'); }
+
+        function updateCounter() {
+            const total = Object.values(selected).flat().length;
+            const counterNum = document.getElementById('counterNum');
+            const pill = document.getElementById('counterPill');
+            const btn = document.getElementById('btnGenerate');
+
+            // Animar el cambio de número
+            counterNum.style.transform = 'scale(1.2)';
+            setTimeout(() => counterNum.style.transform = 'scale(1)', 150);
+            counterNum.textContent = total;
+
+            if (total > 0) {
+                pill.classList.add('border-blue-500/50');
+                counterNum.classList.replace('bg-zinc-800', 'bg-blue-600');
+                counterNum.classList.replace('text-zinc-300', 'text-white');
+                btn.disabled = false;
+            } else {
+                pill.classList.remove('border-blue-500/50');
+                counterNum.classList.replace('bg-blue-600', 'bg-zinc-800');
+                counterNum.classList.replace('text-white', 'text-zinc-300');
+                btn.disabled = true;
+            }
+        }
+
+        // Acentos Dinámicos
+        function setAccent(hex, rgb, el) {
+            document.documentElement.style.setProperty('--accent', hex);
+            document.documentElement.style.setProperty('--accent-rgb', rgb);
+
+            document.querySelectorAll('.active-accent').forEach(d => {
+                d.classList.remove('active-accent', 'ring-2', 'ring-white/50');
+                d.classList.add('ring-transparent');
+            });
+            if (el) {
+                el.classList.add('active-accent', 'ring-2', 'ring-white/50');
+                el.classList.remove('ring-transparent');
+            }
+
+            // Actualizar logo text para que coincida
+            document.getElementById('logo-accent').style.color = hex;
+        }
+
+        // ==========================================
+        // SCRIPT DATA (Lógica completa sincronizada desde ToolboxBS.ps1)
+        // ==========================================
+        const scripts = {
+            'create-restore-point': `try { Checkpoint-Computer -Description "ToolboxBS_Auto" -RestorePointType "MODIFY_SETTINGS"; Write-Host "Punto creado." -ForegroundColor Green } catch { Write-Error "Error: $_" }`,
+
+            'os-maintenance': `sfc /scannow; DISM /Online /Cleanup-image /Restorehealth; Dism /Online /Cleanup-Image /startComponentCleanup`,
+
+            'bsod-info': [
+                'Write-Host "Ejecutando script de análisis de BSOD remoto..." -ForegroundColor Cyan',
+                'try {',
+                '    iex ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/pantalla%20azul.ps1"))',
+                '} catch {',
+                '    Write-Host "Error al ejecutar el script remoto: $_" -ForegroundColor Red',
+                '}',
+                '',
+                'Write-Host "`nAbriendo BlueScreenView para un análisis adicional..." -ForegroundColor Yellow',
+                '$Url = "https://www.nirsoft.net/utils/bluescreenview.zip"',
+                '$ZipPath = Join-Path $env:TEMP "bluescreenview.zip"',
+                '$ExtractPath = Join-Path $env:TEMP "BlueScreenView"',
+                'try { Invoke-WebRequest -Uri $Url -OutFile $ZipPath } catch { Write-Host "Error al descargar BlueScreenView: $_" -ForegroundColor Red; return }',
+                'try { Expand-Archive -Path $ZipPath -DestinationPath $ExtractPath -Force } catch { Write-Host "Error al extraer BlueScreenView: $_" -ForegroundColor Red; return }',
+                '$ExePath = Join-Path $ExtractPath "BlueScreenView.exe"',
+                'if (Test-Path -Path $ExePath) { Start-Process -FilePath $ExePath } else { Write-Host "No se encontro BlueScreenView.exe." -ForegroundColor Red }'
+            ].join('\n'),
+
+            'battery-status': [
+                'Write-Host "Generando informe de bateria..." -ForegroundColor Yellow',
+                '$batteryReportPath = "$env:USERPROFILE\\Desktop\\battery_report.html"',
+                'powercfg /batteryreport /output "$batteryReportPath"',
+                'if (Test-Path $batteryReportPath) {',
+                '    Start-Process $batteryReportPath',
+                '    Write-Host "Informe de bateria generado en $batteryReportPath" -ForegroundColor Green',
+                '} else {',
+                '    Write-Host "No se pudo generar el informe de bateria." -ForegroundColor Red',
+                '}',
+                '',
+                'Write-Host "Abriendo BatteryInfoView..." -ForegroundColor Yellow',
+                '$url = "https://www.nirsoft.net/utils/batteryinfoview.zip"',
+                '$outputPath = Join-Path $env:TEMP "BatteryInfoView.zip"',
+                '$extractPath = Join-Path $env:TEMP "BatteryInfoView"',
+                'try { Invoke-WebRequest -Uri $url -OutFile $outputPath } catch { Write-Host "Error al descargar BatteryInfoView: $_" -ForegroundColor Red; return }',
+                'try { Expand-Archive -Path $outputPath -DestinationPath $extractPath -Force } catch { Write-Host "Error al extraer BatteryInfoView: $_" -ForegroundColor Red; return }',
+                '$exePath = Join-Path $extractPath "BatteryInfoView.exe"',
+                'if (Test-Path -Path $exePath) { Start-Process -FilePath $exePath } else { Write-Host "No se encontro BatteryInfoView.exe." -ForegroundColor Red }'
+            ].join('\n'),
+
+            'repair-network': `netsh winsock reset; netsh int ip reset; ipconfig /release; ipconfig /renew; ipconfig /flushdns; Write-Host "Red reiniciada." -ForegroundColor Green`,
+
+            'winutil': `iex ((New-Object System.Net.WebClient).DownloadString("https://christitus.com/win"))`,
+
+            'tools-optimize-system': [
+                'if (-not (Test-Path "$env:TEMP\\ToolboxBS")) { New-Item -Path "$env:TEMP\\ToolboxBS" -ItemType Directory -Force | Out-Null }',
+                'Invoke-WebRequest -Uri "https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/performance.bat" -OutFile "$env:TEMP\\ToolboxBS\\performance.bat"',
+                'Start-Process -FilePath "cmd.exe" -ArgumentList "/c", "$env:TEMP\\ToolboxBS\\performance.bat"'
+            ].join('\n'),
+
+            'activate-windows': `$key=(Get-WmiObject SoftwareLicensingService).OA3xOriginalProductKey; if($key){slmgr /ipk $key; slmgr /ato} else {Write-Warning "Sin llave BIOS"}`,
+
+            'update-apps': `winget upgrade --all --include-unknown`,
+
+            'find-drivers': `irm "https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/DriverUpdate-Universal.ps1" | iex`,
+
+            'disable-transparency': `Set-ItemProperty -Path "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize" -Name "EnableTransparency" -Value 0`,
+
+            'system-properties': `sysdm.cpl`,
+
+            'reboot-bios': `shutdown /r /fw /t 0`,
+
+            'install-winget': `Start-Process "ms-windows-store://pdp/?productid=9NBLGGH4NNS1"`,
+
+            'driver-info': `Get-WmiObject -Query "SELECT * FROM Win32_SystemDriver" | Out-File -FilePath "$env:USERPROFILE\\Desktop\\drivers.txt"; Start-Process "devmgmt.msc"`,
+
+            'cleanup-temp-files': [
+                'try {',
+                '    Write-Host "Limpiando archivos temporales..." -ForegroundColor Cyan',
+                '    $userTempPath = $env:TEMP',
+                '    $windowsTempPath = "C:\\Windows\\Temp"',
+                '    $totalDeleted = 0',
+                '    ',
+                '    function Clean-Folder {',
+                '        param($path)',
+                '        $items = Get-ChildItem -Path $path -Recurse -Force -ErrorAction SilentlyContinue',
+                '        foreach ($item in $items) {',
+                '            try {',
+                '                Remove-Item $item.FullName -Recurse -Force -ErrorAction Stop',
+                '                $script:totalDeleted++',
+                '            } catch {',
+                '                Write-Warning "No se pudo eliminar: $($item.FullName)"',
+                '            }',
+                '        }',
+                '    }',
+                '    ',
+                '    Clean-Folder -path $userTempPath',
+                '    Clean-Folder -path $windowsTempPath',
+                '',
+                '    Write-Host "Limpieza completada. Se eliminaron $script:totalDeleted archivos/carpetas." -ForegroundColor Green',
+                '} catch {',
+                '    Write-Error "Ocurrió un error durante la limpieza: $_"',
+                '}'
+            ].join('\n'),
+
+            'cleanup-optimize-ram': [
+                '$zipUrl = "https://download.sysinternals.com/files/RAMMap.zip"',
+                '$downloadPath = "$env:TEMP\\RAMMap.zip"',
+                '$extractPath = "$env:TEMP\\RAMMap"',
+                'try { Invoke-WebRequest -Uri $zipUrl -OutFile $downloadPath } catch { Write-Host "Error al descargar RAMMap: $_" -ForegroundColor Red; return }',
+                'try { Expand-Archive -Path $downloadPath -DestinationPath $extractPath -Force } catch { Write-Host "Error al descomprimir RAMMap: $_" -ForegroundColor Red; return }',
+                '$executablePath = Join-Path $extractPath "RAMMap.exe"',
+                'if (Test-Path -Path $executablePath) { Start-Process -FilePath $executablePath } else { Write-Host "No se encontro RAMMap.exe." -ForegroundColor Red }'
+            ].join('\n'),
+
+            'info-hardware': [
+                '#======================================================================',
+                '# SystemInfoPlus.ps1',
+                '# Script avanzado para recopilación detallada de información del sistema',
+                '# Compatible con PowerShell 5.1 y superior',
+                '#======================================================================',
+                '',
+                'Clear-Host',
+                '$ErrorActionPreference = \'SilentlyContinue\'',
+                '$WarningPreference = \'SilentlyContinue\'',
+                '',
+                '# Función para crear encabezados con estilo',
+                'function Write-ColorHeader {',
+                '    param (',
+                '        [string]$Text,',
+                '        [string]$ForegroundColor = \'Cyan\'',
+                '    )',
+                '    $width = $host.UI.RawUI.WindowSize.Width - 4',
+                '    $line = "=" * $width',
+                '    Write-Host ""',
+                '    Write-Host $line -ForegroundColor $ForegroundColor',
+                '    Write-Host "  $Text" -ForegroundColor $ForegroundColor',
+                '    Write-Host $line -ForegroundColor $ForegroundColor',
+                '}',
+                '',
+                '# Función para mostrar información con formato',
+                'function Write-InfoLine {',
+                '    param (',
+                '        [string]$Label,',
+                '        $Value,',
+                '        [string]$ValueColor = \'White\'',
+                '    )',
+                '    $LabelWidth = 35',
+                '    $formattedLabel = $Label.PadRight($LabelWidth, ".")',
+                '    Write-Host " $formattedLabel" -NoNewline -ForegroundColor \'DarkGray\'',
+                '    Write-Host " $Value" -ForegroundColor $ValueColor',
+                '}',
+                '',
+                '# Función para crear una barra de progreso visual',
+                'function Write-ProgressBar {',
+                '    param (',
+                '        [int]$Percentage,',
+                '        [int]$BarSize = 25,',
+                '        [string]$BarColor = \'Green\',',
+                '        [string]$EmptyColor = \'DarkGray\'',
+                '    )',
+                '    $completedSize = [math]::Floor(($Percentage / 100) * $BarSize)',
+                '    $remainingSize = $BarSize - $completedSize',
+                '    Write-Host " [" -NoNewline',
+                '    Write-Host ("■" * $completedSize) -NoNewline -ForegroundColor $BarColor',
+                '    Write-Host ("□" * $remainingSize) -NoNewline -ForegroundColor $EmptyColor',
+                '    Write-Host "] $Percentage%" -ForegroundColor \'DarkGray\'',
+                '}',
+                '',
+                '# Función para convertir bytes a formato legible',
+                'function Convert-Size {',
+                '    param(',
+                '        [double]$SizeInBytes',
+                '    )',
+                '    if ($SizeInBytes -lt 1KB) { return "$SizeInBytes B" }',
+                '    elseif ($SizeInBytes -lt 1MB) { return "{0:N2} KB" -f ($SizeInBytes / 1KB) }',
+                '    elseif ($SizeInBytes -lt 1GB) { return "{0:N2} MB" -f ($SizeInBytes / 1MB) }',
+                '    elseif ($SizeInBytes -lt 1TB) { return "{0:N2} GB" -f ($SizeInBytes / 1TB) }',
+                '    else { return "{0:N2} TB" -f ($SizeInBytes / 1TB) }',
+                '}',
+                '',
+                '# Función para obtener el tipo de memoria RAM',
+                'function Get-RamType {',
+                '    param($SMBIOSMemoryType)',
+                '    $ramTypes = @{',
+                '        20 = "DDR"',
+                '        21 = "DDR2"',
+                '        22 = "DDR2 FB-DIMM"',
+                '        24 = "DDR3"',
+                '        26 = "DDR4"',
+                '        30 = "DDR5"',
+                '        0  = "Desconocido"',
+                '        1  = "Otro"',
+                '    }',
+                '    if ($ramTypes.ContainsKey($SMBIOSMemoryType)) {',
+                '        return $ramTypes[$SMBIOSMemoryType]',
+                '    } else {',
+                '        return "Tipo $SMBIOSMemoryType (No Estándar)"',
+                '    }',
+                '}',
+                '',
+                '# Obtener información detallada de instalación',
+                'function Get-WindowsInstallDetails {',
+                '    try {',
+                '        $installTime = (Get-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion").InstallTime',
+                '        $installDate = [DateTime]::FromFileTime([Int64]::Parse($installTime))',
+                '        $detailedInstallInfo = Get-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion" -ErrorAction SilentlyContinue',
+                '        [PSCustomObject]@{',
+                '            InstallDate = $installDate',
+                '            InstallTime = $installDate.ToString("HH:mm:ss")',
+                '            DaysSinceInstall = [math]::Round(((Get-Date) - $installDate).TotalDays, 0)',
+                '            ReleaseId = $detailedInstallInfo.ReleaseId',
+                '            ProductName = $detailedInstallInfo.ProductName',
+                '            EditionID = $detailedInstallInfo.EditionID',
+                '            BuildBranch = $detailedInstallInfo.BuildBranch',
+                '            CurrentBuild = $detailedInstallInfo.CurrentBuild',
+                '        }',
+                '    }',
+                '    catch {',
+                '        try {',
+                '            $OS = Get-CimInstance Win32_OperatingSystem',
+                '            $installDate = [System.Management.ManagementDateTimeConverter]::ToDateTime($OS.InstallDate)',
+                '            [PSCustomObject]@{',
+                '                InstallDate = $installDate',
+                '                InstallTime = $installDate.ToString("HH:mm:ss")',
+                '                DaysSinceInstall = [math]::Round(((Get-Date) - $installDate).TotalDays, 0)',
+                '                ReleaseId = "Desconocido"',
+                '                ProductName = $OS.Caption',
+                '                EditionID = "Desconocido"',
+                '                BuildBranch = "Desconocido"',
+                '                CurrentBuild = $OS.BuildNumber',
+                '            }',
+                '        }',
+                '        catch {',
+                '            $installDate = Get-Date',
+                '            [PSCustomObject]@{',
+                '                InstallDate = $installDate',
+                '                InstallTime = $installDate.ToString("HH:mm:ss")',
+                '                DaysSinceInstall = 0',
+                '                ReleaseId = "Desconocido"',
+                '                ProductName = "Desconocido"',
+                '                EditionID = "Desconocido"',
+                '                BuildBranch = "Desconocido"',
+                '                CurrentBuild = "Desconocido"',
+                '            }',
+                '        }',
+                '    }',
+                '}',
+                '$installInfo = Get-WindowsInstallDetails',
+                '',
+                'Write-Host "`n`n" -NoNewline',
+                '$progressChars = @("/", "-", "\\", "|")',
+                'foreach ($i in 1..15) {',
+                '    $char = $progressChars[$i % 4]',
+                '    Write-Host "`r $char Cargando sistema de diagnóstico avanzado... $($i * 6)%" -NoNewline -ForegroundColor \'Yellow\'',
+                '    Start-Sleep -Milliseconds 100',
+                '}',
+                'Write-Host "`r √ Sistema de diagnóstico cargado completamente.    " -ForegroundColor \'Green\'',
+                'Start-Sleep -Milliseconds 500',
+                'Clear-Host',
+                '$title = @"',
+                '================================================================================',
+                ' _____           _                _____         __      _____ _          ',
+                '/  ___|         | |              |_   _|       / _|    |  __ \\| |         ',
+                '\\ `--.  _  _ __| |_ ___ _ __ ___  | | _ __   | |_ ___  | |  \\/| |  _ ___ ',
+                ' `--. \\| | | / _` | / _ \\ \'_ ` _ \\| || \'_ \\  |  _/ _ \\ | | __| | | | / __|',
+                '/\\__/ /| |_| \\__,_|  __/ | | | | | || | | | || || (_) || |_\\ \\ | |_| \\__ \\',
+                '\\____/  \\__, |\\__,_|\\___|_| |_| |_\\___|_| |_||_| \\___/  \\____/_|\\__,_|___/',
+                '         __/ |                                                         ',
+                '        |___/        Diagnóstico Avanzado v3.1 Complemento ToolboxBS by: Brandon Sepulveda',
+                '================================================================================',
+                '"@',
+                'Write-Host $title -ForegroundColor \'Cyan\'',
+                'Write-Host \' Ejecutando diagnóstico completo del sistema...\' -ForegroundColor \'Yellow\'',
+                'Write-Host \' Fecha de ejecución: $(Get-Date -Format \'dd/MM/yyyy HH:mm:ss\')`n\' -ForegroundColor \'Gray\'',
+                '#========================================',
+                '# INFORMACIÓN DEL SISTEMA OPERATIVO',
+                '#========================================',
+                'Write-ColorHeader \'INFORMACIÓN DEL SISTEMA OPERATIVO Y PLACA BASE\'',
+                '$OS = Get-CimInstance Win32_OperatingSystem',
+                '$computerSystem = Get-CimInstance Win32_ComputerSystem',
+                '$bios = Get-CimInstance Win32_BIOS',
+                '$motherboard = Get-CimInstance Win32_BaseBoard',
+                'Write-InfoLine \'Nombre del equipo\' $env:COMPUTERNAME \'Yellow\'',
+                'Write-InfoLine \'Usuario actual\' "$env:USERDOMAIN\\$env:USERNAME" \'Yellow\'',
+                'Write-InfoLine \'Sistema Operativo\' $OS.Caption \'White\'',
+                'Write-InfoLine \'Versión\' $OS.Version \'White\'',
+                'Write-InfoLine \'Build\' $OS.BuildNumber \'White\'',
+                'Write-InfoLine \'Arquitectura\' "$($OS.OSArchitecture)" \'White\'',
+                'Write-InfoLine \'Fecha de instalación\' $installInfo.InstallDate.ToString("dd/MM/yyyy HH:mm:ss") \'Magenta\'',
+                'Write-InfoLine \'Días desde instalación\' "$($installInfo.DaysSinceInstall) días" \'Magenta\'',
+                'try {',
+                '    $detailedInstallInfo = Get-ItemProperty "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion" -ErrorAction SilentlyContinue',
+                '    if ($detailedInstallInfo.ReleaseId) {',
+                '        Write-InfoLine \'ID de versión\' $detailedInstallInfo.ReleaseId \'White\'',
+                '    }',
+                '    if ($detailedInstallInfo.BuildBranch) {',
+                '        Write-InfoLine \'Rama de compilación\' $detailedInstallInfo.BuildBranch \'White\'',
+                '    }',
+                '} catch {}',
+                'Write-InfoLine \'Último arranque\' $OS.LastBootUpTime.ToString("dd/MM/yyyy HH:mm:ss") \'White\'',
+                '$upTime = (Get-Date) - $OS.LastBootUpTime',
+                'Write-InfoLine \'Tiempo activo\' "$($upTime.Days) días, $($upTime.Hours) horas, $($upTime.Minutes) minutos" \'Green\'',
+                'Write-InfoLine \'Fabricante del Equipo\' $computerSystem.Manufacturer \'White\'',
+                'Write-InfoLine \'Modelo del Equipo\' $computerSystem.Model \'White\'',
+                'Write-InfoLine \'Fabricante Placa Base\' $motherboard.Manufacturer \'White\'',
+                'Write-InfoLine \'Modelo Placa Base\' $motherboard.Product \'White\'',
+                'Write-InfoLine \'Versión de BIOS\' $bios.SMBIOSBIOSVersion \'White\'',
+                'Write-InfoLine \'Número de serie BIOS\' $bios.SerialNumber \'White\'',
+                '#========================================',
+                '# INFORMACIÓN DEL PROCESADOR',
+                '#========================================',
+                'Write-ColorHeader \'INFORMACIÓN DEL PROCESADOR (CPU)\'',
+                '$processor = Get-CimInstance Win32_Processor',
+                '$cpuLoad = (Get-CimInstance Win32_Processor | Measure-Object -Property LoadPercentage -Average).Average',
+                'Write-InfoLine \'Procesador\' $processor.Name \'White\'',
+                'Write-InfoLine \'Fabricante\' $processor.Manufacturer \'White\'',
+                'Write-InfoLine \'Núcleos físicos\' $processor.NumberOfCores \'White\'',
+                'Write-InfoLine \'Núcleos lógicos (Hilos)\' $processor.NumberOfLogicalProcessors \'White\'',
+                'Write-InfoLine \'Velocidad actual\' "$($processor.CurrentClockSpeed) MHz" \'White\'',
+                'Write-InfoLine \'Velocidad máxima (Base)\' "$($processor.MaxClockSpeed) MHz" \'White\'',
+                'Write-InfoLine \'Socket\' $processor.SocketDesignation \'White\'',
+                'Write-InfoLine \'Arquitectura\' $processor.Architecture \'White\'',
+                'Write-InfoLine \'Caché L2\' "$(Convert-Size ($processor.L2CacheSize * 1KB))" \'White\'',
+                'Write-InfoLine \'Caché L3\' "$(Convert-Size ($processor.L3CacheSize * 1KB))" \'White\'',
+                'Write-Host \' Uso actual del CPU\' -NoNewline -ForegroundColor \'DarkGray\'',
+                '$cpuColor = if ($cpuLoad -lt 30) { \'Green\' } elseif ($cpuLoad -lt 70) { \'Yellow\' } else { \'Red\' }',
+                'Write-ProgressBar -Percentage $cpuLoad -BarColor $cpuColor',
+                '#========================================',
+                '# INFORMACIÓN DE MEMORIA RAM',
+                '#========================================',
+                'Write-ColorHeader \'INFORMACIÓN DE MEMORIA (RAM)\'',
+                '$osInfo = Get-CimInstance -ClassName Win32_OperatingSystem',
+                '$totalRAMBytes = $osInfo.TotalVisibleMemorySize * 1024',
+                '$freeRAMBytes = $osInfo.FreePhysicalMemory * 1024',
+                '$usedRAMBytes = $totalRAMBytes - $freeRAMBytes',
+                '$ramUsagePercentage = [math]::Round(($usedRAMBytes / $totalRAMBytes) * 100, 0)',
+                'Write-InfoLine \'Memoria total instalada\' "$(Convert-Size $totalRAMBytes)" \'White\'',
+                'Write-InfoLine \'Memoria disponible\' "$(Convert-Size $freeRAMBytes)" \'White\'',
+                'Write-InfoLine \'Memoria en uso\' "$(Convert-Size $usedRAMBytes)" \'White\'',
+                'Write-Host \' Uso actual de memoria\' -NoNewline -ForegroundColor \'DarkGray\'',
+                '$ramColor = if ($ramUsagePercentage -lt 70) { \'Green\' } elseif ($ramUsagePercentage -lt 90) { \'Yellow\' } else { \'Red\' }',
+                'Write-ProgressBar -Percentage $ramUsagePercentage -BarColor $ramColor',
+                '$memoryModules = Get-CimInstance Win32_PhysicalMemory',
+                '$moduleCounter = 1',
+                'foreach ($module in $memoryModules) {',
+                '    Write-Host "`n Módulo de Memoria #$moduleCounter" -ForegroundColor \'DarkCyan\'',
+                '    Write-InfoLine "    Capacidad" "$(Convert-Size $module.Capacity)" "White"',
+                '    Write-InfoLine "    Fabricante" $module.Manufacturer "White"',
+                '    Write-InfoLine "    Velocidad (Frecuencia)" "$($module.Speed) MHz" "Yellow"',
+                '    Write-InfoLine "    Tipo de Memoria" "$(Get-RamType -SMBIOSMemoryType $module.SMBIOSMemoryType)" "White"',
+                '    Write-InfoLine "    Número de Parte" $module.PartNumber "White"',
+                '    Write-InfoLine "    Número de Serie" $module.SerialNumber "White"',
+                '    Write-InfoLine "    Banco" $module.BankLabel "White"',
+                '    Write-InfoLine "    Slot" $module.DeviceLocator "White"',
+                '    $moduleCounter++',
+                '}',
+                '#========================================',
+                '# INFORMACIÓN DE ALMACENAMIENTO',
+                '#========================================',
+                'Write-ColorHeader \'INFORMACIÓN DE ALMACENAMIENTO\'',
+                '$diskdrives = Get-CimInstance Win32_DiskDrive',
+                '$diskCounter = 1',
+                'foreach ($disk in $diskdrives) {',
+                '    $partitions = $disk | Get-CimAssociatedInstance -ResultClassName Win32_DiskPartition',
+                '    $diskSize = [math]::Round($disk.Size / 1GB, 2)',
+                '    $diskModel = $disk.Model',
+                '    $diskInterface = $disk.InterfaceType',
+                '    $mediaType = switch ($disk.MediaType) {',
+                '        3 {"HDD"}',
+                '        4 {"SSD"}',
+                '        default {"Desconocido"}',
+                '    }',
+                '    Write-Host "`n Disco físico #$diskCounter ($mediaType)" -ForegroundColor \'DarkCyan\'',
+                '    Write-InfoLine "    Modelo" $diskModel "White"',
+                '    Write-InfoLine "    Tamaño" "$diskSize GB" "White"',
+                '    Write-InfoLine "    Interfaz" $diskInterface "White"',
+                '    Write-InfoLine "    Número de serie" $disk.SerialNumber "White"',
+                '    Write-InfoLine "    Particiones" $partitions.Count "White"',
+                '    $partitionCounter = 1',
+                '    foreach ($partition in $partitions) {',
+                '        $logicaldisks = $partition | Get-CimAssociatedInstance -ResultClassName Win32_LogicalDisk',
+                '        foreach ($logicaldisk in $logicaldisks) {',
+                '            $freeSpace = [math]::Round($logicaldisk.FreeSpace / 1GB, 2)',
+                '            $totalSize = [math]::Round($logicaldisk.Size / 1GB, 2)',
+                '            $usedSpace = [math]::Round($totalSize - $freeSpace, 2)',
+                '            $percentFree = [math]::Round(($freeSpace / $totalSize) * 100, 0)',
+                '            $percentUsed = 100 - $percentFree',
+                '            Write-Host "`n     Volumen lógico" -ForegroundColor \'DarkYellow\'',
+                '            Write-InfoLine "       Letra de unidad" "$($logicaldisk.DeviceID)" "Yellow"',
+                '            Write-InfoLine "       Etiqueta" "$($logicaldisk.VolumeName)" "White"',
+                '            Write-InfoLine "       Sistema de archivos" "$($logicaldisk.FileSystem)" "White"',
+                '            Write-InfoLine "       Tamaño total" "$totalSize GB" "White"',
+                '            Write-InfoLine "       Espacio usado" "$usedSpace GB" "White"',
+                '            Write-InfoLine "       Espacio libre" "$freeSpace GB" "White"',
+                '            Write-Host "       Uso del disco" -NoNewline -ForegroundColor \'DarkGray\'',
+                '            $diskColor = if ($percentUsed -lt 70) { "Green" } elseif ($percentUsed -lt 90) { "Yellow" } else { "Red" }',
+                '            Write-ProgressBar -Percentage $percentUsed -BarColor $diskColor',
+                '            $partitionCounter++',
+                '        }',
+                '    }',
+                '    $diskCounter++',
+                '}',
+                '#========================================',
+                '# INFORMACIÓN DE TARJETA GRÁFICA (GPU)',
+                '#========================================',
+                'Write-ColorHeader \'INFORMACIÓN DE TARJETA GRÁFICA (GPU)\'',
+                '$videoControllers = Get-CimInstance Win32_VideoController',
+                '$gpuCounter = 1',
+                'foreach ($gpu in $videoControllers) {',
+                '    Write-Host "`n Tarjeta gráfica #$gpuCounter" -ForegroundColor \'DarkCyan\'',
+                '    Write-InfoLine "    Nombre" $gpu.Name "White"',
+                '    Write-InfoLine "    Procesador Gráfico" $gpu.VideoProcessor "White"',
+                '    Write-InfoLine "    Versión de controlador" $gpu.DriverVersion "White"',
+                '    Write-InfoLine "    Fecha del controlador" ([System.Management.ManagementDateTimeConverter]::ToDateTime($gpu.DriverDate).ToString("dd/MM/yyyy")) "White"',
+                '    Write-InfoLine "    Resolución actual" "$($gpu.CurrentHorizontalResolution) x $($gpu.CurrentVerticalResolution)" "White"',
+                '    Write-InfoLine "    Frecuencia de refresco" "$($gpu.CurrentRefreshRate) Hz" "White"',
+                '    Write-InfoLine "    Memoria de video (VRAM)" "$(Convert-Size $gpu.AdapterRAM)" "White"',
+                '    $gpuCounter++',
+                '}',
+                '#========================================',
+                '# INFORMACIÓN DE RED',
+                '#========================================',
+                'Write-ColorHeader \'INFORMACIÓN DE RED\'',
+                '$networkAdapters = Get-CimInstance Win32_NetworkAdapter | Where-Object { $_.PhysicalAdapter -eq $true -and $_.MACAddress -ne $null }',
+                '$adapterCounter = 1',
+                'foreach ($adapter in $networkAdapters) {',
+                '    $config = $adapter | Get-CimAssociatedInstance -ResultClassName Win32_NetworkAdapterConfiguration',
+                '    if ($config -ne $null) {',
+                '        Write-Host "`n Adaptador de red #$adapterCounter" -ForegroundColor \'DarkCyan\'',
+                '        Write-InfoLine "    Nombre" $adapter.Name "White"',
+                '        Write-InfoLine "    Fabricante" $adapter.Manufacturer "White"',
+                '        Write-InfoLine "    Tipo de adaptador" $adapter.AdapterType "White"',
+                '        Write-InfoLine "    Dirección MAC" $adapter.MACAddress "White"',
+                '        Write-InfoLine "    Velocidad" "$([math]::Round($adapter.Speed / 1000000, 0)) Mbps" "White"',
+                '        if ($config.IPAddress -ne $null) {',
+                '            Write-InfoLine "    Dirección IPv4" ($config.IPAddress | Where-Object { $_ -like "*.*" })[0] "White"',
+                '            Write-InfoLine "    Máscara de subred" $config.IPSubnet[0] "White"',
+                '            if ($config.DefaultIPGateway -ne $null) {',
+                '                Write-InfoLine "    Puerta de enlace" $config.DefaultIPGateway[0] "White"',
+                '            }',
+                '            if ($config.DNSServerSearchOrder -ne $null) {',
+                '                Write-InfoLine "    Servidor DNS primario" $config.DNSServerSearchOrder[0] "White"',
+                '                if ($config.DNSServerSearchOrder.Count -gt 1) {',
+                '                    Write-InfoLine "    Servidor DNS secundario" $config.DNSServerSearchOrder[1] "White"',
+                '                }',
+                '            }',
+                '        }',
+                '        Write-InfoLine "    Estado" $(if ($adapter.NetEnabled) { "Conectado" } else { "Desconectado" }) $(if ($adapter.NetEnabled) { "Green" } else { "Red" })',
+                '        $adapterCounter++',
+                '    }',
+                '}',
+                '#========================================',
+                '# DISPOSITIVOS DE AUDIO',
+                '#========================================',
+                'Write-ColorHeader \'DISPOSITIVOS DE AUDIO\'',
+                '$audioDevices = Get-CimInstance Win32_SoundDevice',
+                '$audioCounter = 1',
+                'foreach ($audio in $audioDevices) {',
+                '    Write-Host "`n Dispositivo de audio #$audioCounter" -ForegroundColor \'DarkCyan\'',
+                '    Write-InfoLine "    Nombre" $audio.Name "White"',
+                '    Write-InfoLine "    Fabricante" $audio.Manufacturer "White"',
+                '    Write-InfoLine "    Estado" $(if ($audio.Status -eq "OK") { "Funcionando correctamente" } else { $audio.Status }) $(if ($audio.Status -eq "OK") { "Green" } else { "Red" })',
+                '    $audioCounter++',
+                '}',
+                '#========================================',
+                '# RESUMEN Y SALUD DEL SISTEMA',
+                '#========================================',
+                'Write-ColorHeader \'RESUMEN DE SALUD Y RECOMENDACIONES\'',
+                'try {',
+                '    $cpuLoad = (Get-CimInstance Win32_Processor | Measure-Object -Property LoadPercentage -Average).Average',
+                '    if ($cpuLoad -eq $null) { $cpuLoad = 50 }',
+                '    $cpuHealth = if ($cpuLoad -lt 50) { 100 } elseif ($cpuLoad -lt 80) { 70 } else { 40 }',
+                '    $ramHealth = if ($ramUsagePercentage -lt 70) { 100 } elseif ($ramUsagePercentage -lt 90) { 60 } else { 30 }',
+                '    $systemDrive = Get-CimInstance Win32_LogicalDisk -Filter "DeviceID=\'$env:SystemDrive\'"',
+                '    $diskFreePercent = [math]::Round(($systemDrive.FreeSpace / $systemDrive.Size) * 100, 0)',
+                '    $diskHealth = if ($diskFreePercent -gt 25) { 100 } elseif ($diskFreePercent -gt 10) { 60 } else { 20 }',
+                '    try {',
+                '        $updateSession = New-Object -ComObject Microsoft.Update.Session',
+                '        $updateSearcher = $updateSession.CreateUpdateSearcher()',
+                '        $searchResult = $updateSearcher.Search("IsInstalled=0 and Type=\'Software\'")',
+                '        $pendingUpdates = $searchResult.Updates.Count',
+                '        $updateHealth = if ($pendingUpdates -eq 0) { 100 } elseif ($pendingUpdates -lt 5) { 80 } else { 60 }',
+                '    } catch {',
+                '        $pendingUpdates = "N/A"',
+                '        $updateHealth = 70',
+                '}',
+                '    $overallHealth = [math]::Round(($cpuHealth + $ramHealth + $diskHealth + $updateHealth) / 4)',
+                '    $cpuColor = if ($cpuHealth -gt 75) { "Green" } elseif ($cpuHealth -gt 50) { "Yellow" } else { "Red" }',
+                '    $ramColor = if ($ramHealth -gt 75) { "Green" } elseif ($ramHealth -gt 50) { "Yellow" } else { "Red" }',
+                '    $diskColor = if ($diskHealth -gt 75) { "Green" } elseif ($diskHealth -gt 50) { "Yellow" } else { "Red" }',
+                '    $updateColor = if ($updateHealth -gt 75) { "Green" } elseif ($updateHealth -gt 50) { "Yellow" } else { "Red" }',
+                '    $healthColor = if ($overallHealth -gt 75) { "Green" } elseif ($overallHealth -gt 50) { "Yellow" } else { "Red" }',
+                '    Write-InfoLine "Salud del procesador" "$cpuHealth%" $cpuColor',
+                '    Write-InfoLine "Salud de la memoria" "$ramHealth%" $ramColor',
+                '    Write-InfoLine "Salud del almacenamiento (C:)" "$diskHealth%" $diskColor',
+                '    Write-InfoLine "Estado de actualizaciones" "$updateHealth%" $updateColor',
+                '} catch {',
+                '    Write-Host " Error al calcular la salud del sistema: $_" -ForegroundColor "Red"',
+                '    Write-Host " Se mostrarán valores estimados" -ForegroundColor "Yellow"',
+                '    $overallHealth = 70',
+                '    $healthColor = "Yellow"',
+                '}',
+                'Write-Host "`n SALUD GENERAL DEL SISTEMA" -ForegroundColor "White"',
+                'Write-ProgressBar -Percentage $overallHealth -BarColor $healthColor -BarSize 50',
+                'Write-Host "`n RECOMENDACIONES DE DIAGNÓSTICO" -ForegroundColor "Cyan"',
+                'if ($cpuHealth -lt 75) { Write-Host " • [ALTO USO DE CPU] Revisa los procesos en el Administrador de Tareas. Un alto consumo constante puede indicar malware o software mal optimizado." -ForegroundColor "Yellow" }',
+                'if ($ramHealth -lt 75) { Write-Host " • [ALTO USO DE RAM] Cierra aplicaciones que no utilices. Si el problema persiste, considera ampliar la memoria RAM." -ForegroundColor "Yellow" }',
+                'if ($diskHealth -lt 75) { Write-Host " • [POCO ESPACIO EN DISCO] Usa la herramienta \'Liberador de Espacio en Disco\' para eliminar archivos innecesarios y mejorar el rendimiento." -ForegroundColor "Yellow" }',
+                'if ($updateHealth -lt 90) { Write-Host " • [ACTUALIZACIONES PENDIENTES] Instala las actualizaciones de Windows para obtener mejoras de seguridad y rendimiento." -ForegroundColor "Yellow" }',
+                'if ($overallHealth -gt 85) { Write-Host " • [SISTEMA ÓPTIMO] Tu sistema parece estar en excelente estado. ¡Buen trabajo!" -ForegroundColor "Green" }',
+                'elseif ($overallHealth -lt 50) { Write-Host " • [ATENCIÓN REQUERIDA] La salud general es baja. Se recomienda ejecutar las herramientas de reparación y limpieza del sistema." -ForegroundColor "Red" }',
+                'Write-Host "`n Gracias por utilizar SystemInfoPlus!" -ForegroundColor "Cyan"',
+                'Write-Host " Presiona cualquier tecla para salir..." -ForegroundColor "DarkGray"',
+                '$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")'
+            ].join('\n'),
+
+            'home-control-panel': `control`,
+            'home-windows-settings': `start ms-settings:`,
+            'home-powershell-console': `start powershell`,
+            'home-quick-diagnostic': `Get-Process | Sort-Object CPU -Descending | Select-Object -First 10 | Format-Table; Read-Host "Enter..."`,
+            'tools-task-manager': `taskmgr`,
+            'tools-device-manager': `devmgmt.msc`,
+            'tools-windows-services': `services.msc`,
+            'tools-disk-cleanup': `cleanmgr`,
+            'tools-registry-editor': `regedit`,
+            'tools-winget-cli': `start powershell -NoExit -Command "winget"`,
+            'tools-check-updates': `start ms-settings:windowsupdate`,
+            'tools-download-windows': `Start-Process "https://brandonsepulveda.github.io/descargawindows.html"`,
+            'tools-install-windows': `iex ((New-Object System.Net.WebClient).DownloadString("https://cutt.ly/Windeploy"))`
+        };
+
+        function generateScript() {
+            const allCommands = [];
+            const order = ['home', 'repair', 'repairCleanup', 'tweaks', 'tools', 'info'];
+
+            order.forEach(cat => {
+                if (selected[cat]) {
+                    selected[cat].forEach(id => {
+                        if (scripts[id]) allCommands.push({ id, script: scripts[id] });
+                    });
                 }
-            }
-        }
-        Write-InfoLine "    Estado" $(if ($adapter.NetEnabled) { "Conectado" } else { "Desconectado" }) $(if ($adapter.NetEnabled) { "Green" } else { "Red" })
-        $adapterCounter++
-    }
-}
-$networkStats = Get-NetAdapterStatistics | Where-Object Status -eq "Up"
-foreach ($stat in $networkStats) {
-    $adapter = Get-NetAdapter | Where-Object InterfaceIndex -eq $stat.InterfaceIndex
-    Write-Host "\`n Estadísticas de red: $($adapter.Name)" -ForegroundColor 'DarkCyan'
-    Write-InfoLine "    Recibidos" "$(Convert-Size $stat.ReceivedBytes)" "White"
-    Write-InfoLine "    Enviados" "$(Convert-Size $stat.SentBytes)" "White"
-    Write-InfoLine "    Paquetes recibidos" $stat.ReceivedPackets "White"
-    Write-InfoLine "    Paquetes enviados" $stat.SentPackets "White"
-    Write-InfoLine "    Errores recibidos" $stat.ReceivedErrors "White"
-    Write-InfoLine "    Errores enviados" $stat.SentErrors "White"
-}
-#========================================
-# DISPOSITIVOS DE AUDIO
-#========================================
-Write-ColorHeader 'DISPOSITIVOS DE AUDIO'
-$audioDevices = Get-CimInstance Win32_SoundDevice
-$audioCounter = 1
-foreach ($audio in $audioDevices) {
-    Write-Host "\`n Dispositivo de audio #$audioCounter" -ForegroundColor 'DarkCyan'
-    Write-InfoLine "    Nombre" $audio.Name "White"
-    Write-InfoLine "    Fabricante" $audio.Manufacturer "White"
-    Write-InfoLine "    Estado" $(if ($audio.Status -eq "OK") { "Funcionando correctamente" } else { $audio.Status }) $(if ($audio.Status -eq "OK") { "Green" } else { "Red" })
-    $audioCounter++
-}
-#========================================
-# SERVICIOS CRÍTICOS
-#========================================
-Write-ColorHeader 'SERVICIOS CRÍTICOS DEL SISTEMA'
-$criticalServices = @(
-    "wuauserv", "windefend", "WSearch", "Audiosrv", "bits", "EventLog", "LanmanServer", "LanmanWorkstation", "Dnscache", "Dhcp", "TabletInputService", "ShellHWDetection"
-)
-foreach ($service in $criticalServices) {
-    $svc = Get-Service -Name $service -ErrorAction SilentlyContinue
-    if ($svc -ne $null) {
-        $status = $svc.Status
-        $statusColor = if ($status -eq "Running") { "Green" } else { "Red" }
-        Write-InfoLine "$($svc.DisplayName)" "$status" $statusColor
-    }
-}
-#========================================
-# ACTUALIZACIONES INSTALADAS
-#========================================
-Write-ColorHeader 'ÚLTIMAS ACTUALIZACIONES INSTALADAS'
-$updates = Get-HotFix | Sort-Object -Property InstalledOn -Descending | Select-Object -First 10
-foreach ($update in $updates) {
-    Write-InfoLine "$($update.HotFixID)" "$($update.Description) - $($update.InstalledOn.ToString('dd/MM/yyyy'))" "White"
-}
-#========================================
-# RESUMEN Y SALUD DEL SISTEMA
-#========================================
-Write-ColorHeader 'RESUMEN DE SALUD DEL SISTEMA'
-try {
-    $cpuLoad = (Get-CimInstance Win32_Processor | Measure-Object -Property LoadPercentage -Average).Average
-    if ($cpuLoad -eq $null) { $cpuLoad = 50 }
-    $cpuHealth = if ($cpuLoad -lt 50) { 100 } elseif ($cpuLoad -lt 80) { 70 } else { 40 }
-    $totalRAM = [math]::Round((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB, 2)
-    $availableRAM = [math]::Round((Get-CimInstance -ClassName Win32_OperatingSystem).FreePhysicalMemory / 1MB, 2)
-    $usedRAM = [math]::Round($totalRAM - $availableRAM, 2)
-    $ramUsagePercentage = [math]::Round(($usedRAM / $totalRAM) * 100, 0)
-    $ramHealth = if ($ramUsagePercentage -lt 70) { 100 } elseif ($ramUsagePercentage -lt 90) { 60 } else { 30 }
-    $systemDrive = Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='$env:SystemDrive'"
-    $diskFreePercent = [math]::Round(($systemDrive.FreeSpace / $systemDrive.Size) * 100, 0)
-    $diskHealth = if ($diskFreePercent -gt 25) { 100 } elseif ($diskFreePercent -gt 10) { 60 } else { 20 }
-    try {
-        $updateSession = New-Object -ComObject Microsoft.Update.Session
-        $updateSearcher = $updateSession.CreateUpdateSearcher()
-        $searchResult = $updateSearcher.Search("IsInstalled=0 and Type='Software'")
-        $pendingUpdates = $searchResult.Updates.Count
-        $updateHealth = if ($pendingUpdates -eq 0) { 100 } elseif ($pendingUpdates -lt 5) { 80 } else { 60 }
-    } catch {
-        $updateHealth = 70
-    }
-    $overallHealth = [math]::Round(($cpuHealth + $ramHealth + $diskHealth + $updateHealth) / 4)
-    $cpuColor = if ($cpuHealth -gt 75) { "Green" } elseif ($cpuHealth -gt 50) { "Yellow" } else { "Red" }
-    $ramColor = if ($ramHealth -gt 75) { "Green" } elseif ($ramHealth -gt 50) { "Yellow" } else { "Red" }
-    $diskColor = if ($diskHealth -gt 75) { "Green" } elseif ($diskHealth -gt 50) { "Yellow" } else { "Red" }
-    $updateColor = if ($updateHealth -gt 75) { "Green" } elseif ($updateHealth -gt 50) { "Yellow" } else { "Red" }
-    $healthColor = if ($overallHealth -gt 75) { "Green" } elseif ($overallHealth -gt 50) { "Yellow" } else { "Red" }
-    Write-InfoLine "Salud del procesador" "$cpuHealth%" $cpuColor
-    Write-InfoLine "Uso actual de CPU" "$cpuLoad%" $cpuColor
-    Write-InfoLine "Salud de la memoria" "$ramHealth%" $ramColor
-    Write-InfoLine "Uso actual de RAM" "$ramUsagePercentage%" $ramColor
-    Write-InfoLine "Salud del almacenamiento" "$diskHealth%" $diskColor
-    Write-InfoLine "Espacio libre en disco C:" "$diskFreePercent%" $diskColor
-    Write-InfoLine "Estado de actualizaciones" "$updateHealth%" $updateColor
-    Write-InfoLine "Actualizaciones pendientes" "$pendingUpdates" $updateColor
-} catch {
-    Write-Host " Error al calcular la salud del sistema: $_" -ForegroundColor "Red"
-    Write-Host " Se mostrarán valores estimados" -ForegroundColor "Yellow"
-    $cpuHealth = 70
-    $ramHealth = 70
-    $diskHealth = 70
-    $updateHealth = 70
-    $overallHealth = 70
-    $healthColor = "Yellow"
-    Write-InfoLine "Salud del procesador" "$cpuHealth% (estimado)" "Yellow"
-    Write-InfoLine "Salud de la memoria" "$ramHealth% (estimado)" "Yellow"
-    Write-InfoLine "Salud del almacenamiento" "$diskHealth% (estimado)" "Yellow"
-    Write-InfoLine "Estado de actualizaciones" "$updateHealth% (estimado)" "Yellow"
-}
-Write-Host "\`n SALUD GENERAL DEL SISTEMA" -ForegroundColor "White"
-Write-ProgressBar -Percentage $overallHealth -BarColor $healthColor -BarSize 50
-Write-Host "\`n INDICADORES DE RENDIMIENTO" -ForegroundColor "Cyan"
-Write-InfoLine "Rendimiento del procesador" "$(100 - $cpuLoad)%" $(if ((100 - $cpuLoad) -gt 75) { "Green" } elseif ((100 - $cpuLoad) -gt 50) { "Yellow" } else { "Red" })
-Write-InfoLine "Eficiencia de memoria" "$(100 - $ramUsagePercentage)%" $(if ((100 - $ramUsagePercentage) -gt 75) { "Green" } elseif ((100 - $ramUsagePercentage) -gt 50) { "Yellow" } else { "Red" })
-Write-InfoLine "Estado general" "$overallHealth%" $healthColor
-Write-Host "\`n RECOMENDACIONES" -ForegroundColor "Cyan"
-if ($cpuHealth -lt 75) { Write-Host " • Verifica los procesos que consumen más CPU con el Administrador de tareas" -ForegroundColor "Yellow" }
-if ($ramHealth -lt 75) { Write-Host " • Considera cerrar aplicaciones para liberar memoria RAM" -ForegroundColor "Yellow" }
-if ($diskHealth -lt 75) { Write-Host " • Ejecuta la herramienta de limpieza de disco para liberar espacio" -ForegroundColor "Yellow" }
-if ($updateHealth -lt 90) { Write-Host " • Instala las actualizaciones pendientes del sistema" -ForegroundColor "Yellow" }
-if ($overallHealth -lt 50) { Write-Host " • Se recomienda una revisión más detallada del sistema" -ForegroundColor "Red" }
-Write-Host "\`n Gracias por utilizar SystemInfoPlus!" -ForegroundColor "Cyan"
-Write-Host " Presiona cualquier tecla para salir..." -ForegroundColor "DarkGray"
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-`,
-      'create-restore-point': `try { Checkpoint-Computer -Description "Punto de restauracion por ToolboxBS" } catch { Write-Host "Error al crear punto de restauracion: $_" -ForegroundColor Red }`,
-      'os-maintenance': `sfc /scannow; DISM /Online /Cleanup-image /Restorehealth; Dism /Online /Cleanup-Image /startComponentCleanup`,
-      'bsod-info': `
-Write-Host "Abriendo BlueScreenView para analizar pantallazos azules..." -ForegroundColor Yellow
-$Url = "https://www.nirsoft.net/utils/bluescreenview.zip"
-$ZipPath = Join-Path $env:TEMP "bluescreenview.zip"
-$ExtractPath = Join-Path $env:TEMP "BlueScreenView"
-try { Invoke-WebRequest -Uri $Url -OutFile $ZipPath } catch { Write-Host "Error al descargar BlueScreenView: $_" -ForegroundColor Red; return }
-try { Expand-Archive -Path $ZipPath -DestinationPath $ExtractPath -Force } catch { Write-Host "Error al extraer BlueScreenView: $_" -ForegroundColor Red; return }
-$ExePath = Join-Path $ExtractPath "BlueScreenView.exe"
-if (Test-Path -Path $ExePath) { Start-Process -FilePath $ExePath } else { Write-Host "No se encontro BlueScreenView.exe." -ForegroundColor Red }
-`,
-      'battery-status': `
-Write-Host "Generando informe de bateria..." -ForegroundColor Yellow
-$batteryReportPath = "$env:USERPROFILE\\Desktop\\battery_report.html"
-powercfg /batteryreport /output "$batteryReportPath"
-if (Test-Path $batteryReportPath) {
-    Start-Process $batteryReportPath
-    Write-Host "Informe de bateria generado en $batteryReportPath" -ForegroundColor Green
-} else {
-    Write-Host "No se pudo generar el informe de bateria." -ForegroundColor Red
-}
+            });
 
-Write-Host "Abriendo BatteryInfoView..." -ForegroundColor Yellow
-$url = "https://www.nirsoft.net/utils/batteryinfoview.zip"
-$outputPath = Join-Path $env:TEMP "BatteryInfoView.zip"
-$extractPath = Join-Path $env:TEMP "BatteryInfoView"
-try {
-    Invoke-WebRequest -Uri $url -OutFile $outputPath
-} catch {
-    Write-Host "Error al descargar BatteryInfoView: $_" -ForegroundColor Red
-    return
-}
-try {
-    Expand-Archive -Path $outputPath -DestinationPath $extractPath -Force
-} catch {
-    Write-Host "Error al extraer BatteryInfoView: $_" -ForegroundColor Red
-    return
-}
-$exePath = Join-Path $extractPath "BatteryInfoView.exe"
-if (Test-Path -Path $exePath) {
-    Start-Process -FilePath $exePath
-} else {
-    Write-Host "No se encontro BatteryInfoView.exe." -ForegroundColor Red
-}
-`,
-      'driver-info': `Get-WmiObject -Query "SELECT * FROM Win32_SystemDriver" | Out-File -FilePath "$env:USERPROFILE\\Desktop\\drivers.txt"; Start-Process "devmgmt.msc"`,
-      'repair-network': `netsh winsock reset; netsh int ip reset; ipconfig /release; ipconfig /renew; ipconfig /flushdns`,
-      'cleanup-temp-files': `
-try {
-    Write-Host "Limpiando archivos temporales..." -ForegroundColor Cyan
-    $userTempPath = $env:TEMP
-    $windowsTempPath = "C:\\Windows\\Temp"
-    $totalDeleted = 0
-    
-    function Clean-Folder {
-        param($path)
-        $items = Get-ChildItem -Path $path -Recurse -Force -ErrorAction SilentlyContinue
-        foreach ($item in $items) {
-            try {
-                Remove-Item $item.FullName -Recurse -Force -ErrorAction Stop
-                $script:totalDeleted++
-            } catch {
-                Write-Warning "No se pudo eliminar: $($item.FullName)"
-            }
-        }
-    }
-    
-    Clean-Folder -path $userTempPath
-    Clean-Folder -path $windowsTempPath
+            if (allCommands.length === 0) return;
 
-    Write-Host "Limpieza completada. Se eliminaron $script:totalDeleted archivos/carpetas." -ForegroundColor Green
-} catch {
-    Write-Error "Ocurrió un error durante la limpieza: $_"
-}
-`,
-      'cleanup-optimize-ram': `
-$zipUrl = "https://download.sysinternals.com/files/RAMMap.zip"
-$downloadPath = "$env:TEMP\\RAMMap.zip"
-$extractPath = "$env:TEMP\\RAMMap"
-try { Invoke-WebRequest -Uri $zipUrl -OutFile $downloadPath } catch { Write-Host "Error al descargar RAMMap: $_" -ForegroundColor Red; return }
-try { Expand-Archive -Path $downloadPath -DestinationPath $extractPath -Force } catch { Write-Host "Error al descomprimir RAMMap: $_" -ForegroundColor Red; return }
-$executablePath = Join-Path $extractPath "RAMMap.exe"
-if (Test-Path -Path $executablePath) { Start-Process -FilePath $executablePath } else { Write-Host "No se encontro RAMMap.exe." -ForegroundColor Red }
-`,
-      'find-drivers': `
-# 1. VERIFICACIÓN DE PERMISOS
-Write-Host "Verificando permisos de administrador..." -ForegroundColor Yellow
-if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Warning "Este script necesita ser ejecutado con privilegios de Administrador."
-    Start-Sleep -Seconds 10
-    Exit
-}
-Write-Host "Permisos de administrador confirmados." -ForegroundColor Green
+            let ps1 = `<#\n.SYNOPSIS\nScript Generado por ToolboxBS Web Enterprise\n#>\n\nWrite-Host "=== INICIANDO TOOLBOXBS ===" -ForegroundColor Cyan\n\n`;
+            allCommands.forEach(cmd => {
+                ps1 += `Write-Host "Ejecutando tarea: ${cmd.id}..." -ForegroundColor Yellow\n`;
+                ps1 += `${cmd.script.trim()}\n`;
+                ps1 += `Write-Host "Tarea finalizada." -ForegroundColor Green\n\n`;
+            });
+            ps1 += `Write-Host "Todas las tareas completadas. Presione Enter para salir."\nRead-Host`;
 
-# 2. FUNCIONES DE INSTALACIÓN Y EJECUCIÓN
-function Ensure-Winget {
-    if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
-        Write-Host "Winget no encontrado. Intentando instalarlo..." -ForegroundColor Cyan
-        try {
-            $wingetUrl = "https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
-            $wingetInstaller = Join-Path $env:TEMP "winget.msixbundle"
-            Invoke-WebRequest -Uri $wingetUrl -OutFile $wingetInstaller -UseBasicParsing
-            Add-AppxPackage -Path $wingetInstaller
-            Write-Host "Winget instalado correctamente." -ForegroundColor Green
-        } catch {
-            Write-Error "Falló la instalación de Winget: $($_.Exception.Message)"
-            return $false
-        }
-    }
-    return $true
-}
+            let batHeader = `@@echo off\r\n@@chcp 65001 > nul\r\n@@title ToolboxBS Launcher\r\n@@echo.\r\n@@echo  =================================================================\r\n@@echo   Iniciando ToolboxBS Enterprise...\r\n@@echo  =================================================================\r\n@@echo.\r\n@@echo  Cargando modulos de PowerShell...\r\n@@findstr /v "^@@" "%~f0" > "%TEMP%\\ToolboxBS_Run.ps1"\r\n@@powershell -NoProfile -ExecutionPolicy Bypass -File "%TEMP%\\ToolboxBS_Run.ps1"\r\n@@del "%TEMP%\\ToolboxBS_Run.ps1"\r\n@@echo.\r\n@@echo  Finalizado. Presione una tecla para cerrar.\r\n@@pause > nul\r\n@@goto :eof\r\n`;
 
-function Ensure-Chocolatey {
-    if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
-        Write-Host "Chocolatey no encontrado. Intentando instalarlo..." -ForegroundColor Cyan
-        try {
-            Set-ExecutionPolicy Bypass -Scope Process -Force;
-            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
-            iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-            Write-Host "Chocolatey instalado correctamente." -ForegroundColor Green
-        } catch {
-            Write-Error "Falló la instalación de Chocolatey: $($_.Exception.Message)"
-            return $false
-        }
-    }
-    return $true
-}
-
-function Start-Application {
-    param($path, $name)
-    Write-Host "Iniciando ''$name''..." -ForegroundColor Yellow
-    Start-Process -FilePath $path
-    Write-Host "¡Proceso completado!" -ForegroundColor Green
-    Write-Host "Script finalizado."
-    Start-Sleep -Seconds 10
-    Exit
-}
-
-# 3. DETECTAR EL FABRICANTE DEL EQUIPO
-try {
-    $fabricante = (Get-CimInstance -ClassName Win32_ComputerSystem).Manufacturer
-    Write-Host "Fabricante detectado: $fabricante" -ForegroundColor Cyan
-}
-catch {
-    Write-Error "No se pudo detectar el fabricante del equipo."
-    Start-Sleep -Seconds 10
-    Exit
-}
-
-# 4. LÓGICA PRINCIPAL BASADA EN EL FABRICANTE
-$appExePath = ""
-switch ($fabricante.Trim().ToLower()) {
-    { $_ -like "*dell*" } {
-        $appName = "Dell Command | Update"
-        $appExePath = "C:\\Program Files\\Dell\\CommandUpdate\\DCU.Client.Gui.exe"
-        $wingetId = "Dell.CommandUpdate"
-        $chocoId = "dell-command-update"
-    }
-    { $_ -like "*hp*" -or $_ -like "*hewlett-packard*" } {
-        $appName = "HP Image Assistant"
-        $appExePath = "C:\\Program Files (x86)\\HP\\Image Assistant\\HPImageAssistant.exe"
-        $wingetId = "HP.ImageAssistant"
-        $chocoId = "hp-image-assistant-client" # Se mantiene por si acaso, pero no se usará.
-    }
-    { $_ -like "*lenovo*" } {
-        $appName = "Lenovo System Update"
-        $appExePath = "C:\\Program Files (x86)\\Lenovo\\System Update\\tvsu.exe"
-        $wingetId = "Lenovo.SystemUpdate"
-        $chocoId = "lenovo-system-update"
-    }
-    default {
-        Write-Warning "Fabricante ''$fabricante'' no soportado."
-        Start-Sleep -Seconds 10
-        Exit
-    }
-}
-
-# 5. PROCESO DE INSTALACIÓN Y EJECUCIÓN
-try {
-    # Si ya está instalado, ejecutar y salir.
-    if (Test-Path $appExePath) {
-        Write-Host "''$appName'' ya se encuentra instalado." -ForegroundColor Green
-        Start-Application -path $appExePath -name $appName
-    }
-
-    Write-Host "''$appName'' no está instalado. Iniciando proceso de instalación..." -ForegroundColor Yellow
-
-    # --- Intento 1: Winget (Preferido) ---
-    if (Ensure-Winget) {
-        Write-Host "Intentando instalar con Winget..." -ForegroundColor Cyan
-        winget source update | Out-Null
-        winget install --id $wingetId -e --accept-package-agreements --accept-source-agreements
-        Write-Host "Esperando 15 segundos para que finalice la instalación..."
-        Start-Sleep -Seconds 15
-        if (Test-Path $appExePath) {
-            Write-Host "Instalación con Winget exitosa." -ForegroundColor Green
-            Start-Application -path $appExePath -name $appName
-        }
-    }
-
-    # --- Intento 2: Chocolatey (Respaldo, excepto para HP) ---
-    if ($fabricante.Trim().ToLower() -notlike "*hp*") {
-        if (Ensure-Chocolatey) {
-            Write-Host "Intentando instalar con Chocolatey..." -ForegroundColor Cyan
-            choco install $chocoId -y
-            Write-Host "Esperando 15 segundos para que finalice la instalación..."
-            Start-Sleep -Seconds 15
-            if (Test-Path $appExePath) {
-                Write-Host "Instalación con Chocolatey exitosa." -ForegroundColor Green
-                Start-Application -path $appExePath -name $appName
-            }
-        }
-    }
-
-    # --- Intento 3: Descarga Manual (Último recurso) ---
-    Write-Host "Los métodos automáticos fallaron. Intentando descarga manual..." -ForegroundColor Cyan
-    $downloadUrl = ""
-    $installerName = ""
-    $installArgs = ""
-    
-    if ($fabricante.Trim().ToLower() -like "*hp*") {
-        $downloadUrl = "https://hpia.hpcloud.hp.com/downloads/hpia/hp-hpia-5.3.2.exe"
-        $installerName = "HPIA_Extractor.exe"
-        $installArgs = "/s"
-    } elseif ($fabricante.Trim().ToLower() -like "*lenovo*") {
-        $downloadUrl = "https://download.lenovo.com/pccbbs/thinkvantage_en/system_update_5.08.02.25.exe"
-        $installerName = "LenovoSystemUpdate.exe"
-        $installArgs = "/VERYSILENT /SUPPRESSMSGBOXES /NORESTART"
-    }
-
-    if ($downloadUrl) {
-        $installerPath = Join-Path $env:TEMP $installerName
-        Invoke-WebRequest -Uri $downloadUrl -OutFile $installerPath
-        Write-Host "Instalando con argumentos: $installArgs" -ForegroundColor Gray
-        Start-Process -FilePath $installerPath -ArgumentList $installArgs -Wait
-        Write-Host "Esperando 15 segundos para que finalice la instalación..."
-        Start-Sleep -Seconds 15
-
-        # Lógica especial para HP: Buscar el ejecutable en C:\\SWSetup
-        if ($fabricante.Trim().ToLower() -like "*hp*") {
-            Write-Host "Buscando el ejecutable de HP Image Assistant en C:\\SWSetup..."
-            $searchPath = "C:\\SWSetup"
-            if (Test-Path $searchPath) {
-                $hpiaExecutable = Get-ChildItem -Path $searchPath -Recurse -Filter "HPImageAssistant.exe" | Select-Object -First 1
-                if ($hpiaExecutable) {
-                    $appExePath = $hpiaExecutable.FullName # Ruta encontrada dinámicamente
-                    Write-Host "Ejecutable encontrado en: $appExePath" -ForegroundColor Green
-                }
-            }
+            currentHybridBat = batHeader + ps1;
+            document.getElementById('scriptOutput').textContent = currentHybridBat;
+            document.getElementById('modal').classList.add('open');
         }
 
-        if (Test-Path $appExePath) {
-            Write-Host "Instalación manual exitosa." -ForegroundColor Green
-            Start-Application -path $appExePath -name $appName
+        // Modal Actions
+        function closeModal() {
+            document.getElementById('modal').classList.remove('open');
         }
-    }
-    
-    # Si el script llega hasta aquí, significa que todo falló.
-    Write-Error "Todos los métodos de instalación fallaron para ''$appName''."
-    Start-Sleep 10
-    Exit
-}
-catch {
-    Write-Error "Ocurrió un error inesperado: $($_.Exception.Message)"
-}
-
-Write-Host "Script finalizado."
-Start-Sleep -Seconds 10
-`,
-      'winutil': `iex ((New-Object System.Net.WebClient).DownloadString("https://christitus.com/win"))`,
-      'install-winget': `Write-Warning "La instalación automática de Winget ha sido desactivada. Por favor, instálelo desde la Microsoft Store." ; Start-Process "ms-windows-store://pdp/?productid=9NBLGGH4NNS1"`,
-      'activate-windows': `$key = (Get-WmiObject SoftwareLicensingService).OA3xOriginalProductKey; if ($key) { slmgr.vbs /ipk $key; slmgr.vbs /ato } else { Write-Error "No se encontró una clave de producto en el firmware." }`,
-      'update-windows': `Start-Process "ms-settings:windowsupdate"`,
-      'system-properties': `control.exe sysdm.cpl`,
-      'disable-transparency': `Set-ItemProperty -Path "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize" -Name "EnableTransparency" -Value 0`,
-      'reboot-bios': `shutdown /r /fw /t 1`,
-      'recovery-env': `shutdown /r /o /f /t 00`,
-      'update-apps': `winget upgrade --all --include-unknown --accept-package-agreements --accept-source-agreements`,
-      'home-control-panel': `Start-Process "control.exe"`,
-      'home-quick-diagnostic': `Get-CimInstance Win32_ComputerSystem; Get-CimInstance Win32_Processor | Select-Object Name, NumberOfCores; Get-CimInstance Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum; Get-PSDrive C`,
-      'home-windows-settings': `Start-Process "ms-settings:"`,
-      'home-file-explorer': `Start-Process "explorer.exe"`,
-      'home-powershell-console': `Start-Process powershell.exe`,
-      'home-system-info-app': `Start-Process "msinfo32.exe"`,
-      'tools-download-windows': `Start-Process "https://brandonsepulveda.github.io/descargawindows.html"`,
-      'tools-install-windows': `iex ((New-Object System.Net.WebClient).DownloadString("https://cutt.ly/Windeploy"))`,
-      'tools-optimize-system': `
-if (-not (Test-Path "$env:TEMP\\ToolboxBS")) { New-Item -Path "$env:TEMP\\ToolboxBS" -ItemType Directory -Force | Out-Null }
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/performance.bat" -OutFile "$env:TEMP\\ToolboxBS\\performance.bat"
-Start-Process -FilePath "cmd.exe" -ArgumentList "/c", "$env:TEMP\\ToolboxBS\\performance.bat"
-`,
-      'tools-windows-repair': `sfc /scannow; DISM /Online /Cleanup-image /Restorehealth`,
-      'tools-task-manager': `Start-Process "taskmgr.exe"`,
-      'tools-device-manager': `Start-Process "devmgmt.msc"`,
-      'tools-windows-services': `Start-Process "services.msc"`,
-      'tools-disk-cleanup': `Start-Process "cleanmgr.exe"`,
-      'tools-registry-editor': `Start-Process "regedit.exe"`,
-      'tools-winget-cli': `Start-Process powershell.exe -ArgumentList "-NoExit", "-Command", "winget"`,
-      'tools-check-updates': `Start-Process "ms-settings:windowsupdate"`
-    };
-    function generateScript() {
-      const allCommands = [];
-      const order = ['home', 'repair', 'repairCleanup', 'tweaks', 'tools', 'info'];
-      order.forEach(cat => {
-        if (selected[cat]) {
-          selected[cat].forEach(id => {
-            if (scripts[id]) allCommands.push({ id, script: scripts[id] });
-          });
+        function closeModalOutside(e) {
+            if (e.target.classList.contains('modal-overlay')) closeModal();
         }
-      });
-      if (allCommands.length === 0) return;
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeModal();
+        });
 
-      let ps1 = `<#\n.SYNOPSIS\nScript Generado por ToolboxBS NextGen\n#>\n\nWrite-Host "=== INICIANDO TOOLBOXBS ===" -ForegroundColor Cyan\n\n`;
-      allCommands.forEach(cmd => {
-        ps1 += `Write-Host "Ejecutando tarea: ${cmd.id}..." -ForegroundColor Yellow\n`;
-        ps1 += `${cmd.script.trim()}\n`;
-        ps1 += `Write-Host "Tarea finalizada." -ForegroundColor Green\n\n`;
-      });
-      ps1 += `Write-Host "Todas las tareas completadas. Presione Enter para salir."\nRead-Host`;
+        function downloadBat() {
+            if (!currentHybridBat) return;
+            const blob = new Blob([currentHybridBat], { type: "text/plain" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "ToolboxBS_Enterprise.bat";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
 
-      let batHeader = `@@echo off\r\n`;
-      batHeader += `@@chcp 65001 > nul\r\n`;
-      batHeader += `@@title ToolboxBS Launcher\r\n`;
-      batHeader += `@@echo.\r\n`;
-      batHeader += `@@echo  =================================================================\r\n`;
-      batHeader += `@@echo   Iniciando ToolboxBS...\r\n`;
-      batHeader += `@@echo  =================================================================\r\n`;
-      batHeader += `@@echo.\r\n`;
-      batHeader += `@@echo  Cargando modulos de PowerShell...\r\n`;
-      batHeader += `@@findstr /v "^@@" "%~f0" > "%TEMP%\\ToolboxBS_Run.ps1"\r\n`;
-      batHeader += `@@powershell -NoProfile -ExecutionPolicy Bypass -File "%TEMP%\\ToolboxBS_Run.ps1"\r\n`;
-      batHeader += `@@del "%TEMP%\\ToolboxBS_Run.ps1"\r\n`;
-      batHeader += `@@echo.\r\n`;
-      batHeader += `@@echo  Finalizado. Presione una tecla para cerrar.\r\n`;
-      batHeader += `@@pause > nul\r\n`;
-      batHeader += `@@goto :eof\r\n`;
-
-      currentHybridBat = batHeader + ps1;
-      document.getElementById('scriptOutput').textContent = currentHybridBat;
-      document.getElementById('modal').classList.add('open');
-    }
-
-    function downloadBat() {
-      if (!currentHybridBat) { generateScript(); return; }
-      const blob = new Blob([currentHybridBat], { type: "text/plain" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = "ToolboxBS_AllInOne.bat";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-    function openExternalLink(url) {
-      window.open(url, '_blank');
-    }
-
-    // esc to close
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-    function closeModal() { document.getElementById('modal').classList.remove('open'); }
-    function closeModalOutside(e) { if (e.target === document.getElementById('modal')) closeModal(); }
-  </script>
+        function copyScript() {
+            navigator.clipboard.writeText(currentHybridBat).then(() => {
+                // Podrías añadir un toast notification aquí
+                alert("¡Código copiado al portapapeles!");
+            });
+        }
+    </script>
 </body>
 
 </html>
