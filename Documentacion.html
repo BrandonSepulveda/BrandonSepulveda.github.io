@@ -1,1235 +1,564 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9012803289038112"
-     crossorigin="anonymous"></script>
-  
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2RY7LG5R21');
-</script>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="ToolboxBS - Suite integral de optimización y mantenimiento para sistemas Windows desarrollada por Brandon Sepulveda" />
-    <meta name="author" content="Brandon Sepulveda" />
-    <meta name="keywords" content="Windows, optimización, herramientas, sistema, utilidades, PowerShell, mantenimiento PC, ToolboxBS" />
-    <title>ToolboxBS Documentacion - Suite de Optimización Windows | Brandon Sepulveda</title>
-    <link rel="icon" type="image/x-icon" href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* Tus variables CSS */
-        :root {
-            --white: #ffffff;
-            --black: #000000;
-            --light-gray: #f5f5f5;
-            --gray: #e0e0e0;
-            --dark-gray: #333333;
-            --text-color: #333333;
-            --code-bg: #f0f0f0;
-            --border-color: #cccccc;
-            --highlight: #2196F3;
-            --menu-width-mobile: 280px; /* Ancho del menú en móvil */
-        }
-
-        /* Reset y estilos generales */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--white);
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden; /* Previene el scroll horizontal no deseado */
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* --- Header --- */
-        header {
-            background-color: var(--black);
-            color: var(--white);
-            padding: 20px 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: sticky; /* Sigue siendo pegajoso en la parte superior */
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none; /* Asegura que el logo sea clickeable como enlace */
-        }
-
-        .logo img {
-            width: 50px; /* Aumentado un poco el tamaño */
-            height: 50px; /* Aumentado un poco el tamaño */
-            margin-right: 15px;
-            object-fit: contain;
-        }
-
-        .logo-text {
-            font-size: 28px; /* Aumentado un poco el tamaño */
-            font-weight: bold;
-            color: var(--white);
-            margin: 0; /* Elimina margen por defecto h1 */
-        }
-
-        /* --- Botón Hamburguesa (Visible solo en móvil) --- */
-        .hamburger {
-            display: none; /* Oculto por defecto en escritorio */
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 30px;
-            cursor: pointer;
-            padding: 10px;
-            z-index: 1100; /* Mayor que el menú */
-        }
-
-
-        /* --- Navegación Principal --- */
-        nav {
-            /* background-color: var(--black); */ /* El fondo ya lo da el header en escritorio */
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-container {
-             max-width: 1200px;
-             margin: 0 auto;
-             padding: 0 20px;
-        }
-
-        .nav-list {
-            list-style: none;
-            display: flex; /* Layout horizontal en escritorio */
-            margin: 0;
-            padding: 0;
-            /* overflow-x: auto; */ /* Eliminar scroll horizontal, usaremos menú hamburguesa */
-        }
-
-        .nav-item {
-            position: relative; /* Necesario para el submenu absoluto en escritorio */
-        }
-
-        .nav-link {
-            display: block;
-            color: var(--white);
-            text-decoration: none;
-            padding: 15px 20px;
-            font-size: 16px; /* Ajustado a 16px para legibilidad */
-            transition: background-color 0.3s;
-            white-space: nowrap;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        /* --- Submenu (Escritorio) --- */
-        .submenu {
-            display: none; /* Oculto por defecto */
-            position: absolute; /* Posicionamiento relativo al nav-item */
-            top: 100%; /* Debajo del nav-link */
-            left: 0;
-            background-color: var(--white);
-            min-width: 200px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Sombra más pronunciada */
-            z-index: 1050; /* Asegura que esté sobre el contenido principal */
-            border: 1px solid var(--border-color);
-            border-radius: 4px; /* Bordes redondeados */
-            overflow: hidden; /* Para contener border-radius */
-        }
-
-        /* Mostrar submenu al pasar el ratón en escritorio */
-        .nav-item:hover > .submenu { /* Usar > para asegurar que sea el hijo directo */
-            display: block;
-        }
-
-        .submenu-item {
-            display: block;
-            padding: 12px 20px;
-            color: var(--text-color);
-            text-decoration: none;
-            transition: background-color 0.3s;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 15px;
-        }
-
-        .submenu-item:hover {
-            background-color: var(--light-gray);
-        }
-
-        .submenu-item:last-child {
-            border-bottom: none;
-        }
-
-        /* --- Contenido principal --- */
-        .section {
-            padding: 40px 0;
-            border-bottom: 1px solid var(--gray); /* Borde ligeramente más suave */
-        }
-
-        .section:last-child {
-             border-bottom: none; /* Elimina el borde inferior de la última sección */
-        }
-
-        .section-title {
-            color: var(--black);
-            font-size: 32px; /* Ajustado tamaño */
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--highlight);
-        }
-
-        .tool-description {
-            margin-bottom: 40px;
-            padding: 25px; /* Aumentado padding */
-            background-color: var(--light-gray);
-            border-radius: 8px; /* Bordes más redondeados */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.08); /* Sombra más pronunciada */
-        }
-
-        .tool-title {
-            color: var(--dark-gray); /* Color de título más oscuro */
-            font-size: 24px; /* Ajustado tamaño */
-            margin-bottom: 15px;
-            position: relative;
-            padding-left: 20px; /* Aumentado padding para la barra */
-        }
-
-        .tool-title::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 6px; /* Aumentado ancho de la barra */
-            background-color: var(--highlight);
-            border-radius: 3px;
-        }
-
-        .tool-text {
-            margin-bottom: 20px;
-            font-size: 17px; /* Ajustado tamaño */
-            color: var(--text-color);
-        }
-
-        pre {
-            background-color: var(--code-bg);
-            color: var(--dark-gray); /* Color de código más oscuro */
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto; /* Mantiene el scroll horizontal si el código es muy largo */
-            margin: 15px 0;
-            border: 1px solid var(--border-color);
-            white-space: pre-wrap; /* Envuelve el texto si es posible para evitar scroll horizontal */
-            word-wrap: break-word;
-        }
-
-        code {
-            font-family: Consolas, Monaco, 'Andale Mono', monospace;
-            font-size: 14px;
-        }
-
-        .note {
-            background-color: var(--white);
-            border-left: 5px solid var(--highlight); /* Aumentado ancho del borde */
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 5px 5px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra suave */
-        }
-
-        .note-title {
-            color: var(--highlight);
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .note ul {
-            list-style: disc; /* Usa discos para las listas */
-            margin-left: 20px;
-            padding: 0;
-        }
-        .note ul li {
-            margin-bottom: 5px;
-        }
-
-
-        .category-title {
-            color: var(--black);
-            font-size: 28px; /* Ajustado tamaño */
-            margin: 30px 0 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        /* --- Botón para volver arriba --- */
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--black);
-            color: var(--white);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-            opacity: 0; /* Oculto por defecto */
-            visibility: hidden; /* Oculto para no interferir con eventos */
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 99;
-        }
-
-        .back-to-top.visible {
-            opacity: 0.7;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            opacity: 1;
-        }
-
-        /* --- Footer --- */
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            color: var(--text-color);
-            background-color: var(--light-gray);
-            margin-top: 50px;
-            font-size: 15px;
-        }
-
-        footer a {
-            color: var(--highlight);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* --- Overlay para menú móvil --- */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
-            z-index: 800; /* Detrás del menú pero sobre el contenido */
-            display: none; /* Oculto por defecto */
-            transition: opacity 0.3s ease-in-out;
-            opacity: 0;
-        }
-
-        .overlay.visible {
-            display: block;
-            opacity: 1;
-        }
-
-
-        /* --- Responsive Styles --- */
-        @media (max-width: 768px) {
-
-            body.menu-open {
-                 overflow: hidden; /* Evita el scroll del contenido principal cuando el menú está abierto */
-            }
-
-            .header-content {
-                flex-direction: row; /* Mantener logo y hamburguesa en la misma fila */
-                justify-content: space-between; /* Espacio entre logo y hamburguesa */
-                align-items: center; /* Centrar verticalmente */
-                padding: 0 20px; /* Asegurar padding horizontal */
-            }
-
-            .logo {
-                margin-bottom: 0; /* Eliminar margen inferior del logo en móvil */
-            }
-
-            .hamburger {
-                display: block; /* Mostrar el botón hamburguesa en móvil */
-            }
-
-            nav {
-                 border-top: none; /* Eliminar borde superior en móvil */
-            }
-
-            /* Ocultar la lista de navegación principal en móvil por defecto */
-            .nav-list {
-                position: fixed; /* Menú fijo en la pantalla */
-                top: 0; /* Arriba del todo */
-                right: calc(-1 * var(--menu-width-mobile)); /* Inicialmente fuera de la pantalla a la derecha */
-                bottom: 0; /* Abajo del todo */
-                width: var(--menu-width-mobile); /* Ancho definido en variables */
-                background-color: var(--black); /* Fondo oscuro para el menú */
-                flex-direction: column; /* Elementos apilados verticalmente */
-                padding: 60px 20px 20px 20px; /* Padding arriba (para dejar espacio al header), y a los lados/abajo */
-                transition: right 0.3s ease-in-out; /* Animación al mostrar/ocultar */
-                overflow-y: auto; /* Scroll vertical si el contenido del menú es largo */
-                z-index: 900; /* Sobre el contenido y el overlay */
-                box-shadow: -2px 0 5px rgba(0,0,0,0.2); /* Sombra sutil en el borde izquierdo */
-                display: flex; /* Necesario para que flex-direction column funcione */
-            }
-
-            /* Estado del menú abierto */
-            .nav-list.menu-open {
-                right: 0; /* Mover a la posición visible */
-            }
-
-            .nav-item {
-                 width: 100%; /* Cada item ocupa el ancho completo del menú */
-                 border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separador entre items */
-                 position: static; /* Eliminar posicionamiento relativo para evitar problemas con submenus */
-            }
-             .nav-item:last-child {
-                 border-bottom: none;
-             }
-
-
-            .nav-link {
-                padding: 15px 10px; /* Ajustar padding para móvil */
-                font-size: 18px; /* Aumentar tamaño de fuente para mejor interacción táctil */
-                white-space: normal; /* Permitir que el texto se ajuste */
-                display: flex; /* Usar flex para alinear texto y posible icono de submenu */
-                justify-content: space-between; /* Espacio entre texto y icono */
-                align-items: center; /* Alinear verticalmente */
-            }
-
-            /* Icono para indicar submenú en móvil */
-            .nav-item .nav-link::after {
-                 content: '\f078'; /* Código de un icono de flecha hacia abajo de FontAwesome */
-                 font-family: 'Font Awesome 6 Free'; /* Usar la fuente FontAwesome */
-                 font-weight: 900; /* Usar el peso sólido para el icono */
-                 display: inline-block;
-                 margin-left: 10px;
-                 transition: transform 0.3s ease-in-out;
-            }
-
-             /* Rotar icono cuando el submenu esté abierto */
-            .nav-item.submenu-open .nav-link::after {
-                transform: rotate(180deg);
-            }
-
-             /* Ocultar icono para items sin submenu */
-            .nav-item:not(:has(.submenu)) .nav-link::after {
-                content: ''; /* No mostrar icono si no hay submenu */
-            }
-
-
-            /* Submenu (Móvil) */
-            .submenu {
-                position: static; /* Posicionamiento estático dentro del flujo */
-                width: 100%; /* Ocupa el ancho completo del nav-item */
-                background-color: rgba(255, 255, 255, 0.05); /* Fondo ligeramente diferente */
-                box-shadow: none; /* Sin sombra */
-                border: none; /* Sin borde */
-                display: none; /* Oculto por defecto en móvil */
-                padding-left: 10px; /* Espacio adicional para los items del submenu */
-                /* transition: max-height 0.3s ease-in-out; /* Opcional: animación de despliegue */
-                /* max-height: 0; */ /* Para la animación de despliegue */
-                overflow: hidden; /* Para ocultar el contenido cuando max-height es 0 */
-            }
-
-            /* Mostrar submenu cuando el nav-item padre tiene la clase 'submenu-open' */
-            .nav-item.submenu-open > .submenu {
-                display: block;
-                /* max-height: 500px; */ /* Un valor grande para mostrar todo el contenido al animar */
-            }
-
-            .submenu-item {
-                padding: 10px 10px; /* Ajustar padding del item de submenu */
-                color: var(--white); /* Color blanco para los items de submenu en el menú oscuro */
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Separador más sutil */
-                font-size: 16px; /* Tamaño de fuente consistente */
-            }
-
-            .submenu-item:hover {
-                 background-color: rgba(255, 255, 255, 0.1);
-            }
-
-             /* Asegurar que el hover de escritorio no interfiera */
-            .nav-item:hover > .submenu {
-                 display: none; /* Ocultar el submenu al pasar el ratón en móvil */
-            }
-            .nav-item.submenu-open > .submenu {
-                 display: block; /* Asegurarse de que se muestre con la clase */
-            }
-
-        }
-    </style>
+    crossorigin="anonymous"></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2RY7LG5R21"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-2RY7LG5R21');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description"
+    content="Documentación de ToolboxBS v4: las 257 herramientas de mantenimiento, reparación y optimización para Windows, qué hace cada una y cómo ejecutarlas." />
+  <meta name="author" content="Brandon Sepulveda" />
+  <meta name="keywords"
+    content="Windows, optimización, herramientas, sistema, utilidades, PowerShell, mantenimiento PC, ToolboxBS, documentación" />
+  <title>Documentación de ToolboxBS v4 | Brandon Sepulveda</title>
+  <link rel="icon" type="image/x-icon"
+    href="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" />
+  <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --white: #ffffff;
+      --paper: #f7f8fa;
+      --line: #e3e6ea;
+      --ink: #1a1d21;
+      --ink-2: #4b5058;
+      --muted: #767c85;
+      --highlight: #2196F3;
+      --highlight-soft: #e8f3fd;
+      --code-bg: #f2f4f7;
+      --ok: #0f9d58;
+      --warn: #c47f00;
+      --danger: #d93025;
+      --repair: #e2483d;
+      --clean: #0f9d58;
+      --perf: #c47f00;
+      --sec: #8e44d0;
+      --net: #0891b2;
+      --info: #2196F3;
+      --tools: #e07b1f;
+      --apps: #4285f4;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+    body {
+      font-family: 'Manrope', 'Segoe UI', Tahoma, sans-serif;
+      line-height: 1.65;
+      color: var(--ink-2);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    a { color: var(--highlight); }
+
+    /* ── cabecera ─────────────────────────────── */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255, 255, 255, .94);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .header-content {
+      max-width: 1240px; margin: 0 auto;
+      padding: 12px 24px;
+      display: flex; align-items: center; gap: 16px;
+    }
+
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo img { height: 34px; width: auto; }
+    .logo-text { font-size: 18px; font-weight: 800; color: var(--ink); letter-spacing: -.02em; }
+    .logo-text span { color: var(--highlight); }
+
+    .ver-pill {
+      font-size: 11px; font-weight: 700; letter-spacing: .06em;
+      background: var(--highlight-soft); color: var(--highlight);
+      border-radius: 99px; padding: 3px 10px;
+    }
+
+    .header-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font: inherit; font-size: 13.5px; font-weight: 600;
+      border-radius: 9px; padding: 9px 16px; text-decoration: none;
+      border: 1px solid var(--line); color: var(--ink-2); background: var(--white);
+      cursor: pointer; transition: border-color .15s, color .15s, background .15s;
+    }
+    .btn:hover { border-color: var(--highlight); color: var(--highlight); }
+    .btn-primary { background: var(--highlight); border-color: var(--highlight); color: #fff; }
+    .btn-primary:hover { background: #1877c9; border-color: #1877c9; color: #fff; }
+
+    .hamburger {
+      display: none; background: none; border: 0; font-size: 20px;
+      color: var(--ink); cursor: pointer; padding: 4px 8px;
+    }
+
+    /* ── layout ───────────────────────────────── */
+    .shell { max-width: 1240px; margin: 0 auto; display: flex; gap: 40px; padding: 0 24px; }
+
+    .sidebar {
+      width: 232px; flex: none;
+      position: sticky; top: 72px; align-self: flex-start;
+      max-height: calc(100vh - 90px); overflow-y: auto;
+      padding: 28px 0 40px;
+    }
+
+    .side-label {
+      font-size: 10.5px; font-weight: 800; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--muted);
+      margin: 22px 0 8px;
+    }
+    .side-label:first-child { margin-top: 0; }
+
+    .side-link {
+      display: flex; align-items: center; gap: 9px;
+      padding: 7px 10px; border-radius: 7px;
+      font-size: 13.5px; color: var(--ink-2); text-decoration: none;
+      transition: background .12s, color .12s;
+    }
+    .side-link:hover { background: var(--paper); color: var(--ink); }
+    .side-link .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+    .side-link .n { margin-left: auto; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+    main { flex: 1; min-width: 0; padding: 36px 0 80px; }
+
+    /* ── portada ──────────────────────────────── */
+    .hero { padding-bottom: 34px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+    .hero h1 {
+      font-size: clamp(30px, 5vw, 44px); font-weight: 800;
+      color: var(--ink); letter-spacing: -.03em; line-height: 1.08;
+      text-wrap: balance;
+    }
+    .hero p { margin-top: 14px; font-size: 17px; color: var(--ink-2); max-width: 64ch; }
+
+    .stats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .stat {
+      border: 1px solid var(--line); border-radius: 11px;
+      padding: 12px 18px; background: var(--white);
+    }
+    .stat b {
+      display: block; font-size: 24px; font-weight: 800;
+      color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -.02em;
+    }
+    .stat span { font-size: 10.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+
+    /* ── secciones ────────────────────────────── */
+    .section { padding-top: 52px; }
+    .section > h2 {
+      font-size: 25px; font-weight: 800; color: var(--ink);
+      letter-spacing: -.02em; display: flex; align-items: center; gap: 11px;
+    }
+    .section > h2 .bar { width: 4px; height: 24px; border-radius: 3px; }
+    .section > p.intro { margin-top: 10px; color: var(--ink-2); max-width: 68ch; }
+
+    h3.sub {
+      font-size: 16px; font-weight: 700; color: var(--ink);
+      margin: 30px 0 12px;
+    }
+
+    /* ── tarjetas de herramienta ──────────────── */
+    .tools { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); margin-top: 20px; }
+    .tool {
+      border: 1px solid var(--line); border-radius: 11px;
+      padding: 14px 16px; background: var(--white);
+    }
+    .tool .name { font-size: 14.5px; font-weight: 700; color: var(--ink); }
+    .tool .desc { font-size: 13.5px; color: var(--ink-2); margin-top: 5px; }
+    .tool .id {
+      display: inline-block; margin-top: 9px;
+      font-family: ui-monospace, Consolas, monospace; font-size: 11.5px;
+      color: var(--muted); background: var(--code-bg);
+      border-radius: 5px; padding: 2px 7px;
+    }
+    .tags { display: inline-flex; gap: 5px; margin-left: 7px; vertical-align: middle; }
+    .tag {
+      font-size: 9.5px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+      border-radius: 4px; padding: 2px 6px; border: 1px solid currentColor;
+    }
+    .tag-d { color: var(--danger); }
+    .tag-r { color: var(--ok); }
+    .tag-t { color: var(--warn); }
+
+    /* ── bloques de apoyo ─────────────────────── */
+    pre {
+      background: var(--code-bg); border: 1px solid var(--line); border-radius: 10px;
+      padding: 15px 18px; overflow-x: auto; margin-top: 14px;
+      font-family: ui-monospace, Consolas, monospace; font-size: 13px; line-height: 1.8;
+      color: var(--ink);
+    }
+    pre .c { color: var(--muted); }
+    code.inline {
+      font-family: ui-monospace, Consolas, monospace; font-size: .88em;
+      background: var(--code-bg); border-radius: 4px; padding: 1px 6px; color: var(--ink);
+    }
+
+    .note {
+      border-left: 3px solid var(--highlight); background: var(--highlight-soft);
+      border-radius: 0 10px 10px 0; padding: 14px 18px; margin-top: 18px;
+    }
+    .note.warn { border-left-color: var(--warn); background: #fdf6e6; }
+    .note.danger { border-left-color: var(--danger); background: #fdeceb; }
+    .note p { font-size: 14.5px; color: var(--ink-2); }
+    .note strong { color: var(--ink); }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); font-weight: 800; }
+    td.k { font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; color: var(--ink); white-space: nowrap; }
+
+    .grid2 { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 18px; }
+    .panel { border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; }
+    .panel h4 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+
+    .recetas { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); margin-top: 18px; }
+    .receta { border: 1px solid var(--line); border-radius: 11px; padding: 14px 16px; }
+    .receta h4 { font-size: 14.5px; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 9px; }
+    .receta h4 .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+    .receta p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+    .receta .pasos { font-family: ui-monospace, Consolas, monospace; font-size: 11.5px; color: var(--ink-2); margin-top: 9px; word-break: break-word; }
+
+    /* ── buscador ─────────────────────────────── */
+    .buscador { position: relative; margin-top: 24px; }
+    .buscador input {
+      width: 100%; font: inherit; font-size: 15px; color: var(--ink);
+      border: 1px solid var(--line); border-radius: 10px;
+      padding: 12px 14px 12px 40px; background: var(--white);
+    }
+    .buscador input:focus { outline: 2px solid var(--highlight); outline-offset: 1px; border-color: transparent; }
+    .buscador i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+    .hit { font-size: 13px; color: var(--muted); margin-top: 10px; }
+
+    footer.pie {
+      border-top: 1px solid var(--line); margin-top: 60px;
+      padding: 28px 24px 60px; color: var(--muted); font-size: 13.5px;
+    }
+    footer.pie .inner { max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; }
+
+    @media (max-width: 980px) {
+      .hamburger { display: block; }
+      .shell { display: block; padding: 0 18px; }
+      .sidebar {
+        display: none; position: fixed; inset: 57px 0 auto 0;
+        width: 100%; max-height: 70vh; background: var(--white);
+        border-bottom: 1px solid var(--line); padding: 18px 22px; z-index: 40;
+      }
+      .sidebar.open { display: block; }
+      .header-actions .btn span { display: none; }
+      main { padding-top: 26px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+  </style>
 </head>
+
 <body>
-    <header>
-        <div class="header-content">
-            <a href="index.html" class="logo">
-                <img src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true" alt="ToolboxBS Logo">
-                <h1 class="logo-text">TOOLBOXBS</h1>
-            </a>
-            <button class="hamburger" aria-label="Toggle navigation">
-                 <i class="fas fa-bars"></i> </button>
+
+  <header>
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <img
+          src="https://github.com/BrandonSepulveda/BrandonSepulveda.github.io/blob/main/logo/BS%20ToolBox-03.png?raw=true"
+          alt="ToolboxBS">
+        <span class="logo-text">TOOLBOX<span>BS</span></span>
+      </a>
+      <span class="ver-pill">v4.0</span>
+      <div class="header-actions">
+        <a class="btn" href="ToolboxBSweb.html"><i class="fas fa-globe"></i> <span>Versión web</span></a>
+        <a class="btn btn-primary" href="https://github.com/BrandonSepulveda/ToolboxBS"><i class="fab fa-github"></i>
+          <span>GitHub</span></a>
+        <button class="hamburger" aria-label="Menú" onclick="document.querySelector('.sidebar').classList.toggle('open')">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+
+    <aside class="sidebar">
+      <div class="side-label">Empezar</div>
+      <a class="side-link" href="#inicio">Qué es ToolboxBS</a>
+      <a class="side-link" href="#ejecutar">Cómo ejecutarlo</a>
+      <a class="side-link" href="#interfaz">La interfaz</a>
+      <a class="side-link" href="#rutinas">Rutinas de un clic</a>
+      <a class="side-link" href="#consola">Modo consola</a>
+      <div class="side-label">Catálogo</div>
+      <a class="side-link" href="#cat-repair"><span class="dot" style="background:var(--repair)"></span>Reparación<span class="n">31</span></a><a class="side-link" href="#cat-clean"><span class="dot" style="background:var(--clean)"></span>Limpieza<span class="n">19</span></a><a class="side-link" href="#cat-perf"><span class="dot" style="background:var(--perf)"></span>Rendimiento<span class="n">26</span></a><a class="side-link" href="#cat-sec"><span class="dot" style="background:var(--sec)"></span>Seguridad<span class="n">18</span></a><a class="side-link" href="#cat-net"><span class="dot" style="background:var(--net)"></span>Red<span class="n">14</span></a><a class="side-link" href="#cat-info"><span class="dot" style="background:var(--info)"></span>Información<span class="n">14</span></a><a class="side-link" href="#cat-tools"><span class="dot" style="background:var(--tools)"></span>Herramientas<span class="n">48</span></a><a class="side-link" href="#cat-apps"><span class="dot" style="background:var(--apps)"></span>Aplicaciones<span class="n">87</span></a>
+      <div class="side-label">Referencia</div>
+      <a class="side-link" href="#archivos">Dónde quedan los archivos</a>
+      <a class="side-link" href="#riesgos">Riesgos y reversión</a>
+      <a class="side-link" href="#problemas">Solución de problemas</a>
+    </aside>
+
+    <main>
+
+      <div class="hero" id="inicio">
+        <h1>Documentación de ToolboxBS v4</h1>
+        <p>
+          ToolboxBS es una suite de mantenimiento, reparación y optimización para Windows 10 y 11.
+          Reúne 257 herramientas en una sola aplicación: reparar lo que está roto, recuperar
+          espacio, afinar el rendimiento, revisar la seguridad, diagnosticar la red e instalar
+          software sin dar clic en «Siguiente» cien veces.
+        </p>
+        <div class="stats"><div class="stat"><b>257</b><span>herramientas</span></div><div class="stat"><b>8</b><span>módulos</span></div><div class="stat"><b>11</b><span>rutinas</span></div><div class="stat"><b>25</b><span>reversibles</span></div><div class="stat"><b>87</b><span>apps</span></div></div>
+      </div>
+
+      <section class="section" id="ejecutar">
+        <h2><span class="bar" style="background:var(--info)"></span>Cómo ejecutarlo</h2>
+        <p class="intro">Hay dos productos independientes. Usa el que te sirva; no dependen uno del otro.</p>
+
+        <div class="grid2">
+          <div class="panel">
+            <h4><i class="fas fa-desktop" style="color:var(--highlight)"></i> Aplicación de escritorio</h4>
+            <p style="font-size:14px">
+              La experiencia completa: consola integrada con la salida en vivo, estado del equipo en
+              tiempo real, reversión de cambios y registro de cada sesión. Abre <strong>PowerShell como
+              Administrador</strong> y ejecuta:
+            </p>
+            <pre>irm "https://cutt.ly/ToolboxBS" | iex</pre>
+            <p style="font-size:13.5px;margin-top:10px;color:var(--muted)">
+              Se auto-eleva si hace falta. También puedes descargar el <code class="inline">.ps1</code> firmado
+              desde la sección de releases del repositorio.
+            </p>
+          </div>
+          <div class="panel">
+            <h4><i class="fas fa-globe" style="color:var(--highlight)"></i> Versión web</h4>
+            <p style="font-size:14px">
+              No instala nada y no necesita permisos: marcas lo que quieres, la página arma un
+              <code class="inline">.bat</code> y tú lo ejecutas. Todo se genera en tu navegador, sin enviar
+              datos a ningún servidor, y puedes leer el script completo antes de correrlo.
+            </p>
+            <p style="margin-top:14px"><a class="btn btn-primary" href="ToolboxBSweb.html">Abrir la versión web</a></p>
+          </div>
         </div>
-        <nav>
-            <div class="nav-container">
-                <ul class="nav-list">
-                    <li class="nav-item">
-                        <a href="#inicio" class="nav-link">Inicio</a>
-                        <div class="submenu">
-                            <a href="#panel-control" class="submenu-item">Panel de Control</a>
-                            <a href="#diagnostico-rapido" class="submenu-item">Diagnóstico Rápido</a>
-                            <a href="#ajustes-windows" class="submenu-item">Ajustes de Windows</a>
-                            <a href="#explorador" class="submenu-item">Explorador de Archivos</a>
-                            <a href="#powershell" class="submenu-item">PowerShell</a>
-                            <a href="#msinfo32" class="submenu-item">Información del Sistema</a>
-                            <a href="#instalar-powershell7" class="submenu-item">Instalar PowerShell 7</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#info-sistema" class="nav-link">Información del Sistema</a>
-                        </li>
-                    <li class="nav-item">
-                        <a href="#descargas-apps" class="nav-link">Descargas Apps</a>
-                        </li>
-                    <li class="nav-item">
-                        <a href="#reparacion" class="nav-link">Reparación</a>
-                        <div class="submenu">
-                            <a href="#crear-punto-restauracion" class="submenu-item">Crear Punto de Restauración</a>
-                            <a href="#mantenimiento-so" class="submenu-item">Mantenimiento del S.O.</a>
-                            <a href="#info-pantallazos" class="submenu-item">Info de Pantallazos Azules</a>
-                            <a href="#estado-bateria" class="submenu-item">Estado de la Batería</a>
-                            <a href="#info-drivers" class="submenu-item">Información de Drivers</a>
-                            <a href="#reparar-red" class="submenu-item">Reparar Red</a>
-                            <a href="#limpieza" class="submenu-item">Limpieza</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#tweaks" class="nav-link">Tweaks</a>
-                        <div class="submenu">
-                            <a href="#ejecutar-winutil" class="submenu-item">Ejecutar WinUtil</a>
-                            <a href="#instalar-winget" class="submenu-item">Instalar Winget</a>
-                            <a href="#activar-windows" class="submenu-item">Activar Windows</a>
-                            <a href="#ejecutar-optimizer" class="submenu-item">Ejecutar Optimizer</a>
-                            <a href="#buscar-drivers" class="submenu-item">Buscar Drivers</a>
-                            <a href="#actualizar-windows" class="submenu-item">Actualizar Windows</a>
-                            <a href="#analizar-optimizar" class="submenu-item">Analizar y Optimizar S.O.</a>
-                            <a href="#propiedades-sistema" class="submenu-item">Propiedades del Sistema</a>
-                            <a href="#deshabilitar-transparencia" class="submenu-item">Deshabilitar Transparencia</a>
-                            <a href="#apagar-bios" class="submenu-item">Apagar y Entrar a BIOS</a>
-                            <a href="#entorno-recuperacion" class="submenu-item">Entorno de Recuperación</a>
-                            <a href="#actualizar-apps" class="submenu-item">Actualizar Apps</a>
-                        </div>
-                    </li>
-                     <li class="nav-item">
-                        <a href="#herramientas" class="nav-link">Herramientas</a>
-                        <div class="submenu">
-                            <a href="#ejecutar-toolboxbs" class="submenu-item">Ejecutar ToolboxBS</a>
-                            <a href="#ejecutar-winscript" class="submenu-item">Ejecutar WinScript</a>
-                            <a href="#instalar-sentinel" class="submenu-item">Instalar Sentinel</a>
-                            <a href="#optimizar-sistema" class="submenu-item">Optimizar Sistema</a>
-                            <a href="#instalar-intel" class="submenu-item">Instalar Intel Driver Support</a>
-                            <a href="#reparacion-windows" class="submenu-item">Reparación de Windows</a>
-                            <a href="#administrador-tareas" class="submenu-item">Administrador de Tareas</a>
-                            <a href="#administrador-dispositivos" class="submenu-item">Administrador de Dispositivos</a>
-                            <a href="#servicios" class="submenu-item">Servicios</a>
-                            <a href="#limpieza-disco" class="submenu-item">Limpieza de Disco</a>
-                            <a href="#editor-registro" class="submenu-item">Editor del Registro</a>
-                            <a href="#verificar-actualizaciones" class="submenu-item">Verificar Actualizaciones</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
 
-    <div class="overlay"></div>
+        <div class="note">
+          <p><strong>¿Por qué pide permisos de Administrador?</strong> Casi todo lo que hace ToolboxBS
+            —reparar componentes de Windows, tocar servicios, limpiar carpetas del sistema, leer el estado de
+            Defender— requiere privilegios elevados. Sin ellos las herramientas fallarían a medias.</p>
+        </div>
+      </section>
 
-    <div class="container">
-        <section id="inicio" class="section">
-            <h2 class="section-title">Inicio</h2>
-            <p>El menú de Inicio proporciona acceso rápido a funciones básicas del sistema y herramientas de diagnóstico.</p>
+      <section class="section" id="interfaz">
+        <h2><span class="bar" style="background:var(--info)"></span>La interfaz</h2>
+        <p class="intro">
+          A la izquierda están los módulos; cada herramienta es una tarjeta que se marca con un clic.
+          Abajo a la derecha, el botón Ejecutar corre todo lo seleccionado en orden y te muestra la
+          salida en la consola integrada.
+        </p>
 
-            <div class="tool-description" id="panel-control">
-                <h3 class="tool-title">Panel de Control</h3>
-                <p class="tool-text">Abre el Panel de Control clásico de Windows para configurar y personalizar el sistema operativo.</p>
-                <pre><code>control.exe</code></pre>
-            </div>
+        <h3 class="sub">Atajos de teclado</h3>
+        <table>
+          <tr><th>Atajo</th><th>Qué hace</th></tr>
+          <tr><td class="k">Ctrl + F</td><td>Busca en las 257 herramientas, sin importar el módulo en el que estés</td></tr>
+          <tr><td class="k">Ctrl + Enter</td><td>Ejecuta la selección actual</td></tr>
+          <tr><td class="k">Escape</td><td>Limpia la búsqueda</td></tr>
+          <tr><td class="k">F5</td><td>Refresca el estado del equipo del dashboard</td></tr>
+          <tr><td class="k">F1</td><td>Ayuda con todos los atajos</td></tr>
+          <tr><td class="k">Clic derecho</td><td>Sobre una tarjeta: ejecutarla sola, revertirla o ver el código exacto que corre</td></tr>
+        </table>
 
-            <div class="tool-description" id="diagnostico-rapido">
-                <h3 class="tool-title">Diagnóstico Rápido</h3>
-                <p class="tool-text">Realiza un análisis rápido del sistema para identificar problemas críticos del hardware y software.</p>
-                <div class="note">
-                    <div class="note-title">Elementos analizados:</div>
-                    <ul>
-                        <li>Espacio disponible en disco (alerta si menos del 10%)</li>
-                        <li>Uso de memoria RAM (alerta si más del 80%)</li>
-                        <li>Estado de servicios críticos de Windows</li>
-                        <li>Actualizaciones pendientes</li>
-                        <li>Eventos críticos recientes en el registro de Windows</li>
-                    </ul>
-                </div>
-            </div>
+        <h3 class="sub">El dashboard</h3>
+        <p style="font-size:14.5px">
+          Muestra CPU, memoria, disco y tiempo encendido en vivo, y ocho comprobaciones de salud:
+          activación de Windows, protección en tiempo real de Defender, firewall, antigüedad del último
+          parche, espacio libre, salud SMART de los discos, punto de restauración disponible y si hay un
+          reinicio pendiente.
+        </p>
 
-            <div class="tool-description" id="ajustes-windows">
-                <h3 class="tool-title">Ajustes de Windows</h3>
-                <p class="tool-text">Abre la aplicación de Configuración moderna de Windows.</p>
-                <pre><code>Start-Process "ms-settings:"</code></pre>
-            </div>
+        <h3 class="sub">Perfiles</h3>
+        <p style="font-size:14.5px">
+          Si siempre haces lo mismo en los equipos que atiendes, marca las herramientas una vez y guarda
+          un perfil <code class="inline">.json</code>. En el siguiente equipo lo cargas y ya tienes la
+          selección lista.
+        </p>
+      </section>
 
-            <div class="tool-description" id="explorador">
-                <h3 class="tool-title">Explorador de Archivos</h3>
-                <p class="tool-text">Inicia el Explorador de archivos de Windows.</p>
-                <pre><code>explorer.exe</code></pre>
-            </div>
+      <section class="section" id="rutinas">
+        <h2><span class="bar" style="background:var(--clean)"></span>Rutinas de un clic</h2>
+        <p class="intro">
+          Los casos que más se repiten, ya armados. La rutina marca sus herramientas y te muestra la
+          selección: el último clic siempre es tuyo, nunca ejecuta nada sola.
+        </p>
+        <div class="recetas"><div class="receta"><h4><span class="dot" style="background:var(--clean)"></span>Mantenimiento express</h4><p>Limpieza + DNS + TRIM &middot; 6 pasos</p><div class="pasos">Purgar temporales &rarr; Cache de navegadores &rarr; Vaciar papelera &rarr; Cache de miniaturas e iconos &rarr; Vaciar cache DNS &rarr; Optimizar unidades (TRIM)</div></div><div class="receta"><h4><span class="dot" style="background:var(--perf)"></span>El equipo va lento</h4><p>Diagnostico + limpieza + tweaks &middot; 9 pasos</p><div class="pasos">Purgar temporales &rarr; Que se esta comiendo el disco &rarr; Auditar programas de inicio &rarr; Cortar apps en segundo plano &rarr; Liberar RAM en espera &rarr; Efectos visuales a rendimiento &rarr; Historial de encendidos &rarr; Salud de discos (SMART) &rarr; Triaje de errores del sistema</div></div><div class="receta"><h4><span class="dot" style="background:var(--info)"></span>Recien formateado</h4><p>Winget, debloat, tweaks base &middot; 12 pasos</p><div class="pasos">Crear punto de restauracion &rarr; Instalar o reparar Winget &rarr; Explorador para tecnicos &rarr; Menu contextual clasico &rarr; Quitar Widgets, Chat y Copilot &rarr; Quitar apps preinstaladas &rarr; Quitar Bing del menu Inicio &rarr; Silenciar notificaciones &rarr; Historial del portapapeles &rarr; Menu contextual de tecnico &rarr; Plan de energia maximo &rarr; Sincronizar reloj del sistema</div></div><div class="receta"><h4><span class="dot" style="background:var(--sec)"></span>Revision de seguridad</h4><p>Defender, cuentas, persistencias &middot; 10 pasos</p><div class="pasos">Estado de Microsoft Defender &rarr; Examen rapido de Defender &rarr; Cazar persistencias sospechosas &rarr; Auditar cuentas de usuario &rarr; Historial de inicios de sesion &rarr; Puertos y conexiones activas &rarr; Revisar archivo hosts &rarr; Revisar certificados raiz &rarr; Auditar permisos de aplicaciones &rarr; Parches instalados y pendientes</div></div><div class="receta"><h4><span class="dot" style="background:var(--tools)"></span>Antes de formatear</h4><p>Respalda drivers, claves y datos &middot; 6 pasos</p><div class="pasos">Respaldar todos los drivers &rarr; Claves de producto &rarr; Contrasenas WiFi guardadas &rarr; Inventario de software &rarr; Estado de Office &rarr; Respaldar datos del usuario</div></div><div class="receta"><h4><span class="dot" style="background:var(--net)"></span>Reporte para el cliente</h4><p>HTML completo + inventario &middot; 3 pasos</p><div class="pasos">Reporte HTML del equipo &rarr; Salud de discos (SMART) &rarr; Inventario de software</div></div><div class="receta"><h4><span class="dot" style="background:var(--repair)"></span>No hay internet</h4><p>Diagnostico y reset de red &middot; 6 pasos</p><div class="pasos">Diagnostico de red completo &rarr; Trazado de ruta y estabilidad &rarr; VPN y adaptadores virtuales &rarr; Revisar y limpiar proxy &rarr; Vaciar cache DNS &rarr; Restablecer red completa</div></div><div class="receta"><h4><span class="dot" style="background:var(--clean)"></span>Windows no actualiza</h4><p>Reset de update + SFC &middot; 3 pasos</p><div class="pasos">Resetear Windows Update &rarr; Logs y volcados del sistema &rarr; Reparar Windows (SFC + DISM)</div></div><div class="receta"><h4><span class="dot" style="background:var(--repair)"></span>Despues de un virus</h4><p>Reactiva Defender y limpia rastros &middot; 8 pasos</p><div class="pasos">Reactivar Microsoft Defender &rarr; Revisar y limpiar proxy &rarr; Revisar archivo hosts &rarr; Revisar certificados raiz &rarr; Cazar persistencias sospechosas &rarr; Examen rapido de Defender &rarr; Cache de navegadores &rarr; Purgar temporales</div></div><div class="receta"><h4><span class="dot" style="background:var(--clean)"></span>Liberar espacio a fondo</h4><p>Todo lo que se puede borrar sin riesgo &middot; 9 pasos</p><div class="pasos">Que se esta comiendo el disco &rarr; Purgar temporales &rarr; Cache de navegadores &rarr; Cache de aplicaciones &rarr; Logs y volcados del sistema &rarr; Cache de miniaturas e iconos &rarr; Vaciar papelera &rarr; Liberador de espacio automatico &rarr; Temporales de todos los perfiles</div></div><div class="receta"><h4><span class="dot" style="background:var(--perf)"></span>Perifericos que fallan</h4><p>USB, audio, camara, Bluetooth &middot; 6 pasos</p><div class="pasos">Inventario de controladores &rarr; Reparar puertos USB &rarr; Reparar audio &rarr; Reparar camara y microfono &rarr; Reparar Bluetooth &rarr; Dispositivos USB conectados</div></div></div>
+      </section>
 
-            <div class="tool-description" id="powershell">
-                <h3 class="tool-title">PowerShell</h3>
-                <p class="tool-text">Abre PowerShell, la interfaz de línea de comandos avanzada de Windows.</p>
-                <div class="note">
-                    <div class="note-title">Nota:</div>
-                    <p>Intenta abrir PowerShell 7 si está disponible. Si no, abre PowerShell 5 (integrado en Windows).</p>
-                </div>
-            </div>
+      <section class="section" id="consola">
+        <h2><span class="bar" style="background:var(--tools)"></span>Modo consola</h2>
+        <p class="intro">
+          La aplicación de escritorio también funciona sin abrir la ventana, lo que sirve para
+          automatizar mantenimientos o integrarla en tus propios scripts.
+        </p>
+        <pre><span class="c"># listar las 257 herramientas con su id y categoria</span>
+.\ToolboxBS.ps1 -ListTools
 
-            <div class="tool-description" id="msinfo32">
-                <h3 class="tool-title">Información del Sistema</h3>
-                <p class="tool-text">Abre la herramienta de información del sistema integrada en Windows.</p>
-                <pre><code>msinfo32.exe</code></pre>
-            </div>
+<span class="c"># ejecutar una o varias sin interfaz</span>
+.\ToolboxBS.ps1 -RunTool clean-temp,net-info
 
-            <div class="tool-description" id="instalar-powershell7">
-                <h3 class="tool-title">Instalar PowerShell 7</h3>
-                <p class="tool-text">Instala la última versión de PowerShell 7, una versión mejorada con más características y mejor rendimiento.</p>
-                <div class="note">
-                    <div class="note-title">Nota:</div>
-                    <p>Se instala automáticamente usando Winget si está disponible. Si no está disponible Winget, se descarga e instala el MSI desde GitHub.</p>
-                </div>
-            </div>
-        </section>
+<span class="c"># volcar el catalogo a JSON (metadata)</span>
+.\ToolboxBS.ps1 -ExportCatalog catalogo.json
 
-        <section id="info-sistema" class="section">
-            <h2 class="section-title">Información del Sistema</h2>
+<span class="c"># volcar el catalogo con el codigo de cada herramienta</span>
+.\ToolboxBS.ps1 -ExportCatalog catalogo.full.json -WithCode
 
-            <div class="tool-description">
-                <h3 class="tool-title">Información Completa del Sistema</h3>
-                <p class="tool-text">Proporciona un informe detallado sobre el hardware y software del equipo.</p>
-                <div class="note">
-                    <div class="note-title">Información proporcionada:</div>
-                    <ul>
-                        <li><strong>Sistema operativo:</strong> Versión de Windows, compilación, arquitectura, fecha de instalación</li>
-                        <li><strong>Procesador:</strong> Modelo, núcleos, hilos, velocidad máxima</li>
-                        <li><strong>Memoria RAM:</strong> Capacidad total, detalles de módulos, fabricante, velocidad</li>
-                        <li><strong>Almacenamiento:</strong> Capacidad, espacio libre, tipo (SSD/HDD), interfaces</li>
-                        <li><strong>GPU:</strong> Modelo, memoria dedicada, resolución actual, versión del controlador</li>
-                        <li><strong>Placa base:</strong> Fabricante, modelo</li>
-                        <li><strong>Red:</strong> Adaptadores activos, direcciones IP, MAC, velocidad de conexión</li>
-                        <li><strong>Seguridad:</strong> Estado de Windows Defender, Firewall, BitLocker</li>
-                        <li><strong>Batería:</strong> Estado de carga, capacidad, vida estimada (para portátiles)</li>
-                        <li><strong>Monitores:</strong> Modelos conectados, información de fabricante</li>
-                        <li><strong>Rendimiento actual:</strong> Uso de CPU, memoria y disco en tiempo real</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+<span class="c"># validar el script despues de editarlo</span>
+.\ToolboxBS.ps1 -SelfTest</pre>
+        <div class="note">
+          <p><strong>El id es la clave.</strong> Cada herramienta de este documento muestra su id
+            (por ejemplo <code class="inline">clean-temp</code>). Ese es el mismo identificador que
+            acepta <code class="inline">-RunTool</code>.</p>
+        </div>
+      </section>
 
-        <section id="descargas-apps" class="section">
-            <h2 class="section-title">Descargas Apps</h2>
+      <section class="section" id="catalogo">
+        <h2><span class="bar" style="background:var(--highlight)"></span>Catálogo completo</h2>
+        <p class="intro">
+          Las 257 herramientas agrupadas por módulo. Busca por nombre, descripción o id.
+        </p>
+        <div class="buscador">
+          <i class="fas fa-search"></i>
+          <input id="q" type="search" placeholder="Buscar: defender, drivers, wifi, temporales..."
+            autocomplete="off" aria-label="Buscar en el catálogo">
+        </div>
+        <p class="hit" id="hit"></p>
+      </section>
 
-            <div class="tool-description">
-                <h3 class="tool-title">Instalador de Aplicaciones</h3>
-                <p class="tool-text">Interfaz gráfica para instalar aplicaciones populares utilizando Chocolatey o Winget.</p>
-                <div class="note">
-                    <div class="note-title">Características:</div>
-                    <ul>
-                        <li>Selección entre gestores de paquetes Chocolatey o Winget</li>
-                        <li>Instalación automatizada del gestor de paquetes si no está disponible</li>
-                        <li>Búsqueda de aplicaciones con filtrado en tiempo real</li>
-                        <li>Selección múltiple para instalar varias aplicaciones a la vez</li>
-                        <li>Visualización del progreso de instalación</li>
-                        <li>Registro detallado del proceso</li>
-                    </ul>
-                </div>
-                <div class="note">
-                    <div class="note-title">Aplicaciones disponibles:</div>
-                    <p>7zip, aida64, anydesk, brave, cpu-z, crystaldiskinfo, dellcommandupdate, discord, googlechrome, hp-pc-hardware-diagnostics, hpimageassistant, hpsmart, hpsupportassistant, intel-driver-support-assistant, lenovovantage, lenovosystemupdate, microsoft365uninstall, microsoftpowertoys, myasus, notepadplusplus, nzxt-cam, powershell, rufus, teamviewer, ventoy, visualstudiocode, whatsapp, windowsterminal</p>
-                </div>
-            </div>
-        </section>
+      <section class="section" id="cat-repair" data-cat="repair"><h2><span class="bar" style="background:var(--repair)"></span>Reparación <span style="font-size:14px;font-weight:600;color:var(--muted)">31</span></h2><p class="intro">Arreglar lo que está roto: componentes de Windows, red, impresión, audio, arranque y controladores.</p><div class="tools"><div class="tool" data-q="crear punto de restauracion habilita la proteccion del sistema y crea un punto repair-restore-point reparación"><div class="name">Crear punto de restauracion</div><div class="desc">Habilita la proteccion del sistema y crea un punto</div><span class="id">repair-restore-point</span></div><div class="tool" data-q="reparar windows (sfc + dism) verifica y repara la integridad del sistema. tarda 15-40 min repair-sfc-dism reparación"><div class="name">Reparar Windows (SFC + DISM)<span class="tags"><span class="tag tag-t">ventana</span></span></div><div class="desc">Verifica y repara la integridad del sistema. Tarda 15-40 min</div><span class="id">repair-sfc-dism</span></div><div class="tool" data-q="programar chkdsk revisa el disco de sistema en el proximo reinicio repair-chkdsk reparación"><div class="name">Programar CHKDSK</div><div class="desc">Revisa el disco de sistema en el proximo reinicio</div><span class="id">repair-chkdsk</span></div><div class="tool" data-q="resetear windows update reconstruye softwaredistribution y catroot2, arregla el 90% de errores de update repair-wu-reset reparación"><div class="name">Resetear Windows Update</div><div class="desc">Reconstruye SoftwareDistribution y catroot2, arregla el 90% de errores de update</div><span class="id">repair-wu-reset</span></div><div class="tool" data-q="reparar microsoft store y apps limpia la cache de la store y re-registra las aplicaciones uwp repair-store reparación"><div class="name">Reparar Microsoft Store y apps</div><div class="desc">Limpia la cache de la Store y re-registra las aplicaciones UWP</div><span class="id">repair-store</span></div><div class="tool" data-q="reparar explorador e iconos reconstruye la cache de iconos y miniaturas, y reinicia el explorador repair-explorer reparación"><div class="name">Reparar Explorador e iconos</div><div class="desc">Reconstruye la cache de iconos y miniaturas, y reinicia el Explorador</div><span class="id">repair-explorer</span></div><div class="tool" data-q="reparar cola de impresion detiene el spooler, borra trabajos atascados y lo reinicia repair-print reparación"><div class="name">Reparar cola de impresion</div><div class="desc">Detiene el spooler, borra trabajos atascados y lo reinicia</div><span class="id">repair-print</span></div><div class="tool" data-q="reparar audio reinicia los servicios de sonido y lista los dispositivos repair-audio reparación"><div class="name">Reparar audio</div><div class="desc">Reinicia los servicios de sonido y lista los dispositivos</div><span class="id">repair-audio</span></div><div class="tool" data-q="reconstruir busqueda de windows regenera el indice cuando el buscador del menu inicio deja de responder repair-search reparación"><div class="name">Reconstruir busqueda de Windows</div><div class="desc">Regenera el indice cuando el buscador del menu Inicio deja de responder</div><span class="id">repair-search</span></div><div class="tool" data-q="restablecer red completa winsock, tcp/ip, dns, firewall y renovacion de ip repair-network reparación"><div class="name">Restablecer red completa</div><div class="desc">Winsock, TCP/IP, DNS, firewall y renovacion de IP</div><span class="id">repair-network</span></div><div class="tool" data-q="restaurar firewall por defecto elimina reglas rotas y devuelve el firewall a los valores de fabrica repair-firewall reparación"><div class="name">Restaurar firewall por defecto</div><div class="desc">Elimina reglas rotas y devuelve el firewall a los valores de fabrica</div><span class="id">repair-firewall</span></div><div class="tool" data-q="reparar menu inicio y barra reconstruye el paquete del shell cuando el menu inicio no abre repair-startmenu reparación"><div class="name">Reparar menu Inicio y barra</div><div class="desc">Reconstruye el paquete del Shell cuando el menu Inicio no abre</div><span class="id">repair-startmenu</span></div><div class="tool" data-q="analizar pantallazos azules lee los minidumps, resume los codigos de parada y abre bluescreenview repair-bsod reparación"><div class="name">Analizar pantallazos azules</div><div class="desc">Lee los minidumps, resume los codigos de parada y abre BlueScreenView</div><span class="id">repair-bsod</span></div><div class="tool" data-q="triaje de errores del sistema agrupa los errores criticos de los ultimos 7 dias por origen repair-events reparación"><div class="name">Triaje de errores del sistema</div><div class="desc">Agrupa los errores criticos de los ultimos 7 dias por origen</div><span class="id">repair-events</span></div><div class="tool" data-q="diagnostico de memoria ram revisa resultados previos y programa la prueba de memoria de windows repair-memtest reparación"><div class="name">Diagnostico de memoria RAM</div><div class="desc">Revisa resultados previos y programa la prueba de memoria de Windows</div><span class="id">repair-memtest</span></div><div class="tool" data-q="salud de la bateria informe de desgaste, ciclos y capacidad real frente a la de diseno repair-battery reparación"><div class="name">Salud de la bateria</div><div class="desc">Informe de desgaste, ciclos y capacidad real frente a la de diseno</div><span class="id">repair-battery</span></div><div class="tool" data-q="inventario de controladores exporta todos los drivers y senala los que estan fallando repair-drivers-list reparación"><div class="name">Inventario de controladores</div><div class="desc">Exporta todos los drivers y senala los que estan fallando</div><span class="id">repair-drivers-list</span></div><div class="tool" data-q="respaldar todos los drivers exporta los controladores a una carpeta para reinstalarlos tras formatear repair-drivers-backup reparación"><div class="name">Respaldar todos los drivers</div><div class="desc">Exporta los controladores a una carpeta para reinstalarlos tras formatear</div><span class="id">repair-drivers-backup</span></div><div class="tool" data-q="restaurar drivers respaldados reinstala los controladores desde la carpeta de respaldo mas reciente repair-drivers-restore reparación"><div class="name">Restaurar drivers respaldados</div><div class="desc">Reinstala los controladores desde la carpeta de respaldo mas reciente</div><span class="id">repair-drivers-restore</span></div><div class="tool" data-q="compactar winsxs elimina versiones antiguas de componentes. libera varios gb pero impide desinstalar updates repair-winsxs reparación"><div class="name">Compactar WinSxS<span class="tags"><span class="tag tag-t">ventana</span></span></div><div class="desc">Elimina versiones antiguas de componentes. Libera varios GB pero impide desinstalar updates</div><span class="id">repair-winsxs</span></div><div class="tool" data-q="sincronizar reloj del sistema arregla certificados y accesos que fallan por hora incorrecta repair-time reparación"><div class="name">Sincronizar reloj del sistema</div><div class="desc">Arregla certificados y accesos que fallan por hora incorrecta</div><span class="id">repair-time</span></div><div class="tool" data-q="verificar .net y runtimes lista versiones de .net, vc++ y habilita .net 3.5 si falta repair-netfx reparación"><div class="name">Verificar .NET y runtimes</div><div class="desc">Lista versiones de .NET, VC++ y habilita .NET 3.5 si falta</div><span class="id">repair-netfx</span></div><div class="tool" data-q="auditar perfiles de usuario detecta perfiles corruptos, temporales o huerfanos y su peso en disco repair-profile reparación"><div class="name">Auditar perfiles de usuario</div><div class="desc">Detecta perfiles corruptos, temporales o huerfanos y su peso en disco</div><span class="id">repair-profile</span></div><div class="tool" data-q="reinstalar apps esenciales recupera calculadora, fotos, camara, notas y terminal si fueron borradas repair-uwp-core reparación"><div class="name">Reinstalar apps esenciales</div><div class="desc">Recupera Calculadora, Fotos, Camara, Notas y Terminal si fueron borradas</div><span class="id">repair-uwp-core</span></div><div class="tool" data-q="reparar repositorio wmi arregla el origen de mil errores raros: informes vacios, defender mudo, gpo que no aplican repair-wmi reparación"><div class="name">Reparar repositorio WMI<span class="tags"><span class="tag tag-d">riesgo</span></span></div><div class="desc">Arregla el origen de mil errores raros: informes vacios, Defender mudo, GPO que no aplican</div><span class="id">repair-wmi</span></div><div class="tool" data-q="reparar puertos usb quita los controladores usb para que windows los reinstale limpios al reiniciar repair-usb reparación"><div class="name">Reparar puertos USB</div><div class="desc">Quita los controladores USB para que Windows los reinstale limpios al reiniciar</div><span class="id">repair-usb</span></div><div class="tool" data-q="reparar bluetooth reinicia la pila de bluetooth y lista los dispositivos emparejados repair-bluetooth reparación"><div class="name">Reparar Bluetooth</div><div class="desc">Reinicia la pila de Bluetooth y lista los dispositivos emparejados</div><span class="id">repair-bluetooth</span></div><div class="tool" data-q="reparar camara y microfono revisa permisos de privacidad, drivers y que ninguna app los tenga secuestrados repair-camera reparación"><div class="name">Reparar camara y microfono</div><div class="desc">Revisa permisos de privacidad, drivers y que ninguna app los tenga secuestrados</div><span class="id">repair-camera</span></div><div class="tool" data-q="restaurar asociaciones de archivo arregla los .exe, .lnk o extensiones que abren con el programa equivocado repair-fileassoc reparación"><div class="name">Restaurar asociaciones de archivo</div><div class="desc">Arregla los .exe, .lnk o extensiones que abren con el programa equivocado</div><span class="id">repair-fileassoc</span></div><div class="tool" data-q="verificar entorno de recuperacion comprueba que winre existe y funciona: sin el no hay reinicio avanzado ni restablecer pc repair-winre reparación"><div class="name">Verificar entorno de recuperacion</div><div class="desc">Comprueba que WinRE existe y funciona: sin el no hay reinicio avanzado ni restablecer PC</div><span class="id">repair-winre</span></div><div class="tool" data-q="reactivar microsoft defender recupera defender cuando un antivirus desinstalado o un crack lo dejo apagado repair-defender-reset reparación"><div class="name">Reactivar Microsoft Defender</div><div class="desc">Recupera Defender cuando un antivirus desinstalado o un crack lo dejo apagado</div><span class="id">repair-defender-reset</span></div></div></section><section class="section" id="cat-clean" data-cat="clean"><h2><span class="bar" style="background:var(--clean)"></span>Limpieza <span style="font-size:14px;font-weight:600;color:var(--muted)">19</span></h2><p class="intro">Recuperar espacio en disco sin tocar archivos personales: temporales, cachés, logs y restos de actualizaciones.</p><div class="tools"><div class="tool" data-q="purgar temporales temp de usuario y de windows, prefetch, informes de errores y cache de entrega clean-temp limpieza"><div class="name">Purgar temporales</div><div class="desc">Temp de usuario y de Windows, Prefetch, informes de errores y cache de entrega</div><span class="id">clean-temp</span></div><div class="tool" data-q="cache de navegadores chrome, edge, brave, opera y firefox. no borra contrasenas ni marcadores clean-browsers limpieza"><div class="name">Cache de navegadores</div><div class="desc">Chrome, Edge, Brave, Opera y Firefox. No borra contrasenas ni marcadores</div><span class="id">clean-browsers</span></div><div class="tool" data-q="vaciar papelera vacia la papelera de reciclaje de todas las unidades clean-recycle limpieza"><div class="name">Vaciar papelera</div><div class="desc">Vacia la papelera de reciclaje de todas las unidades</div><span class="id">clean-recycle</span></div><div class="tool" data-q="eliminar windows.old borra la instalacion anterior. libera 10-30 gb pero impide volver a la version previa clean-winold limpieza"><div class="name">Eliminar Windows.old<span class="tags"><span class="tag tag-d">riesgo</span></span></div><div class="desc">Borra la instalacion anterior. Libera 10-30 GB pero impide volver a la version previa</div><span class="id">clean-winold</span></div><div class="tool" data-q="cache de miniaturas e iconos arregla miniaturas en blanco o iconos equivocados clean-thumbs limpieza"><div class="name">Cache de miniaturas e iconos</div><div class="desc">Arregla miniaturas en blanco o iconos equivocados</div><span class="id">clean-thumbs</span></div><div class="tool" data-q="logs y volcados del sistema cbs, dism, informes de rendimiento y volcados de memoria antiguos clean-logs limpieza"><div class="name">Logs y volcados del sistema</div><div class="desc">CBS, DISM, informes de rendimiento y volcados de memoria antiguos</div><span class="id">clean-logs</span></div><div class="tool" data-q="cache de aplicaciones teams, discord, spotify, adobe, zoom, slack y la store clean-apps-cache limpieza"><div class="name">Cache de aplicaciones</div><div class="desc">Teams, Discord, Spotify, Adobe, Zoom, Slack y la Store</div><span class="id">clean-apps-cache</span></div><div class="tool" data-q="liberador de espacio automatico ejecuta cleanmgr con todas las categorias seguras preseleccionadas clean-cleanmgr limpieza"><div class="name">Liberador de espacio automatico</div><div class="desc">Ejecuta cleanmgr con todas las categorias seguras preseleccionadas</div><span class="id">clean-cleanmgr</span></div><div class="tool" data-q="borrar puntos de restauracion viejos conserva unicamente el punto mas reciente y libera espacio de instantaneas clean-restore-old limpieza"><div class="name">Borrar puntos de restauracion viejos<span class="tags"><span class="tag tag-d">riesgo</span></span></div><div class="desc">Conserva unicamente el punto mas reciente y libera espacio de instantaneas</div><span class="id">clean-restore-old</span></div><div class="tool" data-q="descargas de mas de 90 dias lista primero lo que va a borrar de la carpeta descargas y luego lo elimina clean-downloads-old limpieza"><div class="name">Descargas de mas de 90 dias<span class="tags"><span class="tag tag-d">riesgo</span></span></div><div class="desc">Lista primero lo que va a borrar de la carpeta Descargas y luego lo elimina</div><span class="id">clean-downloads-old</span></div><div class="tool" data-q="que se esta comiendo el disco ranking de las 30 carpetas y los 30 archivos mas pesados del disco clean-space-report limpieza"><div class="name">Que se esta comiendo el disco</div><div class="desc">Ranking de las 30 carpetas y los 30 archivos mas pesados del disco</div><span class="id">clean-space-report</span></div><div class="tool" data-q="desactivar hibernacion elimina hiberfil.sys y libera un espacio igual a la ram instalada clean-hiberfil limpieza"><div class="name">Desactivar hibernacion<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Elimina hiberfil.sys y libera un espacio igual a la RAM instalada</div><span class="id">clean-hiberfil</span></div><div class="tool" data-q="vaciar registros de eventos limpia el visor de eventos para partir de cero en un diagnostico clean-eventlogs limpieza"><div class="name">Vaciar registros de eventos</div><div class="desc">Limpia el Visor de eventos para partir de cero en un diagnostico</div><span class="id">clean-eventlogs</span></div><div class="tool" data-q="temporales de todos los perfiles recorre cada usuario del equipo y limpia sus temporales y cache clean-all-users-temp limpieza"><div class="name">Temporales de todos los perfiles</div><div class="desc">Recorre cada usuario del equipo y limpia sus temporales y cache</div><span class="id">clean-all-users-temp</span></div><div class="tool" data-q="liberar ram en espera vacia la standby list con rammap de sysinternals y muestra el antes/despues clean-ram limpieza"><div class="name">Liberar RAM en espera</div><div class="desc">Vacia la standby list con RAMMap de Sysinternals y muestra el antes/despues</div><span class="id">clean-ram</span></div><div class="tool" data-q="buscar archivos duplicados reporta duplicados grandes en el perfil de usuario. solo informa, no borra nada clean-dupes limpieza"><div class="name">Buscar archivos duplicados</div><div class="desc">Reporta duplicados grandes en el perfil de usuario. Solo informa, no borra nada</div><span class="id">clean-dupes</span></div><div class="tool" data-q="eliminar drivers huerfanos borra versiones antiguas de controladores del driverstore. suele liberar 2-8 gb clean-driverstore limpieza"><div class="name">Eliminar drivers huerfanos<span class="tags"><span class="tag tag-d">riesgo</span></span></div><div class="desc">Borra versiones antiguas de controladores del DriverStore. Suele liberar 2-8 GB</div><span class="id">clean-driverstore</span></div><div class="tool" data-q="perfiles sin usar hace 6 meses lista los perfiles abandonados y su peso. solo informa: el borrado se confirma aparte clean-old-profiles limpieza"><div class="name">Perfiles sin usar hace 6 meses<span class="tags"><span class="tag tag-d">riesgo</span></span></div><div class="desc">Lista los perfiles abandonados y su peso. Solo informa: el borrado se confirma aparte</div><span class="id">clean-old-profiles</span></div><div class="tool" data-q="configurar sensor de almacenamiento deja windows limpiando temporales y papelera solo, cada mes clean-storage-sense limpieza"><div class="name">Configurar Sensor de almacenamiento<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Deja Windows limpiando temporales y papelera solo, cada mes</div><span class="id">clean-storage-sense</span></div></div></section><section class="section" id="cat-perf" data-cat="perf"><h2><span class="bar" style="background:var(--perf)"></span>Rendimiento <span style="font-size:14px;font-weight:600;color:var(--muted)">26</span></h2><p class="intro">Ajustes que se notan: energía, efectos visuales, servicios, arranque, telemetría y bloatware.</p><div class="tools"><div class="tool" data-q="plan de energia maximo activa rendimiento maximo y desactiva el ahorro que frena la cpu perf-ultimate rendimiento"><div class="name">Plan de energia maximo<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Activa Rendimiento maximo y desactiva el ahorro que frena la CPU</div><span class="id">perf-ultimate</span></div><div class="tool" data-q="efectos visuales a rendimiento quita animaciones, sombras y transparencias manteniendo las fuentes suavizadas perf-visual rendimiento"><div class="name">Efectos visuales a rendimiento<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Quita animaciones, sombras y transparencias manteniendo las fuentes suavizadas</div><span class="id">perf-visual</span></div><div class="tool" data-q="auditar programas de inicio muestra todo lo que arranca con windows y su impacto medido perf-startup rendimiento"><div class="name">Auditar programas de inicio</div><div class="desc">Muestra todo lo que arranca con Windows y su impacto medido</div><span class="id">perf-startup</span></div><div class="tool" data-q="optimizar servicios pasa a manual los servicios prescindibles. respalda antes y es reversible perf-services rendimiento"><div class="name">Optimizar servicios<span class="tags"><span class="tag tag-d">riesgo</span><span class="tag tag-r">reversible</span></span></div><div class="desc">Pasa a manual los servicios prescindibles. Respalda antes y es reversible</div><span class="id">perf-services</span></div><div class="tool" data-q="ajustar sysmain y prefetch los desactiva solo si el disco de sistema es ssd, donde no aportan nada perf-sysmain rendimiento"><div class="name">Ajustar SysMain y Prefetch<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Los desactiva solo si el disco de sistema es SSD, donde no aportan nada</div><span class="id">perf-sysmain</span></div><div class="tool" data-q="optimizar unidades (trim) lanza trim en ssd y desfragmentacion en discos mecanicos perf-trim rendimiento"><div class="name">Optimizar unidades (TRIM)</div><div class="desc">Lanza TRIM en SSD y desfragmentacion en discos mecanicos</div><span class="id">perf-trim</span></div><div class="tool" data-q="reducir telemetria desactiva el envio de diagnosticos, publicidad y sugerencias perf-telemetry rendimiento"><div class="name">Reducir telemetria<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Desactiva el envio de diagnosticos, publicidad y sugerencias</div><span class="id">perf-telemetry</span></div><div class="tool" data-q="quitar apps preinstaladas elimina bloatware de fabrica. no toca la store, terminal, calculadora ni fotos perf-bloat rendimiento"><div class="name">Quitar apps preinstaladas<span class="tags"><span class="tag tag-d">riesgo</span></span></div><div class="desc">Elimina bloatware de fabrica. No toca la Store, Terminal, Calculadora ni Fotos</div><span class="id">perf-bloat</span></div><div class="tool" data-q="quitar widgets, chat y copilot limpia la barra de tareas de windows 11 y libera memoria en segundo plano perf-widgets rendimiento"><div class="name">Quitar Widgets, Chat y Copilot<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Limpia la barra de tareas de Windows 11 y libera memoria en segundo plano</div><span class="id">perf-widgets</span></div><div class="tool" data-q="menu contextual clasico devuelve el clic derecho completo de windows 10 en windows 11 perf-context rendimiento"><div class="name">Menu contextual clasico<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Devuelve el clic derecho completo de Windows 10 en Windows 11</div><span class="id">perf-context</span></div><div class="tool" data-q="explorador para tecnicos extensiones visibles, archivos ocultos, ruta completa y abrir en este equipo perf-explorer-tweaks rendimiento"><div class="name">Explorador para tecnicos</div><div class="desc">Extensiones visibles, archivos ocultos, ruta completa y abrir en Este equipo</div><span class="id">perf-explorer-tweaks</span></div><div class="tool" data-q="optimizacion para juegos desactiva gamedvr, activa gpu scheduling y prioriza tareas graficas perf-gaming rendimiento"><div class="name">Optimizacion para juegos<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Desactiva GameDVR, activa GPU scheduling y prioriza tareas graficas</div><span class="id">perf-gaming</span></div><div class="tool" data-q="afinar pila de red quita el throttling, aplica ctcp y reduce latencia de nagle perf-net-tweaks rendimiento"><div class="name">Afinar pila de red<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Quita el throttling, aplica CTCP y reduce latencia de Nagle</div><span class="id">perf-net-tweaks</span></div><div class="tool" data-q="acelerar el arranque reduce el tiempo de espera del gestor y quita retardos de inicio de sesion perf-boot rendimiento"><div class="name">Acelerar el arranque</div><div class="desc">Reduce el tiempo de espera del gestor y quita retardos de inicio de sesion</div><span class="id">perf-boot</span></div><div class="tool" data-q="chris titus winutil lanza la utilidad de la comunidad para tweaks avanzados perf-winutil rendimiento"><div class="name">Chris Titus WinUtil<span class="tags"><span class="tag tag-t">ventana</span></span></div><div class="desc">Lanza la utilidad de la comunidad para tweaks avanzados</div><span class="id">perf-winutil</span></div><div class="tool" data-q="performance.bat (bs) script propio de optimizacion de rendimiento del repositorio toolboxbs perf-perfbat rendimiento"><div class="name">Performance.bat (BS)<span class="tags"><span class="tag tag-t">ventana</span></span></div><div class="desc">Script propio de optimizacion de rendimiento del repositorio ToolboxBS</div><span class="id">perf-perfbat</span></div><div class="tool" data-q="actualizar todo el software winget upgrade --all, incluyendo paquetes de version desconocida perf-update-apps rendimiento"><div class="name">Actualizar todo el software<span class="tags"><span class="tag tag-t">ventana</span></span></div><div class="desc">winget upgrade --all, incluyendo paquetes de version desconocida</div><span class="id">perf-update-apps</span></div><div class="tool" data-q="instalar o reparar winget instala el instalador de aplicaciones y sus dependencias sin pasar por la store perf-install-winget rendimiento"><div class="name">Instalar o reparar Winget</div><div class="desc">Instala el Instalador de aplicaciones y sus dependencias sin pasar por la Store</div><span class="id">perf-install-winget</span></div><div class="tool" data-q="activar con licencia oem recupera la clave grabada en el bios y reactiva windows con ella perf-activate rendimiento"><div class="name">Activar con licencia OEM</div><div class="desc">Recupera la clave grabada en el BIOS y reactiva Windows con ella</div><span class="id">perf-activate</span></div><div class="tool" data-q="reiniciar a la bios/uefi reinicia el equipo directamente en la configuracion de firmware perf-reboot-bios rendimiento"><div class="name">Reiniciar a la BIOS/UEFI<span class="tags"><span class="tag tag-d">riesgo</span></span></div><div class="desc">Reinicia el equipo directamente en la configuracion de firmware</div><span class="id">perf-reboot-bios</span></div><div class="tool" data-q="actualizador de drivers oem detecta el fabricante y descarga su utilidad oficial de drivers perf-drivers-oem rendimiento"><div class="name">Actualizador de drivers OEM<span class="tags"><span class="tag tag-t">ventana</span></span></div><div class="desc">Detecta el fabricante y descarga su utilidad oficial de drivers</div><span class="id">perf-drivers-oem</span></div><div class="tool" data-q="cortar apps en segundo plano impide que las apps de la store consuman cpu y red sin estar abiertas perf-background-apps rendimiento"><div class="name">Cortar apps en segundo plano<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Impide que las apps de la Store consuman CPU y red sin estar abiertas</div><span class="id">perf-background-apps</span></div><div class="tool" data-q="quitar onedrive desinstala onedrive y devuelve las carpetas del usuario al disco local perf-onedrive rendimiento"><div class="name">Quitar OneDrive<span class="tags"><span class="tag tag-d">riesgo</span><span class="tag tag-r">reversible</span></span></div><div class="desc">Desinstala OneDrive y devuelve las carpetas del usuario al disco local</div><span class="id">perf-onedrive</span></div><div class="tool" data-q="quitar bing del menu inicio la busqueda deja de consultar internet y responde al instante perf-bing-search rendimiento"><div class="name">Quitar Bing del menu Inicio<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">La busqueda deja de consultar internet y responde al instante</div><span class="id">perf-bing-search</span></div><div class="tool" data-q="quitar aceleracion del mouse movimiento 1:1 del raton, como lo quieren los jugadores y disenadores perf-mouse rendimiento"><div class="name">Quitar aceleracion del mouse<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Movimiento 1:1 del raton, como lo quieren los jugadores y disenadores</div><span class="id">perf-mouse</span></div><div class="tool" data-q="silenciar notificaciones quita avisos, consejos y la pantalla de bienvenida tras cada actualizacion perf-notifications rendimiento"><div class="name">Silenciar notificaciones<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Quita avisos, consejos y la pantalla de bienvenida tras cada actualizacion</div><span class="id">perf-notifications</span></div></div></section><section class="section" id="cat-sec" data-cat="sec"><h2><span class="bar" style="background:var(--sec)"></span>Seguridad <span style="font-size:14px;font-weight:600;color:var(--muted)">18</span></h2><p class="intro">Defender, cuentas, permisos, persistencias sospechosas, cifrado y endurecimiento del sistema.</p><div class="tools"><div class="tool" data-q="estado de microsoft defender protecciones activas, firmas, exclusiones y amenazas detectadas sec-defender-status seguridad"><div class="name">Estado de Microsoft Defender</div><div class="desc">Protecciones activas, firmas, exclusiones y amenazas detectadas</div><span class="id">sec-defender-status</span></div><div class="tool" data-q="examen rapido de defender actualiza firmas y ejecuta un analisis rapido de las zonas criticas sec-defender-scan seguridad"><div class="name">Examen rapido de Defender</div><div class="desc">Actualiza firmas y ejecuta un analisis rapido de las zonas criticas</div><span class="id">sec-defender-scan</span></div><div class="tool" data-q="examen completo de defender analisis exhaustivo de todo el disco. puede tardar horas sec-defender-full seguridad"><div class="name">Examen completo de Defender<span class="tags"><span class="tag tag-t">ventana</span></span></div><div class="desc">Analisis exhaustivo de todo el disco. Puede tardar horas</div><span class="id">sec-defender-full</span></div><div class="tool" data-q="herramientas antimalware descarga adwcleaner de malwarebytes y el escaner kvrt de kaspersky sec-malware-tools seguridad"><div class="name">Herramientas antimalware</div><div class="desc">Descarga ADWCleaner de Malwarebytes y el escaner KVRT de Kaspersky</div><span class="id">sec-malware-tools</span></div><div class="tool" data-q="bitlocker y claves de recuperacion estado del cifrado y exporta las claves antes de que sea tarde sec-bitlocker seguridad"><div class="name">BitLocker y claves de recuperacion</div><div class="desc">Estado del cifrado y exporta las claves antes de que sea tarde</div><span class="id">sec-bitlocker</span></div><div class="tool" data-q="auditar cuentas de usuario cuentas locales, quien es administrador y contrasenas que nunca expiran sec-accounts seguridad"><div class="name">Auditar cuentas de usuario</div><div class="desc">Cuentas locales, quien es administrador y contrasenas que nunca expiran</div><span class="id">sec-accounts</span></div><div class="tool" data-q="historial de inicios de sesion quien entro, cuando, y cuantos intentos fallidos hubo sec-logons seguridad"><div class="name">Historial de inicios de sesion</div><div class="desc">Quien entro, cuando, y cuantos intentos fallidos hubo</div><span class="id">sec-logons</span></div><div class="tool" data-q="cazar persistencias sospechosas revisa autoarranques, tareas y servicios con binarios sin firmar o en rutas raras sec-autoruns seguridad"><div class="name">Cazar persistencias sospechosas</div><div class="desc">Revisa autoarranques, tareas y servicios con binarios sin firmar o en rutas raras</div><span class="id">sec-autoruns</span></div><div class="tool" data-q="puertos y conexiones activas que esta escuchando, con que proceso y hacia donde sale el trafico sec-ports seguridad"><div class="name">Puertos y conexiones activas</div><div class="desc">Que esta escuchando, con que proceso y hacia donde sale el trafico</div><span class="id">sec-ports</span></div><div class="tool" data-q="revisar archivo hosts detecta redirecciones inyectadas por malware o cracks sec-hosts seguridad"><div class="name">Revisar archivo hosts</div><div class="desc">Detecta redirecciones inyectadas por malware o cracks</div><span class="id">sec-hosts</span></div><div class="tool" data-q="parches instalados y pendientes historial de actualizaciones y busqueda de las que faltan sec-updates seguridad"><div class="name">Parches instalados y pendientes</div><div class="desc">Historial de actualizaciones y busqueda de las que faltan</div><span class="id">sec-updates</span></div><div class="tool" data-q="escritorio remoto y smbv1 revisa rdp, nla y desactiva el protocolo smbv1 vulnerable sec-rdp seguridad"><div class="name">Escritorio remoto y SMBv1</div><div class="desc">Revisa RDP, NLA y desactiva el protocolo SMBv1 vulnerable</div><span class="id">sec-rdp</span></div><div class="tool" data-q="arranque seguro y tpm verifica secure boot, tpm, virtualizacion y requisitos de windows 11 sec-secureboot seguridad"><div class="name">Arranque seguro y TPM</div><div class="desc">Verifica Secure Boot, TPM, virtualizacion y requisitos de Windows 11</div><span class="id">sec-secureboot</span></div><div class="tool" data-q="endurecer el sistema sube uac al maximo, activa smartscreen y bloquea macros de office sec-uac-max seguridad"><div class="name">Endurecer el sistema</div><div class="desc">Sube UAC al maximo, activa SmartScreen y bloquea macros de Office</div><span class="id">sec-uac-max</span></div><div class="tool" data-q="proteccion contra ransomware activa el acceso controlado a carpetas de defender sobre documentos, fotos y escritorio sec-ransomware seguridad"><div class="name">Proteccion contra ransomware<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Activa el acceso controlado a carpetas de Defender sobre Documentos, Fotos y Escritorio</div><span class="id">sec-ransomware</span></div><div class="tool" data-q="activar auditoria de seguridad registra inicios de sesion, cambios de cuentas y uso de privilegios para poder investigar despues sec-audit seguridad"><div class="name">Activar auditoria de seguridad<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Registra inicios de sesion, cambios de cuentas y uso de privilegios para poder investigar despues</div><span class="id">sec-audit</span></div><div class="tool" data-q="auditar permisos de aplicaciones que apps tienen acceso a camara, microfono, ubicacion y contactos sec-app-permissions seguridad"><div class="name">Auditar permisos de aplicaciones</div><div class="desc">Que apps tienen acceso a camara, microfono, ubicacion y contactos</div><span class="id">sec-app-permissions</span></div><div class="tool" data-q="revisar certificados raiz detecta autoridades de certificacion instaladas por adware o proxies de interceptacion sec-certs seguridad"><div class="name">Revisar certificados raiz</div><div class="desc">Detecta autoridades de certificacion instaladas por adware o proxies de interceptacion</div><span class="id">sec-certs</span></div></div></section><section class="section" id="cat-net" data-cat="net"><h2><span class="bar" style="background:var(--net)"></span>Red <span style="font-size:14px;font-weight:600;color:var(--muted)">14</span></h2><p class="intro">Diagnóstico y reparación de conectividad: IP, DNS, WiFi, velocidad, dispositivos de la red local y VPN.</p><div class="tools"><div class="tool" data-q="diagnostico de red completo ip publica y privada, gateway, dns, mac, latencia y perdida de paquetes net-info red"><div class="name">Diagnostico de red completo</div><div class="desc">IP publica y privada, gateway, DNS, MAC, latencia y perdida de paquetes</div><span class="id">net-info</span></div><div class="tool" data-q="test de velocidad mide la velocidad real de bajada descargando un archivo de prueba net-speed red"><div class="name">Test de velocidad</div><div class="desc">Mide la velocidad real de bajada descargando un archivo de prueba</div><span class="id">net-speed</span></div><div class="tool" data-q="contrasenas wifi guardadas recupera las claves de todas las redes memorizadas por el equipo net-wifi-pass red"><div class="name">Contrasenas WiFi guardadas</div><div class="desc">Recupera las claves de todas las redes memorizadas por el equipo</div><span class="id">net-wifi-pass</span></div><div class="tool" data-q="escanear la red local descubre los dispositivos conectados, su ip, mac y fabricante net-scan-lan red"><div class="name">Escanear la red local</div><div class="desc">Descubre los dispositivos conectados, su IP, MAC y fabricante</div><span class="id">net-scan-lan</span></div><div class="tool" data-q="dns rapidos (cloudflare) aplica 1.1.1.1 y 8.8.8.8 en todos los adaptadores activos net-dns-set red"><div class="name">DNS rapidos (Cloudflare)<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Aplica 1.1.1.1 y 8.8.8.8 en todos los adaptadores activos</div><span class="id">net-dns-set</span></div><div class="tool" data-q="vaciar cache dns soluciona paginas que cargan mal tras un cambio de servidor net-dns-flush red"><div class="name">Vaciar cache DNS</div><div class="desc">Soluciona paginas que cargan mal tras un cambio de servidor</div><span class="id">net-dns-flush</span></div><div class="tool" data-q="trazado de ruta y estabilidad traza el camino hasta internet y detecta en que salto se pierde el paquete net-trace red"><div class="name">Trazado de ruta y estabilidad</div><div class="desc">Traza el camino hasta Internet y detecta en que salto se pierde el paquete</div><span class="id">net-trace</span></div><div class="tool" data-q="gestionar adaptadores de red estado de cada tarjeta y reinicio del adaptador principal net-adapters red"><div class="name">Gestionar adaptadores de red</div><div class="desc">Estado de cada tarjeta y reinicio del adaptador principal</div><span class="id">net-adapters</span></div><div class="tool" data-q="revisar y limpiar proxy detecta proxies inyectados que rompen la navegacion y los elimina net-proxy red"><div class="name">Revisar y limpiar proxy</div><div class="desc">Detecta proxies inyectados que rompen la navegacion y los elimina</div><span class="id">net-proxy</span></div><div class="tool" data-q="recursos y unidades de red que comparte este equipo y a que unidades de red esta conectado net-shares red"><div class="name">Recursos y unidades de red</div><div class="desc">Que comparte este equipo y a que unidades de red esta conectado</div><span class="id">net-shares</span></div><div class="tool" data-q="informe de wifi de windows genera el reporte oficial con el historial de conexiones, cortes y errores net-wifi-report red"><div class="name">Informe de WiFi de Windows</div><div class="desc">Genera el reporte oficial con el historial de conexiones, cortes y errores</div><span class="id">net-wifi-report</span></div><div class="tool" data-q="auditar reglas de firewall que programas tienen permitido entrar, y exporta todas las reglas a csv net-firewall-rules red"><div class="name">Auditar reglas de firewall</div><div class="desc">Que programas tienen permitido entrar, y exporta todas las reglas a CSV</div><span class="id">net-firewall-rules</span></div><div class="tool" data-q="consumo de red por adaptador cuantos datos ha movido cada tarjeta y que procesos tienen conexiones abiertas net-usage red"><div class="name">Consumo de red por adaptador</div><div class="desc">Cuantos datos ha movido cada tarjeta y que procesos tienen conexiones abiertas</div><span class="id">net-usage</span></div><div class="tool" data-q="vpn y adaptadores virtuales detecta vpn, tuneles y adaptadores virtuales que pueden estar rompiendo la red net-vpn red"><div class="name">VPN y adaptadores virtuales</div><div class="desc">Detecta VPN, tuneles y adaptadores virtuales que pueden estar rompiendo la red</div><span class="id">net-vpn</span></div></div></section><section class="section" id="cat-info" data-cat="info"><h2><span class="bar" style="background:var(--info)"></span>Información <span style="font-size:14px;font-weight:600;color:var(--muted)">14</span></h2><p class="intro">Reportes y diagnóstico profundo: hardware, discos, monitores, claves, software instalado y garantía.</p><div class="tools"><div class="tool" data-q="reporte html del equipo informe completo con marca para entregar al cliente. se abre al terminar info-report-html información"><div class="name">Reporte HTML del equipo</div><div class="desc">Informe completo con marca para entregar al cliente. Se abre al terminar</div><span class="id">info-report-html</span></div><div class="tool" data-q="inventario de software todo lo instalado con version y editor, exportado a csv info-software información"><div class="name">Inventario de software</div><div class="desc">Todo lo instalado con version y editor, exportado a CSV</div><span class="id">info-software</span></div><div class="tool" data-q="claves de producto recupera la clave de windows del bios y del registro antes de formatear info-keys información"><div class="name">Claves de producto</div><div class="desc">Recupera la clave de Windows del BIOS y del registro antes de formatear</div><span class="id">info-keys</span></div><div class="tool" data-q="salud de discos (smart) horas de uso, reasignaciones, temperatura y vida util restante info-disks información"><div class="name">Salud de discos (SMART)</div><div class="desc">Horas de uso, reasignaciones, temperatura y vida util restante</div><span class="id">info-disks</span></div><div class="tool" data-q="temperaturas y sensores lee los sensores termicos disponibles via wmi y acpi info-temps información"><div class="name">Temperaturas y sensores</div><div class="desc">Lee los sensores termicos disponibles via WMI y ACPI</div><span class="id">info-temps</span></div><div class="tool" data-q="benchmark rapido mide cpu, memoria y velocidad de disco en menos de un minuto info-bench información"><div class="name">Benchmark rapido</div><div class="desc">Mide CPU, memoria y velocidad de disco en menos de un minuto</div><span class="id">info-bench</span></div><div class="tool" data-q="consultar garantia detecta el serial y abre el portal de garantia del fabricante ya rellenado info-warranty información"><div class="name">Consultar garantia</div><div class="desc">Detecta el serial y abre el portal de garantia del fabricante ya rellenado</div><span class="id">info-warranty</span></div><div class="tool" data-q="diagnostico profundo del sistema systeminfoplus: recorrido completo de os, cpu, ram, discos, red y gpu info-hardware información"><div class="name">Diagnostico profundo del sistema</div><div class="desc">SystemInfoPlus: recorrido completo de OS, CPU, RAM, discos, red y GPU</div><span class="id">info-hardware</span></div><div class="tool" data-q="monitores y pantallas marca, modelo, serial, anio de fabricacion y resolucion de cada pantalla info-monitors información"><div class="name">Monitores y pantallas</div><div class="desc">Marca, modelo, serial, anio de fabricacion y resolucion de cada pantalla</div><span class="id">info-monitors</span></div><div class="tool" data-q="tarjetas graficas gpu, memoria, version y antiguedad del driver, y estado de directx info-gpu información"><div class="name">Tarjetas graficas</div><div class="desc">GPU, memoria, version y antiguedad del driver, y estado de DirectX</div><span class="id">info-gpu</span></div><div class="tool" data-q="historial de actualizaciones que se instalo, cuando, y cuales fallaron. clave para culpar al parche correcto info-updates-history información"><div class="name">Historial de actualizaciones</div><div class="desc">Que se instalo, cuando, y cuales fallaron. Clave para culpar al parche correcto</div><span class="id">info-updates-history</span></div><div class="tool" data-q="historial de encendidos cuando se enciende y apaga el equipo, cuanto tarda en arrancar y si hubo apagones info-boot-history información"><div class="name">Historial de encendidos</div><div class="desc">Cuando se enciende y apaga el equipo, cuanto tarda en arrancar y si hubo apagones</div><span class="id">info-boot-history</span></div><div class="tool" data-q="dispositivos usb conectados todo lo que se ha conectado alguna vez por usb, util en auditorias y peritajes info-usb-history información"><div class="name">Dispositivos USB conectados</div><div class="desc">Todo lo que se ha conectado alguna vez por USB, util en auditorias y peritajes</div><span class="id">info-usb-history</span></div><div class="tool" data-q="estado de office version, canal de actualizacion, activacion y cuenta asociada info-office información"><div class="name">Estado de Office</div><div class="desc">Version, canal de actualizacion, activacion y cuenta asociada</div><span class="id">info-office</span></div></div></section><section class="section" id="cat-tools" data-cat="tools"><h2><span class="bar" style="background:var(--tools)"></span>Herramientas <span style="font-size:14px;font-weight:600;color:var(--muted)">48</span></h2><p class="intro">Consolas nativas de Windows y utilidades de técnico: respaldos, mantenimiento programado y accesos rápidos.</p><div class="tools"><div class="tool" data-q="crear god mode carpeta en el escritorio con las 260 opciones del panel de control tools-godmode herramientas"><div class="name">Crear God Mode</div><div class="desc">Carpeta en el escritorio con las 260 opciones del Panel de control</div><span class="id">tools-godmode</span></div><div class="tool" data-q="suite sysinternals descarga autoruns, process explorer, tcpview y el resto de la suite tools-sysinternals herramientas"><div class="name">Suite Sysinternals</div><div class="desc">Descarga Autoruns, Process Explorer, TCPView y el resto de la suite</div><span class="id">tools-sysinternals</span></div><div class="tool" data-q="desinstalador de programas lista todo lo instalado por winget y permite desinstalar en lote tools-uninstaller herramientas"><div class="name">Desinstalador de programas<span class="tags"><span class="tag tag-t">ventana</span></span></div><div class="desc">Lista todo lo instalado por winget y permite desinstalar en lote</div><span class="id">tools-uninstaller</span></div><div class="tool" data-q="respaldar datos del usuario copia escritorio, documentos, imagenes, videos y favoritos a la ruta que elijas tools-backup-profile herramientas"><div class="name">Respaldar datos del usuario</div><div class="desc">Copia Escritorio, Documentos, Imagenes, Videos y Favoritos a la ruta que elijas</div><span class="id">tools-backup-profile</span></div><div class="tool" data-q="mantenimiento automatico semanal crea una tarea programada que limpia temporales y actualiza software cada domingo tools-maint-task herramientas"><div class="name">Mantenimiento automatico semanal<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Crea una tarea programada que limpia temporales y actualiza software cada domingo</div><span class="id">tools-maint-task</span></div><div class="tool" data-q="gestor de puntos de restauracion lista los puntos existentes, el espacio que ocupan y abre el asistente tools-restore-manager herramientas"><div class="name">Gestor de puntos de restauracion</div><div class="desc">Lista los puntos existentes, el espacio que ocupan y abre el asistente</div><span class="id">tools-restore-manager</span></div><div class="tool" data-q="editar archivo hosts abre hosts en notepad con permisos y crea copia de seguridad antes tools-hosts-edit herramientas"><div class="name">Editar archivo hosts</div><div class="desc">Abre hosts en Notepad con permisos y crea copia de seguridad antes</div><span class="id">tools-hosts-edit</span></div><div class="tool" data-q="cuenta administrador integrada activa la cuenta oculta de administrador para rescatar un equipo bloqueado tools-admin-account herramientas"><div class="name">Cuenta Administrador integrada<span class="tags"><span class="tag tag-d">riesgo</span></span></div><div class="desc">Activa la cuenta oculta de Administrador para rescatar un equipo bloqueado</div><span class="id">tools-admin-account</span></div><div class="tool" data-q="variables de entorno y path revisa el path, detecta rutas rotas y abre el editor del sistema tools-env herramientas"><div class="name">Variables de entorno y PATH</div><div class="desc">Revisa el PATH, detecta rutas rotas y abre el editor del sistema</div><span class="id">tools-env</span></div><div class="tool" data-q="carpetas del sistema abre de golpe inicio, enviar a, plantillas y otras carpetas ocultas utiles tools-shell-folders herramientas"><div class="name">Carpetas del sistema</div><div class="desc">Abre de golpe Inicio, Enviar a, Plantillas y otras carpetas ocultas utiles</div><span class="id">tools-shell-folders</span></div><div class="tool" data-q="descargar windows iso abre el portal de descargas de imagenes de toolboxbs tools-download-windows herramientas"><div class="name">Descargar Windows ISO</div><div class="desc">Abre el portal de descargas de imagenes de ToolboxBS</div><span class="id">tools-download-windows</span></div><div class="tool" data-q="windeploy despliegue post-formateo desde la nube tools-windeploy herramientas"><div class="name">WinDeploy<span class="tags"><span class="tag tag-t">ventana</span></span></div><div class="desc">Despliegue post-formateo desde la nube</div><span class="id">tools-windeploy</span></div><div class="tool" data-q="abrir carpeta de toolboxbs reportes, logs, respaldos y perfiles generados por la herramienta tools-open-logs herramientas"><div class="name">Abrir carpeta de ToolboxBS</div><div class="desc">Reportes, logs, respaldos y perfiles generados por la herramienta</div><span class="id">tools-open-logs</span></div><div class="tool" data-q="administrador de tareas procesos, rendimiento e inicio abrir-taskmgr herramientas"><div class="name">Administrador de tareas</div><div class="desc">Procesos, rendimiento e inicio</div><span class="id">abrir-taskmgr</span></div><div class="tool" data-q="administrador de dispositivos drivers y hardware abrir-devmgmt herramientas"><div class="name">Administrador de dispositivos</div><div class="desc">Drivers y hardware</div><span class="id">abrir-devmgmt</span></div><div class="tool" data-q="servicios arranque y estado de servicios abrir-services herramientas"><div class="name">Servicios</div><div class="desc">Arranque y estado de servicios</div><span class="id">abrir-services</span></div><div class="tool" data-q="administracion de discos particiones y volumenes abrir-diskmgmt herramientas"><div class="name">Administracion de discos</div><div class="desc">Particiones y volumenes</div><span class="id">abrir-diskmgmt</span></div><div class="tool" data-q="visor de eventos registros del sistema abrir-eventvwr herramientas"><div class="name">Visor de eventos</div><div class="desc">Registros del sistema</div><span class="id">abrir-eventvwr</span></div><div class="tool" data-q="editor del registro claves y valores abrir-regedit herramientas"><div class="name">Editor del registro</div><div class="desc">Claves y valores</div><span class="id">abrir-regedit</span></div><div class="tool" data-q="administracion del equipo consola unificada abrir-compmgmt herramientas"><div class="name">Administracion del equipo</div><div class="desc">Consola unificada</div><span class="id">abrir-compmgmt</span></div><div class="tool" data-q="programador de tareas tareas automaticas abrir-taskschd herramientas"><div class="name">Programador de tareas</div><div class="desc">Tareas automaticas</div><span class="id">abrir-taskschd</span></div><div class="tool" data-q="usuarios y grupos locales cuentas del equipo abrir-lusrmgr herramientas"><div class="name">Usuarios y grupos locales</div><div class="desc">Cuentas del equipo</div><span class="id">abrir-lusrmgr</span></div><div class="tool" data-q="directivas de grupo politicas locales (solo pro) abrir-gpedit herramientas"><div class="name">Directivas de grupo</div><div class="desc">Politicas locales (solo Pro)</div><span class="id">abrir-gpedit</span></div><div class="tool" data-q="monitor de rendimiento contadores en detalle abrir-perfmon herramientas"><div class="name">Monitor de rendimiento</div><div class="desc">Contadores en detalle</div><span class="id">abrir-perfmon</span></div><div class="tool" data-q="monitor de recursos cpu, disco, red y memoria en vivo abrir-resmon herramientas"><div class="name">Monitor de recursos</div><div class="desc">CPU, disco, red y memoria en vivo</div><span class="id">abrir-resmon</span></div><div class="tool" data-q="configuracion del sistema arranque y servicios abrir-msconfig herramientas"><div class="name">Configuracion del sistema</div><div class="desc">Arranque y servicios</div><span class="id">abrir-msconfig</span></div><div class="tool" data-q="propiedades del sistema nombre, restauracion y rendimiento abrir-sysdm herramientas"><div class="name">Propiedades del sistema</div><div class="desc">Nombre, restauracion y rendimiento</div><span class="id">abrir-sysdm</span></div><div class="tool" data-q="programas y caracteristicas desinstalar software abrir-appwiz herramientas"><div class="name">Programas y caracteristicas</div><div class="desc">Desinstalar software</div><span class="id">abrir-appwiz</span></div><div class="tool" data-q="conexiones de red adaptadores abrir-ncpa herramientas"><div class="name">Conexiones de red</div><div class="desc">Adaptadores</div><span class="id">abrir-ncpa</span></div><div class="tool" data-q="opciones de energia planes de energia abrir-powercfg herramientas"><div class="name">Opciones de energia</div><div class="desc">Planes de energia</div><span class="id">abrir-powercfg</span></div><div class="tool" data-q="caracteristicas de windows activar o desactivar componentes abrir-optional herramientas"><div class="name">Caracteristicas de Windows</div><div class="desc">Activar o desactivar componentes</div><span class="id">abrir-optional</span></div><div class="tool" data-q="liberador de espacio limpieza clasica abrir-cleanmgr herramientas"><div class="name">Liberador de espacio</div><div class="desc">Limpieza clasica</div><span class="id">abrir-cleanmgr</span></div><div class="tool" data-q="panel de control panel clasico completo abrir-control herramientas"><div class="name">Panel de control</div><div class="desc">Panel clasico completo</div><span class="id">abrir-control</span></div><div class="tool" data-q="configuracion de windows app moderna de ajustes abrir-settings herramientas"><div class="name">Configuracion de Windows</div><div class="desc">App moderna de ajustes</div><span class="id">abrir-settings</span></div><div class="tool" data-q="windows update buscar actualizaciones abrir-winupdate herramientas"><div class="name">Windows Update</div><div class="desc">Buscar actualizaciones</div><span class="id">abrir-winupdate</span></div><div class="tool" data-q="seguridad de windows centro de seguridad abrir-defenderui herramientas"><div class="name">Seguridad de Windows</div><div class="desc">Centro de seguridad</div><span class="id">abrir-defenderui</span></div><div class="tool" data-q="escritorio remoto conectar a otro equipo abrir-mstsc herramientas"><div class="name">Escritorio remoto</div><div class="desc">Conectar a otro equipo</div><span class="id">abrir-mstsc</span></div><div class="tool" data-q="informacion del sistema msinfo32 completo abrir-msinfo herramientas"><div class="name">Informacion del sistema</div><div class="desc">msinfo32 completo</div><span class="id">abrir-msinfo</span></div><div class="tool" data-q="diagnostico directx gpu, sonido y entrada abrir-dxdiag herramientas"><div class="name">Diagnostico DirectX</div><div class="desc">GPU, sonido y entrada</div><span class="id">abrir-dxdiag</span></div><div class="tool" data-q="consola powershell terminal elevada abrir-psconsole herramientas"><div class="name">Consola PowerShell</div><div class="desc">Terminal elevada</div><span class="id">abrir-psconsole</span></div><div class="tool" data-q="consola winget gestor de paquetes abrir-wingetcli herramientas"><div class="name">Consola Winget</div><div class="desc">Gestor de paquetes</div><span class="id">abrir-wingetcli</span></div><div class="tool" data-q="reiniciar en modo seguro programa el arranque en modo seguro con red. se revierte desde la misma tarjeta tools-safe-mode herramientas"><div class="name">Reiniciar en modo seguro<span class="tags"><span class="tag tag-d">riesgo</span><span class="tag tag-r">reversible</span></span></div><div class="desc">Programa el arranque en modo seguro con red. Se revierte desde la misma tarjeta</div><span class="id">tools-safe-mode</span></div><div class="tool" data-q="crear unidad de recuperacion abre el asistente para hacer un usb de rescate de este equipo tools-recovery-usb herramientas"><div class="name">Crear unidad de recuperacion</div><div class="desc">Abre el asistente para hacer un USB de rescate de este equipo</div><span class="id">tools-recovery-usb</span></div><div class="tool" data-q="programar apagado apaga el equipo dentro de una hora. se cancela desde la misma tarjeta tools-shutdown-timer herramientas"><div class="name">Programar apagado<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Apaga el equipo dentro de una hora. Se cancela desde la misma tarjeta</div><span class="id">tools-shutdown-timer</span></div><div class="tool" data-q="habilitar escritorio remoto activa rdp con autenticacion de red y abre el puerto solo en la red privada tools-rdp-enable herramientas"><div class="name">Habilitar escritorio remoto<span class="tags"><span class="tag tag-d">riesgo</span><span class="tag tag-r">reversible</span></span></div><div class="desc">Activa RDP con autenticacion de red y abre el puerto solo en la red privada</div><span class="id">tools-rdp-enable</span></div><div class="tool" data-q="historial del portapapeles activa win+v para recuperar lo ultimo que copiaste tools-clipboard herramientas"><div class="name">Historial del portapapeles<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Activa Win+V para recuperar lo ultimo que copiaste</div><span class="id">tools-clipboard</span></div><div class="tool" data-q="restaurar software desde export reinstala de golpe todo el software del archivo winget_export generado antes de formatear tools-winget-restore herramientas"><div class="name">Restaurar software desde export<span class="tags"><span class="tag tag-t">ventana</span></span></div><div class="desc">Reinstala de golpe todo el software del archivo winget_export generado antes de formatear</div><span class="id">tools-winget-restore</span></div><div class="tool" data-q="menu contextual de tecnico agrega abrir powershell aqui, tomar propiedad y copiar ruta al clic derecho tools-context-menu herramientas"><div class="name">Menu contextual de tecnico<span class="tags"><span class="tag tag-r">reversible</span></span></div><div class="desc">Agrega Abrir PowerShell aqui, Tomar propiedad y Copiar ruta al clic derecho</div><span class="id">tools-context-menu</span></div></div></section><section class="section" id="cat-apps" data-cat="apps"><h2><span class="bar" style="background:var(--apps)"></span>Aplicaciones <span style="font-size:14px;font-weight:600;color:var(--muted)">87</span></h2><p class="intro">Instalación desatendida por winget del software que siempre toca poner después de formatear.</p><div class="tools"><div class="tool" data-q="google chrome navegadores - el navegador mas usado del mundo app-googlechrome aplicaciones"><div class="name">Google Chrome</div><div class="desc">Navegadores - El navegador mas usado del mundo</div><span class="id">app-googlechrome</span></div><div class="tool" data-q="brave navegadores - rapido y con bloqueo de anuncios integrado app-brave aplicaciones"><div class="name">Brave</div><div class="desc">Navegadores - Rapido y con bloqueo de anuncios integrado</div><span class="id">app-brave</span></div><div class="tool" data-q="mozilla firefox navegadores - navegador independiente centrado en privacidad app-mozillafirefox aplicaciones"><div class="name">Mozilla Firefox</div><div class="desc">Navegadores - Navegador independiente centrado en privacidad</div><span class="id">app-mozillafirefox</span></div><div class="tool" data-q="opera gx navegadores - navegador para gamers con limitador de recursos app-operagx aplicaciones"><div class="name">Opera GX</div><div class="desc">Navegadores - Navegador para gamers con limitador de recursos</div><span class="id">app-operagx</span></div><div class="tool" data-q="7-zip esenciales - compresor de archivos open source app-7zip aplicaciones"><div class="name">7-Zip</div><div class="desc">Esenciales - Compresor de archivos open source</div><span class="id">app-7zip</span></div><div class="tool" data-q="nanazip esenciales - fork moderno de 7-zip integrado en windows 11 app-nanazip aplicaciones"><div class="name">NanaZip</div><div class="desc">Esenciales - Fork moderno de 7-Zip integrado en Windows 11</div><span class="id">app-nanazip</span></div><div class="tool" data-q="winrar esenciales - compresor clasico con soporte rar app-winrar aplicaciones"><div class="name">WinRAR</div><div class="desc">Esenciales - Compresor clasico con soporte RAR</div><span class="id">app-winrar</span></div><div class="tool" data-q="adobe acrobat reader esenciales - lector de pdf de referencia app-adobeacrobatreader aplicaciones"><div class="name">Adobe Acrobat Reader</div><div class="desc">Esenciales - Lector de PDF de referencia</div><span class="id">app-adobeacrobatreader</span></div><div class="tool" data-q="sumatrapdf esenciales - lector de pdf ultraligero app-sumatrapdf aplicaciones"><div class="name">SumatraPDF</div><div class="desc">Esenciales - Lector de PDF ultraligero</div><span class="id">app-sumatrapdf</span></div><div class="tool" data-q="notepad++ esenciales - editor de texto con resaltado de sintaxis app-notepad aplicaciones"><div class="name">Notepad++</div><div class="desc">Esenciales - Editor de texto con resaltado de sintaxis</div><span class="id">app-notepad</span></div><div class="tool" data-q="vlc media player esenciales - reproduce cualquier formato de video y audio app-vlcmediaplayer aplicaciones"><div class="name">VLC Media Player</div><div class="desc">Esenciales - Reproduce cualquier formato de video y audio</div><span class="id">app-vlcmediaplayer</span></div><div class="tool" data-q="k-lite codec pack esenciales - codecs para reproducir todo en windows app-klitecodecpack aplicaciones"><div class="name">K-Lite Codec Pack</div><div class="desc">Esenciales - Codecs para reproducir todo en Windows</div><span class="id">app-klitecodecpack</span></div><div class="tool" data-q="microsoft powertoys esenciales - utilidades avanzadas: fancyzones, powerrename, peek app-microsoftpowertoys aplicaciones"><div class="name">Microsoft PowerToys</div><div class="desc">Esenciales - Utilidades avanzadas: FancyZones, PowerRename, Peek</div><span class="id">app-microsoftpowertoys</span></div><div class="tool" data-q="everything esenciales - busca cualquier archivo del disco al instante app-everything aplicaciones"><div class="name">Everything</div><div class="desc">Esenciales - Busca cualquier archivo del disco al instante</div><span class="id">app-everything</span></div><div class="tool" data-q="windows terminal esenciales - terminal moderna con pestanas app-windowsterminal aplicaciones"><div class="name">Windows Terminal</div><div class="desc">Esenciales - Terminal moderna con pestanas</div><span class="id">app-windowsterminal</span></div><div class="tool" data-q="powershell 7 esenciales - powershell multiplataforma actualizado app-powershell7 aplicaciones"><div class="name">PowerShell 7</div><div class="desc">Esenciales - PowerShell multiplataforma actualizado</div><span class="id">app-powershell7</span></div><div class="tool" data-q="greenshot esenciales - capturas de pantalla con anotaciones app-greenshot aplicaciones"><div class="name">Greenshot</div><div class="desc">Esenciales - Capturas de pantalla con anotaciones</div><span class="id">app-greenshot</span></div><div class="tool" data-q="sharex esenciales - capturas, grabacion y subida automatica app-sharex aplicaciones"><div class="name">ShareX</div><div class="desc">Esenciales - Capturas, grabacion y subida automatica</div><span class="id">app-sharex</span></div><div class="tool" data-q="libreoffice ofimatica - suite ofimatica libre compatible con office app-libreoffice aplicaciones"><div class="name">LibreOffice</div><div class="desc">Ofimatica - Suite ofimatica libre compatible con Office</div><span class="id">app-libreoffice</span></div><div class="tool" data-q="microsoft 365 ofimatica - instalador de office / microsoft 365 app-microsoft365 aplicaciones"><div class="name">Microsoft 365</div><div class="desc">Ofimatica - Instalador de Office / Microsoft 365</div><span class="id">app-microsoft365</span></div><div class="tool" data-q="onlyoffice ofimatica - suite con maxima compatibilidad con formatos de office app-onlyoffice aplicaciones"><div class="name">OnlyOffice</div><div class="desc">Ofimatica - Suite con maxima compatibilidad con formatos de Office</div><span class="id">app-onlyoffice</span></div><div class="tool" data-q="obsidian ofimatica - notas en markdown enlazadas app-obsidian aplicaciones"><div class="name">Obsidian</div><div class="desc">Ofimatica - Notas en Markdown enlazadas</div><span class="id">app-obsidian</span></div><div class="tool" data-q="notion ofimatica - espacio de trabajo todo en uno app-notion aplicaciones"><div class="name">Notion</div><div class="desc">Ofimatica - Espacio de trabajo todo en uno</div><span class="id">app-notion</span></div><div class="tool" data-q="cpu-z diagnostico - identifica cpu, placa base y memoria app-cpuz aplicaciones"><div class="name">CPU-Z</div><div class="desc">Diagnostico - Identifica CPU, placa base y memoria</div><span class="id">app-cpuz</span></div><div class="tool" data-q="gpu-z diagnostico - detalle completo de la tarjeta grafica app-gpuz aplicaciones"><div class="name">GPU-Z</div><div class="desc">Diagnostico - Detalle completo de la tarjeta grafica</div><span class="id">app-gpuz</span></div><div class="tool" data-q="hwinfo diagnostico - sensores y temperaturas de todo el equipo app-hwinfo aplicaciones"><div class="name">HWiNFO</div><div class="desc">Diagnostico - Sensores y temperaturas de todo el equipo</div><span class="id">app-hwinfo</span></div><div class="tool" data-q="crystaldiskinfo diagnostico - salud smart de discos duros y ssd app-crystaldiskinfo aplicaciones"><div class="name">CrystalDiskInfo</div><div class="desc">Diagnostico - Salud SMART de discos duros y SSD</div><span class="id">app-crystaldiskinfo</span></div><div class="tool" data-q="crystaldiskmark diagnostico - mide la velocidad real del disco app-crystaldiskmark aplicaciones"><div class="name">CrystalDiskMark</div><div class="desc">Diagnostico - Mide la velocidad real del disco</div><span class="id">app-crystaldiskmark</span></div><div class="tool" data-q="hd sentinel diagnostico - monitorea y predice fallos de disco app-hdsentinel aplicaciones"><div class="name">HD Sentinel</div><div class="desc">Diagnostico - Monitorea y predice fallos de disco</div><span class="id">app-hdsentinel</span></div><div class="tool" data-q="aida64 extreme diagnostico - diagnostico y benchmark profesional (trial) app-aida64extreme aplicaciones"><div class="name">AIDA64 Extreme</div><div class="desc">Diagnostico - Diagnostico y benchmark profesional (trial)</div><span class="id">app-aida64extreme</span></div><div class="tool" data-q="occt diagnostico - prueba de estres de cpu, gpu y fuente app-occt aplicaciones"><div class="name">OCCT</div><div class="desc">Diagnostico - Prueba de estres de CPU, GPU y fuente</div><span class="id">app-occt</span></div><div class="tool" data-q="memtest86 diagnostico - prueba exhaustiva de memoria ram arrancable app-memtest86 aplicaciones"><div class="name">MemTest86</div><div class="desc">Diagnostico - Prueba exhaustiva de memoria RAM arrancable</div><span class="id">app-memtest86</span></div><div class="tool" data-q="wiztree diagnostico - analiza que ocupa el disco en segundos app-wiztree aplicaciones"><div class="name">WizTree</div><div class="desc">Diagnostico - Analiza que ocupa el disco en segundos</div><span class="id">app-wiztree</span></div><div class="tool" data-q="windirstat diagnostico - mapa visual del uso de disco app-windirstat aplicaciones"><div class="name">WinDirStat</div><div class="desc">Diagnostico - Mapa visual del uso de disco</div><span class="id">app-windirstat</span></div><div class="tool" data-q="revo uninstaller mantenimiento - desinstala dejando el registro limpio app-revouninstaller aplicaciones"><div class="name">Revo Uninstaller</div><div class="desc">Mantenimiento - Desinstala dejando el registro limpio</div><span class="id">app-revouninstaller</span></div><div class="tool" data-q="bcuninstaller mantenimiento - desinstalacion masiva de programas app-bcuninstaller aplicaciones"><div class="name">BCUninstaller</div><div class="desc">Mantenimiento - Desinstalacion masiva de programas</div><span class="id">app-bcuninstaller</span></div><div class="tool" data-q="bleachbit mantenimiento - limpieza profunda open source app-bleachbit aplicaciones"><div class="name">BleachBit</div><div class="desc">Mantenimiento - Limpieza profunda open source</div><span class="id">app-bleachbit</span></div><div class="tool" data-q="treesize free mantenimiento - encuentra las carpetas que llenan el disco app-treesizefree aplicaciones"><div class="name">TreeSize Free</div><div class="desc">Mantenimiento - Encuentra las carpetas que llenan el disco</div><span class="id">app-treesizefree</span></div><div class="tool" data-q="autoruns mantenimiento - control total de lo que arranca con windows app-autoruns aplicaciones"><div class="name">Autoruns</div><div class="desc">Mantenimiento - Control total de lo que arranca con Windows</div><span class="id">app-autoruns</span></div><div class="tool" data-q="process explorer mantenimiento - administrador de tareas con esteroides app-processexplorer aplicaciones"><div class="name">Process Explorer</div><div class="desc">Mantenimiento - Administrador de tareas con esteroides</div><span class="id">app-processexplorer</span></div><div class="tool" data-q="sysinternals suite mantenimiento - toda la suite de utilidades de microsoft app-sysinternalssuite aplicaciones"><div class="name">Sysinternals Suite</div><div class="desc">Mantenimiento - Toda la suite de utilidades de Microsoft</div><span class="id">app-sysinternalssuite</span></div><div class="tool" data-q="unigetui mantenimiento - interfaz grafica para winget, choco y scoop app-unigetui aplicaciones"><div class="name">UniGetUI</div><div class="desc">Mantenimiento - Interfaz grafica para winget, choco y scoop</div><span class="id">app-unigetui</span></div><div class="tool" data-q="chocolatey mantenimiento - gestor de paquetes alternativo app-chocolatey aplicaciones"><div class="name">Chocolatey</div><div class="desc">Mantenimiento - Gestor de paquetes alternativo</div><span class="id">app-chocolatey</span></div><div class="tool" data-q="rufus instalacion - crea usb de arranque desde una iso app-rufus aplicaciones"><div class="name">Rufus</div><div class="desc">Instalacion - Crea USB de arranque desde una ISO</div><span class="id">app-rufus</span></div><div class="tool" data-q="ventoy instalacion - un usb con multiples iso arrancables app-ventoy aplicaciones"><div class="name">Ventoy</div><div class="desc">Instalacion - Un USB con multiples ISO arrancables</div><span class="id">app-ventoy</span></div><div class="tool" data-q="balenaetcher instalacion - graba imagenes en usb y tarjetas sd app-balenaetcher aplicaciones"><div class="name">balenaEtcher</div><div class="desc">Instalacion - Graba imagenes en USB y tarjetas SD</div><span class="id">app-balenaetcher</span></div><div class="tool" data-q="macrium reflect free instalacion - clonado y respaldo completo de disco app-macriumreflectfree aplicaciones"><div class="name">Macrium Reflect Free</div><div class="desc">Instalacion - Clonado y respaldo completo de disco</div><span class="id">app-macriumreflectfree</span></div><div class="tool" data-q="veeam agent instalacion - respaldo de imagen del sistema app-veeamagent aplicaciones"><div class="name">Veeam Agent</div><div class="desc">Instalacion - Respaldo de imagen del sistema</div><span class="id">app-veeamagent</span></div><div class="tool" data-q="anydesk remoto - escritorio remoto rapido y ligero app-anydesk aplicaciones"><div class="name">AnyDesk</div><div class="desc">Remoto - Escritorio remoto rapido y ligero</div><span class="id">app-anydesk</span></div><div class="tool" data-q="teamviewer remoto - soporte remoto empresarial app-teamviewer aplicaciones"><div class="name">TeamViewer</div><div class="desc">Remoto - Soporte remoto empresarial</div><span class="id">app-teamviewer</span></div><div class="tool" data-q="rustdesk remoto - alternativa open source y autoalojable app-rustdesk aplicaciones"><div class="name">RustDesk</div><div class="desc">Remoto - Alternativa open source y autoalojable</div><span class="id">app-rustdesk</span></div><div class="tool" data-q="zoom remoto - videollamadas y reuniones app-zoom aplicaciones"><div class="name">Zoom</div><div class="desc">Remoto - Videollamadas y reuniones</div><span class="id">app-zoom</span></div><div class="tool" data-q="microsoft teams remoto - colaboracion y reuniones de microsoft app-microsoftteams aplicaciones"><div class="name">Microsoft Teams</div><div class="desc">Remoto - Colaboracion y reuniones de Microsoft</div><span class="id">app-microsoftteams</span></div><div class="tool" data-q="discord remoto - chat de voz, video y texto app-discord aplicaciones"><div class="name">Discord</div><div class="desc">Remoto - Chat de voz, video y texto</div><span class="id">app-discord</span></div><div class="tool" data-q="whatsapp remoto - cliente de escritorio de whatsapp app-whatsapp aplicaciones"><div class="name">WhatsApp</div><div class="desc">Remoto - Cliente de escritorio de WhatsApp</div><span class="id">app-whatsapp</span></div><div class="tool" data-q="telegram remoto - mensajeria rapida y multiplataforma app-telegram aplicaciones"><div class="name">Telegram</div><div class="desc">Remoto - Mensajeria rapida y multiplataforma</div><span class="id">app-telegram</span></div><div class="tool" data-q="visual studio code desarrollo - editor de codigo de microsoft app-visualstudiocode aplicaciones"><div class="name">Visual Studio Code</div><div class="desc">Desarrollo - Editor de codigo de Microsoft</div><span class="id">app-visualstudiocode</span></div><div class="tool" data-q="git desarrollo - control de versiones app-git aplicaciones"><div class="name">Git</div><div class="desc">Desarrollo - Control de versiones</div><span class="id">app-git</span></div><div class="tool" data-q="node.js lts desarrollo - entorno de ejecucion javascript app-nodejslts aplicaciones"><div class="name">Node.js LTS</div><div class="desc">Desarrollo - Entorno de ejecucion JavaScript</div><span class="id">app-nodejslts</span></div><div class="tool" data-q="python 3 desarrollo - lenguaje python con pip app-python3 aplicaciones"><div class="name">Python 3</div><div class="desc">Desarrollo - Lenguaje Python con pip</div><span class="id">app-python3</span></div><div class="tool" data-q="docker desktop desarrollo - contenedores en windows app-dockerdesktop aplicaciones"><div class="name">Docker Desktop</div><div class="desc">Desarrollo - Contenedores en Windows</div><span class="id">app-dockerdesktop</span></div><div class="tool" data-q="winscp desarrollo - cliente sftp y ftp grafico app-winscp aplicaciones"><div class="name">WinSCP</div><div class="desc">Desarrollo - Cliente SFTP y FTP grafico</div><span class="id">app-winscp</span></div><div class="tool" data-q="putty desarrollo - cliente ssh clasico app-putty aplicaciones"><div class="name">PuTTY</div><div class="desc">Desarrollo - Cliente SSH clasico</div><span class="id">app-putty</span></div><div class="tool" data-q="filezilla desarrollo - cliente ftp multiplataforma app-filezilla aplicaciones"><div class="name">FileZilla</div><div class="desc">Desarrollo - Cliente FTP multiplataforma</div><span class="id">app-filezilla</span></div><div class="tool" data-q="malwarebytes seguridad - segunda opinion contra malware app-malwarebytes aplicaciones"><div class="name">Malwarebytes</div><div class="desc">Seguridad - Segunda opinion contra malware</div><span class="id">app-malwarebytes</span></div><div class="tool" data-q="bitwarden seguridad - gestor de contrasenas open source app-bitwarden aplicaciones"><div class="name">Bitwarden</div><div class="desc">Seguridad - Gestor de contrasenas open source</div><span class="id">app-bitwarden</span></div><div class="tool" data-q="keepassxc seguridad - boveda de contrasenas local app-keepassxc aplicaciones"><div class="name">KeePassXC</div><div class="desc">Seguridad - Boveda de contrasenas local</div><span class="id">app-keepassxc</span></div><div class="tool" data-q="veracrypt seguridad - cifrado de discos y contenedores app-veracrypt aplicaciones"><div class="name">VeraCrypt</div><div class="desc">Seguridad - Cifrado de discos y contenedores</div><span class="id">app-veracrypt</span></div><div class="tool" data-q="wireshark seguridad - analizador de trafico de red app-wireshark aplicaciones"><div class="name">Wireshark</div><div class="desc">Seguridad - Analizador de trafico de red</div><span class="id">app-wireshark</span></div><div class="tool" data-q="advanced ip scanner seguridad - escanea equipos de la red local app-advancedipscanner aplicaciones"><div class="name">Advanced IP Scanner</div><div class="desc">Seguridad - Escanea equipos de la red local</div><span class="id">app-advancedipscanner</span></div><div class="tool" data-q="gimp multimedia - edicion de imagen profesional y libre app-gimp aplicaciones"><div class="name">GIMP</div><div class="desc">Multimedia - Edicion de imagen profesional y libre</div><span class="id">app-gimp</span></div><div class="tool" data-q="paint.net multimedia - editor de imagen sencillo y potente app-paintnet aplicaciones"><div class="name">Paint.NET</div><div class="desc">Multimedia - Editor de imagen sencillo y potente</div><span class="id">app-paintnet</span></div><div class="tool" data-q="inkscape multimedia - diseno vectorial app-inkscape aplicaciones"><div class="name">Inkscape</div><div class="desc">Multimedia - Diseno vectorial</div><span class="id">app-inkscape</span></div><div class="tool" data-q="obs studio multimedia - grabacion y transmision en vivo app-obsstudio aplicaciones"><div class="name">OBS Studio</div><div class="desc">Multimedia - Grabacion y transmision en vivo</div><span class="id">app-obsstudio</span></div><div class="tool" data-q="handbrake multimedia - conversor de video app-handbrake aplicaciones"><div class="name">HandBrake</div><div class="desc">Multimedia - Conversor de video</div><span class="id">app-handbrake</span></div><div class="tool" data-q="audacity multimedia - edicion de audio multipista app-audacity aplicaciones"><div class="name">Audacity</div><div class="desc">Multimedia - Edicion de audio multipista</div><span class="id">app-audacity</span></div><div class="tool" data-q="spotify multimedia - musica en streaming app-spotify aplicaciones"><div class="name">Spotify</div><div class="desc">Multimedia - Musica en streaming</div><span class="id">app-spotify</span></div><div class="tool" data-q="dell command update fabricantes - drivers y bios oficiales de dell app-dellcommandupdate aplicaciones"><div class="name">Dell Command Update</div><div class="desc">Fabricantes - Drivers y BIOS oficiales de Dell</div><span class="id">app-dellcommandupdate</span></div><div class="tool" data-q="hp support assistant fabricantes - soporte y drivers de hp app-hpsupportassistant aplicaciones"><div class="name">HP Support Assistant</div><div class="desc">Fabricantes - Soporte y drivers de HP</div><span class="id">app-hpsupportassistant</span></div><div class="tool" data-q="hp image assistant fabricantes - gestion de imagenes y drivers hp app-hpimageassistant aplicaciones"><div class="name">HP Image Assistant</div><div class="desc">Fabricantes - Gestion de imagenes y drivers HP</div><span class="id">app-hpimageassistant</span></div><div class="tool" data-q="lenovo system update fabricantes - drivers y bios de lenovo app-lenovosystemupdate aplicaciones"><div class="name">Lenovo System Update</div><div class="desc">Fabricantes - Drivers y BIOS de Lenovo</div><span class="id">app-lenovosystemupdate</span></div><div class="tool" data-q="lenovo vantage fabricantes - centro de control lenovo app-lenovovantage aplicaciones"><div class="name">Lenovo Vantage</div><div class="desc">Fabricantes - Centro de control Lenovo</div><span class="id">app-lenovovantage</span></div><div class="tool" data-q="myasus fabricantes - soporte y diagnostico asus app-myasus aplicaciones"><div class="name">MyASUS</div><div class="desc">Fabricantes - Soporte y diagnostico ASUS</div><span class="id">app-myasus</span></div><div class="tool" data-q="intel dsa fabricantes - actualiza drivers intel app-inteldsa aplicaciones"><div class="name">Intel DSA</div><div class="desc">Fabricantes - Actualiza drivers Intel</div><span class="id">app-inteldsa</span></div><div class="tool" data-q="nvidia app fabricantes - drivers y optimizacion nvidia app-nvidiaapp aplicaciones"><div class="name">NVIDIA App</div><div class="desc">Fabricantes - Drivers y optimizacion NVIDIA</div><span class="id">app-nvidiaapp</span></div><div class="tool" data-q="amd adrenalin fabricantes - drivers y control radeon app-amdadrenalin aplicaciones"><div class="name">AMD Adrenalin</div><div class="desc">Fabricantes - Drivers y control Radeon</div><span class="id">app-amdadrenalin</span></div><div class="tool" data-q="nzxt cam fabricantes - monitorizacion de hardware nzxt app-nzxtcam aplicaciones"><div class="name">NZXT CAM</div><div class="desc">Fabricantes - Monitorizacion de hardware NZXT</div><span class="id">app-nzxtcam</span></div></div></section>
 
-        <section id="reparacion" class="section">
-            <h2 class="section-title">Reparación</h2>
+      <section class="section" id="archivos">
+        <h2><span class="bar" style="background:var(--tools)"></span>Dónde quedan los archivos</h2>
+        <p class="intro">
+          Todo lo que ToolboxBS genera se guarda en tu carpeta de Documentos, nunca en rutas ocultas.
+        </p>
+        <table>
+          <tr><th>Carpeta</th><th>Contenido</th></tr>
+          <tr><td class="k">Documentos\ToolboxBS\logs</td><td>El registro completo de cada sesión, con la salida de todas las tareas. Si algo falla, esto es lo que hay que revisar.</td></tr>
+          <tr><td class="k">Documentos\ToolboxBS\reportes</td><td>Informes HTML y CSV: reporte del equipo, inventario de software, eventos, drivers, redes WiFi, análisis de espacio.</td></tr>
+          <tr><td class="k">Documentos\ToolboxBS\backups</td><td>Respaldos del registro antes de cada tweak, copia de drivers, claves de BitLocker y de producto, archivo hosts.</td></tr>
+          <tr><td class="k">Documentos\ToolboxBS\perfiles</td><td>Tus selecciones guardadas en formato JSON.</td></tr>
+        </table>
+      </section>
 
-            <div class="tool-description" id="crear-punto-restauracion">
-                <h3 class="tool-title">Crear Punto de Restauración</h3>
-                <p class="tool-text">Crea un punto de restauración del sistema antes de aplicar cambios importantes.</p>
-                <pre><code>Checkpoint-Computer -Description "Punto de restauracion creado por ToolboxBS" -RestorePointType "MODIFY_SETTINGS"</code></pre>
-                <div class="note">
-                    <div class="note-title">Nota:</div>
-                    <p>Permite revertir el sistema a un estado anterior en caso de problemas con actualizaciones o cambios en la configuración.</p>
-                </div>
-            </div>
+      <section class="section" id="riesgos">
+        <h2><span class="bar" style="background:var(--repair)"></span>Riesgos y reversión</h2>
+        <p class="intro">Cada herramienta está clasificada. Así se lee la etiqueta:</p>
+        <table>
+          <tr><th>Etiqueta</th><th>Qué significa</th></tr>
+          <tr><td><span class="tag tag-d">riesgo</span></td>
+            <td>Hace cambios difíciles de deshacer: borrar Windows.old, eliminar apps preinstaladas, tocar el arranque. La aplicación pide confirmación mostrando la lista exacta antes de ejecutar.</td></tr>
+          <tr><td><span class="tag tag-r">reversible</span></td>
+            <td>Trae su propia acción de reversión. Desde el clic derecho en la tarjeta, o con el botón «Revertir seleccionados».</td></tr>
+          <tr><td><span class="tag tag-t">ventana</span></td>
+            <td>Es interactiva o muy larga (SFC, DISM, exámenes completos) y se abre en su propia ventana en vez de la consola integrada.</td></tr>
+        </table>
 
-            <div class="tool-description" id="mantenimiento-so">
-                <h3 class="tool-title">Mantenimiento del S.O.</h3>
-                <p class="tool-text">Realiza tareas de mantenimiento avanzadas en el sistema operativo Windows.</p>
-                <pre><code>bcdedit /set useplatformtick yes
-bcdedit /set disabledynamictick yes
-sfc /scannow
-DISM.exe /Online /Cleanup-image /CheckHealth
-DISM.exe /Online /Cleanup-image /Restorehealth
-sfc /scannow
-Dism.exe /Online /Cleanup-Image /startComponentCleanup</code></pre>
-                <div class="note">
-                    <div class="note-title">Tareas realizadas:</div>
-                    <ul>
-                        <li>Configuración del temporizador del sistema para mejor rendimiento</li>
-                        <li>Verificación y reparación de archivos del sistema (SFC)</li>
-                        <li>Diagnóstico y reparación de la imagen de Windows (DISM)</li>
-                        <li>Limpieza de componentes de Windows Update</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="note warn">
+          <p><strong>Antes de tocar el sistema, crea un punto de restauración.</strong> Está en
+            <em>Reparación → Crear punto de restauración</em>, y también como casilla
+            «Punto de restauración antes» junto al botón Ejecutar. Todo lo que escribe en el registro
+            hace además un <code class="inline">reg export</code> a la carpeta de respaldos.</p>
+        </div>
+      </section>
 
-            <div class="tool-description" id="info-pantallazos">
-                <h3 class="tool-title">Información de Pantallazos Azules</h3>
-                <p class="tool-text">Analiza y proporciona información sobre los pantallazos azules (BSOD) que han ocurrido en el sistema.</p>
-                <div class="note">
-                    <div class="note-title">Opciones disponibles:</div>
-                    <ul>
-                        <li><strong>BlueScreenView:</strong> Herramienta para visualizar detalles de los BSODs</li>
-                        <li><strong>Script Remoto:</strong> Análisis avanzado de las causas comunes de BSODs</li>
-                    </ul>
-                </div>
-            </div>
+      <section class="section" id="problemas">
+        <h2><span class="bar" style="background:var(--sec)"></span>Solución de problemas</h2>
 
-            <div class="tool-description" id="estado-bateria">
-                <h3 class="tool-title">Ver Estado de la Batería</h3>
-                <p class="tool-text">Proporciona información detallada sobre el estado y salud de la batería en dispositivos portátiles.</p>
-                <pre><code>powercfg /batteryreport /output "C:\battery_report.html"</code></pre>
-                <div class="note">
-                    <div class="note-title">Opciones disponibles:</div>
-                    <ul>
-                        <li><strong>BatteryInfoView:</strong> Herramienta para detalles avanzados de la batería</li>
-                        <li><strong>Informe de Batería:</strong> Genera un informe HTML completo con información histórica</li>
-                    </ul>
-                </div>
-            </div>
+        <h3 class="sub">«No se puede cargar el archivo porque la ejecución de scripts está deshabilitada»</h3>
+        <p style="font-size:14.5px">Es la directiva de ejecución de PowerShell. Lánzalo así:</p>
+        <pre>powershell -ExecutionPolicy Bypass -File .\ToolboxBS.ps1</pre>
 
-            <div class="tool-description" id="info-drivers">
-                <h3 class="tool-title">Información de Drivers</h3>
-                <p class="tool-text">Proporciona información detallada sobre los controladores instalados en el sistema.</p>
-                <div class="note">
-                    <div class="note-title">Opciones disponibles:</div>
-                    <ul>
-                        <li><strong>Exportar Drivers:</strong> Guarda la información de controladores en un archivo de texto</li>
-                        <li><strong>Administrador de Dispositivos:</strong> Abre la herramienta de gestión de hardware de Windows</li>
-                    </ul>
-                </div>
-            </div>
+        <h3 class="sub">Windows Defender bloquea alguna herramienta</h3>
+        <p style="font-size:14.5px">
+          Las utilidades de NirSoft (BlueScreenView, BatteryInfoView) suelen marcarse como riesgo porque
+          leen información del sistema. Si las necesitas, agrega una exclusión para
+          <code class="inline">%TEMP%\ToolboxBS</code>. Si prefieres no hacerlo, el resto de la
+          herramienta funciona igual: esas solo son un complemento.
+        </p>
 
-            <div class="tool-description" id="reparar-red">
-                <h3 class="tool-title">Reparar Red</h3>
-                <p class="tool-text">Soluciona problemas comunes de conexión a Internet y red.</p>
-                <pre><code>netsh winsock reset
-netsh int ip reset
-ipconfig /release
-ipconfig /renew
-ipconfig /flushdns</code></pre>
-                <div class="note">
-                    <div class="note-title">Operaciones realizadas:</div>
-                    <ul>
-                        <li>Restablecer catálogo Winsock</li>
-                        <li>Restablecer TCP/IP stack</li>
-                        <li>Liberar y renovar la dirección IP</li>
-                        <li>Limpiar la caché DNS</li>
-                    </ul>
-                </div>
-            </div>
+        <h3 class="sub">La ventana no abre o sale un error de STA</h3>
+        <p style="font-size:14.5px">
+          La interfaz usa WPF, que necesita un hilo STA. La aplicación lo detecta y se relanza sola,
+          pero si lo estás llamando desde otro script puedes forzarlo:
+        </p>
+        <pre>powershell -STA -ExecutionPolicy Bypass -File .\ToolboxBS.ps1</pre>
 
-            <div class="tool-description" id="limpieza">
-                <h3 class="tool-title">Limpieza</h3>
-                <p class="tool-text">Herramientas para liberar espacio y optimizar recursos del sistema.</p>
-                <div class="note">
-                    <div class="note-title">Opciones disponibles:</div>
-                    <ul>
-                        <li><strong>Limpiar Archivos Temporales:</strong> Elimina archivos temporales del sistema y del usuario</li>
-                        <li><strong>Optimizar RAM:</strong> Libera memoria utilizando la herramienta RAMMap de Sysinternals</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+        <h3 class="sub">Una tarea falló y no sé por qué</h3>
+        <p style="font-size:14.5px">
+          Cada sesión deja su registro completo en <code class="inline">Documentos\ToolboxBS\logs</code>,
+          y desde la vista Consola tienes el botón «Abrir registro». Ahí está la salida literal de la
+          tarea, con el error exacto.
+        </p>
 
-        <section id="tweaks" class="section">
-            <h2 class="section-title">Tweaks</h2>
+        <h3 class="sub">¿Qué hace realmente una herramienta antes de ejecutarla?</h3>
+        <p style="font-size:14.5px">
+          Clic derecho sobre la tarjeta → <em>Ver el código que ejecuta</em>. Se abre en el Bloc de notas
+          el PowerShell literal que va a correr, sin ejecutarlo. En la versión web, el enlace
+          «ver código» de cada tarjeta hace lo mismo.
+        </p>
+      </section>
 
-            <div class="tool-description" id="ejecutar-winutil">
-                <h3 class="tool-title">Ejecutar WinUtil</h3>
-                <p class="tool-text">Ejecuta la herramienta WinUtil de Chris Titus Tech para optimizaciones avanzadas del sistema.</p>
-                <pre><code>powershell -NoExit -Command "irm christitus.com/win | iex"</code></pre>
-                <div class="note">
-                    <div class="note-title">Características:</div>
-                    <ul>
-                        <li>Optimizaciones de rendimiento y privacidad</li>
-                        <li>Instalación y desinstalación de aplicaciones</li>
-                        <li>Configuración de opciones avanzadas de Windows</li>
-                        <li>Mejoras de seguridad</li>
-                        <li>Activación de características ocultas</li>
-                    </ul>
-                </div>
-            </div>
+    </main>
+  </div>
 
-            <div class="tool-description" id="instalar-winget">
-                <h3 class="tool-title">Instalar Winget</h3>
-                <p class="tool-text">Instala el gestor de paquetes oficial de Windows (Windows Package Manager).</p>
-                <pre><code>Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
-Invoke-WebRequest -Uri https://aka.ms/Microsoft.VCLibs.x64.14.00.Desktop.appx -OutFile Microsoft.VCLibs.x64.14.00.Desktop.appx
-Invoke-WebRequest -Uri https://github.com/microsoft/microsoft-ui-xaml/releases/download/v2.7.3/Microsoft.UI.Xaml.2.7.x64.appx -OutFile Microsoft.UI.Xaml.2.7.x64.appx
-Add-AppxPackage Microsoft.VCLibs.x64.14.00.Desktop.appx
-Add-AppxPackage Microsoft.UI.Xaml.2.7.x64.appx
-Add-AppxPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle</code></pre>
-                <div class="note">
-                    <div class="note-title">Nota:</div>
-                    <p>Winget facilita la instalación y actualización de aplicaciones desde la línea de comandos. Es el gestor de paquetes nativo de Microsoft para Windows 10 y 11.</p>
-                </div>
-            </div>
-
-            <div class="tool-description" id="activar-windows">
-                <h3 class="tool-title">Activar Windows</h3>
-                <p class="tool-text">Activa Windows utilizando la clave digital integrada en la BIOS/UEFI del sistema.</p>
-                <pre><code># Obtener la clave digital almacenada en la BIOS
-$clave = (Get-WmiObject SoftwareLicensingService | Select-Object -ExpandProperty OA3xOriginalProductKey)
-
-# Establecer la clave como predefinida
-slmgr.vbs /ipk $clave</code></pre>
-                <div class="note">
-                    <div class="note-title">Nota:</div>
-                    <p>Esta función recupera la clave digital de Windows que está almacenada en la BIOS de fábrica (si está disponible) y la aplica automáticamente.</p>
-                </div>
-            </div>
-
-            <div class="tool-description" id="ejecutar-optimizer">
-                <h3 class="tool-title">Ejecutar Optimizer</h3>
-                <p class="tool-text">Descarga e inicia Optimizer, una herramienta de optimización completa para Windows.</p>
-                <div class="note">
-                    <div class="note-title">Características de Optimizer:</div>
-                    <ul>
-                        <li>Limpieza del sistema</li>
-                        <li>Gestión de servicios</li>
-                        <li>Eliminación de telemetría</li>
-                        <li>Opciones de privacidad</li>
-                        <li>Gestión de aplicaciones de inicio</li>
-                        <li>Personalización del sistema</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="tool-description" id="buscar-drivers">
-                <h3 class="tool-title">Buscar Drivers</h3>
-                <p class="tool-text">Identifica el modelo y número de serie del equipo y busca los controladores correspondientes en línea.</p>
-                <pre><code># Obtener información del equipo
-$modelo = (Get-WmiObject -Class:Win32_ComputerSystem).Model
-$serial = (Get-WmiObject -Class:Win32_BIOS).SerialNumber
-
-# Buscar drivers para este modelo específico
-Start-Process "https://www.google.com/search?q=$modelo+$serial+drivers"</code></pre>
-            </div>
-
-            <div class="tool-description" id="actualizar-windows">
-                <h3 class="tool-title">Actualizar Windows</h3>
-                <p class="tool-text">Inicia el proceso de búsqueda e instalación de actualizaciones de Windows.</p>
-                <pre><code>Start-Process -FilePath "C:\Windows\System32\UsoClient.exe" -ArgumentList "StartInteractiveScan" -NoNewWindow</code></pre>
-                <div class="note">
-                    <div class="note-title">Nota:</div>
-                    <p>Este comando inicia el escáner de Windows Update de forma interactiva, permitiendo al usuario elegir qué actualizaciones instalar.</p>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="analizar-optimizar">
-                <h3 class="tool-title">Analizar y Optimizar S.O.</h3>
-                <p class="tool-text">Ejecuta un script personalizado que analiza y optimiza el sistema operativo Windows.</p>
-                <pre><code>powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "irm 'https://raw.githubusercontent.com/BrandonSepulveda/ToolboxBS/refs/heads/main/procesos/Analizador.ps1' | iex"</code></pre>
-                <div class="note">
-                    <div class="note-title">Funciones del analizador:</div>
-                    <ul>
-                        <li>Diagnóstico completo del sistema</li>
-                        <li>Identificación de problemas y cuellos de botella</li>
-                        <li>Sugerencias personalizadas de optimización</li>
-                        <li>Aplicación automática de mejoras recomendadas</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="propiedades-sistema">
-                <h3 class="tool-title">Propiedades del Sistema</h3>
-                <p class="tool-text">Abre la ventana de propiedades del sistema para ajustar la configuración de rendimiento y otras opciones avanzadas.</p>
-                <pre><code>control.exe sysdm.cpl</code></pre>
-                <div class="note">
-                    <div class="note-title">Nota:</div>
-                    <p>Permite acceder a configuraciones avanzadas como opciones de rendimiento, variables de entorno, inicio y recuperación, y protección del sistema.</p>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="deshabilitar-transparencia">
-                <h3 class="tool-title">Deshabilitar Transparencia</h3>
-                <p class="tool-text">Desactiva los efectos de transparencia en Windows para mejorar el rendimiento visual.</p>
-                <pre><code>$registryPath = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"
-$name = "EnableTransparency"
-$value = 0
-Set-ItemProperty -Path $registryPath -Name $name -Value $value</code></pre>
-                <div class="note">
-                    <div class="note-title">Nota:</div>
-                    <p>Deshabilitar los efectos de transparencia puede mejorar el rendimiento en equipos con hardware limitado.</p>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="apagar-bios">
-                <h3 class="tool-title">Apagar y Entrar a BIOS</h3>
-                <p class="tool-text">Reinicia el sistema y entra directamente a la configuración del BIOS/UEFI.</p>
-                <pre><code>Start-Process -FilePath "shutdown" -ArgumentList "/r /fw /t 1" -Verb RunAs</code></pre>
-                <div class="note">
-                    <div class="note-title">Nota:</div>
-                    <p>Este comando permite acceder a la configuración de la BIOS sin necesidad de presionar teclas especiales durante el inicio del sistema.</p>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="entorno-recuperacion">
-                <h3 class="tool-title">Entorno de Recuperación</h3>
-                <p class="tool-text">Reinicia el sistema y entra al entorno de recuperación de Windows.</p>
-                <pre><code>shutdown /r /o /f /t 00</code></pre>
-                <div class="note">
-                    <div class="note-title">Opciones disponibles en el entorno de recuperación:</div>
-                    <ul>
-                        <li>Restaurar a un punto anterior</li>
-                        <li>Restablecer el PC</li>
-                        <li>Iniciar en modo seguro</li>
-                        <li>Símbolo del sistema para solucionar problemas avanzados</li>
-                        <li>Restaurar desde una imagen del sistema</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="actualizar-apps">
-                <h3 class="tool-title">Actualizar Apps</h3>
-                <p class="tool-text">Actualiza todas las aplicaciones instaladas mediante Winget.</p>
-                <pre><code>winget update --all</code></pre>
-                <div class="note">
-                    <div class="note-title">Nota:</div>
-                    <p>Este comando busca actualizaciones para todas las aplicaciones instaladas a través de Winget y las actualiza automáticamente.</p>
-                </div>
-            </div>
-        </section>
-        
-        <section id="herramientas" class="section">
-            <h2 class="section-title">Herramientas</h2>
-            
-            <div class="tool-description" id="ejecutar-toolboxbs">
-                <h3 class="tool-title">Ejecutar ToolboxBS</h3>
-                <p class="tool-text">Inicia la última versión de ToolboxBS directamente desde GitHub.</p>
-                <pre><code>irm "https://brandonsepulveda.github.io/tbs" | iex</code></pre>
-                <div class="note">
-                    <div class="note-title">Nota:</div>
-                    <p>Este comando descarga e inicia la última versión de ToolboxBS sin necesidad de instalación.</p>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="ejecutar-winscript">
-                <h3 class="tool-title">Ejecutar WinScript</h3>
-                <p class="tool-text">Ejecuta WinScript, una herramienta complementaria para optimización de Windows.</p>
-                <pre><code>irm https://winscript.cc/irm | iex</code></pre>
-            </div>
-            
-            <div class="tool-description" id="instalar-sentinel">
-                <h3 class="tool-title">Instalar Sentinel</h3>
-                <p class="tool-text">Descarga e instala Hard Disk Sentinel para monitorear la salud de los discos duros.</p>
-                <div class="note">
-                    <div class="note-title">Características:</div>
-                    <ul>
-                        <li>Monitoreo de la salud de discos duros y SSD</li>
-                        <li>Detección temprana de fallos</li>
-                        <li>Información detallada de temperatura</li>
-                        <li>Pruebas de rendimiento</li>
-                        <li>Alertas preventivas</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="optimizar-sistema">
-                <h3 class="tool-title">Optimizar Sistema</h3>
-                <p class="tool-text">Aplica una serie de optimizaciones avanzadas al sistema operativo para mejorar el rendimiento.</p>
-                <div class="note">
-                    <div class="note-title">Optimizaciones aplicadas:</div>
-                    <ul>
-                        <li>Creación de un punto de restauración</li>
-                        <li>Deshabilitación de telemetría y rastreo</li>
-                        <li>Optimización de servicios para mejor rendimiento</li>
-                        <li>Activación del modo de rendimiento definitivo</li>
-                        <li>Aplicación de ajustes para videojuegos</li>
-                        <li>Personalización de la interfaz de Windows</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="instalar-intel">
-                <h3 class="tool-title">Instalar Intel Driver Support</h3>
-                <p class="tool-text">Descarga e instala Intel Driver Support Assistant para la gestión automatizada de controladores Intel.</p>
-                <div class="note">
-                    <div class="note-title">Características:</div>
-                    <ul>
-                        <li>Detección automática de hardware Intel</li>
-                        <li>Verificación de controladores desactualizados</li>
-                        <li>Descarga e instalación de los controladores más recientes</li>
-                        <li>Soporte para gráficas, chipsets, redes y más</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="reparacion-windows">
-                <h3 class="tool-title">Reparación de Windows</h3>
-                <p class="tool-text">Ejecuta comandos avanzados de reparación del sistema operativo Windows.</p>
-                <pre><code>sfc /scannow
-DISM.exe /Online /Cleanup-image /Restorehealth</code></pre>
-                <div class="note">
-                    <div class="note-title">Operaciones realizadas:</div>
-                    <ul>
-                        <li>Verificación de la integridad de todos los archivos protegidos del sistema</li>
-                        <li>Reparación de archivos dañados</li>
-                        <li>Reparación de la imagen del sistema operativo</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="administrador-tareas">
-                <h3 class="tool-title">Administrador de Tareas</h3>
-                <p class="tool-text">Abre el Administrador de tareas de Windows para monitorear y gestionar procesos y rendimiento.</p>
-                <pre><code>taskmgr.exe</code></pre>
-            </div>
-            
-            <div class="tool-description" id="administrador-dispositivos">
-                <h3 class="tool-title">Administrador de Dispositivos</h3>
-                <p class="tool-text">Abre el Administrador de dispositivos para visualizar y gestionar el hardware del sistema.</p>
-                <pre><code>devmgmt.msc</code></pre>
-            </div>
-            
-            <div class="tool-description" id="servicios">
-                <h3 class="tool-title">Servicios</h3>
-                <p class="tool-text">Abre la consola de administración de servicios de Windows.</p>
-                <pre><code>services.msc</code></pre>
-                <div class="note">
-                    <div class="note-title">Nota:</div>
-                    <p>Permite iniciar, detener, habilitar o deshabilitar los servicios del sistema. Es una herramienta avanzada para usuarios con conocimientos técnicos.</p>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="limpieza-disco">
-                <h3 class="tool-title">Limpieza de Disco</h3>
-                <p class="tool-text">Inicia la herramienta de limpieza de disco integrada en Windows.</p>
-                <pre><code>cleanmgr.exe</code></pre>
-                <div class="note">
-                    <div class="note-title">Nota:</div>
-                    <p>Permite eliminar archivos temporales, caché del navegador, archivos de la papelera y otras categorías de archivos innecesarios para liberar espacio en disco.</p>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="editor-registro">
-                <h3 class="tool-title">Editor del Registro</h3>
-                <p class="tool-text">Abre el Editor del registro de Windows para realizar modificaciones avanzadas.</p>
-                <pre><code>regedit.exe</code></pre>
-                <div class="note">
-                    <div class="note-title">Precaución:</div>
-                    <p>El Editor del registro es una herramienta avanzada. Los cambios incorrectos pueden causar problemas graves en el sistema. Se recomienda crear un punto de restauración antes de realizar cambios.</p>
-                </div>
-            </div>
-            
-            <div class="tool-description" id="verificar-actualizaciones">
-                <h3 class="tool-title">Verificar Actualizaciones</h3>
-                <p class="tool-text">Abre la configuración de Windows Update para buscar e instalar actualizaciones.</p>
-                <pre><code>Start-Process "ms-settings:windowsupdate"</code></pre>
-            </div>
-        </section>
-        
-        <section id="conclusion" class="section">
-            <h2 class="section-title">Conclusión</h2>
-            <div class="tool-description">
-                <h3 class="tool-title">Sobre ToolboxBS</h3>
-                <p class="tool-text">ToolboxBS es una herramienta completa de mantenimiento y optimización para Windows, desarrollada por Brandon Sepulveda. Proporciona una interfaz moderna y amigable para acceder a numerosas funciones de diagnóstico, reparación, optimización y personalización del sistema operativo.</p>
-                
-                <div class="note">
-                    <div class="note-title">Contacto e información:</div>
-                    <ul>
-    <li><strong>Autor:</strong> Jhon Brandon Sepulveda Valdes</li>
-    <li><strong>GitHub:</strong> <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank">github.com/BrandonSepulveda/ToolboxBS</a></li>
-    <li><strong>Sitio web:</strong> <a href="https://brandonsepulveda.github.io" target="_blank">brandonsepulveda.github.io</a></li>
-    <li><strong>Versión:</strong> 2.2/li>
-    <li><strong>Licencia:</strong> Licencia Dual (AGPL v3.0 para la comunidad / Comercial)</li>
-    <li><strong>Copyright:</strong> © 2024-2025 Jhon Brandon Sepulveda Valdes</li>
-</ul>
-                </div>
-                
-                <div class="note">
-                    <div class="note-title">Instalación rápida:</div>
-                    <p>Para ejecutar ToolboxBS directamente, utiliza el siguiente comando en PowerShell:</p>
-                    <pre><code>irm "https://cutt.ly/ToolboxBS" | iex</code></pre>
-                </div>
-            </div>
-        </section>
+  <footer class="pie">
+    <div class="inner">
+      <span>ToolboxBS v4.0 &middot; 257 herramientas &middot; documentación generada desde el catálogo del script</span>
+      <span>Brandon Sepúlveda &middot; <a href="https://brandonsepulveda.github.io/">brandonsepulveda.github.io</a></span>
     </div>
-    <a href="#" class="back-to-top" aria-label="Volver arriba">
-    <i class="fas fa-arrow-up"></i>
-</a>
+  </footer>
 
-<div class="overlay"></div>
+  <script>
+    (function () {
+      var q = document.getElementById('q'),
+          hit = document.getElementById('hit'),
+          tools = Array.prototype.slice.call(document.querySelectorAll('.tool')),
+          secs = Array.prototype.slice.call(document.querySelectorAll('.section[data-cat]'));
 
-
-<footer>
-    <div class="container">
-        <p>&copy; <span id="current-year"></span> ToolboxBS. Todos los derechos reservados. Desarrollado por <a href="[https://github.com/BrandonSepulveda](https://github.com/BrandonSepulveda)" target="_blank">Brandon Sepulveda</a>.</p>
-    </div>
-</footer>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const hamburger = document.querySelector('.hamburger');
-        const navList = document.querySelector('.nav-list');
-        const overlay = document.querySelector('.overlay');
-        const navItemsWithSubmenu = document.querySelectorAll('.nav-item:has(.submenu)'); // Selecciona items con submenu
-
-        // --- Toggle del Menú Hamburguesa ---
-        function toggleMenu() {
-            navList.classList.toggle('menu-open');
-            overlay.classList.toggle('visible');
-             // Bloquear scroll del cuerpo cuando el menú está abierto
-            document.body.classList.toggle('menu-open');
-             // Actualizar estado de accesibilidad
-             const isMenuOpen = navList.classList.contains('menu-open');
-             hamburger.setAttribute('aria-expanded', isMenuOpen);
+      function filtrar() {
+        var t = q.value.trim().toLowerCase();
+        if (!t) {
+          tools.forEach(function (el) { el.hidden = false; });
+          secs.forEach(function (s) { s.hidden = false; });
+          hit.textContent = '';
+          return;
         }
-
-        hamburger.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu); // Cerrar menú al hacer clic en overlay
-
-         // --- Cerrar Menú al Clic en un Enlace (opcional) ---
-         // Esto es si quieres que el menú se cierre automáticamente al hacer clic en un enlace interno.
-         // Si haces clic en un enlace de submenú, el menú principal se cerrará.
-        navList.querySelectorAll('a.nav-link, .submenu-item').forEach(link => {
-             link.addEventListener('click', function() {
-                 // Solo cerrar si la ventana es menor o igual a 768px (móvil)
-                 if (window.innerWidth <= 768) {
-                     // Agregar un pequeño retraso si es necesario para que la navegación ocurra primero
-                     setTimeout(toggleMenu, 100); // Cierra el menú después de 100ms
-                 }
-             });
-         });
-
-
-        // --- Toggle de Submenús en Móvil ---
-         // Manejar el clic en los elementos del menú principal que tienen submenús
-         navItemsWithSubmenu.forEach(item => {
-             const link = item.querySelector('.nav-link'); // Obtener el enlace dentro del item
-             link.addEventListener('click', function(e) {
-                 // Solo aplicar esta lógica en pantallas móviles
-                 if (window.innerWidth <= 768) {
-                     const parentItem = this.closest('.nav-item'); // Obtener el li.nav-item padre
-                     const isSubmenuOpen = parentItem.classList.contains('submenu-open');
-
-                     // Cerrar otros submenús abiertos antes de abrir este (comportamiento tipo acordeón)
-                     navItemsWithSubmenu.forEach(otherItem => {
-                          if (otherItem !== parentItem && otherItem.classList.contains('submenu-open')) {
-                              otherItem.classList.remove('submenu-open');
-                          }
-                     });
-
-                     // Toggle el submenu del item clickeado
-                     parentItem.classList.toggle('submenu-open');
-
-                     // Prevenir la navegación si el submenu se acaba de abrir o estaba abierto
-                     // Esto evita que el #anchor active el scroll si abres/cierras el submenu
-                     // Si solo quieres que el click *siempre* abra/cierre el submenu y *nunca* navegue al #anchor,
-                     // elimina el href de los links principales que tienen submenus en tu HTML.
-                     if (!isSubmenuOpen || parentItem.classList.contains('submenu-open')) {
-                         e.preventDefault();
-                     }
-                 }
-                 // En escritorio, el comportamiento de hover sigue funcionando por CSS.
-                 // Si haces clic en escritorio, el enlace navegará normalmente.
-             });
-         });
-
-
-        // --- Back to Top Button ---
-        const backToTopButton = document.querySelector(".back-to-top");
-
-        window.addEventListener("scroll", () => {
-            if (window.pageYOffset > 100) { // Muestra el botón después de 100px de scroll
-                backToTopButton.classList.add("visible");
-            } else {
-                backToTopButton.classList.remove("visible");
-            }
+        var n = 0;
+        tools.forEach(function (el) {
+          var ok = el.dataset.q.indexOf(t) !== -1;
+          el.hidden = !ok;
+          if (ok) n++;
         });
-
-        // --- Actualizar Año en el Footer ---
-         const currentYearSpan = document.getElementById('current-year');
-         if (currentYearSpan) {
-             currentYearSpan.textContent = new Date().getFullYear();
-         }
-    });
-</script>
-    <footer>
-        <p>ToolboxBS &copy; 2023-2025 | Desarrollado por <a href="https://github.com/BrandonSepulveda" target="_blank">Brandon Sepulveda</a></p>
-        <p> LicenciaAGPL v3.0</p>
-    </footer>
-    
-    <script>
-        // Script para el botón de "Volver arriba"
-        document.addEventListener('DOMContentLoaded', function() {
-            var backToTop = document.createElement('a');
-            backToTop.href = '#';
-            backToTop.className = 'back-to-top';
-            backToTop.textContent = '↑';
-            document.body.appendChild(backToTop);
-            
-            window.addEventListener('scroll', function() {
-                if (window.pageYOffset > 300) {
-                    backToTop.classList.add('visible');
-                } else {
-                    backToTop.classList.remove('visible');
-                }
-            });
-            
-            backToTop.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+        secs.forEach(function (s) {
+          s.hidden = s.querySelectorAll('.tool:not([hidden])').length === 0;
         });
-    </script>
+        hit.textContent = n === 0
+          ? 'Ninguna herramienta coincide con "' + q.value + '".'
+          : n + (n === 1 ? ' herramienta encontrada' : ' herramientas encontradas');
+      }
+
+      q.addEventListener('input', filtrar);
+      document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') { e.preventDefault(); q.focus(); }
+        if (e.key === 'Escape' && document.activeElement === q) { q.value = ''; filtrar(); }
+      });
+    })();
+  </script>
 </body>
+
 </html>
