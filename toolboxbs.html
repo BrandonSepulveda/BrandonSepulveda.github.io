@@ -1,838 +1,825 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta name="description" content="ToolboxBS - Suite integral de optimización y mantenimiento para Windows. Desarrollada con PowerShell por Brandon Sepulveda."/>
-<title>ToolboxBS | Windows Optimization Suite</title>
-<link rel="icon" type="image/png" href="logo/BS_Removedor_1768162986835.png"/>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+    content="ToolboxBS v4: 258 herramientas de reparación, limpieza, rendimiento, seguridad y diagnóstico para Windows, en una sola aplicación. Gratis y de código abierto." />
+  <meta name="author" content="Brandon Sepulveda" />
+  <meta property="og:title" content="ToolboxBS v4 — La navaja suiza de Windows" />
+  <meta property="og:description"
+    content="258 herramientas en una sola app. Consola integrada, estado del equipo en vivo y reversión de cambios." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://brandonsepulveda.github.io/toolboxbs.html" />
+  <meta property="og:image" content="https://brandonsepulveda.github.io/img/toolboxbs/dashboard.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>ToolboxBS v4 — La navaja suiza de Windows</title>
+  <link rel="icon" type="image/png" href="logo/BS_Removedor_1768162986835.png" />
 
-<style>
-:root {
-  --bg: #060608;
-  --surface: #0d0d10;
-  --surface2: #131318;
-  --border: rgba(255,255,255,0.07);
-  --border-h: rgba(255,255,255,0.16);
-  --green: #4afa1e;
-  --cyan: #00f5e4;
-  --blue: #1e90ff;
-  --red: #ff2d55;
-  --white: #f0f0f0;
-  --muted: #555;
-  --dim: #888;
-  --fd: 'Syne', sans-serif;
-  --fm: 'JetBrains Mono', monospace;
-  --fb: 'Inter', sans-serif;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: var(--fb); background: var(--bg); color: var(--dim); overflow-x: hidden; }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
 
-/* noise */
-body::before {
-  content: '';
-  position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.35;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-}
-/* grid */
-.grid-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0;
-  background-image: linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-/* orbs */
-.orb { position: fixed; border-radius: 50%; filter: blur(110px); pointer-events: none; z-index: 0; }
-.orb-1 { width: 500px; height: 500px; background: var(--green); opacity: 0.07; top: -150px; left: -80px; animation: fl 22s ease-in-out infinite; }
-.orb-2 { width: 400px; height: 400px; background: var(--cyan); opacity: 0.06; bottom: -100px; right: -80px; animation: fl 28s ease-in-out infinite reverse; }
-.orb-3 { width: 250px; height: 250px; background: var(--blue); opacity: 0.05; top: 50%; left: 45%; animation: fl 18s ease-in-out infinite 4s; }
-@keyframes fl { 0%,100%{transform:translate(0,0)} 33%{transform:translate(30px,-25px)} 66%{transform:translate(-20px,20px)} }
+  <style>
+    :root {
+      --bg: #060608;
+      --surface: #0d0d10;
+      --surface2: #131318;
+      --border: rgba(255, 255, 255, .07);
+      --border-h: rgba(255, 255, 255, .18);
+      --green: #4afa1e;
+      --cyan: #00f5e4;
+      --white: #f0f0f0;
+      --dim: #8a8a92;
+      --muted: #55555e;
 
-/* ─ NAV ─ */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.1rem 0; transition: all 0.4s; }
-nav.scrolled { background: rgba(6,6,8,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0.65rem 0; }
-.nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; }
-.nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--fd); font-weight: 800; font-size: 1.15rem; color: var(--white); letter-spacing: -0.02em; }
-.nav-brand img { width: 32px; height: 32px; border-radius: 8px; object-fit: contain; }
-.nav-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pdot 2s ease-in-out infinite; }
-@keyframes pdot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
-.nav-links { display: flex; gap: 0.5rem; list-style: none; }
-.nav-links a { font-family: var(--fm); font-size: 0.75rem; color: var(--muted); text-decoration: none; padding: 0.4rem 0.9rem; border-radius: 6px; transition: all 0.3s; letter-spacing: 0.05em; }
-.nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
-.nav-cta { font-family: var(--fm); font-size: 0.75rem; font-weight: 700; color: #000; background: var(--green); border: none; padding: 0.55rem 1.2rem; border-radius: 7px; cursor: pointer; letter-spacing: 0.05em; transition: all 0.3s; box-shadow: 0 0 20px rgba(74,250,30,0.3); text-decoration: none; }
-.nav-cta:hover { background: #5fff25; box-shadow: 0 0 40px rgba(74,250,30,0.5); transform: translateY(-1px); }
-.hamburger { display: none; background: none; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 0.6rem; color: var(--dim); cursor: pointer; font-size: 1rem; }
+      --c-repair: #ff2d55;
+      --c-clean: #4afa1e;
+      --c-perf: #ffb020;
+      --c-sec: #a855f7;
+      --c-net: #00f5e4;
+      --c-info: #1e90ff;
+      --c-tools: #ff7a1a;
+      --c-apps: #60a5fa;
 
-/* ─ HERO ─ */
-.hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding: 8rem 0 5rem; }
-.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
-.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(30,144,255,0.08); border: 1px solid rgba(30,144,255,0.2); padding: 5px 14px; border-radius: 100px; font-family: var(--fm); font-size: 0.72rem; color: var(--blue); margin-bottom: 1.5rem; letter-spacing: 0.06em; }
-.hero-badge-dot { width: 5px; height: 5px; background: var(--blue); border-radius: 50%; animation: pdot 2s ease-in-out infinite; }
-.hero-title { font-family: var(--fd); font-size: clamp(3.5rem, 10vw, 8rem); font-weight: 800; line-height: 0.9; letter-spacing: -0.04em; color: var(--white); margin-bottom: 0.5rem; }
-.hero-title .accent { -webkit-text-fill-color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.2); }
-.hero-version { font-family: var(--fm); font-size: 0.75rem; color: var(--green); letter-spacing: 0.1em; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px; }
-.hero-version::before { content: ''; width: 20px; height: 1px; background: var(--green); }
-.hero-desc { font-size: 1rem; color: var(--dim); max-width: 520px; line-height: 1.8; margin-bottom: 2.5rem; }
-.hero-desc strong { color: var(--white); }
-.ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
-.btn-green { display: inline-flex; align-items: center; gap: 10px; padding: 0.9rem 2rem; border-radius: 8px; font-family: var(--fm); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em; text-decoration: none; color: #000; background: var(--green); border: 1px solid var(--green); box-shadow: 0 0 30px rgba(74,250,30,0.25); transition: all 0.3s; }
-.btn-green:hover { background: transparent; color: var(--green); box-shadow: 0 0 50px rgba(74,250,30,0.4); transform: translateY(-2px); }
-.btn-outline { display: inline-flex; align-items: center; gap: 10px; padding: 0.9rem 2rem; border-radius: 8px; font-family: var(--fm); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.05em; text-decoration: none; color: var(--white); background: transparent; border: 1px solid var(--border-h); transition: all 0.3s; }
-.btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.04); transform: translateY(-2px); color: var(--white); }
-.hero-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; }
-.hstat { display: flex; flex-direction: column; }
-.hstat-num { font-family: var(--fd); font-size: 1.6rem; font-weight: 800; color: var(--white); letter-spacing: -0.03em; line-height: 1; }
-.hstat-num.g { color: var(--green); }
-.hstat-num.c { color: var(--cyan); }
-.hstat-label { font-family: var(--fm); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 3px; }
-/* terminal hero */
-.hero-terminal { background: #000; border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; font-family: var(--fm); }
-.term-bar { background: #111; padding: 10px 14px; display: flex; align-items: center; gap: 7px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-.td { width: 12px; height: 12px; border-radius: 50%; }
-.tr { background: #ff5f57; } .ty { background: #febc2e; } .tg { background: #28c840; }
-.tname { margin-left: 8px; font-size: 0.7rem; color: var(--muted); }
-.term-body { padding: 1.25rem; font-size: 0.8rem; line-height: 2; }
-.tp { color: var(--green); }
-.tc { color: #e0e0e0; }
-.to { color: var(--cyan); padding-left: 1rem; }
-.tw { color: #febc2e; padding-left: 1rem; }
-.tm { color: var(--muted); padding-left: 1rem; font-size: 0.72rem; }
+      --fd: 'Syne', sans-serif;
+      --fm: 'JetBrains Mono', monospace;
+      --fb: 'Inter', sans-serif;
+    }
 
-/* ─ SECTIONS ─ */
-.section { padding: 7rem 0; position: relative; z-index: 1; }
-.section-alt { background: linear-gradient(to bottom, var(--bg), var(--surface) 50%, var(--bg)); }
-.sec-label { font-family: var(--fm); font-size: 0.7rem; letter-spacing: 0.15em; color: var(--green); text-transform: uppercase; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px; }
-.sec-label::before { content: ''; width: 22px; height: 1px; background: var(--green); }
-.sec-title { font-family: var(--fd); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; color: var(--white); line-height: 1; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* ─ FEATURE CARDS ─ */
-.feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 4rem; }
-.feat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); position: relative; overflow: hidden; }
-.feat-card::after { content: ''; position: absolute; inset: 0; background: radial-gradient(400px circle at var(--mx,50%) var(--my,50%), rgba(74,250,30,0.04), transparent 40%); pointer-events: none; opacity: 0; transition: opacity 0.3s; }
-.feat-card:hover { border-color: var(--border-h); transform: translateY(-6px); }
-.feat-card:hover::after { opacity: 1; }
-.feat-icon { width: 52px; height: 52px; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.25rem; transition: all 0.3s; color: var(--cyan); }
-.feat-card:hover .feat-icon { border-color: rgba(0,245,228,0.3); background: rgba(0,245,228,0.08); }
-.feat-title { font-family: var(--fd); font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.6rem; letter-spacing: -0.02em; }
-.feat-desc { font-size: 0.85rem; color: var(--dim); line-height: 1.7; }
-.feat-list { list-style: none; margin-top: 1rem; display: flex; flex-direction: column; gap: 5px; }
-.feat-list li { font-family: var(--fm); font-size: 0.72rem; color: var(--dim); display: flex; align-items: center; gap: 8px; }
-.feat-list li::before { content: '→'; color: var(--green); font-size: 0.65rem; flex-shrink: 0; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
 
-/* ─ INSTALL SECTION ─ */
-.install-box { background: #000; border: 1px solid rgba(74,250,30,0.15); border-radius: 16px; overflow: hidden; max-width: 780px; margin: 3rem auto 0; box-shadow: 0 0 60px rgba(74,250,30,0.06); }
-.install-bar { background: #0a0a0a; padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 8px; }
-.install-title { font-family: var(--fm); font-size: 0.72rem; color: var(--muted); margin-left: 8px; letter-spacing: 0.05em; }
-.install-body { padding: 2rem; }
-.cmd-line { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
-.cmd-prompt { color: var(--green); font-family: var(--fm); font-size: 0.85rem; flex-shrink: 0; }
-.cmd-text { color: var(--cyan); font-family: var(--fm); font-size: 0.85rem; flex: 1; word-break: break-all; }
-.cmd-copy { background: none; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); cursor: pointer; padding: 6px 12px; font-family: var(--fm); font-size: 0.7rem; transition: all 0.2s; flex-shrink: 0; display: flex; align-items: center; gap: 5px; }
-.cmd-copy:hover { border-color: var(--green); color: var(--green); }
-.install-alt { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
-.install-note { font-family: var(--fm); font-size: 0.72rem; color: var(--muted); display: flex; align-items: center; gap: 6px; padding: 0.5rem 0; }
-.install-note i { color: var(--green); font-size: 0.7rem; }
+    @supports (overflow-x: clip) {
+      html { overflow-x: clip; }
+    }
 
-/* ─ STATS COUNTER ─ */
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 4rem; }
-.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; text-align: center; transition: all 0.3s; }
-.stat-card:hover { border-color: var(--border-h); }
-.stat-big { font-family: var(--fd); font-size: 2.5rem; font-weight: 800; color: var(--white); letter-spacing: -0.04em; line-height: 1; margin-bottom: 6px; }
-.stat-big.g { color: var(--green); }
-.stat-big.c { color: var(--cyan); }
-.stat-big.b { color: var(--blue); }
-.stat-sub { font-family: var(--fm); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    body {
+      font-family: var(--fb);
+      background: var(--bg);
+      color: var(--dim);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.65;
+    }
 
-/* ─ TESTIMONIALS ─ */
-.testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
-.testi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; transition: all 0.3s; }
-.testi-card:hover { border-color: var(--border-h); }
-.testi-stars { color: #febc2e; font-size: 0.85rem; margin-bottom: 1rem; letter-spacing: 2px; }
-.testi-text { font-size: 0.9rem; color: var(--dim); line-height: 1.8; font-style: italic; margin-bottom: 1.25rem; }
-.testi-author { display: flex; align-items: center; gap: 10px; }
-.testi-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: var(--fd); font-size: 0.85rem; font-weight: 700; color: var(--cyan); flex-shrink: 0; }
-.testi-name { font-family: var(--fd); font-size: 0.9rem; font-weight: 700; color: var(--white); }
-.testi-role { font-family: var(--fm); font-size: 0.68rem; color: var(--muted); }
+    /* textura de ruido, la misma del resto del sitio */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: .35;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    }
 
-/* ─ MODAL ─ */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal { background: var(--surface); border: 1px solid rgba(74,250,30,0.2); border-radius: 20px; padding: 2.5rem; max-width: 480px; width: 90%; position: relative; transform: scale(0.95); transition: transform 0.3s; box-shadow: 0 0 80px rgba(74,250,30,0.1); }
-.modal-overlay.open .modal { transform: scale(1); }
-.modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-.modal-close:hover { border-color: var(--red); color: var(--red); }
-.modal-title { font-family: var(--fd); font-size: 1.5rem; font-weight: 800; color: var(--white); margin-bottom: 0.5rem; letter-spacing: -0.02em; }
-.modal-sub { font-family: var(--fm); font-size: 0.78rem; color: var(--muted); margin-bottom: 2rem; }
-.modal-options { display: flex; flex-direction: column; gap: 1rem; }
-.modal-btn { display: flex; align-items: center; gap: 14px; padding: 1rem 1.25rem; border-radius: 10px; text-decoration: none; border: 1px solid var(--border); background: var(--surface2); transition: all 0.3s; cursor: pointer; }
-.modal-btn:hover { border-color: var(--border-h); background: var(--surface); transform: translateX(4px); }
-.modal-btn-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
-.modal-btn-icon.ps { background: rgba(0,245,228,0.08); border: 1px solid rgba(0,245,228,0.2); color: var(--cyan); }
-.modal-btn-icon.exe { background: rgba(74,250,30,0.08); border: 1px solid rgba(74,250,30,0.2); color: var(--green); }
-.modal-btn-icon.web { background: rgba(30,144,255,0.08); border: 1px solid rgba(30,144,255,0.2); color: var(--blue); }
-.modal-btn-label { font-family: var(--fd); font-weight: 700; font-size: 0.95rem; color: var(--white); line-height: 1.2; }
-.modal-btn-sub { font-family: var(--fm); font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
-.modal-btn-arr { margin-left: auto; color: var(--muted); transition: all 0.3s; font-size: 0.85rem; }
-.modal-btn:hover .modal-btn-arr { color: var(--white); transform: translateX(3px); }
+    ::selection { background: var(--green); color: #000; }
 
-/* ─ FOOTER ─ */
-footer { border-top: 1px solid var(--border); padding: 3rem 0; position: relative; z-index: 1; }
-.footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
-.footer-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.footer-brand img { width: 28px; height: 28px; border-radius: 6px; }
-.footer-brand span { font-family: var(--fd); font-weight: 700; color: var(--white); font-size: 0.95rem; }
-.footer-links { display: flex; gap: 1.5rem; list-style: none; }
-.footer-links a { font-family: var(--fm); font-size: 0.72rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
-.footer-links a:hover { color: var(--white); }
-.footer-copy { font-family: var(--fm); font-size: 0.7rem; color: var(--muted); }
+    a { color: inherit; text-decoration: none; }
 
-/* ─ UTILS ─ */
-.fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.fade-up.visible { opacity: 1; transform: translateY(0); }
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--green); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
 
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .hamburger { display: block; }
-  .hero-row { flex-direction: column; }
-  .hero-terminal { display: none; }
-  .ctas { flex-direction: column; }
-  .install-alt { flex-direction: column; }
-  .footer-inner { flex-direction: column; align-items: flex-start; }
-}
-</style>
+    /* ─────────── NAV ─────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px 0; transition: all .35s ease;
+    }
+    nav.scrolled {
+      background: rgba(6, 6, 8, .82);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 11px 0;
+    }
+    .nav-in { display: flex; align-items: center; gap: 14px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-family: var(--fd); font-weight: 800; font-size: 18px; color: var(--white); letter-spacing: -.02em; }
+    .brand img { width: 30px; height: 30px; border-radius: 7px; }
+    .brand .v { font-family: var(--fm); font-size: 10px; font-weight: 700; color: var(--green); border: 1px solid rgba(74,250,30,.3); background: rgba(74,250,30,.08); border-radius: 99px; padding: 2px 8px; letter-spacing: .06em; }
+    .nav-links { margin-left: auto; display: flex; align-items: center; gap: 26px; }
+    .nav-links a { font-family: var(--fm); font-size: 12.5px; color: var(--dim); transition: color .2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      font-family: var(--fm); font-size: 12.5px; font-weight: 700;
+      background: var(--green); color: #000 !important; border-radius: 8px;
+      padding: 9px 18px; transition: transform .2s, box-shadow .2s;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(74,250,30,.28); }
+    @media (max-width: 860px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+    /* ─────────── HERO ─────────── */
+    .hero { position: relative; padding: 190px 0 90px; overflow: hidden; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(130px); pointer-events: none; opacity: .13; z-index: 0; }
+    .orb-a { width: 620px; height: 620px; background: var(--green); top: -260px; left: -160px; }
+    .orb-b { width: 520px; height: 520px; background: var(--cyan); top: 120px; right: -200px; opacity: .1; }
+    .hero-in { position: relative; z-index: 2; }
+
+    .tag {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: var(--fm); font-size: 12px; color: var(--green);
+      background: rgba(74, 250, 30, .07); border: 1px solid rgba(74, 250, 30, .22);
+      border-radius: 99px; padding: 7px 16px; margin-bottom: 30px; letter-spacing: .04em;
+    }
+    .tag i { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .45; transform: scale(.75); } }
+
+    h1 {
+      font-family: var(--fd); font-weight: 800;
+      font-size: clamp(46px, 8.5vw, 108px); line-height: .93;
+      letter-spacing: -.045em; color: var(--white); text-wrap: balance;
+    }
+    h1 .num {
+      background: linear-gradient(100deg, var(--green), var(--cyan));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .lede { margin-top: 26px; font-size: clamp(16px, 2vw, 19px); max-width: 60ch; color: var(--dim); }
+    .lede b { color: var(--white); font-weight: 500; }
+
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 38px; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--fm); font-size: 14px; font-weight: 700;
+      border-radius: 11px; padding: 15px 26px; transition: transform .2s, box-shadow .2s, border-color .2s;
+      border: 1px solid transparent; cursor: pointer;
+    }
+    .btn-p { background: var(--green); color: #000; }
+    .btn-p:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(74, 250, 30, .3); }
+    .btn-s { background: transparent; border-color: var(--border-h); color: var(--white); }
+    .btn-s:hover { border-color: var(--white); transform: translateY(-3px); }
+
+    /* terminal */
+    .term {
+      margin-top: 40px; max-width: 620px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 13px; overflow: hidden;
+    }
+    .term-bar { display: flex; align-items: center; gap: 7px; padding: 11px 15px; border-bottom: 1px solid var(--border); background: rgba(255,255,255,.015); }
+    .term-bar span { width: 11px; height: 11px; border-radius: 50%; }
+    .term-bar .t { margin-left: 10px; font-family: var(--fm); font-size: 11.5px; color: var(--muted); }
+    .term-body { padding: 20px 22px; font-family: var(--fm); font-size: 14px; line-height: 1.9; }
+    .term-body .p { color: var(--green); }
+    .term-body .c { color: var(--white); }
+    .term-body .o { color: var(--muted); font-size: 13px; }
+    .copy {
+      margin-left: auto; font-family: var(--fm); font-size: 11px; color: var(--dim);
+      background: none; border: 1px solid var(--border); border-radius: 6px;
+      padding: 4px 10px; cursor: pointer; transition: all .2s;
+    }
+    .copy:hover { border-color: var(--green); color: var(--green); }
+
+    /* barra de cifras del hero */
+    .hero-stats {
+      display: flex; flex-wrap: wrap; gap: 40px; margin-top: 54px;
+      padding-top: 34px; border-top: 1px solid var(--border);
+    }
+    .hs b {
+      display: block; font-family: var(--fd); font-weight: 800;
+      font-size: 36px; color: var(--white); letter-spacing: -.03em;
+      font-variant-numeric: tabular-nums; line-height: 1;
+    }
+    .hs span { font-family: var(--fm); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; }
+
+    /* ─────────── SECCIONES ─────────── */
+    section { position: relative; z-index: 2; padding: 110px 0; }
+    .eyebrow {
+      font-family: var(--fm); font-size: 11.5px; color: var(--green);
+      text-transform: uppercase; letter-spacing: .18em; margin-bottom: 16px;
+    }
+    h2 {
+      font-family: var(--fd); font-weight: 800;
+      font-size: clamp(32px, 5vw, 56px); line-height: 1.02;
+      letter-spacing: -.035em; color: var(--white); text-wrap: balance;
+    }
+    .sub { margin-top: 16px; max-width: 62ch; font-size: 16.5px; }
+
+    /* módulos */
+    .mods { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 50px; }
+    .mod {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 15px; padding: 26px 24px; transition: transform .25s, border-color .25s, background .25s;
+      position: relative; overflow: hidden;
+    }
+    .mod::after {
+      content: ''; position: absolute; inset: 0 auto auto 0; height: 2px; width: 100%;
+      background: var(--mc); transform: scaleX(0); transform-origin: left; transition: transform .3s;
+    }
+    .mod:hover { transform: translateY(-5px); border-color: var(--border-h); background: var(--surface2); }
+    .mod:hover::after { transform: scaleX(1); }
+    .mod .n { font-family: var(--fd); font-weight: 800; font-size: 42px; color: var(--mc); letter-spacing: -.04em; line-height: 1; }
+    .mod h3 { font-family: var(--fb); font-weight: 600; font-size: 17px; color: var(--white); margin: 10px 0 8px; }
+    .mod p { font-size: 13.5px; color: var(--dim); }
+    .mod ul { list-style: none; margin-top: 15px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .mod li { font-family: var(--fm); font-size: 11.5px; color: var(--muted); padding: 3px 0; }
+    .mod li::before { content: '›'; color: var(--mc); margin-right: 8px; }
+
+    /* bloques de característica con captura */
+    .feat { display: grid; grid-template-columns: 1fr 1.25fr; gap: 60px; align-items: center; margin-top: 90px; }
+    .feat:nth-child(even) .feat-txt { order: 2; }
+    .feat h3 { font-family: var(--fd); font-weight: 800; font-size: clamp(24px, 3.4vw, 36px); color: var(--white); letter-spacing: -.03em; line-height: 1.1; }
+    .feat p { margin-top: 16px; font-size: 15.5px; }
+    .feat .kv { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .kv em {
+      font-family: var(--fm); font-style: normal; font-size: 11.5px; color: var(--dim);
+      border: 1px solid var(--border); border-radius: 7px; padding: 5px 11px;
+    }
+    .shot {
+      border: 1px solid var(--border); border-radius: 13px; overflow: hidden;
+      background: var(--surface); box-shadow: 0 30px 70px -30px rgba(0, 0, 0, .9);
+    }
+    .shot-bar { display: flex; align-items: center; gap: 6px; padding: 9px 13px; border-bottom: 1px solid var(--border); }
+    .shot-bar span { width: 9px; height: 9px; border-radius: 50%; }
+    .shot img { display: block; width: 100%; height: auto; }
+    @media (max-width: 900px) {
+      .feat { grid-template-columns: 1fr; gap: 34px; margin-top: 64px; }
+      .feat:nth-child(even) .feat-txt { order: 0; }
+    }
+
+    /* rutinas */
+    .rutinas { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 12px; margin-top: 46px; }
+    .rut {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 17px 19px; transition: border-color .2s, transform .2s;
+    }
+    .rut:hover { border-color: var(--border-h); transform: translateX(4px); }
+    .rut i { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+    .rut b { display: block; font-size: 14.5px; font-weight: 600; color: var(--white); }
+    .rut small { font-size: 12.5px; color: var(--muted); }
+    .rut .pasos { margin-left: auto; font-family: var(--fm); font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+    /* números */
+    .nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-top: 50px; }
+    .num-c { background: var(--surface); border: 1px solid var(--border); border-radius: 15px; padding: 30px 26px; }
+    .num-c b {
+      display: block; font-family: var(--fd); font-weight: 800; font-size: 46px;
+      letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums;
+      background: linear-gradient(100deg, var(--green), var(--cyan));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .num-c span { font-family: var(--fm); font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-top: 9px; display: block; }
+
+    /* instalación */
+    .inst { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 46px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 15px; padding: 30px 28px;
+    }
+    .card h3 { font-family: var(--fd); font-weight: 700; font-size: 21px; color: var(--white); margin-bottom: 12px; letter-spacing: -.02em; }
+    .card p { font-size: 14.5px; }
+    .card pre {
+      margin-top: 18px; background: #08080a; border: 1px solid var(--border);
+      border-radius: 9px; padding: 14px 16px; overflow-x: auto;
+      font-family: var(--fm); font-size: 13px; color: var(--green);
+    }
+    .card .btn { margin-top: 20px; font-size: 13px; padding: 12px 20px; }
+
+    /* testimonios */
+    .tst { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-top: 46px; }
+    .t-c { background: var(--surface); border: 1px solid var(--border); border-radius: 15px; padding: 28px 26px; }
+    .stars { color: var(--green); font-size: 13px; letter-spacing: 3px; margin-bottom: 14px; }
+    .t-c q { display: block; font-size: 15px; color: var(--white); font-style: italic; line-height: 1.7; }
+    .t-who { display: flex; align-items: center; gap: 12px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .t-av {
+      width: 38px; height: 38px; border-radius: 50%; flex: none;
+      display: grid; place-items: center; font-family: var(--fm); font-size: 12px; font-weight: 700;
+      background: rgba(74, 250, 30, .1); color: var(--green); border: 1px solid rgba(74, 250, 30, .25);
+    }
+    .t-who b { display: block; font-size: 14px; color: var(--white); font-weight: 600; }
+    .t-who small { font-size: 12px; color: var(--muted); }
+
+    /* aviso */
+    .nota {
+      margin-top: 40px; border-left: 2px solid var(--green);
+      background: rgba(74, 250, 30, .04); border-radius: 0 12px 12px 0; padding: 20px 24px;
+    }
+    .nota p { font-size: 14.5px; }
+    .nota strong { color: var(--white); font-weight: 600; }
+
+    footer { position: relative; z-index: 2; border-top: 1px solid var(--border); padding: 50px 0 60px; }
+    .f-in { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center; }
+    .f-in p { font-family: var(--fm); font-size: 12.5px; color: var(--muted); }
+    .f-links { display: flex; gap: 22px; }
+    .f-links a { font-family: var(--fm); font-size: 12.5px; color: var(--dim); transition: color .2s; }
+    .f-links a:hover { color: var(--green); }
+
+    /* reveal */
+    .rv { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+    .rv.in { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+      html { scroll-behavior: auto; }
+      .rv { opacity: 1; transform: none; }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="grid-bg"></div>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
+  <nav id="nav">
+    <div class="wrap nav-in">
+      <a class="brand" href="index.html">
+        <img src="logo/BS_Removedor_1768162986835.png" alt="">
+        ToolboxBS <span class="v">v4.0</span>
+      </a>
+      <div class="nav-links">
+        <a href="#modulos">Módulos</a>
+        <a href="#interfaz">Interfaz</a>
+        <a href="#rutinas">Rutinas</a>
+        <a href="#numeros">Números</a>
+        <a href="Documentacion.html">Docs</a>
+        <a class="nav-cta" href="#instalar">Descargar</a>
+      </div>
+    </div>
+  </nav>
 
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-inner">
-    <a class="nav-brand" href="https://brandonsepulveda.github.io">
-      <img src="logo/BS_Removedor_1768162986835.png" alt="BS Logo">
-      ToolboxBS
-      <div class="nav-dot"></div>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#features">Características</a></li>
-      <li><a href="#stats">Stats</a></li>
-      <li><a href="#install">Instalación</a></li>
-      <li><a href="#testimonials">Opiniones</a></li>
-    </ul>
-    <a href="https://brandonsepulveda.github.io/ToolboxBSweb" target="_blank" class="nav-cta">
-      <i class="fa-solid fa-globe" style="font-size:0.7rem;"></i> Versión Web
-    </a>
-    <button class="hamburger"><i class="fas fa-bars"></i></button>
-  </div>
-</nav>
+  <!-- ══════════ HERO ══════════ -->
+  <header class="hero">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="wrap hero-in">
+      <div class="tag"><i></i> v4.0 &middot; 258 herramientas &middot; código abierto</div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <div style="display:flex; align-items:center; gap:4rem; flex-wrap:wrap;" class="hero-row">
-      <div style="flex:1; min-width:280px;">
-        <div class="hero-badge fade-up">
-          <div class="hero-badge-dot"></div>
-          POWERSHELL + WPF · VERSIÓN 3.1
+      <h1>La navaja suiza<br>de Windows.<br><span class="num">258</span> herramientas.</h1>
+
+      <p class="lede">
+        Reparar lo que está roto, recuperar espacio, afinar el rendimiento, revisar la seguridad,
+        diagnosticar la red e instalar software. <b>Todo en una sola aplicación</b>, con la salida
+        en vivo, el estado del equipo en tiempo real y la posibilidad de deshacer lo que tocaste.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn-p" href="#instalar">Descargar gratis</a>
+        <a class="btn btn-s" href="ToolboxBSweb.html">Usar sin instalar</a>
+      </div>
+
+      <div class="term">
+        <div class="term-bar">
+          <span style="background:#ff5f57"></span>
+          <span style="background:#febc2e"></span>
+          <span style="background:#28c840"></span>
+          <span class="t">PowerShell (Administrador)</span>
+          <button class="copy" onclick="copiar(this)">Copiar</button>
         </div>
-        <h1 class="hero-title fade-up" style="transition-delay:0.05s;">
-          TOOLBOX<span class="accent">BS</span>
-        </h1>
-        <div class="hero-version fade-up" style="transition-delay:0.1s;">WINDOWS OPTIMIZATION SUITE</div>
-        <p class="hero-desc fade-up" style="transition-delay:0.15s;">
-          No es solo una herramienta. Es una <strong>central de comando</strong> para limpiar, acelerar y diagnosticar tu PC con <strong>un solo script</strong>. Desarrollada con PowerShell y WPF por Brandon Sepulveda.
-        </p>
-        <div class="ctas fade-up" style="transition-delay:0.2s;">
-          <button class="btn-green" onclick="openModal()">
-            <i class="fa-solid fa-bolt"></i> Ejecutar Ahora
-          </button>
-          <a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank" class="btn-outline">
-            <i class="fab fa-github"></i> Ver en GitHub
-          </a>
-        </div>
-        <div class="hero-stats fade-up" style="transition-delay:0.25s;">
-          <div class="hstat"><span class="hstat-num g" id="cnt-dl">+20K</span><span class="hstat-label">Descargas</span></div>
-          <div class="hstat"><span class="hstat-num c">3.1</span><span class="hstat-label">Versión actual</span></div>
-          <div class="hstat"><span class="hstat-num">97%</span><span class="hstat-label">PowerShell</span></div>
-          <div class="hstat"><span class="hstat-num">31+</span><span class="hstat-label">Releases</span></div>
+        <div class="term-body">
+          <div><span class="p">PS&gt;</span> <span class="c" id="cmd">irm "https://cutt.ly/ToolboxBS" | iex</span></div>
+          <div class="o" id="out"></div>
         </div>
       </div>
-      <div style="flex:0 0 380px;" class="fade-up hero-terminal" style="transition-delay:0.3s;">
-        <div class="hero-terminal">
+
+      <div class="hero-stats">
+        <div class="hs"><b data-n="258">0</b><span>Herramientas</span></div>
+        <div class="hs"><b data-n="20104" data-suf="+">0</b><span>Descargas</span></div>
+        <div class="hs"><b data-n="8">0</b><span>Módulos</span></div>
+        <div class="hs"><b data-n="11">0</b><span>Rutinas de un clic</span></div>
+        <div class="hs"><b data-n="0" data-txt="$0">0</b><span>Coste</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════ MÓDULOS ══════════ -->
+  <section id="modulos">
+    <div class="wrap">
+      <div class="rv">
+        <div class="eyebrow">El catálogo</div>
+        <h2>Ocho módulos.<br>Todo lo que hace falta.</h2>
+        <p class="sub">
+          Cada herramienta te dice qué va a hacer antes de hacerlo, y puedes leer su código
+          exacto con un clic derecho. Nada corre a tus espaldas.
+        </p>
+      </div>
+
+      <div class="mods">
+        <div class="mod rv" style="--mc:var(--c-repair)">
+          <div class="n">31</div>
+          <h3>Reparación</h3>
+          <p>Arreglar lo que está roto sin formatear.</p>
+          <ul>
+            <li>Reparar Windows (SFC + DISM)</li>
+            <li>Resetear Windows Update</li>
+            <li>Reparar Microsoft Store</li>
+            <li>Analizar pantallazos azules</li>
+            <li>Respaldar todos los drivers</li>
+          </ul>
+        </div>
+        <div class="mod rv" style="--mc:var(--c-clean)">
+          <div class="n">19</div>
+          <h3>Limpieza</h3>
+          <p>Recuperar espacio sin tocar tus archivos.</p>
+          <ul>
+            <li>Purgar temporales</li>
+            <li>Caché de navegadores</li>
+            <li>Eliminar Windows.old</li>
+            <li>Qué se está comiendo el disco</li>
+            <li>Liberar RAM en espera</li>
+          </ul>
+        </div>
+        <div class="mod rv" style="--mc:var(--c-perf)">
+          <div class="n">27</div>
+          <h3>Rendimiento</h3>
+          <p>Ajustes que de verdad se notan.</p>
+          <ul>
+            <li>Plan de energía máximo</li>
+            <li>Quitar apps preinstaladas</li>
+            <li>Auditar programas de inicio</li>
+            <li>Reducir telemetría</li>
+            <li>Menú contextual clásico</li>
+          </ul>
+        </div>
+        <div class="mod rv" style="--mc:var(--c-sec)">
+          <div class="n">18</div>
+          <h3>Seguridad</h3>
+          <p>Defender, cuentas y persistencias.</p>
+          <ul>
+            <li>Estado de Microsoft Defender</li>
+            <li>Cazar persistencias sospechosas</li>
+            <li>BitLocker y claves de recuperación</li>
+            <li>Historial de inicios de sesión</li>
+            <li>Endurecer el sistema</li>
+          </ul>
+        </div>
+        <div class="mod rv" style="--mc:var(--c-net)">
+          <div class="n">14</div>
+          <h3>Red</h3>
+          <p>Cuando "no hay internet".</p>
+          <ul>
+            <li>Diagnóstico de red completo</li>
+            <li>Contraseñas WiFi guardadas</li>
+            <li>Escanear la red local</li>
+            <li>Test de velocidad</li>
+            <li>DNS rápidos de Cloudflare</li>
+          </ul>
+        </div>
+        <div class="mod rv" style="--mc:var(--c-info)">
+          <div class="n">14</div>
+          <h3>Información</h3>
+          <p>Reportes que puedes entregar.</p>
+          <ul>
+            <li>Reporte HTML del equipo</li>
+            <li>Salud de discos (SMART)</li>
+            <li>Claves de producto</li>
+            <li>Inventario de software</li>
+            <li>Salud y carga de la batería</li>
+          </ul>
+        </div>
+        <div class="mod rv" style="--mc:var(--c-tools)">
+          <div class="n">48</div>
+          <h3>Herramientas</h3>
+          <p>Consolas nativas y utilidades de técnico.</p>
+          <ul>
+            <li>Respaldar datos del usuario</li>
+            <li>Mantenimiento automático semanal</li>
+            <li>Suite Sysinternals</li>
+            <li>Crear God Mode</li>
+            <li>Menú contextual de técnico</li>
+          </ul>
+        </div>
+        <div class="mod rv" style="--mc:var(--c-apps)">
+          <div class="n">87</div>
+          <h3>Aplicaciones</h3>
+          <p>Todo lo que toca instalar tras formatear.</p>
+          <ul>
+            <li>Chrome, Brave, Firefox</li>
+            <li>7-Zip, VLC, Notepad++</li>
+            <li>AnyDesk, TeamViewer</li>
+            <li>VS Code, Git, Python</li>
+            <li>&hellip;y 78 más, vía winget</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ INTERFAZ ══════════ -->
+  <section id="interfaz" style="padding-top:40px">
+    <div class="wrap">
+      <div class="rv">
+        <div class="eyebrow">La interfaz</div>
+        <h2>Se ve bien porque<br>trabajas mejor.</h2>
+        <p class="sub">
+          Aplicación nativa en WPF. Sin navegador embebido, sin Electron, sin instalador:
+          un solo archivo que se auto-eleva y arranca.
+        </p>
+      </div>
+
+      <div class="feat rv">
+        <div class="feat-txt">
+          <h3>El estado del equipo, en vivo</h3>
+          <p>
+            CPU, memoria, disco, tiempo encendido y batería actualizándose mientras trabajas.
+            Debajo, ocho comprobaciones de salud: activación de Windows, protección en tiempo real,
+            firewall, antigüedad del último parche, espacio libre, salud SMART de los discos,
+            punto de restauración y si hay un reinicio pendiente.
+          </p>
+          <div class="kv">
+            <em>CPU / RAM / disco</em><em>batería con desgaste</em><em>8 chequeos</em><em>F5 refresca</em>
+          </div>
+        </div>
+        <div class="shot">
+          <div class="shot-bar"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+          <img src="img/toolboxbs/dashboard.png" alt="Dashboard de ToolboxBS con el estado del equipo en vivo" loading="lazy" width="1340" height="820">
+        </div>
+      </div>
+
+      <div class="feat rv">
+        <div class="feat-txt">
+          <h3>La salida, aquí dentro</h3>
+          <p>
+            Antes cada tarea abría su propia ventana y lo que decía se perdía al cerrarla.
+            Ahora la salida llega en vivo a la aplicación, coloreada por tipo de línea, y queda
+            guardada en un registro por sesión en <code style="font-family:var(--fm);font-size:.9em;color:var(--cyan)">Documentos\ToolboxBS\logs</code>.
+          </p>
+          <div class="kv">
+            <em>salida en vivo</em><em>registro por sesión</em><em>botón detener</em><em>progreso real</em>
+          </div>
+        </div>
+        <div class="shot">
+          <div class="shot-bar"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+          <img src="img/toolboxbs/consola.png" alt="Consola integrada de ToolboxBS" loading="lazy" width="1340" height="820">
+        </div>
+      </div>
+
+      <div class="feat rv">
+        <div class="feat-txt">
+          <h3>Buscar entre 258 sin perderte</h3>
+          <p>
+            <b style="color:var(--white)">Ctrl+F</b> busca en todo el catálogo sin importar el módulo en el que estés.
+            Marcas lo que necesitas, el contador te dice cuántas llevas y el botón Ejecutar
+            las corre en orden. Si siempre haces lo mismo, guarda la selección como perfil
+            y cárgala en el siguiente equipo.
+          </p>
+          <div class="kv">
+            <em>Ctrl+F global</em><em>selección múltiple</em><em>perfiles .json</em><em>Ctrl+Enter ejecuta</em>
+          </div>
+        </div>
+        <div class="shot">
+          <div class="shot-bar"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+          <img src="img/toolboxbs/reparacion.png" alt="Cuadrícula de herramientas del módulo de Reparación" loading="lazy" width="1340" height="820">
+        </div>
+      </div>
+
+      <div class="feat rv">
+        <div class="feat-txt">
+          <h3>Deshacer de verdad</h3>
+          <p>
+            Todo lo que escribe en el registro hace una copia con <code style="font-family:var(--fm);font-size:.9em;color:var(--cyan)">reg export</code>
+            antes de tocar nada, y <b style="color:var(--white)">25 herramientas traen su propia acción de reversión</b>.
+            Las 13 acciones difíciles de deshacer piden confirmación mostrando la lista exacta.
+          </p>
+          <div class="kv">
+            <em>25 reversibles</em><em>respaldo del registro</em><em>confirmación de riesgo</em><em>punto de restauración</em>
+          </div>
+        </div>
+        <div class="shot">
+          <div class="shot-bar"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
+          <img src="img/toolboxbs/seguridad.png" alt="Módulo de Seguridad de ToolboxBS" loading="lazy" width="1340" height="820">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ RUTINAS ══════════ -->
+  <section id="rutinas">
+    <div class="wrap">
+      <div class="rv">
+        <div class="eyebrow">Rutinas de un clic</div>
+        <h2>Los casos de siempre,<br>ya armados.</h2>
+        <p class="sub">
+          Marcan sus herramientas y te muestran la selección. El último clic siempre es tuyo:
+          ninguna rutina ejecuta nada sola.
+        </p>
+      </div>
+
+      <div class="rutinas">
+        <div class="rut rv"><i style="background:var(--c-clean)"></i><div><b>Mantenimiento express</b><small>Limpieza + DNS + TRIM</small></div><span class="pasos">6 pasos</span></div>
+        <div class="rut rv"><i style="background:var(--c-perf)"></i><div><b>El equipo va lento</b><small>Diagnóstico, limpieza y tweaks</small></div><span class="pasos">9 pasos</span></div>
+        <div class="rut rv"><i style="background:var(--c-info)"></i><div><b>Recién formateado</b><small>Activación, winget, debloat y ajustes</small></div><span class="pasos">13 pasos</span></div>
+        <div class="rut rv"><i style="background:var(--c-sec)"></i><div><b>Revisión de seguridad</b><small>Defender, cuentas, persistencias</small></div><span class="pasos">10 pasos</span></div>
+        <div class="rut rv"><i style="background:var(--c-tools)"></i><div><b>Antes de formatear</b><small>Respalda drivers, claves y datos</small></div><span class="pasos">6 pasos</span></div>
+        <div class="rut rv"><i style="background:var(--c-net)"></i><div><b>Reporte para el cliente</b><small>HTML completo e inventario</small></div><span class="pasos">3 pasos</span></div>
+        <div class="rut rv"><i style="background:var(--c-repair)"></i><div><b>No hay internet</b><small>Diagnóstico y reset de red</small></div><span class="pasos">6 pasos</span></div>
+        <div class="rut rv"><i style="background:var(--c-clean)"></i><div><b>Windows no actualiza</b><small>Reset de update + SFC</small></div><span class="pasos">3 pasos</span></div>
+        <div class="rut rv"><i style="background:var(--c-repair)"></i><div><b>Después de un virus</b><small>Reactiva Defender y limpia rastros</small></div><span class="pasos">8 pasos</span></div>
+        <div class="rut rv"><i style="background:var(--c-clean)"></i><div><b>Liberar espacio a fondo</b><small>Todo lo borrable sin riesgo</small></div><span class="pasos">9 pasos</span></div>
+        <div class="rut rv"><i style="background:var(--c-perf)"></i><div><b>Periféricos que fallan</b><small>USB, audio, cámara, Bluetooth</small></div><span class="pasos">6 pasos</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ MODO CONSOLA ══════════ -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="feat rv" style="margin-top:0">
+        <div class="feat-txt">
+          <div class="eyebrow">Para automatizar</div>
+          <h3>También sin abrir la ventana</h3>
+          <p>
+            La misma lógica corre desde consola, así que puedes meterla en tus propios scripts
+            o programarla. Cada herramienta tiene un identificador estable.
+          </p>
+        </div>
+        <div class="term" style="margin-top:0;max-width:none">
           <div class="term-bar">
-            <div class="td tr"></div><div class="td ty"></div><div class="td tg"></div>
-            <span class="tname">Administrator: PowerShell 5.1</span>
+            <span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span>
+            <span class="t">modo consola</span>
           </div>
-          <div class="term-body">
-            <div style="display:flex;gap:8px;"><span class="tp">PS&gt;</span><span class="tc" id="tc1"></span></div>
-            <div class="to" id="to1" style="display:none;"></div>
-            <div style="display:flex;gap:8px;margin-top:6px;"><span class="tp">PS&gt;</span><span class="tc" id="tc2"></span></div>
-            <div class="to" id="to2" style="display:none;"></div>
-            <div class="tw" id="to3" style="display:none;"></div>
-            <div class="tm" id="to4" style="display:none;"></div>
-            <div style="display:flex;gap:8px;margin-top:6px;"><span class="tp">PS&gt;</span><span class="tc" id="tc3"></span></div>
+          <div class="term-body" style="font-size:13px">
+            <div class="o"># listar las 258 herramientas con su id</div>
+            <div><span class="p">PS&gt;</span> <span class="c">.\ToolboxBS.ps1 -ListTools</span></div>
+            <div class="o" style="padding-top:10px"># ejecutar sin interfaz</div>
+            <div><span class="p">PS&gt;</span> <span class="c">.\ToolboxBS.ps1 -RunTool clean-temp,net-info</span></div>
+            <div class="o" style="padding-top:10px"># volcar el catálogo a JSON</div>
+            <div><span class="p">PS&gt;</span> <span class="c">.\ToolboxBS.ps1 -ExportCatalog cat.json</span></div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- scroll indicator -->
-  <div style="position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;z-index:2;">
-    <div style="width:1px;height:44px;background:linear-gradient(to bottom,var(--green),transparent);animation:sdrop 1.5s ease-in-out infinite;"></div>
-    <span style="font-family:var(--fm);font-size:0.65rem;color:var(--muted);letter-spacing:0.12em;">SCROLL</span>
-  </div>
-</section>
-<style>@keyframes sdrop{0%,100%{opacity:1;transform:scaleY(1)}50%{opacity:0.3;transform:scaleY(0.5)}}</style>
+  </section>
 
-<!-- FEATURES -->
-<section class="section" id="features">
-  <div class="container">
-    <div class="text-center fade-up" style="text-align:center;">
-      <div class="sec-label" style="justify-content:center;">Características</div>
-      <h2 class="sec-title">Todo lo que<br>necesitas.</h2>
-      <p style="color:var(--dim);font-size:0.9rem;margin-top:1rem;font-family:var(--fm);">Un script. Cero instaladores pesados. Control total de Windows.</p>
-    </div>
-    <div class="feat-grid">
-
-      <div class="feat-card fade-up">
-        <div class="feat-icon"><i class="fas fa-gauge-high"></i></div>
-        <div class="feat-title">Boost de Rendimiento</div>
-        <p class="feat-desc">Libera memoria RAM, detiene procesos basura y optimiza servicios para máximo FPS y velocidad general.</p>
-        <ul class="feat-list">
-          <li>Optimización de RAM con RAMMap</li>
-          <li>Gestión de servicios de inicio</li>
-          <li>Tweaks de registro seguros</li>
-        </ul>
+  <!-- ══════════ NÚMEROS ══════════ -->
+  <section id="numeros">
+    <div class="wrap">
+      <div class="rv">
+        <div class="eyebrow">Números reales</div>
+        <h2>El impacto, en datos.</h2>
+        <p class="sub">Descargas contadas por GitHub sobre los archivos de cada versión publicada.</p>
       </div>
-
-      <div class="feat-card fade-up" style="transition-delay:0.05s;">
-        <div class="feat-icon"><i class="fas fa-stethoscope"></i></div>
-        <div class="feat-title">Diagnóstico Completo</div>
-        <p class="feat-desc">Informe detallado de hardware, temperaturas, estado de disco y salud general del sistema en segundos.</p>
-        <ul class="feat-list">
-          <li>CPU, GPU, RAM, SSD info</li>
-          <li>Análisis de pantallazos azules</li>
-          <li>Diagnóstico de batería</li>
-        </ul>
-      </div>
-
-      <div class="feat-card fade-up" style="transition-delay:0.1s;">
-        <div class="feat-icon"><i class="fas fa-broom"></i></div>
-        <div class="feat-title">Limpieza Profunda</div>
-        <p class="feat-desc">Elimina gigabytes de basura acumulada: caché de Windows Update, temporales y archivos huérfanos.</p>
-        <ul class="feat-list">
-          <li>Limpieza de archivos temporales</li>
-          <li>Caché de Windows Update</li>
-          <li>Prefetch y minidumps</li>
-        </ul>
-      </div>
-
-      <div class="feat-card fade-up" style="transition-delay:0.15s;">
-        <div class="feat-icon"><i class="fas fa-box-open"></i></div>
-        <div class="feat-title">Gestor de Apps</div>
-        <p class="feat-desc">Instala o desinstala aplicaciones esenciales en lote usando Winget o Chocolatey. Centro de Apps integrado.</p>
-        <ul class="feat-list">
-          <li>Autoinstalación de gestores</li>
-          <li>Chocolatey + Winget</li>
-          <li>HP, Lenovo, TeamViewer y más</li>
-        </ul>
-      </div>
-
-      <div class="feat-card fade-up" style="transition-delay:0.2s;">
-        <div class="feat-icon"><i class="fas fa-wrench"></i></div>
-        <div class="feat-title">Reparación del Sistema</div>
-        <p class="feat-desc">SFC, DISM, reparación de red y gestión de drivers. Restaura tu sistema a su estado óptimo.</p>
-        <ul class="feat-list">
-          <li>SFC / DISM automatizado</li>
-          <li>Reparación de Windows Update</li>
-          <li>Puntos de restauración</li>
-        </ul>
-      </div>
-
-      <div class="feat-card fade-up" style="transition-delay:0.25s;">
-        <div class="feat-icon" style="color:var(--green);"><i class="fas fa-file-alt"></i></div>
-        <div class="feat-title">Reporte Automático</div>
-        <p class="feat-desc">Al terminar, genera un .txt en tu escritorio con fecha, equipo y lista exacta de tareas. Ideal para clientes.</p>
-        <ul class="feat-list">
-          <li>Reporte en el escritorio</li>
-          <li>Comprobante para clientes</li>
-          <li>Historial de mantenimiento</li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<section class="section section-alt" id="stats">
-  <div class="container">
-    <div style="text-align:center;" class="fade-up">
-      <div class="sec-label" style="justify-content:center;">Números reales</div>
-      <h2 class="sec-title">El impacto<br><span style="-webkit-text-fill-color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.2);">en datos.</span></h2>
-    </div>
-
-    <!-- top metrics -->
-    <div class="stats-grid">
-      <div class="stat-card fade-up">
-        <div class="stat-big g">+15.6K</div>
-        <div class="stat-sub">Descargas totales</div>
-      </div>
-      <div class="stat-card fade-up" style="transition-delay:0.07s;">
-        <div class="stat-big c">19</div>
-        <div class="stat-sub">Países alcanzados</div>
-      </div>
-      <div class="stat-card fade-up" style="transition-delay:0.14s;">
-        <div class="stat-big b">31+</div>
-        <div class="stat-sub">Versiones publicadas</div>
-      </div>
-      <div class="stat-card fade-up" style="transition-delay:0.21s;">
-        <div class="stat-big">368</div>
-        <div class="stat-sub">Commits en GitHub</div>
-      </div>
-      <div class="stat-card fade-up" style="transition-delay:0.28s;">
-        <div class="stat-big g">12</div>
-        <div class="stat-sub">Stars en GitHub</div>
-      </div>
-      <div class="stat-card fade-up" style="transition-delay:0.35s;">
-        <div class="stat-big c">75%</div>
-        <div class="stat-sub">Latinoamérica</div>
+      <div class="nums">
+        <div class="num-c rv"><b data-n="20104">0</b><span>Descargas totales</span></div>
+        <div class="num-c rv"><b data-n="35">0</b><span>Versiones publicadas</span></div>
+        <div class="num-c rv"><b data-n="385">0</b><span>Commits en GitHub</span></div>
+        <div class="num-c rv"><b data-n="258">0</b><span>Herramientas</span></div>
+        <div class="num-c rv"><b data-n="25">0</b><span>Reversibles</span></div>
+        <div class="num-c rv"><b data-n="15">0</b><span>Stars en GitHub</span></div>
       </div>
     </div>
+  </section>
 
-    <!-- country carousel -->
-    <div class="fade-up" style="margin-top:4rem; transition-delay:0.1s;">
-      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.75rem;">
-        <div>
-          <div class="sec-label">Distribución por país</div>
-          <h3 style="font-family:var(--fd); font-size:1.4rem; font-weight:800; color:var(--white); letter-spacing:-0.02em;">19 Países · +15.6K descargas</h3>
+  <!-- ══════════ INSTALAR ══════════ -->
+  <section id="instalar">
+    <div class="wrap">
+      <div class="rv">
+        <div class="eyebrow">Empezar</div>
+        <h2>Dos formas.<br>Ninguna instala nada.</h2>
+      </div>
+
+      <div class="inst">
+        <div class="card rv">
+          <h3>Aplicación de escritorio</h3>
+          <p>
+            La experiencia completa: consola integrada, estado en vivo y reversión.
+            Abre <b style="color:var(--white)">PowerShell como Administrador</b> y pega esto:
+          </p>
+          <pre>irm "https://cutt.ly/ToolboxBS" | iex</pre>
+          <a class="btn btn-p" href="https://github.com/BrandonSepulveda/ToolboxBS/releases/latest/download/ToolboxBS.ps1">Descargar el .ps1</a>
         </div>
-        <p style="font-family:var(--fm); font-size:0.68rem; color:var(--muted);">
-          <i class="fas fa-circle" style="color:var(--green);font-size:0.45rem;vertical-align:middle;"></i> Datos reales · UTC
+
+        <div class="card rv">
+          <h3>Versión web</h3>
+          <p>
+            No necesita permisos ni descargar nada primero: marcas lo que quieres, la página
+            arma un <code style="font-family:var(--fm);font-size:.9em;color:var(--cyan)">.bat</code> en tu navegador y tú lo ejecutas.
+            Todo se genera en tu equipo, sin enviar datos a ningún servidor.
+          </p>
+          <a class="btn btn-s" href="ToolboxBSweb.html">Abrir la versión web</a>
+        </div>
+
+        <div class="card rv">
+          <h3>Código abierto</h3>
+          <p>
+            El código está publicado y puedes leerlo entero antes de ejecutarlo. Dentro de la app,
+            clic derecho en cualquier tarjeta muestra el PowerShell exacto que va a correr.
+          </p>
+          <a class="btn btn-s" href="https://github.com/BrandonSepulveda/ToolboxBS">Ver en GitHub</a>
+        </div>
+      </div>
+
+      <div class="nota rv">
+        <p>
+          <strong>¿Por qué pide permisos de Administrador?</strong> Casi todo lo que hace
+          —reparar componentes de Windows, tocar servicios, limpiar carpetas del sistema, leer
+          el estado de Defender— los necesita. A cambio, todo queda registrado en disco y
+          puedes leer cada línea antes de ejecutarla.
+          <a href="Documentacion.html" style="color:var(--green)">Ver la documentación completa &rarr;</a>
         </p>
       </div>
+    </div>
+  </section>
 
-      <!-- carousel wrapper con fade edges -->
-      <div class="carousel-outer">
-        <div class="carousel-track" id="carousel-track"></div>
+  <!-- ══════════ TESTIMONIOS ══════════ -->
+  <section id="opiniones" style="padding-top:0">
+    <div class="wrap">
+      <div class="rv">
+        <div class="eyebrow">Opiniones</div>
+        <h2>Lo que dicen<br>los usuarios.</h2>
       </div>
-
-      <!-- selected country detail -->
-      <div id="country-detail" class="country-detail">
-        <span id="cd-flag" class="cd-flag"></span>
-        <div>
-          <div id="cd-name" class="cd-name"></div>
-          <div id="cd-stats" class="cd-stats"></div>
+      <div class="tst">
+        <div class="t-c rv">
+          <div class="stars">★★★★★</div>
+          <q>Increíble. ToolboxBS reunió todas las herramientas que usaba por separado en un solo lugar. Mi flujo de trabajo de soporte IT cambió completamente.</q>
+          <div class="t-who"><div class="t-av">JM</div><div><b>John Muñoz</b><small>Ing. Sistemas</small></div></div>
         </div>
-        <div class="cd-bar-wrap">
-          <div id="cd-bar" class="cd-bar"></div>
+        <div class="t-c rv">
+          <div class="stars">★★★★★</div>
+          <q>La función de instalación por PowerShell es una genialidad. Es seguro, rápido y el reporte automático que deja para los clientes es perfecto.</q>
+          <div class="t-who"><div class="t-av">JV</div><div><b>Julio Valencia</b><small>Dev &amp; Soporte IT</small></div></div>
         </div>
-        <div id="cd-count" class="cd-count"></div>
+        <div class="t-c rv">
+          <div class="stars">★★★★★</div>
+          <q>El debloater de Windows funciona de maravilla. Eliminé toda la basura preinstalada en minutos. Lo uso en cada formateo que hago.</q>
+          <div class="t-who"><div class="t-av">CA</div><div><b>Carlos Arenas</b><small>Técnico PC</small></div></div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<style>
-/* ── CAROUSEL ── */
-.carousel-outer {
-  position: relative;
-  overflow: hidden;
-  padding: 8px 0;
-}
-.carousel-outer::before,
-.carousel-outer::after {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0;
-  width: 80px;
-  z-index: 2;
-  pointer-events: none;
-}
-.carousel-outer::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
-.carousel-outer::after  { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
+  <footer>
+    <div class="wrap f-in">
+      <p>ToolboxBS v4.0 &middot; hecho por Brandon Sepúlveda</p>
+      <div class="f-links">
+        <a href="index.html">Portafolio</a>
+        <a href="Documentacion.html">Documentación</a>
+        <a href="ToolboxBSweb.html">Versión web</a>
+        <a href="https://github.com/BrandonSepulveda/ToolboxBS">GitHub</a>
+        <a href="https://kick.com/papibrandon">Kick</a>
+      </div>
+    </div>
+  </footer>
 
-.carousel-track {
-  display: flex;
-  gap: 12px;
-  width: max-content;
-  animation: scroll-x 30s linear infinite;
-  cursor: grab;
-}
-.carousel-track:active { cursor: grabbing; }
-.carousel-track.paused { animation-play-state: paused; }
+  <script>
+    // nav al hacer scroll
+    const nav = document.getElementById('nav');
+    addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), { passive: true });
 
-@keyframes scroll-x {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.c-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 1rem 1.25rem;
-  min-width: 110px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-  position: relative;
-  user-select: none;
-}
-.c-card:hover, .c-card.active {
-  border-color: var(--border-h);
-  background: var(--surface2);
-  transform: translateY(-4px);
-}
-.c-card.rank-1 { border-color: rgba(74,250,30,0.3); box-shadow: 0 0 20px rgba(74,250,30,0.08); }
-.c-card.rank-1:hover, .c-card.rank-1.active { border-color: rgba(74,250,30,0.6); box-shadow: 0 0 30px rgba(74,250,30,0.15); }
-.c-card.rank-2, .c-card.rank-3 { border-color: rgba(0,245,228,0.2); }
-.c-flag { font-size: 2rem; line-height: 1; }
-.c-name { font-family: var(--fm); font-size: 0.65rem; color: var(--dim); text-align: center; white-space: nowrap; max-width: 90px; overflow: hidden; text-overflow: ellipsis; }
-.c-num  { font-family: var(--fd); font-size: 0.85rem; font-weight: 700; color: var(--white); }
-.c-num.g { color: var(--green); }
-.c-num.c { color: var(--cyan); }
-.c-rank-badge {
-  position: absolute;
-  top: -6px; right: -6px;
-  width: 18px; height: 18px;
-  background: var(--surface2);
-  border: 1px solid var(--border-h);
-  border-radius: 50%;
-  font-family: var(--fm);
-  font-size: 0.58rem;
-  color: var(--muted);
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700;
-}
-.c-card.rank-1 .c-rank-badge { background: rgba(74,250,30,0.15); border-color: var(--green); color: var(--green); }
-.c-card.rank-2 .c-rank-badge, .c-card.rank-3 .c-rank-badge { background: rgba(0,245,228,0.1); border-color: var(--cyan); color: var(--cyan); }
-
-/* ── DETAIL BAR ── */
-.country-detail {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1rem 1.5rem;
-  margin-top: 1.25rem;
-  transition: all 0.3s;
-  flex-wrap: wrap;
-}
-.cd-flag  { font-size: 1.8rem; flex-shrink:0; }
-.cd-name  { font-family: var(--fd); font-size: 0.95rem; font-weight: 700; color: var(--white); }
-.cd-stats { font-family: var(--fm); font-size: 0.68rem; color: var(--muted); margin-top: 2px; }
-.cd-bar-wrap { flex: 1; min-width: 120px; background: rgba(255,255,255,0.05); border-radius: 4px; height: 6px; overflow: hidden; }
-.cd-bar { height: 100%; border-radius: 4px; background: var(--cyan); transition: width 0.8s cubic-bezier(0.16,1,0.3,1); width: 0; }
-.cd-count { font-family: var(--fd); font-size: 1.2rem; font-weight: 800; color: var(--white); flex-shrink:0; white-space:nowrap; }
-</style>
-
-<script>
-(function(){
-  const data = [
-    { name:'Colombia',       flag:'🇨🇴', count:11727 },
-    { name:'España',         flag:'🇪🇸', count:956   },
-    { name:'México',         flag:'🇲🇽', count:932   },
-    { name:'Perú',           flag:'🇵🇪', count:435   },
-    { name:'Argentina',      flag:'🇦🇷', count:418   },
-    { name:'Chile',          flag:'🇨🇱', count:215   },
-    { name:'Venezuela',      flag:'🇻🇪', count:193   },
-    { name:'USA',            flag:'🇺🇸', count:191   },
-    { name:'R. Dominicana',  flag:'🇩🇴', count:144   },
-    { name:'Bolivia',        flag:'🇧🇴', count:102   },
-    { name:'Paraguay',       flag:'🇵🇾', count:81    },
-    { name:'Ecuador',        flag:'🇪🇨', count:58    },
-    { name:'Reino Unido',    flag:'🇬🇧', count:55    },
-    { name:'Guatemala',      flag:'🇬🇹', count:42    },
-    { name:'Alemania',       flag:'🇩🇪', count:37    },
-    { name:'Rusia',          flag:'🇷🇺', count:32    },
-    { name:'Nicaragua',      flag:'🇳🇮', count:29    },
-    { name:'Costa Rica',     flag:'🇨🇷', count:25    },
-    { name:'Honduras',       flag:'🇭🇳', count:23    },
-  ];
-  const total = data.reduce((s,d)=>s+d.count,0);
-  const max   = data[0].count;
-  const track = document.getElementById('carousel-track');
-
-  function makeCard(d, i, ghost) {
-    const card = document.createElement('div');
-    const rank = i+1;
-    const rankClass = rank<=3 ? `rank-${rank}` : '';
-    const numClass  = rank===1 ? 'g' : rank<=3 ? 'c' : '';
-    card.className = `c-card ${rankClass}`;
-    if (!ghost) card.dataset.idx = i;
-    card.innerHTML = `
-      <div class="c-rank-badge">${rank}</div>
-      <span class="c-flag">${d.flag}</span>
-      <span class="c-name">${d.name}</span>
-      <span class="c-num ${numClass}">${d.count>=1000?(d.count/1000).toFixed(1)+'K':d.count}</span>
-    `;
-    if (!ghost) {
-      card.addEventListener('click', ()=>{ selectCountry(i); });
-      card.addEventListener('mouseenter', ()=>{ track.classList.add('paused'); });
-      card.addEventListener('mouseleave', ()=>{ track.classList.remove('paused'); });
+    // copiar el comando
+    function copiar(btn) {
+      navigator.clipboard.writeText(document.getElementById('cmd').textContent.trim())
+        .then(() => { btn.textContent = 'Copiado'; setTimeout(() => btn.textContent = 'Copiar', 1800); })
+        .catch(() => { btn.textContent = 'Copia manual'; });
     }
-    return card;
-  }
 
-  // render cards × 2 (infinite loop)
-  data.forEach((d,i) => track.appendChild(makeCard(d,i,false)));
-  data.forEach((d,i) => track.appendChild(makeCard(d,i,true)));
-
-  // detail panel
-  function selectCountry(i) {
-    const d   = data[i];
-    const pct = ((d.count/total)*100).toFixed(1);
-    const barW= ((d.count/max)*100).toFixed(1);
-    const isTop = i===0;
-    document.getElementById('cd-flag').textContent  = d.flag;
-    document.getElementById('cd-name').textContent  = d.name;
-    document.getElementById('cd-stats').textContent = `Puesto #${i+1} · ${pct}% del total`;
-    document.getElementById('cd-count').textContent = d.count.toLocaleString();
-    const bar = document.getElementById('cd-bar');
-    bar.style.background = isTop ? 'var(--green)' : i<3 ? 'var(--cyan)' : 'rgba(255,255,255,0.3)';
-    bar.style.width = '0';
-    setTimeout(()=>{ bar.style.width = barW+'%'; }, 50);
-    // highlight card
-    document.querySelectorAll('.c-card[data-idx]').forEach(c => c.classList.toggle('active', +c.dataset.idx===i));
-  }
-
-  selectCountry(0); // default Colombia
-
-  // drag to scroll
-  let isDown=false, startX=0, scrollLeft=0;
-  track.addEventListener('mousedown',  e=>{ isDown=true; track.classList.add('paused'); startX=e.pageX; scrollLeft=track.parentElement.scrollLeft; });
-  track.addEventListener('mouseleave', ()=>{ isDown=false; });
-  track.addEventListener('mouseup',    ()=>{ isDown=false; });
-  track.addEventListener('mousemove',  e=>{ if(!isDown) return; e.preventDefault(); track.parentElement.scrollLeft=scrollLeft-(e.pageX-startX); });
-})();
-</script>
-
-<!-- INSTALL -->
-<section class="section" id="install">
-  <div class="container">
-    <div style="text-align:center;" class="fade-up">
-      <div class="sec-label" style="justify-content:center;">Instalación</div>
-      <h2 class="sec-title">Zero-Touch<br>Setup.</h2>
-      <p style="color:var(--dim);font-size:0.9rem;margin-top:1rem;font-family:var(--fm);">Abre PowerShell como Administrador y pega uno de estos comandos.</p>
-    </div>
-    <div class="install-box fade-up" style="transition-delay:0.1s;">
-      <div class="install-bar">
-        <div class="td tr"></div><div class="td ty"></div><div class="td tg"></div>
-        <span class="install-title">Administrator: Windows PowerShell</span>
-      </div>
-      <div class="install-body">
-        <p style="font-family:var(--fm);font-size:0.7rem;color:var(--muted);margin-bottom:1rem;letter-spacing:0.05em;"># COMANDO PRINCIPAL</p>
-        <div class="cmd-line">
-          <span class="cmd-prompt">PS&gt;</span>
-          <span class="cmd-text">irm "https://cutt.ly/ToolboxBS" | iex</span>
-          <button class="cmd-copy" onclick="copyText(this,'irm \"https://cutt.ly/ToolboxBS\" | iex')">
-            <i class="fa-regular fa-copy"></i> Copiar
-          </button>
-        </div>
-        <p style="font-family:var(--fm);font-size:0.7rem;color:var(--muted);margin-bottom:1rem;letter-spacing:0.05em;"># ALTERNATIVO</p>
-        <div class="cmd-line">
-          <span class="cmd-prompt">PS&gt;</span>
-          <span class="cmd-text">irm "https://brandonsepulveda.github.io/Tool" | iex</span>
-          <button class="cmd-copy" onclick="copyText(this,'irm \"https://brandonsepulveda.github.io/Tool\" | iex')">
-            <i class="fa-regular fa-copy"></i> Copiar
-          </button>
-        </div>
-        <div class="install-alt">
-          <a href="https://brandonsepulveda.github.io/ToolboxBSweb" target="_blank" class="btn-green" style="padding:0.7rem 1.4rem;font-size:0.78rem;">
-            <i class="fa-solid fa-globe"></i> Versión Web Online
-          </a>
-          <a href="https://github.com/BrandonSepulveda/ToolboxBS/releases/latest/download/ToolboxBS.exe" class="btn-outline" style="padding:0.7rem 1.4rem;font-size:0.78rem;opacity:0.7;">
-            <i class="fa-solid fa-download"></i> Descargar .EXE
-            <span style="font-size:0.6rem;background:rgba(255,188,46,0.15);border:1px solid rgba(255,188,46,0.4);color:#febc2e;padding:1px 6px;border-radius:4px;letter-spacing:0.05em;">BETA</span>
-          </a>
-        </div>
-        <div style="margin-top:1.25rem;display:flex;gap:1.5rem;flex-wrap:wrap;">
-          <span class="install-note"><i class="fas fa-check-circle"></i> Sin instalador</span>
-          <span class="install-note"><i class="fas fa-check-circle"></i> Script portable</span>
-          <span class="install-note"><i class="fas fa-check-circle"></i> Código abierto AGPL v3</span>
-          <span class="install-note"><i class="fas fa-check-circle"></i> Win 10 / 11</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="section section-alt" id="testimonials">
-  <div class="container">
-    <div style="text-align:center;" class="fade-up">
-      <div class="sec-label" style="justify-content:center;">Opiniones</div>
-      <h2 class="sec-title">Lo que dicen<br>los usuarios.</h2>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card fade-up">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Increíble. ToolboxBS reunió todas las herramientas que usaba por separado en un solo lugar. Mi flujo de trabajo de soporte IT cambió completamente."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">JM</div>
-          <div><div class="testi-name">John Muñoz</div><div class="testi-role">Ing. Sistemas</div></div>
-        </div>
-      </div>
-      <div class="testi-card fade-up" style="transition-delay:0.07s;">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"La función de instalación por PowerShell es una genialidad. Es seguro, rápido y el reporte automático que deja en el escritorio es perfecto para los clientes."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">JV</div>
-          <div><div class="testi-name">Julio Valencia</div><div class="testi-role">Dev & Soporte IT</div></div>
-        </div>
-      </div>
-      <div class="testi-card fade-up" style="transition-delay:0.14s;">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"El debloater de Windows funciona de maravilla. Eliminé toda la basura preinstalada en minutos. Lo uso en cada formateo que hago."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">CA</div>
-          <div><div class="testi-name">Carlos Arenas</div><div class="testi-role">Técnico PC</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="container">
-    <div class="footer-inner">
-      <a class="footer-brand" href="https://brandonsepulveda.github.io">
-        <img src="logo/BS_Removedor_1768162986835.png" alt="Logo">
-        <span>Brandon Sepulveda</span>
-      </a>
-      <ul class="footer-links">
-        <li><a href="https://github.com/BrandonSepulveda/ToolboxBS" target="_blank">GitHub</a></li>
-        <li><a href="https://github.com/BrandonSepulveda/ToolboxBS/releases" target="_blank">Releases</a></li>
-        <li><a href="https://brandonsepulveda.github.io">Portafolio</a></li>
-        <li><a href="https://kick.com/papibrandon" target="_blank">Kick</a></li>
-      </ul>
-      <p class="footer-copy">© 2025 Brandon Sepulveda · AGPL v3.0 · Hecho con <i class="fas fa-heart" style="color:var(--red);"></i></p>
-    </div>
-  </div>
-</footer>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
-    <h3 class="modal-title">Elige tu Camino</h3>
-    <p class="modal-sub">Tres formas de ejecutar ToolboxBS.</p>
-    <div class="modal-options">
-      <div class="modal-btn" onclick="copyModal()">
-        <div class="modal-btn-icon ps"><i class="fas fa-terminal"></i></div>
-        <div>
-          <div class="modal-btn-label">PowerShell <span style="font-size:0.65rem;background:rgba(74,250,30,0.1);border:1px solid rgba(74,250,30,0.3);color:var(--green);padding:1px 7px;border-radius:4px;margin-left:4px;">RECOMENDADO</span></div>
-          <div class="modal-btn-sub" id="modal-copy-sub">irm "https://cutt.ly/ToolboxBS" | iex</div>
-        </div>
-        <i class="fa-regular fa-copy modal-btn-arr"></i>
-      </div>
-      <a href="https://brandonsepulveda.github.io/ToolboxBSweb" target="_blank" class="modal-btn">
-        <div class="modal-btn-icon web"><i class="fas fa-globe"></i></div>
-        <div>
-          <div class="modal-btn-label">Versión Web Online</div>
-          <div class="modal-btn-sub">Herramientas básicas sin instalar nada</div>
-        </div>
-        <i class="fas fa-arrow-right modal-btn-arr"></i>
-      </a>
-      <a href="https://github.com/BrandonSepulveda/ToolboxBS/releases/latest/download/ToolboxBS.exe" class="modal-btn" style="opacity:0.65;">
-        <div class="modal-btn-icon exe"><i class="fas fa-download"></i></div>
-        <div>
-          <div class="modal-btn-label">Descargar .EXE <span style="font-size:0.62rem;background:rgba(255,188,46,0.12);border:1px solid rgba(255,188,46,0.35);color:#febc2e;padding:1px 7px;border-radius:4px;margin-left:4px;">BETA</span></div>
-          <div class="modal-btn-sub">Puede generar falsos positivos en antivirus</div>
-        </div>
-        <i class="fas fa-arrow-right modal-btn-arr"></i>
-      </a>
-    </div>
-  </div>
-</div>
-
-<script>
-// Nav scroll
-window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50); });
-
-// Fade-up
-const fels = document.querySelectorAll('.fade-up');
-const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} }), {threshold:0.08,rootMargin:'0px 0px -30px 0px'});
-fels.forEach(el => obs.observe(el));
-setTimeout(() => fels.forEach(el => { const r=el.getBoundingClientRect(); if(r.top<window.innerHeight) el.classList.add('visible'); }), 80);
-
-// Card mouse glow
-document.querySelectorAll('.feat-card').forEach(c => c.addEventListener('mousemove', e => {
-  const r=c.getBoundingClientRect();
-  c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
-  c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
-}));
-
-// Copy
-function copyText(btn, text) {
-  navigator.clipboard.writeText(text).then(() => {
-    const orig = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-check" style="color:var(--green)"></i> ¡Copiado!';
-    btn.style.borderColor = 'var(--green)'; btn.style.color = 'var(--green)';
-    setTimeout(() => { btn.innerHTML = orig; btn.style.borderColor=''; btn.style.color=''; }, 1800);
-  });
-}
-
-// Modal
-function openModal() { document.getElementById('modal').classList.add('open'); }
-function closeModal() { document.getElementById('modal').classList.remove('open'); }
-function closeModalOutside(e) { if(e.target===document.getElementById('modal')) closeModal(); }
-function copyModal() {
-  const cmd = 'irm "https://cutt.ly/ToolboxBS" | iex';
-  navigator.clipboard.writeText(cmd).then(() => {
-    document.getElementById('modal-copy-sub').textContent = '¡Copiado al portapapeles!';
-    setTimeout(() => { document.getElementById('modal-copy-sub').textContent = cmd; }, 2000);
-  });
-}
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
-
-// Terminal animation
-function typeEl(el, text, spd, cb) {
-  let i=0;
-  function t() { if(i<=text.length){el.textContent=text.substring(0,i++);setTimeout(t,spd);} else if(cb) setTimeout(cb,250); }
-  t();
-}
-setTimeout(() => {
-  const tc1=document.getElementById('tc1'), to1=document.getElementById('to1');
-  const tc2=document.getElementById('tc2'), to2=document.getElementById('to2');
-  const to3=document.getElementById('to3'), to4=document.getElementById('to4');
-  const tc3=document.getElementById('tc3');
-  if(!tc1) return;
-  typeEl(tc1,'Get-SystemInfo -Detail',62,()=>{
-    to1.style.display='block'; to1.textContent='✓ Win11 Pro | Ryzen 5 | 16GB RAM | 1TB SSD';
-    setTimeout(()=>{
-      typeEl(tc2,'irm "cutt.ly/ToolboxBS" | iex',55,()=>{
-        to2.style.display='block'; to2.textContent='→ Descargando ToolboxBS v3.1...';
-        setTimeout(()=>{
-          to3.style.display='block'; to3.textContent='⚡ Iniciando interfaz gráfica...';
-          setTimeout(()=>{
-            to4.style.display='block'; to4.textContent='# Presiona CTRL+C para cancelar en cualquier momento';
-            setTimeout(()=>{ tc3.textContent=''; let on=true; setInterval(()=>{ tc3.textContent=on?'_':''; on=!on; },550); },400);
-          },500);
-        },600);
+    // revelado al entrar en pantalla
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('in'), Math.min(i * 60, 240));
+          io.unobserve(e.target);
+        }
       });
-    },700);
-  });
-},1000);
-</script>
+    }, { threshold: .12, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+    // contadores
+    const fmt = new Intl.NumberFormat('es-CO');
+    function contar(el) {
+      if (el.dataset.txt) { el.textContent = el.dataset.txt; return; }
+      const fin = +el.dataset.n, suf = el.dataset.suf || '', t0 = performance.now(), dur = 1400;
+      (function paso(t) {
+        const p = Math.min((t - t0) / dur, 1);
+        el.textContent = fmt.format(Math.round(fin * (1 - Math.pow(1 - p, 3)))) + (p === 1 ? suf : '');
+        if (p < 1) requestAnimationFrame(paso);
+      })(t0);
+    }
+    const ioN = new IntersectionObserver((es) => {
+      es.forEach(e => { if (e.isIntersecting) { contar(e.target); ioN.unobserve(e.target); } });
+    }, { threshold: .5 });
+    document.querySelectorAll('[data-n]').forEach(el => ioN.observe(el));
+
+    // salida del terminal del hero, escrita poco a poco
+    const lineas = [
+      'ToolboxBS v4 listo. 258 herramientas cargadas.',
+      'Windows 11 Pro 24H2  ·  Administrador  ·  sin BOM',
+      'Registro: Documentos\\ToolboxBS\\logs'
+    ];
+    const out = document.getElementById('out');
+    let li = 0;
+    function escribir() {
+      if (li >= lineas.length) return;
+      const d = document.createElement('div');
+      out.appendChild(d);
+      const txt = lineas[li++];
+      let ci = 0;
+      (function tick() {
+        d.textContent = txt.slice(0, ++ci);
+        if (ci < txt.length) setTimeout(tick, 16);
+        else setTimeout(escribir, 320);
+      })();
+    }
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setTimeout(escribir, 900);
+    else out.textContent = lineas.join(' · ');
+  </script>
 </body>
+
 </html>
